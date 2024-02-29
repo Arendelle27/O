@@ -19,7 +19,7 @@ namespace MANAGER
         {
             if(this.wanderer!=null)
             {
-                EntityPool.Instance.Wanderers.Release(this.wanderer.gameObject);
+                GameObjectPool.Instance.Wanderers.Release(this.wanderer.gameObject);
             }
 
             this.GetWanderer(PlotManager.Instance.grids[new Vector2Int(0, 0)]);
@@ -32,7 +32,7 @@ namespace MANAGER
         /// <param name="plot"></param>
         public void GetWanderer(Plot plot)
         {
-            GameObject go=Instantiate(EntityPool.Instance.Wanderers.Get(), this.transform);
+            GameObject go=Instantiate(GameObjectPool.Instance.Wanderers.Get(), this.transform);
             Wanderer wanderer = go.GetComponent<Wanderer>();
             this.wanderer = wanderer;
 
@@ -51,8 +51,8 @@ namespace MANAGER
             this.wanderer.transform.position = des.transform.position-new Vector3(0,0,0.3f);
             des.wanderer = this.wanderer;
 
-            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.CanDiscover_Plot);
-            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.Discovered_Plot);
+            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.¿ÉÌ½Ë÷);
+            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.ÒÑÌ½Ë÷);
         }
 
         public void IsMoveWander()

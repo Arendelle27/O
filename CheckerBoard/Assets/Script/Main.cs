@@ -7,12 +7,12 @@ public class Main : MonoBehaviour
 {
     private void Awake()
     {
-        EntityPool.Instance.Init();
+        GameObjectPool.Instance.Init();
+        
     }
 
     void Start()
     {
-
         PlotManager.Instance.Init();
         WandererManager.Instance.Init();
     }

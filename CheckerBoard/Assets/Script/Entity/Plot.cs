@@ -14,7 +14,7 @@ namespace ENTITY
         public List<Sprite> plot_Sps = new List<Sprite>();
 
         [SerializeField, LabelText("板块类型"), ReadOnly]
-        internal Plot_Type plot_Type;
+        public Plot_Type plot_Type;
         [SerializeField, LabelText("位置"), ReadOnly]
         public Vector2Int pos;
 
@@ -37,16 +37,16 @@ namespace ENTITY
         {
             switch (plot_Type)
             {
-                case Plot_Type.Undiscovered_Plot:
+                case Plot_Type.未探明:
                     ChangeToUndiscoverd();
                     break;
-                case Plot_Type.CanDiscover_Plot:
+                case Plot_Type.可探索:
                     ChangeToCanDisCover();
                     break;
-                case Plot_Type.Discovered_Plot:
+                case Plot_Type.已探索:
                     ChangeToDiscovered();
                     break;
-                case Plot_Type.developed_Plot:
+                case Plot_Type.已开发:
                     ChangeToDeveloped();
                     break;
                 default:
@@ -59,7 +59,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToUndiscoverd()
         {
-            this.plot_Type = Plot_Type.Undiscovered_Plot;
+            this.plot_Type = Plot_Type.未探明;
             this.SR.color = Color.black;
         }
 
@@ -68,7 +68,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToCanDisCover()
         {
-            this.plot_Type = Plot_Type.CanDiscover_Plot;
+            this.plot_Type = Plot_Type.可探索;
             this.SR.color = Color.red;
         }
 
@@ -77,7 +77,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToDiscovered()
         {
-            this.plot_Type = Plot_Type.Discovered_Plot;
+            this.plot_Type = Plot_Type.已探索;
             this.SR.color = Color.yellow;
         }
 
@@ -86,7 +86,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToDeveloped()
         {
-            this.plot_Type = Plot_Type.developed_Plot;
+            this.plot_Type = Plot_Type.已开发;
             this.SR.color = Color.green;
         }
         #endregion
@@ -102,11 +102,11 @@ namespace ENTITY
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            if(this.plot_Type!=Plot_Type.Undiscovered_Plot)
+            if(this.plot_Type!=Plot_Type.未探明)
             {
                 this.selectedSubject.OnNext(this.pos);
             }
-            Debug.Log("鼠标点击");
+            //Debug.Log("鼠标点击");
         }
     }
 }

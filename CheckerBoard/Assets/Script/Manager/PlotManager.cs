@@ -9,6 +9,8 @@ using UnityEngine.Tilemaps;
 using UniRx;
 using System;
 using UnityEngine.EventSystems;
+using Managers;
+using UIBUILDING;
 
 namespace MANAGER
 {
@@ -29,6 +31,8 @@ namespace MANAGER
         bool isMove;//是否移动格子中的流浪者
         [SerializeField, LabelText("出发点的板块"), ReadOnly]
         Plot ini;//出发点的板块
+
+
 
         ///当前被选中的格子
         Plot SelectedPlot
@@ -74,10 +78,10 @@ namespace MANAGER
             for (int i = -4; i < 5; i++)
                 for (int j = -4; j < 5; j++)
                 {
-                    this.grids[new Vector2Int(i, j)].ChangeType(Plot_Type.Undiscovered_Plot);
+                    this.grids[new Vector2Int(i, j)].ChangeType(Plot_Type.未探明);
                 }
 
-            this.grids[new Vector2Int(0,0)].ChangeType(Plot_Type.developed_Plot);
+            this.grids[new Vector2Int(0,0)].ChangeType(Plot_Type.已开发);
         }
 
         
@@ -89,7 +93,7 @@ namespace MANAGER
         /// <param name="y"></param>
         void GetGrid(Vector2Int pos)
         {
-            GameObject gO = Instantiate(EntityPool.Instance.Plots.Get(), this.transform);
+            GameObject gO = Instantiate(GameObjectPool.Instance.Plots.Get(), this.transform);
             Vector3Int v3= new Vector3Int(pos.x, pos.y, 0);
             gO.transform.position = this.map.GetCellCenterWorld(v3);
 
@@ -99,11 +103,19 @@ namespace MANAGER
 
             plot.Selected.Subscribe(v2 =>
             {
+                if(this.grids[v2].plot_Type==Plot_Type.已探索)
+                {
+                    UIManager.Instance.Show<UIBuilding>();//打开建筑UI选择界面
+                }
+                else
+                {
+                    UIManager.Instance.Close<UIBuilding>();//关闭建筑UI选择界面
+                }
                 this.SelectedPlot = this.grids[v2];
             });
         }
 
-        #region 是否移动板块中的流浪者相关函数
+        #region 是否移动板块中的流浪者相关方法
         /// <summary>
         /// 是否移动格子中的流浪者
         /// </summary>
@@ -165,19 +177,19 @@ namespace MANAGER
         {
             switch (plot_Type)
             {
-                case Plot_Type.CanDiscover_Plot:
+                case Plot_Type.可探索:
                     this.PlotsChangeToCanDiscover(pos);
                     break;
-                case Plot_Type.Discovered_Plot:
+                case Plot_Type.已探索:
                     this.PlotsChangeToDiscovered_Plot(pos);
                     break;
-                case Plot_Type.developed_Plot:
+                case Plot_Type.已开发:
                     this.PlotsChangeToDeveloped_Plot(pos);
                     break;
             }
         }
         /// <summary>
-        /// 使周围一圈板块转为可探测
+        /// 使周围一圈板块转为可探索
         /// </summary>
         /// <param name="pos"></param>
         void PlotsChangeToCanDiscover(Vector2Int pos)
@@ -193,23 +205,23 @@ namespace MANAGER
                     Vector2Int v2 = new Vector2Int(x, y);
                     if (this.grids.ContainsKey(v2))
                     {
-                        if (this.grids[v2].plot_Type==Plot_Type.Undiscovered_Plot)
+                        if (this.grids[v2].plot_Type==Plot_Type.未探明)
                         {
-                            this.grids[v2].ChangeType(Plot_Type.CanDiscover_Plot);
+                            this.grids[v2].ChangeType(Plot_Type.可探索);
                         }
                     }
 
                 }
         }
         /// <summary>
-        /// 当前板块转为已探测
+        /// 当前板块转为已探明
         /// </summary>
         /// <param name="pos"></param>
         void PlotsChangeToDiscovered_Plot(Vector2Int pos)
         {
-            if (grids[pos].plot_Type == Plot_Type.CanDiscover_Plot)
+            if (grids[pos].plot_Type == Plot_Type.可探索)
             {
-                this.grids[pos].ChangeType(Plot_Type.Discovered_Plot);
+                this.grids[pos].ChangeType(Plot_Type.已探索);
             }
 
         }
@@ -219,9 +231,9 @@ namespace MANAGER
         /// <param name="pos"></param>
         void PlotsChangeToDeveloped_Plot(Vector2Int pos)
         {
-            if (grids[pos].plot_Type==Plot_Type.Discovered_Plot)
+            if (grids[pos].plot_Type==Plot_Type.已探索)
             {
-                this.grids[pos].ChangeType(Plot_Type.developed_Plot);
+                this.grids[pos].ChangeType(Plot_Type.已开发);
             }
         }
         #endregion
