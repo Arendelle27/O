@@ -22,6 +22,11 @@ namespace UIBUILDING
         [SerializeField, LabelText("ui图形显示"), Tooltip("放入建筑图像")]
         public Image buildingImage;
 
+        private void OnEnable()
+        {
+            this.background.sprite = normalBg;
+        }
+
         public override void onSelected(bool selected)
         {
             this.background.sprite = selected ? selectedBg : normalBg;

@@ -92,8 +92,8 @@ MonoBehaviour:
   owner: {fileID: 0}
   type: 0
   background: {fileID: 4021500420072505166}
-  normalBg: {fileID: 0}
-  selectedBg: {fileID: 0}
+  normalBg: {fileID: 21300000, guid: a8f3a3f090c86614ba100195c61d3723, type: 3}
+  selectedBg: {fileID: 21300000, guid: ddec001d42573e14c95fad658f04fccb, type: 3}
   buildingImage: {fileID: 3907934809827396220}
 --- !u!1 &6947012222180312707
 GameObject:

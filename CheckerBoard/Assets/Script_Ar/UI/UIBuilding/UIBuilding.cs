@@ -46,13 +46,13 @@ namespace UIBUILDING
         }
 
         /// <summary>
-        /// 选中想要建造的建筑
+        /// 选中想要建造的建筑,第二次点击后确认建造
         /// </summary>
         /// <param name="item"></param>
         void OnBuildingItemSelected(ListView.ListViewItem item)
         {
             UIBuildingItem buildingItem = item as UIBuildingItem;
-            if (buildingItem != null) 
+            if (this.buildingItemSelected != buildingItem) 
             {
                 this.buildingItemSelected = buildingItem;
             }
