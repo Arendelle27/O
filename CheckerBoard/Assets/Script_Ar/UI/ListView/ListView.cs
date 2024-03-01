@@ -2,75 +2,79 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class ListView : MonoBehaviour
+namespace UILIST
 {
-    public UnityAction<ListViewItem> onItemSelected;
-    public class ListViewItem : MonoBehaviour, IPointerClickHandler
+    public class ListView:MonoBehaviour
     {
-        private bool selected;
-        public bool Selected
+        public UnityAction<ListViewItem> onItemSelected;
+        public class ListViewItem : MonoBehaviour, IPointerClickHandler
         {
-            get { return selected; }
-            set
+            private bool selected;
+            public bool Selected
             {
-                selected = value;
-                onSelected(selected);
+                get { return selected; }
+                set
+                {
+                    selected = value;
+                    onSelected(selected);
+                }
+            }
+            public virtual void onSelected(bool selected)
+            {
+            }
+
+            public ListView owner;
+
+            public void OnPointerClick(PointerEventData eventData)
+            {
+                if (!this.selected)
+                {
+                    this.Selected = true;
+                }
+                //if (owner != null && owner.SelectedItem != this)
+                if (owner != null)
+                {
+                    owner.SelectedItem = this;
+                }
             }
         }
-        public virtual void onSelected(bool selected)
-        {
-        }
 
-        public ListView owner;
+        List<ListViewItem> items = new List<ListViewItem>();
 
-        public void OnPointerClick(PointerEventData eventData)
+        private ListViewItem selectedItem = null;
+        public ListViewItem SelectedItem
         {
-            if (!this.selected)
+            get { return selectedItem; }
+            private set
             {
-                this.Selected = true;
-            }
-            if (owner != null && owner.SelectedItem != this)
-            {
-                owner.SelectedItem = this;
+                if (selectedItem != null && selectedItem != value)
+                {
+                    selectedItem.Selected = false;
+                }
+                selectedItem = value;
+                if (onItemSelected != null)
+                    onItemSelected.Invoke((ListViewItem)value);
             }
         }
-    }
 
-    List<ListViewItem> items = new List<ListViewItem>();
-
-    private ListViewItem selectedItem = null;
-    public ListViewItem SelectedItem
-    {
-        get { return selectedItem; }
-        private set
+        public void AddItem(ListViewItem item)
         {
-            if (selectedItem!=null && selectedItem != value)
-            {
-                selectedItem.Selected = false;
-            }
-            selectedItem = value;
-            if (onItemSelected != null)
-                onItemSelected.Invoke((ListViewItem)value);
+            item.owner = this;
+            this.items.Add(item);
         }
-    }
 
-    public void AddItem(ListViewItem item)
-    {
-        item.owner = this;
-        this.items.Add(item);
-    }
-
-    public void RemoveAll()
-    {
-        foreach(var it in items)
+        public void RemoveAll()
         {
-            Destroy(it.gameObject);
+            foreach (var it in items)
+            {
+                Destroy(it.gameObject);
+            }
+            items.Clear();
         }
-        items.Clear();
     }
 }
+

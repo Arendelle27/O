@@ -36,7 +36,7 @@ namespace MANAGER
             Wanderer wanderer = go.GetComponent<Wanderer>();
             this.wanderer = wanderer;
 
-
+            BuildingManager.Instance.GetBuilding(Building_Type.基地, plot);//初始位置产生基地
             this.WandererMoveTo(plot,plot);
         }
 
@@ -53,11 +53,6 @@ namespace MANAGER
 
             PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.可探索);
             PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.已探索);
-        }
-
-        public void IsMoveWander()
-        {
-
         }
 
 

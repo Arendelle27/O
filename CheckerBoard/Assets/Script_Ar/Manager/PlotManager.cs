@@ -32,15 +32,21 @@ namespace MANAGER
         [SerializeField, LabelText("出发点的板块"), ReadOnly]
         Plot ini;//出发点的板块
 
-
+        [SerializeField, LabelText("当前被选中的板块"), ReadOnly]
+        private Plot selectedPlot;//当前被选中的板块
 
         ///当前被选中的格子
-        Plot SelectedPlot
+        public Plot SelectedPlot
         {
+            get
+            {
+                return this.selectedPlot;
+            }
             set
             {
                 if (value != null)
                 {
+                    this.selectedPlot = value;
                     if(value.wanderer!=null)
                     {
                         this.IsMoveWanaderer(value);

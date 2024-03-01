@@ -14,6 +14,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         PlotManager.Instance.Init();
+        BuildingManager.Instance.Init();
         WandererManager.Instance.Init();
     }
 

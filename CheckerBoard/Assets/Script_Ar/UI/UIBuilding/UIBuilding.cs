@@ -3,6 +3,7 @@ using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using UILIST;
 using UnityEngine;
 
 namespace UIBUILDING
@@ -17,8 +18,8 @@ namespace UIBUILDING
         [SerializeField, LabelText("建筑列表"), Tooltip("收集建筑和生产建筑列表")]
         public TabView tabView;
 
-        [SerializeField, LabelText("被选中的建筑UI"), ReadOnly]
-        UIBuildingItem buildingItemSelected;//被选中的建筑UI
+        [SerializeField, LabelText("被选中的建筑UI类型"), ReadOnly]
+        Building_Type buildingtypeSelected;//被选中的建筑UI类型
 
         private void Awake()
         {
@@ -42,23 +43,24 @@ namespace UIBUILDING
 
         private void OnDisable()
         {
-            this.buildingItemSelected=null;
+            this.buildingtypeSelected=Building_Type.无;
         }
 
         /// <summary>
         /// 选中想要建造的建筑,第二次点击后确认建造
         /// </summary>
         /// <param name="item"></param>
-        void OnBuildingItemSelected(ListView.ListViewItem item)
+        public void OnBuildingItemSelected(ListView.ListViewItem item)
         {
             UIBuildingItem buildingItem = item as UIBuildingItem;
-            if (this.buildingItemSelected != buildingItem) 
+            if (this.buildingtypeSelected != buildingItem.type) 
             {
-                this.buildingItemSelected = buildingItem;
+                this.buildingtypeSelected = buildingItem.type;
             }
             else
             {
-                Debug.LogFormat("建造建筑：{0}", buildingItem.type);
+                Debug.LogFormat("建造建筑：{0}", buildingtypeSelected);
+                BuildingManager.Instance.GetBuilding(buildingtypeSelected, PlotManager.Instance.SelectedPlot);
             }
         }
 

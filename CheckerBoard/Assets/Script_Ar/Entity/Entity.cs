@@ -29,7 +29,10 @@ namespace ENTITY
 
         public void LookToCamera()
         {
-            this.transform.rotation=Camera.main.transform.rotation;
+            if(this.transform.rotation!=Camera.main.transform.rotation)
+            {
+                this.transform.rotation = Camera.main.transform.rotation;
+            }
         }
     }
 }
