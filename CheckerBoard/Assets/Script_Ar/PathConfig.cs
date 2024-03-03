@@ -10,6 +10,8 @@ public static class PathConfig
     public const string Building_Prefab_Path = "Prefabs/Building";
     //流浪者预制体位置
     public const string Wanderer_Prefab_Path = "Prefabs/Wanderer";
+    //目的地提示牌预制体位置
+    public const string DestinationSign_Prefab_Path = "Prefabs/DestinationSign";
 
     #region UI图像
     public static List<string> UI_Building_Sprite_Paths = new List<string>()

@@ -13,11 +13,16 @@ public class GameObjectPool :Singleton<GameObjectPool>
     //流浪者对象池
     public ObjectPool<GameObject> Wanderers { get; set; }
 
+    //目的地提示牌对象
+    public GameObject DestinationSigns { get; set; }
+
     public GameObjectPool()
     {
         this.Plots = new ObjectPool<GameObject>(GetObject_Plot, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 100);
         this.Buildings = new ObjectPool<GameObject>(GetObject_Building, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 50);
         this.Wanderers = new ObjectPool<GameObject>(GetObject_Wanderer, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 1, 1);
+        
+         this.DestinationSigns = Resources.Load<GameObject>(PathConfig.DestinationSign_Prefab_Path);
     }
 
     public void Init()

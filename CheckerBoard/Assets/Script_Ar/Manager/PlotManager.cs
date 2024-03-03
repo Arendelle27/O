@@ -29,8 +29,8 @@ namespace MANAGER
 
         [SerializeField, LabelText("是否移动板块中的流浪者"),ReadOnly]
         bool isMove;//是否移动格子中的流浪者
-        [SerializeField, LabelText("出发点的板块"), ReadOnly]
-        Plot ini;//出发点的板块
+        //[SerializeField, LabelText("出发点的板块"), ReadOnly]
+        //Plot ini;//出发点的板块
 
         [SerializeField, LabelText("当前被选中的板块"), ReadOnly]
         private Plot selectedPlot;//当前被选中的板块
@@ -137,7 +137,7 @@ namespace MANAGER
                 {
                     Debug.Log("选择了");
                     this.isMove = true;
-                    this.ini = ini;
+                    //this.ini = ini;
 
                     this.CancelMoveWanderer();
                 });
@@ -149,7 +149,7 @@ namespace MANAGER
         void MoveWanderer(Plot des)
         {
             this.isMove = false;
-            WandererManager.Instance.WandererMoveTo(this.ini, des);
+            WandererManager.Instance.DestinationSignMoveTo(des);//将目的地提示牌移动到指定的板块
             if(this.cancel!=null)
             {
                 this.cancel.Dispose();

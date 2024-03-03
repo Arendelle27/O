@@ -13,9 +13,11 @@ public class Main : MonoBehaviour
 
     void Start()
     {
+        RoundManager.Instance.Init();
         PlotManager.Instance.Init();
         BuildingManager.Instance.Init();
         WandererManager.Instance.Init();
+        
     }
 
     // Update is called once per frame
