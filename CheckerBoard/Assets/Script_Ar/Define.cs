@@ -14,7 +14,6 @@ public enum Plot_Type
 public enum Building_Type
 {
     无=-1,
-    基地,
     自动采集建筑_1,
     自动采集建筑_2,
     生产建筑_1,

@@ -1,9 +1,10 @@
 using MANAGER;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main : MonoBehaviour
+public class Main : MonoSingleton<Main>
 {
     private void Awake()
     {
@@ -11,18 +12,32 @@ public class Main : MonoBehaviour
         
     }
 
-    void Start()
+    private void Start()
     {
-        RoundManager.Instance.Init();
-        PlotManager.Instance.Init();
-        BuildingManager.Instance.Init();
-        WandererManager.Instance.Init();
-        
+        UIMain.Instance.ChangeToGamePanel(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Init()
     {
+        RoundManager.Instance.Init();
+        yield return null;
+        ResourceManager.Instance.Init();
+        yield return null;
+        PlotManager.Instance.Init();
+        yield return null;
+        BuildingManager.Instance.Init();
+        yield return null;
+        WandererManager.Instance.Init();
+        yield return null;
         
+        UIMain.Instance.ChangeToGamePanel(true);
+    }
+
+    /// <summary>
+    /// 一局游戏结束
+    /// </summary>
+    public void GameOver()
+    {
+        UIManager.Instance.Show<UIScorePanel>();
     }
 }

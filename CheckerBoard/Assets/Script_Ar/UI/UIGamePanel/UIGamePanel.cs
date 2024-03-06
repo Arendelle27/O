@@ -8,8 +8,13 @@ using UnityEngine.UI;
 
 public class UIGamePanel : MonoBehaviour
 {
-    [SerializeField, LabelText("能量槽"), Tooltip("当前能量值显示")]
-    public Slider energyValue;
+    //[SerializeField, LabelText("能量槽"), Tooltip("当前能量值显示")]
+    //public Slider energyValue;
+    [SerializeField, LabelText("当前等级"), Tooltip("当前等级显示")]
+    public Text leaveValue;
+
+    [SerializeField, LabelText("当前剩余财富"), Tooltip("当前剩余财富的显示")]
+    public Text wealthAmount;
 
     [SerializeField, LabelText("各种资源的数量"), Tooltip("各种资源的数量的显示")]
     public List<Text> resourcesAmounts = new List<Text>();

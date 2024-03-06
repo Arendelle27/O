@@ -15,7 +15,7 @@ namespace MANAGER
         {
             this.ObserveEveryValueChanged(_ => this.roundNumber).Subscribe(_ =>
             {
-                //变化时更新UI
+                //变化时更新回合数UI
                 UIMain.Instance.gamePanel.roundNumber.text =  this.roundNumber.ToString();
             });
         }
@@ -34,6 +34,11 @@ namespace MANAGER
         public void RoundOver()
         {
             this.roundNumber++;//回合数加1
+
+            BuildingManager.Instance.RoundOver();//建筑结束回合
+
+            ResourceManager.Instance.RoundOver();//资源结束回合
+
             WandererManager.Instance.WandererMoveToDestination();
         }
     }

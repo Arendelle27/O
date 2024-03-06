@@ -84,7 +84,7 @@ namespace UIBUILDING
             {
                 GameObject go = Instantiate(this.itemPrefab.gameObject, this.tabView.tabPages[0].transform);//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType, this.define.sprites[(int)buType-1]);//设置建筑UIItem信息
+                ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
                 this.tabView.tabPages[0].AddItem(ui);
             }
 
@@ -92,7 +92,7 @@ namespace UIBUILDING
             {
                 GameObject go = Instantiate(this.itemPrefab.gameObject, this.tabView.tabPages[1].transform);//在建筑列表第二页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType, this.define.sprites[(int)buType - 1]);//设置建筑UIItem信息
+                ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
                 this.tabView.tabPages[1].AddItem(ui);
             }
         }

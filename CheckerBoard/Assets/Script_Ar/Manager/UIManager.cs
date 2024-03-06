@@ -22,6 +22,8 @@ namespace Managers
             this.UIResources.Add(typeof(UIBuilding), new UIElement() { Resources = "UI/UIBuilding", Cache = true });
             this.Show<UIBuilding>();
             this.Close<UIBuilding>();
+
+            this.UIResources.Add(typeof(UIScorePanel), new UIElement() { Resources = "UI/UIScorePanel", Cache = true });
         }
 
         ~UIManager()

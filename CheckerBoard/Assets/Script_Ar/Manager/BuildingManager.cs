@@ -41,18 +41,28 @@ namespace MANAGER
         /// <param name="plot"></param>
         public void GetBuilding(Building_Type type,Plot plot)
         {
-            GameObject go = Instantiate(GameObjectPool.Instance.Buildings.Get(), this.transform);
-            go.transform.position = plot.transform.position - new Vector3(0,0, 0.3f);
+            if(ResourceManager.Instance.CanBuild(type))
+            {
+                ResourceManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
+                ResourceManager.Instance.ChangeExecution(-1);
 
-            Building building = go.GetComponent<Building>();
-            building.SetInfo(this.ids, type);
+                GameObject go = Instantiate(GameObjectPool.Instance.Buildings.Get(), this.transform);
+                go.transform.position = plot.transform.position - new Vector3(0, 0, 0.3f);
+
+                Building building = go.GetComponent<Building>();
+                building.SetInfo(this.ids, type);
 
 
-            plot.building = building;
+                plot.building = building;
 
-            this.ids++;
-
+                this.ids++;
+            }
+            else
+            {
+                Debug.Log("资源不足");
+            }
         }
+
 
         /// <summary>
         /// 删除建筑
@@ -62,6 +72,14 @@ namespace MANAGER
         {
             GameObjectPool.Instance.Buildings.Release(this.buildings[removeId].gameObject);
             this.buildings.Remove(removeId);
+
+        }
+
+        /// <summary>
+        /// 回合结束，进行结算
+        /// </summary>
+        public void RoundOver()
+        {
 
         }
     }
