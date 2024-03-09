@@ -22,15 +22,16 @@ namespace MANAGER
         [SerializeField, LabelText("地图"), Tooltip("瓦片地图")]
         public Tilemap map;
 
+        [SerializeField, LabelText("地图模式"), ReadOnly]
+        public Map_Mode map_Mode = Map_Mode.正常;
+
         //是否右键选择移动格子中的流浪者
         IDisposable select;
         //是否取消移动格子中的流浪者
         IDisposable cancel;
 
-        [SerializeField, LabelText("是否移动板块中的流浪者"),ReadOnly]
-        bool isMove;//是否移动格子中的流浪者
-        //[SerializeField, LabelText("出发点的板块"), ReadOnly]
-        //Plot ini;//出发点的板块
+        //[SerializeField, LabelText("是否移动板块中的流浪者"),ReadOnly]
+        //bool isMove;//是否移动格子中的流浪者
 
         [SerializeField, LabelText("当前被选中的板块"), ReadOnly]
         private Plot selectedPlot;//当前被选中的板块
@@ -47,21 +48,34 @@ namespace MANAGER
                 if (value != null)
                 {
                     this.selectedPlot = value;
-                    if(value.wanderer!=null)
+
+                    switch (this.map_Mode)
                     {
-                        this.IsMoveWanaderer(value);
+                        case Map_Mode.正常:
+                            if (this.select != null)
+                            {
+                                select.Dispose();
+                            }
+
+                            if (value.wanderer != null)
+                            {
+                                this.IsMoveWanaderer(value);
+                            }
+                            break;
+                        case Map_Mode.选择目的地位置:
+                            if (value.plot_Type != Plot_Type.未探明&& value.wanderer == null)
+                            {
+                                this.MoveWanderer(value);
+                            }
+                            break;
+                        case Map_Mode.拓展探索小队:
+                            if(DataManager.Instance.levelPromptionAmount>0)
+                            {
+                                WandererManager.Instance.ExtendExpTeam(value);//拓展探索小队
+                            }
+                            break;
                     }
-                    else
-                    {
-                        if(this.select!=null)
-                        {
-                            select.Dispose();
-                        }
-                        if (this.isMove)
-                        {
-                            this.MoveWanderer(value);
-                        }
-                    }
+
                 }
             }
         }
@@ -84,10 +98,10 @@ namespace MANAGER
             for (int i = -4; i < 5; i++)
                 for (int j = -4; j < 5; j++)
                 {
-                    this.grids[new Vector2Int(i, j)].ChangeType(Plot_Type.未探明);
+                    this.grids[new Vector2Int(i, j)].Init();
                 }
 
-            this.grids[new Vector2Int(0,0)].ChangeType(Plot_Type.已开发);
+            this.map_Mode = Map_Mode.正常;
         }
 
         
@@ -105,17 +119,18 @@ namespace MANAGER
 
             Plot plot = gO.GetComponent<Plot>();
             plot.pos = pos;
+
             this.grids.Add(pos, plot);
 
-            plot.Selected.Subscribe(v2 =>
+            plot.clickSelectedSubject.Subscribe(v2 =>
             {
                 if(this.grids[v2].plot_Type==Plot_Type.已探索)
                 {
-                    UIManager.Instance.Show<UIBuilding>();//打开建筑UI选择界面
+                    UIManager.Instance.Show<UIBuildingWindow>();//打开建筑UI选择界面
                 }
                 else
                 {
-                    UIManager.Instance.Close<UIBuilding>();//关闭建筑UI选择界面
+                    UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
                 }
                 this.SelectedPlot = this.grids[v2];
             });
@@ -135,11 +150,21 @@ namespace MANAGER
                 .First()
                 .Subscribe(_ =>
                 {
-                    Debug.Log("选择了");
-                    this.isMove = true;
+                    Debug.Log("选择移动点");
+
+                    this.map_Mode = Map_Mode.选择目的地位置;
                     //this.ini = ini;
 
                     this.CancelMoveWanderer();
+
+                    UIMain.Instance.ChangeToGamePanel(1);//选择落点时关闭UI界面
+
+                    //if((UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.activeSelf)
+                    //{
+                    //    (UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(false);//选择落点时关闭UI界面
+                    //}
+
+                    this.select.Dispose();
                 });
         }
 
@@ -148,9 +173,13 @@ namespace MANAGER
         /// </summary>
         void MoveWanderer(Plot des)
         {
-            this.isMove = false;
+            this.map_Mode = Map_Mode.正常;
             WandererManager.Instance.DestinationSignMoveTo(des);//将目的地提示牌移动到指定的板块
-            if(this.cancel!=null)
+
+            UIMain.Instance.ChangeToGamePanel(1);//选择完落点打开UI界面
+            //(UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(true);//选择完落点打开UI界面
+
+            if (this.cancel!=null)
             {
                 this.cancel.Dispose();
             }
@@ -167,81 +196,52 @@ namespace MANAGER
                 .First()
                 .Subscribe(_ =>
                 {
-                    this.isMove = false;
+                    this.map_Mode = Map_Mode.正常;
+
+                    UIMain.Instance.ChangeToGamePanel(1);//取消选择落点后打开UI界面
+                    //(UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(true);//取消选择落点后打开UI界面
+
                     cancel.Dispose();
                 });
         }
         #endregion
 
-        #region 改变板块类型
         /// <summary>
-        /// 改变板块类型
+        /// 流浪者进入给定板块
         /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="plot_Type"></param>
-        public void PlotsChangeType(Vector2Int pos, Plot_Type plot_Type)
+        /// <param name="enterPlot"></param>
+        public void WanderEnter(Plot enterPlot)
         {
-            switch (plot_Type)
-            {
-                case Plot_Type.可探索:
-                    this.PlotsChangeToCanDiscover(pos);
-                    break;
-                case Plot_Type.已探索:
-                    this.PlotsChangeToDiscovered_Plot(pos);
-                    break;
-                case Plot_Type.已开发:
-                    this.PlotsChangeToDeveloped_Plot(pos);
-                    break;
-            }
+            enterPlot.wanderer = WandererManager.Instance.wanderer;
+            this.ExpTeamEnterOrLeave(enterPlot, true);//探索小队伴随着流浪者进入
         }
+
+
         /// <summary>
-        /// 使周围一圈板块转为可探索
+        /// 流浪者离开给定板块
         /// </summary>
-        /// <param name="pos"></param>
-        void PlotsChangeToCanDiscover(Vector2Int pos)
+        /// <param name="leaverPlot"></param>
+        public void WanderLeave(Plot leaverPlot)
         {
-            for (int i = -1; i < 2; i++)
-                for (int j = -1; j < 2; j++)
+            leaverPlot.wanderer = null;
+            this.ExpTeamEnterOrLeave(leaverPlot, false);//探索小队伴随着流浪者离开
+        }
+
+        /// <summary>
+        /// 探索小队伴随着流浪者进入或离开
+        /// </summary>
+        /// <param name="WandererPlot"></param>
+        /// <param name="isEnter"></param>
+        void ExpTeamEnterOrLeave(Plot WandererPlot,bool isEnter)
+        {
+            foreach (var expTeam in WandererManager.Instance.exploratoryTeams)
+            {
+                Vector2Int v2 = new Vector2Int(WandererPlot.pos.x + expTeam.x, WandererPlot.pos.y + expTeam.y);
+                if (this.grids.ContainsKey(v2))
                 {
-                    int x= pos.x + i;
-                    int y= pos.y + j;
-                    if (x == pos.x && y == pos.y)
-                        continue;
-
-                    Vector2Int v2 = new Vector2Int(x, y);
-                    if (this.grids.ContainsKey(v2))
-                    {
-                        if (this.grids[v2].plot_Type==Plot_Type.未探明)
-                        {
-                            this.grids[v2].ChangeType(Plot_Type.可探索);
-                        }
-                    }
-
+                    this.grids[v2].HaveExploratoryTeam = isEnter;
                 }
-        }
-        /// <summary>
-        /// 当前板块转为已探明
-        /// </summary>
-        /// <param name="pos"></param>
-        void PlotsChangeToDiscovered_Plot(Vector2Int pos)
-        {
-            if (grids[pos].plot_Type == Plot_Type.可探索)
-            {
-                this.grids[pos].ChangeType(Plot_Type.已探索);
-            }
-
-        }
-        /// <summary>
-        /// 当前板块转为已开发
-        /// </summary>
-        /// <param name="pos"></param>
-        void PlotsChangeToDeveloped_Plot(Vector2Int pos)
-        {
-            if (grids[pos].plot_Type==Plot_Type.已探索)
-            {
-                this.grids[pos].ChangeType(Plot_Type.已开发);
             }
         }
-        #endregion
     }
 }

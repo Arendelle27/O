@@ -23,7 +23,7 @@ namespace ENTITY
             this.ObserveEveryValueChanged(_ => this.level).Subscribe(_ =>
             {
                 //变化时更新能量UI
-                UIMain.Instance.gamePanel.leaveValue.text = this.level.ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).leaveValue.text = this.level.ToString();
                 Debug.Log("等级变化");
             });
         }

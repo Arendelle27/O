@@ -13,20 +13,39 @@ namespace MANAGER
         [SerializeField, LabelText("流浪者"), ReadOnly]
         public Wanderer wanderer;
 
+        [SerializeField, LabelText("储存探索小队的相对于流浪者位置"), ReadOnly]
+        public HashSet<Vector2Int> exploratoryTeams;
+
         //储存当前存在的目的地提示牌
         [SerializeField, LabelText("目的地提示牌"), ReadOnly]
         public DestinationSign destinationSign;
+
+        //储存本次拓展的板块
+        [SerializeField, LabelText("本次拓展的板块"), ReadOnly]
+        public Stack<Vector2Int> exploredV2 = new Stack<Vector2Int>();
 
         /// <summary>
         /// 初始化
         /// </summary>
         public void Init()
         {
-            if(this.wanderer!=null)
+            this.exploredV2.Clear();
+
+            this.exploratoryTeams=new HashSet<Vector2Int>() {
+                new Vector2Int(1,1),
+                new Vector2Int(1,0),
+                new Vector2Int(1,-1),
+                new Vector2Int(0,1),
+                new Vector2Int(0,-1),
+                new Vector2Int(-1,1),
+                new Vector2Int(-1,0),
+                new Vector2Int(-1,-1)
+            };
+
+            if (this.wanderer != null)
             {
                 GameObjectPool.Instance.Wanderers.Release(this.wanderer.gameObject);
             }
-
             this.GetWanderer(PlotManager.Instance.grids[new Vector2Int(0, 0)]);
 
             if(this.destinationSign==null)
@@ -48,7 +67,7 @@ namespace MANAGER
             Wanderer wanderer = go.GetComponent<Wanderer>();
             this.wanderer = wanderer;
 
-            this.WandererMoveTo(plot);
+            StartCoroutine( this.WandererMoveTo(plot));
         }
 
         /// <summary>
@@ -59,7 +78,7 @@ namespace MANAGER
         {
             if(this.destinationSign.plot!=null)
             {
-                this.WandererMoveTo(this.destinationSign.plot);
+                StartCoroutine(this.WandererMoveTo(this.destinationSign.plot));
                 this.destinationSign.plot = null;
                 this.destinationSign.gameObject.SetActive(false);
             }
@@ -69,19 +88,19 @@ namespace MANAGER
         /// 流浪者移动到指定的板块
         /// </summary>
         /// <param name="des"></param>
-        void WandererMoveTo(Plot des)
+        IEnumerator WandererMoveTo(Plot des)
         {
             if (this.wanderer.plot != null)
             {
-                this.wanderer.plot.wanderer = null;
+                PlotManager.Instance.WanderLeave(this.wanderer.plot);
             }
 
+            yield return null;
+
             this.wanderer.transform.position = des.transform.position - new Vector3(0, 0, 0.3f);
-            des.wanderer = this.wanderer;
             this.wanderer.plot = des;
 
-            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.可探索);
-            PlotManager.Instance.PlotsChangeType(des.pos, Plot_Type.已探索);
+            PlotManager.Instance.WanderEnter(des);
 
 
         }
@@ -96,6 +115,55 @@ namespace MANAGER
             this.destinationSign.transform.position = des.transform.position-new Vector3(0,0,0.1f);
             this.destinationSign.gameObject.SetActive(true);
         }
+        /// <summary>
+        /// 流浪者升级
+        /// </summary>
+        public void Upgrade()
+        {
+            DataManager.Instance.ChangeWealth(-this.wanderer.level * 10);
+            DataManager.Instance.levelPromptionAmount++;
+            this.wanderer.level++;
+        }
+
+        /// <summary>
+        /// 拓展探索小队
+        /// </summary>
+        /// <param name="aimPlot"></param>
+        public void ExtendExpTeam(Plot aimPlot)
+        {
+            if (aimPlot.HaveExploratoryTeam)
+                return;
+
+            foreach (var expTeam in this.exploratoryTeams)
+            {
+                Vector2Int v2 = aimPlot.pos- this.wanderer.plot.pos;
+                if ((v2 - expTeam).magnitude <= 1&& v2.magnitude>0)//判断目标板块是与否探索小队相邻,且不能是流浪者所在的板块
+                {
+                    this.exploratoryTeams.Add(v2);
+                    aimPlot.HaveExploratoryTeam = true;
+
+                    this.exploredV2.Push(v2);//储存本次拓展的板块
+                    DataManager.Instance.levelPromptionAmount--;
+
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 撤销上一次探索小队的拓展
+        /// </summary>
+        public void WithdrawExpTeam()
+        {
+            if (this.exploredV2.Count > 0)
+            {
+                Vector2Int v2 = this.exploredV2.Pop();
+                this.exploratoryTeams.Remove(v2);
+                Plot aimPlot = PlotManager.Instance.grids[this.wanderer.plot.pos + v2];
+                aimPlot.HaveExploratoryTeam = false;
+                DataManager.Instance.levelPromptionAmount++;
+            }
+        }   
     }
 }
 

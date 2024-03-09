@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UniRx;
 using MANAGER;
 
-public class UIStartPanel : MonoBehaviour
+public class UIStartPanel : UIPanel
 {
     [SerializeField, LabelText("开始新游戏"), Tooltip("重新开始游戏")]
     public Button restartGame;

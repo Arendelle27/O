@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIScorePanel : UIWindow
+public class UIScoreWindow : UIWindow
 {
     [SerializeField, LabelText("存活天数"), Tooltip("重新开始游戏")]
     public Text roundnumber;

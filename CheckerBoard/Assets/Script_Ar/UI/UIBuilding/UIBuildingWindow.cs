@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UIBUILDING
 {
-    public class UIBuilding : UIWindow
+    public class UIBuildingWindow : UIWindow
     {
         //½¨ÖþUIÍ¼Ïñ
         UIBuildingSprites define;

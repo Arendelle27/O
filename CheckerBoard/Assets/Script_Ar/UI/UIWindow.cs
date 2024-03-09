@@ -16,7 +16,7 @@ public class UIWindow : MonoBehaviour {
         No,
     }
 
-    public void Close(WindowResult result=WindowResult.None)
+    void Close(WindowResult result=WindowResult.None)
     {
         UIManager.Instance.Close(this.Type);
         if (this.OnClose != null)

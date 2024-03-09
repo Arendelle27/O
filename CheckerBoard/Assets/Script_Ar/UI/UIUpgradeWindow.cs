@@ -1,0 +1,182 @@
+using MANAGER;
+using Sirenix.OdinInspector;
+using System.Collections;
+using System.Collections.Generic;
+using UniRx;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIUpgradeWindow : UIWindow
+{
+    [SerializeField, LabelText("升级文本"), Tooltip("显示升级文本")]
+    public Text upgradeText;
+
+    [SerializeField, LabelText("升级耗费金钱值"), Tooltip("显示升级耗费金钱值")]
+    public Text upgradeCost;
+
+    [SerializeField, LabelText("升级结果文本"), Tooltip("显示升级结果")]
+    public Text upgradeResult;
+
+    [SerializeField, LabelText("确认升级按钮"), Tooltip("升级按钮")]
+    public Button upgradeButton;
+
+    [SerializeField, LabelText("扩展探索小队按钮"), Tooltip("点击扩展探索小队按钮")]
+    public Button extendExpTeamButton;
+
+    [SerializeField, LabelText("扩展探索小队数量显示"), Tooltip("显示扩展探索小队数量")]
+    public Text expTeamExtendAmountText;
+
+    [SerializeField, LabelText("返回按钮"), Tooltip("返回按钮")]
+    public Button closeButton;
+    private void Start()
+    {
+        this.upgradeButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            this.OnYesClick();
+            Debug.Log("选择升级");
+        });
+
+        this.closeButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            this.OnCloseClick();
+        });
+
+        this.extendExpTeamButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            //打开扩展探索小队的UI界面
+            UIMain.Instance.ChangeToGamePanel(2);
+            PlotManager.Instance.map_Mode = Map_Mode.拓展探索小队;//切换地图模式
+
+            this.OnCloseClick();
+        });
+
+        //this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
+        //{
+        //    //变化时更新
+        //    this.expTeamExtendAmountText.text = this.levelPromptionAmount.ToString();
+        //});
+
+    }
+
+    private void OnEnable()
+    {
+        this.UpdateUI();
+
+       if(this.upgradeResult.gameObject.activeSelf)
+        {
+            this.upgradeResult.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 更新UI
+    /// </summary>
+    void UpdateUI()
+    {
+        if(WandererManager.Instance.wanderer?.level <10)
+        {
+            this.upgradeText.text = "是否要升级，\r\n本次升级需要消耗金钱:";
+
+            this.upgradeCost.text = (WandererManager.Instance.wanderer!.level * 10).ToString();
+
+            if (!this.upgradeCost.gameObject.activeSelf)
+            {
+                this.upgradeCost.gameObject.SetActive(true);
+            }
+
+            if (!this.upgradeButton.gameObject.activeSelf)
+            {
+                this.upgradeButton.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            this.upgradeText.text = "已经满级辣";
+
+            if (this.upgradeCost.gameObject.activeSelf)
+            {
+                this.upgradeCost.gameObject.SetActive(false);
+            }
+
+            if (this.upgradeButton.gameObject.activeSelf)
+            {
+                this.upgradeButton.gameObject.SetActive(false);
+            }
+        }
+
+        if(DataManager.Instance.levelPromptionAmount>0)
+        {
+            this.expTeamExtendAmountText.text = DataManager.Instance.levelPromptionAmount.ToString();
+
+            if(this.closeButton.gameObject.activeSelf)
+            {
+                this.closeButton.gameObject.SetActive(false);
+            }
+            if(!this.extendExpTeamButton.gameObject.activeSelf)
+            {
+                this.extendExpTeamButton.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (!this.closeButton.gameObject.activeSelf)
+            {
+                this.closeButton.gameObject.SetActive(true);
+            }
+            if (this.extendExpTeamButton.gameObject.activeSelf)
+            {
+                this.extendExpTeamButton.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 确认升级
+    /// </summary>
+    public override void OnYesClick()
+    {
+        if(DataManager.Instance.CanUpgrade())
+        {
+            this.UpdateUI();
+
+            this.ShowUpgradeResult(true);
+        }
+        else
+        {
+            this.ShowUpgradeResult(false);
+        }
+    }
+
+    /// <summary>
+    /// 显示升级结果
+    /// </summary>
+    /// <param name="isSuccess"></param>
+    void ShowUpgradeResult(bool isSuccess)
+    {
+        if(this.showUpgradeResultCor!=null)
+        {
+            StopCoroutine(this.showUpgradeResultCor);
+        }
+        this.showUpgradeResultCor = StartCoroutine(this.ShowUpgradeResultCor(isSuccess));
+    }
+
+    Coroutine showUpgradeResultCor;
+    IEnumerator ShowUpgradeResultCor(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            this.upgradeResult.color = Color.green;
+            this.upgradeResult.text = "升级成功!";
+
+        }
+        else
+        {
+            this.upgradeResult.color = Color.red;
+            this.upgradeResult.text = "升级失败,钱不够www";
+        }
+        this.upgradeResult.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        this.upgradeResult.gameObject.SetActive(false);
+    }
+
+}

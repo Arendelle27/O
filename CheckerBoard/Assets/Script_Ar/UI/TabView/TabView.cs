@@ -28,7 +28,6 @@ public class TabView : MonoBehaviour {
     {
         if (this.index != index)
         {
-            Debug.Log(index);
             for (int i = 0; i < tabButtons.Length; i++)
             {
                 tabButtons[i].Select(i == index);

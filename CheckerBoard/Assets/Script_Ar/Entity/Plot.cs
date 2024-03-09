@@ -15,6 +15,11 @@ namespace ENTITY
 
         [SerializeField, LabelText("板块类型"), ReadOnly]
         public Plot_Type plot_Type;
+        //临时 当前颜色
+        public Color curColor;
+        //被选中时的颜色
+        public Color selectedColor=Color.blue;
+
         [SerializeField, LabelText("位置"), ReadOnly]
         public Vector2Int pos;
 
@@ -23,17 +28,82 @@ namespace ENTITY
         [SerializeField, LabelText("建筑"), ReadOnly]
         public Building building;
 
+        [SerializeField, LabelText("是否有探索小队"), ReadOnly]
+        private bool haveExploratoryTeam;//是否有探索小队
+        public bool HaveExploratoryTeam
+        {
+            get
+            {
+                return this.haveExploratoryTeam;
+            }
+            set
+            {
+                this.haveExploratoryTeam = value;
+                this.ExpTeamEnter(value);
+            }
+        }
+
         #region 事件
-        private Subject<Vector2Int> selectedSubject = new Subject<Vector2Int>();
-        public IObservable<Vector2Int> Selected => selectedSubject;
+        [SerializeField, LabelText("点击板块"), ReadOnly]
+        public Subject<Vector2Int> clickSelectedSubject = new Subject<Vector2Int>();
+        //public IObservable<Vector2Int> Selected => selectedSubject;
+
+        [SerializeField, LabelText("进入板块"), ReadOnly]
+        public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
         #endregion
+
+
+        private void Start()
+        {
+            this.ObserveEveryValueChanged(_ => this.building).Subscribe(_ =>
+            {
+                if (this.building != null)
+                {
+                    this.BuildConstruction(true);
+                }
+                else
+                {
+                    this.BuildConstruction(false);
+                }
+            });
+
+            this.ObserveEveryValueChanged(_ => this.wanderer).Subscribe(_ =>
+            {
+                if(this.wanderer!=null)
+                {
+                    this.WandererEnter(true);
+                }
+                else
+                {
+                    this.WandererEnter(false);
+                }
+            });
+
+
+            this.ObserveEveryValueChanged(_ => this.curColor).Subscribe(_ =>
+            {
+                this.SR.color = this.curColor;
+            });
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init()
+        {
+            ChangeType(Plot_Type.未探明);
+
+            this.wanderer = null;
+            this.building = null;
+            this.HaveExploratoryTeam = false;
+        }
 
         #region 改变格子状态
         /// <summary>
         /// 随格子类型改变而改变
         /// </summary>
         /// <param name="plot_Type"></param>
-        public void ChangeType(Plot_Type plot_Type)
+        void ChangeType(Plot_Type plot_Type)
         {
             switch (plot_Type)
             {
@@ -60,7 +130,7 @@ namespace ENTITY
         void ChangeToUndiscoverd()
         {
             this.plot_Type = Plot_Type.未探明;
-            this.SR.color = Color.black;
+            this.curColor = Color.black;
         }
 
         /// <summary>
@@ -69,7 +139,7 @@ namespace ENTITY
         void ChangeToCanDisCover()
         {
             this.plot_Type = Plot_Type.可探索;
-            this.SR.color = Color.red;
+            this.curColor = Color.red;
         }
 
         /// <summary>
@@ -78,7 +148,7 @@ namespace ENTITY
         void ChangeToDiscovered()
         {
             this.plot_Type = Plot_Type.已探索;
-            this.SR.color = Color.yellow;
+            this.curColor = Color.yellow;
         }
 
         /// <summary>
@@ -87,9 +157,70 @@ namespace ENTITY
         void ChangeToDeveloped()
         {
             this.plot_Type = Plot_Type.已开发;
-            this.SR.color = Color.green;
+            this.curColor = Color.green;
         }
         #endregion
+
+        /// <summary>
+        /// 流浪者进入或离开
+        /// </summary>
+        /// <param name="isEnter"></param>
+        void WandererEnter(bool isEnter)
+        {
+            if(isEnter)
+            {
+                if(this.plot_Type==Plot_Type.可探索||this.plot_Type==Plot_Type.未探明)
+                {
+                    this.ChangeType(Plot_Type.已探索);
+                }
+            }
+            else
+            {
+                if(this.plot_Type==Plot_Type.已探索)
+                {
+                    this.ChangeType(Plot_Type.未探明);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 建成或者拆除建筑
+        /// </summary>
+        /// <param name="isbuild"></param>
+        void BuildConstruction(bool isbuild)
+        {
+            if(isbuild)
+            {
+                this.ChangeType(Plot_Type.已开发);
+            }
+            else
+            {
+                this.ChangeType(Plot_Type.已探索);
+            }
+        }
+
+        /// <summary>
+        /// 探索小队进入或离开
+        /// </summary>
+        /// <param name="isEnter"></param>
+        void ExpTeamEnter(bool isEnter)
+        {
+            if (isEnter)
+            {
+                if(this.plot_Type == Plot_Type.未探明)
+                {
+                    this.ChangeType(Plot_Type.可探索);
+                }
+            }
+            else
+            {
+                if (this.plot_Type == Plot_Type.可探索)
+                {
+                    this.ChangeType(Plot_Type.未探明);
+                }
+            }
+        }
+
 
         public void OnMouseEnter()
         {
@@ -102,10 +233,8 @@ namespace ENTITY
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            if(this.plot_Type!=Plot_Type.未探明)
-            {
-                this.selectedSubject.OnNext(this.pos);
-            }
+
+            this.clickSelectedSubject.OnNext(this.pos);
             //Debug.Log("鼠标点击");
         }
     }

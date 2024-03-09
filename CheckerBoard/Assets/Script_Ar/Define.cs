@@ -20,4 +20,10 @@ public enum Building_Type
     生产建筑_2,
 }
 
+public enum Map_Mode
+{
+    正常=0,
+    选择目的地位置,
+    拓展探索小队,
+}
 

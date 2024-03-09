@@ -1,47 +1,56 @@
+using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MANAGER
 {
-    public class ResourceManager :Singleton<ResourceManager>
+    public class DataManager :MonoSingleton<DataManager>
     {
-        [SerializeField, LabelText("能量"), ReadOnly]
-        public int wealth=100;
+        [SerializeField, LabelText("金钱"), ReadOnly]
+        public int wealth;
 
         [SerializeField, LabelText("建筑资源"), ReadOnly]
         public int[] buildingResources = new int[3];
 
         [SerializeField, LabelText("行动点"), ReadOnly]
-        public int execution=5;
-        public ResourceManager()
+        public int execution;
+
+        [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
+        public int levelPromptionAmount;
+        public void Start()
         {
             this.ObserveEveryValueChanged(_ => this.wealth).Subscribe(_ =>
             {
                 //变化时更新能量UI
-                UIMain.Instance.gamePanel.wealthAmount.text = this.wealth.ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).wealthAmount.text = this.wealth.ToString();
                 Debug.Log("能量变化");
             });
 
             this.ObserveEveryValueChanged(_ => this.buildingResources).Subscribe(_ =>
             {
                 //变化时更资源UI
-                UIMain.Instance.gamePanel.resourcesAmounts[0].text = this.buildingResources[0].ToString();
-                UIMain.Instance.gamePanel.resourcesAmounts[1].text = this.buildingResources[1].ToString();
-                UIMain.Instance.gamePanel.resourcesAmounts[2].text = this.buildingResources[2].ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[0].text = this.buildingResources[0].ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[1].text = this.buildingResources[1].ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[2].text = this.buildingResources[2].ToString();
                 Debug.Log("资源变化");
             });
 
             this.ObserveEveryValueChanged(_ => this.execution).Subscribe(_ =>
             {
                 //变化时更新行动点UI
-                UIMain.Instance.gamePanel.executionAmount.text = this.execution.ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).executionAmount.text = this.execution.ToString();
                 Debug.Log("行动点变化");
             });
-        
+
+            this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
+            {
+                //变化时更新行动点UI
+                (UIMain.Instance.uiPanels[2] as UIExtendExpTeamPanel).UpdateUI();
+
+            });
         }
 
         /// <summary>
@@ -49,9 +58,10 @@ namespace MANAGER
         /// </summary>
         public void Init()
         {
-            this.wealth = 50;
+            this.wealth = 900;
             this.buildingResources = new int[3] { 5, 5, 5 };
             this.execution = 5;
+            this.levelPromptionAmount = 0;
         }
 
 
@@ -59,13 +69,13 @@ namespace MANAGER
         /// 增减能量
         /// </summary>
         /// <param name="variation"></param>
-        public void ChangeEnergy(int variation)
+        public void ChangeWealth(int variation)
         {
             this.wealth += variation;
-            if(this.wealth<=0)
-            {
-                Main.Instance.GameOver();//金钱不足时
-            }
+            //if(this.wealth<=0)
+            //{
+            //    Main.Instance.GameOver();//金钱不足时
+            //}
         }
 
         /// <summary>
@@ -91,6 +101,11 @@ namespace MANAGER
             this.execution += variation;
         }
 
+        /// <summary>
+        /// 判断资源是否足够建造
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public bool CanBuild(Building_Type type)
         {
             for (int i = 0; i < buildingResources.Length; i++)
@@ -105,6 +120,23 @@ namespace MANAGER
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 判断是否能升级
+        /// </summary>
+        /// <returns></returns>
+        public bool CanUpgrade()
+        {
+            if(this.wealth>=WandererManager.Instance.wanderer.level*10)
+            {
+                WandererManager.Instance.Upgrade();//升级
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void RoundOver()

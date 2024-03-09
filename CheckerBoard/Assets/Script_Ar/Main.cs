@@ -14,14 +14,14 @@ public class Main : MonoSingleton<Main>
 
     private void Start()
     {
-        UIMain.Instance.ChangeToGamePanel(false);
+        UIMain.Instance.ChangeToGamePanel(0);
     }
 
     public IEnumerator Init()
     {
         RoundManager.Instance.Init();
         yield return null;
-        ResourceManager.Instance.Init();
+        DataManager.Instance.Init();
         yield return null;
         PlotManager.Instance.Init();
         yield return null;
@@ -30,7 +30,7 @@ public class Main : MonoSingleton<Main>
         WandererManager.Instance.Init();
         yield return null;
         
-        UIMain.Instance.ChangeToGamePanel(true);
+        UIMain.Instance.ChangeToGamePanel(1);
     }
 
     /// <summary>
@@ -38,6 +38,6 @@ public class Main : MonoSingleton<Main>
     /// </summary>
     public void GameOver()
     {
-        UIManager.Instance.Show<UIScorePanel>();
+        UIManager.Instance.Show<UIScoreWindow>();
     }
 }

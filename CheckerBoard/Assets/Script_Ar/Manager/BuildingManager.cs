@@ -15,13 +15,13 @@ namespace MANAGER
         int ids;
 
         public List<Building_Type> GatheringTypes = new List<Building_Type>() {
-            Building_Type.自动采集建筑_1,
-            Building_Type.自动采集建筑_2,
+            //Building_Type.自动采集建筑_1,
+            //Building_Type.自动采集建筑_2,
         };
 
         public List<Building_Type> ProductionTypes = new List<Building_Type>() {
-            Building_Type.生产建筑_1,
-            Building_Type.生产建筑_2,
+            //Building_Type.生产建筑_1,
+            //Building_Type.生产建筑_2
         };
 
         public void Init()
@@ -41,10 +41,10 @@ namespace MANAGER
         /// <param name="plot"></param>
         public void GetBuilding(Building_Type type,Plot plot)
         {
-            if(ResourceManager.Instance.CanBuild(type))
+            if(DataManager.Instance.CanBuild(type))
             {
-                ResourceManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
-                ResourceManager.Instance.ChangeExecution(-1);
+                DataManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
+                DataManager.Instance.ChangeExecution(-1);
 
                 GameObject go = Instantiate(GameObjectPool.Instance.Buildings.Get(), this.transform);
                 go.transform.position = plot.transform.position - new Vector3(0, 0, 0.3f);

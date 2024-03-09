@@ -12,7 +12,7 @@ namespace UIBUILDING
         [SerializeField, LabelText("建筑类型"), ReadOnly]
         public Building_Type type;
 
-        [SerializeField, LabelText("背景图像"), Tooltip("放入背景图像【")]
+        [SerializeField, LabelText("背景图像"), Tooltip("放入背景图像")]
         public Image background;
         [SerializeField, LabelText("未被选择时的背景"), Tooltip("放入未被选择时的背景")]
         public Sprite normalBg;

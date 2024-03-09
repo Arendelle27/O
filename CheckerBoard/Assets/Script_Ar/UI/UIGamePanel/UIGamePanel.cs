@@ -1,4 +1,5 @@
 using MANAGER;
+using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIGamePanel : MonoBehaviour
+public class UIGamePanel : UIPanel
 {
     //[SerializeField, LabelText("能量槽"), Tooltip("当前能量值显示")]
     //public Slider energyValue;
@@ -15,6 +16,9 @@ public class UIGamePanel : MonoBehaviour
 
     [SerializeField, LabelText("当前剩余财富"), Tooltip("当前剩余财富的显示")]
     public Text wealthAmount;
+
+    [SerializeField, LabelText("升级按钮"), Tooltip("点击选择升级")]
+    public Button upgrade;
 
     [SerializeField, LabelText("各种资源的数量"), Tooltip("各种资源的数量的显示")]
     public List<Text> resourcesAmounts = new List<Text>();
@@ -30,6 +34,12 @@ public class UIGamePanel : MonoBehaviour
 
     private void Start()
     {
+        this.upgrade.OnClickAsObservable().Subscribe(_ =>
+        {
+            //打开升级界面
+            UIManager.Instance.Show<UIUpgradeWindow>();
+        });
+
         this.roundOver.OnClickAsObservable().Subscribe(_ =>
         {
             RoundManager.Instance.RoundOver();
