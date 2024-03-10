@@ -1,34 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public static class PathConfig 
+public class PathConfig 
 {
-    //地块预制体位置
-    public const string Plot_Prefab_Path = "Prefabs/Plot";
-    //建筑预制体位置
-    public const string Building_Prefab_Path = "Prefabs/Building";
-    //流浪者预制体位置
-    public const string Wanderer_Prefab_Path = "Prefabs/Wanderer";
-    //目的地提示牌预制体位置
-    public const string DestinationSign_Prefab_Path = "Prefabs/DestinationSign";
+    //实体预制体位置
+    const string Entity_Prefab_Path = "Prefabs/{0}";
+    //UI预制体位置
+    public const string UI_Prefab_Path = "Prefabs/UI/{0}";
 
-    #region UI图像
-    public static List<string> UI_Building_Sprite_Paths = new List<string>()
+    public const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
+
+    //获取实体预制体位置
+    public static string GetEntityPrefabPath(string name)
     {
-        "UI/Building/Gathering_1",
-        "UI/Building/Gathering_2",
-        "UI/Building/Production_1",
-        "UI/Building/Production_2"
-    };
+        
+        return string.Format(Entity_Prefab_Path, name);
+    }
+    //Plot,Buildings,Wander,DestinationSign
+    //HumanSettlement,RobotSettlement
 
-    //public const string UI_Building_Gathering1_Path = "UI/Building/Gathering_1";
-    //public const string UI_Building_Gathering2_Path = "UI/Building/Gathering_2";
+    //获取UI预制体位置
+    public static string GetUIPrefabPath(string name)
+    {
 
-    //public const string UI_Building_Production1_Path = "UI/Building/Production_1";
-    //public const string UI_Building_Production2_Path = "UI/Building/Production_2";
-    #endregion
+        return string.Format(UI_Prefab_Path, name);
+    }
+    //UIBuildingItem
 
-    //建筑物UI预制体位置
-    public const string UI_BuildingItem_Prefab_Path = "Prefabs/UI/UIBuildingItem";
+    public static string GetBuildingItemSpritePath(string name)
+    {
+        return string.Format(BuildingItem_Sprite_Paths, name);
+    }
+    //BuildingItemSprite
 }

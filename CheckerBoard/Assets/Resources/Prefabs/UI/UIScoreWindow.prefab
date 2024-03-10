@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 3807556031856398887}
   - component: {fileID: 3889385383505640244}
   m_Layer: 5
-  m_Name: UIScorePanel
+  m_Name: UIScoreWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

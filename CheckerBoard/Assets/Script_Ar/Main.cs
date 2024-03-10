@@ -25,6 +25,8 @@ public class Main : MonoSingleton<Main>
         yield return null;
         PlotManager.Instance.Init();
         yield return null;
+        SettlementManager.Instance.Init();
+        yield return null;
         BuildingManager.Instance.Init();
         yield return null;
         WandererManager.Instance.Init();

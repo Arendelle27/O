@@ -1,4 +1,3 @@
-using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace MANAGER
 {
-    public class DataManager :MonoSingleton<DataManager>
+    public class DataManager :Singleton<DataManager>
     {
         [SerializeField, LabelText("金钱"), ReadOnly]
         public int wealth;
@@ -20,7 +19,7 @@ namespace MANAGER
 
         [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
         public int levelPromptionAmount;
-        public void Start()
+        public DataManager()
         {
             this.ObserveEveryValueChanged(_ => this.wealth).Subscribe(_ =>
             {
@@ -47,8 +46,7 @@ namespace MANAGER
 
             this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
             {
-                //变化时更新行动点UI
-                (UIMain.Instance.uiPanels[2] as UIExtendExpTeamPanel).UpdateUI();
+                (UIMain.Instance.uiPanels[2] as UIExtendExpTeamPanel).UpdateUI(this.levelPromptionAmount);
 
             });
         }

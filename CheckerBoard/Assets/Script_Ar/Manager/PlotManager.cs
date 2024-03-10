@@ -25,13 +25,13 @@ namespace MANAGER
         [SerializeField, LabelText("地图模式"), ReadOnly]
         public Map_Mode map_Mode = Map_Mode.正常;
 
+        //建筑UI选择界面是否存在
+        bool isUIBuildingWindowExist;
+
         //是否右键选择移动格子中的流浪者
         IDisposable select;
         //是否取消移动格子中的流浪者
         IDisposable cancel;
-
-        //[SerializeField, LabelText("是否移动板块中的流浪者"),ReadOnly]
-        //bool isMove;//是否移动格子中的流浪者
 
         [SerializeField, LabelText("当前被选中的板块"), ReadOnly]
         private Plot selectedPlot;//当前被选中的板块
@@ -102,6 +102,7 @@ namespace MANAGER
                 }
 
             this.map_Mode = Map_Mode.正常;
+            this.isUIBuildingWindowExist = false;//建筑UI选择界面关闭
         }
 
         
@@ -122,17 +123,24 @@ namespace MANAGER
 
             this.grids.Add(pos, plot);
 
-            plot.clickSelectedSubject.Subscribe(v2 =>
+            plot.clickSelectedSubject.Subscribe(p =>
             {
-                if(this.grids[v2].plot_Type==Plot_Type.已探索)
+                if(p.plot_Type==Plot_Type.已探索
+                    && this.map_Mode == Map_Mode.正常
+                    /*&& p.settlement==null*/)
                 {
                     UIManager.Instance.Show<UIBuildingWindow>();//打开建筑UI选择界面
+                    this.isUIBuildingWindowExist = true;
                 }
                 else
                 {
-                    UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
+                    if(this.isUIBuildingWindowExist)
+                    {
+                        UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
+                        this.isUIBuildingWindowExist = false;
+                    }
                 }
-                this.SelectedPlot = this.grids[v2];
+                this.SelectedPlot = p;
             });
         }
 
@@ -158,11 +166,6 @@ namespace MANAGER
                     this.CancelMoveWanderer();
 
                     UIMain.Instance.ChangeToGamePanel(1);//选择落点时关闭UI界面
-
-                    //if((UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.activeSelf)
-                    //{
-                    //    (UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(false);//选择落点时关闭UI界面
-                    //}
 
                     this.select.Dispose();
                 });
@@ -240,6 +243,25 @@ namespace MANAGER
                 if (this.grids.ContainsKey(v2))
                 {
                     this.grids[v2].HaveExploratoryTeam = isEnter;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 进入选择拓展探索小队模式
+        /// </summary>
+        /// <param name="isEnter"></param>
+        public void EnterSelectExtendExpTeam(bool isEnter)
+        {
+            this.map_Mode =isEnter? Map_Mode.拓展探索小队:Map_Mode.正常;//切换地图模式
+
+            WandererManager.Instance.wanderer.plot.ShowSelectedColor(isEnter);
+            foreach (var expTeam in WandererManager.Instance.exploratoryTeams)
+            {
+                var v2 = expTeam + WandererManager.Instance.wanderer.plot.pos;
+                if (this.grids[v2] != null)
+                {
+                    this.grids[v2].ShowSelectedColor(isEnter);
                 }
             }
         }

@@ -45,16 +45,10 @@ public class UIUpgradeWindow : UIWindow
         {
             //打开扩展探索小队的UI界面
             UIMain.Instance.ChangeToGamePanel(2);
-            PlotManager.Instance.map_Mode = Map_Mode.拓展探索小队;//切换地图模式
+            PlotManager.Instance.EnterSelectExtendExpTeam(true);//进入选择扩展探索小队的模式
 
             this.OnCloseClick();
         });
-
-        //this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
-        //{
-        //    //变化时更新
-        //    this.expTeamExtendAmountText.text = this.levelPromptionAmount.ToString();
-        //});
 
     }
 

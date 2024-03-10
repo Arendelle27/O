@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 621418500416331022}
   - component: {fileID: 7281575162844040830}
   m_Layer: 5
-  m_Name: UIUpgradePanel
+  m_Name: UIUpgradeWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,7 +834,6 @@ MonoBehaviour:
   upgradeResult: {fileID: 4267100620209154390}
   upgradeButton: {fileID: 1799533047261639066}
   extendExpTeamButton: {fileID: 1229273881484052281}
-  levelPromptionAmount: 0
   expTeamExtendAmountText: {fileID: 2621814498730493449}
   closeButton: {fileID: 5763433815723662588}
 --- !u!1 &6341580490970660546

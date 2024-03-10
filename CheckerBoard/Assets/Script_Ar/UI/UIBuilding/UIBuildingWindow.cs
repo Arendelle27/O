@@ -12,8 +12,6 @@ namespace UIBUILDING
     {
         //建筑UI图像
         UIBuildingSprites define;
-        [SerializeField, LabelText("建筑UI预制体"),ReadOnly]
-        public GameObject itemPrefab;
 
         [SerializeField, LabelText("建筑列表"), Tooltip("收集建筑和生产建筑列表")]
         public TabView tabView;
@@ -24,7 +22,6 @@ namespace UIBUILDING
         private void Awake()
         {
             this.define = new UIBuildingSprites();
-            this.itemPrefab =  Resources.Load<GameObject>(PathConfig.UI_BuildingItem_Prefab_Path);
         }
 
         private void Start()
@@ -82,7 +79,7 @@ namespace UIBUILDING
         {
             foreach(var buType in BuildingManager.Instance.GatheringTypes)
             {
-                GameObject go = Instantiate(this.itemPrefab.gameObject, this.tabView.tabPages[0].transform);//在建筑列表第一页生成
+                GameObject go = Instantiate(GameObjectPool.Instance.UIBuildingItems.Get(), this.tabView.tabPages[0].transform);//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
                 ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
                 this.tabView.tabPages[0].AddItem(ui);
@@ -90,7 +87,7 @@ namespace UIBUILDING
 
             foreach (var buType in BuildingManager.Instance.ProductionTypes)
             {
-                GameObject go = Instantiate(this.itemPrefab.gameObject, this.tabView.tabPages[1].transform);//在建筑列表第二页生成
+                GameObject go = Instantiate(GameObjectPool.Instance.UIBuildingItems.Get(), this.tabView.tabPages[1].transform);//在建筑列表第二页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
                 ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
                 this.tabView.tabPages[1].AddItem(ui);

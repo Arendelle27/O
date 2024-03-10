@@ -44,7 +44,7 @@ namespace MANAGER
 
             if (this.wanderer != null)
             {
-                GameObjectPool.Instance.Wanderers.Release(this.wanderer.gameObject);
+                this.wanderer.gameObject.SetActive(false);
             }
             this.GetWanderer(PlotManager.Instance.grids[new Vector2Int(0, 0)]);
 
@@ -63,9 +63,16 @@ namespace MANAGER
         /// <param name="plot"></param>
         public void GetWanderer(Plot plot)
         {
-            GameObject go=Instantiate(GameObjectPool.Instance.Wanderers.Get(), this.transform);
-            Wanderer wanderer = go.GetComponent<Wanderer>();
-            this.wanderer = wanderer;
+            if(this.wanderer==null)
+            {
+                GameObject go = Instantiate(GameObjectPool.Instance.Wanderer, this.transform);
+                Wanderer wanderer = go.GetComponent<Wanderer>();
+                this.wanderer = wanderer;
+            }
+            else
+            {
+                this.wanderer.gameObject.SetActive(true);
+            }
 
             StartCoroutine( this.WandererMoveTo(plot));
         }
@@ -141,6 +148,7 @@ namespace MANAGER
                 {
                     this.exploratoryTeams.Add(v2);
                     aimPlot.HaveExploratoryTeam = true;
+                    aimPlot.ShowSelectedColor(true);
 
                     this.exploredV2.Push(v2);//储存本次拓展的板块
                     DataManager.Instance.levelPromptionAmount--;

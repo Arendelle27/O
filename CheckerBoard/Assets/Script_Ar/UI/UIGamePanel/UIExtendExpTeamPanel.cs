@@ -25,7 +25,8 @@ public class UIExtendExpTeamPanel : UIPanel
             if (PlotManager.Instance.map_Mode == Map_Mode.拓展探索小队)
             {
                 WandererManager.Instance.exploredV2.Clear();
-                PlotManager.Instance.map_Mode = Map_Mode.正常;
+
+                PlotManager.Instance.EnterSelectExtendExpTeam(false);//进入选择扩展探索小队的模式
                 UIMain.Instance.ChangeToGamePanel(1);//恢复到游戏界面
             }
         });
@@ -38,13 +39,14 @@ public class UIExtendExpTeamPanel : UIPanel
     }
 
 
+
     /// <summary>
     /// 更新UI
     /// </summary>
-    public void UpdateUI()
+    public void UpdateUI(int proAmount)
     {
-        this.selectPlotAmount.text = DataManager.Instance.levelPromptionAmount.ToString();
-        if (DataManager.Instance.levelPromptionAmount > 0)
+        this.selectPlotAmount.text = proAmount.ToString();
+        if (proAmount > 0)
         {
             if (this.finishgrade.gameObject.activeSelf)
             {

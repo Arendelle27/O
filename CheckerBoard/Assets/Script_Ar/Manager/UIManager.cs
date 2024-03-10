@@ -19,13 +19,11 @@ namespace Managers
 
         public UIManager()
         {
-            this.UIResources.Add(typeof(UIBuildingWindow), new UIElement() { Resources = "Prefabs/UI/UIBuilding", Cache = true });
-            this.Show<UIBuildingWindow>();
-            this.Close<UIBuildingWindow>();
+            this.UIResources.Add(typeof(UIBuildingWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIBuildingWindow"), Cache = true });
 
-            this.UIResources.Add(typeof(UIScoreWindow), new UIElement() { Resources = "Prefabs/UI/UIScorePanel", Cache = true });
+            this.UIResources.Add(typeof(UIScoreWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIScoreWindow"), Cache = true });
 
-            this.UIResources.Add(typeof(UIUpgradeWindow), new UIElement() { Resources = "Prefabs/UI/UIUpgradePanel", Cache = true });
+            this.UIResources.Add(typeof(UIUpgradeWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIUpgradeWindow"), Cache = true });
         }
 
         ~UIManager()

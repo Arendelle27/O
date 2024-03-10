@@ -10,6 +10,9 @@ namespace ENTITY
 {
     public class Plot : Entity
     {
+        [SerializeField, LabelText("图形"), ReadOnly]
+        SpriteRenderer SR;
+
         [SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
         public List<Sprite> plot_Sps = new List<Sprite>();
 
@@ -27,6 +30,8 @@ namespace ENTITY
         public Wanderer wanderer;
         [SerializeField, LabelText("建筑"), ReadOnly]
         public Building building;
+        [SerializeField, LabelText("聚落"), ReadOnly]
+        public Settlement settlement;
 
         [SerializeField, LabelText("是否有探索小队"), ReadOnly]
         private bool haveExploratoryTeam;//是否有探索小队
@@ -45,13 +50,21 @@ namespace ENTITY
 
         #region 事件
         [SerializeField, LabelText("点击板块"), ReadOnly]
-        public Subject<Vector2Int> clickSelectedSubject = new Subject<Vector2Int>();
+        public Subject<Plot> clickSelectedSubject = new Subject<Plot>();
         //public IObservable<Vector2Int> Selected => selectedSubject;
 
         [SerializeField, LabelText("进入板块"), ReadOnly]
         public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
         #endregion
 
+        public void Awake()
+        {
+            SpriteRenderer SR = GetComponent<SpriteRenderer>();
+            if (SR != null)
+            {
+                this.SR = SR;
+            }
+        }
 
         private void Start()
         {
@@ -82,7 +95,10 @@ namespace ENTITY
 
             this.ObserveEveryValueChanged(_ => this.curColor).Subscribe(_ =>
             {
-                this.SR.color = this.curColor;
+                if(this.SR.color!=this.selectedColor)
+                {
+                    this.SR.color = this.curColor;
+                }
             });
         }
 
@@ -221,6 +237,21 @@ namespace ENTITY
             }
         }
 
+        /// <summary>
+        /// 进入选择拓展开拓小队中，被选择的状态
+        /// </summary>
+        /// <param name="isShow"></param>
+        public void ShowSelectedColor(bool isShow)
+        {
+            if(isShow)
+            {
+                this.SR.color = this.selectedColor;
+            }
+            else
+            {
+                this.SR.color = this.curColor;
+            }
+        }
 
         public void OnMouseEnter()
         {
@@ -234,7 +265,7 @@ namespace ENTITY
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            this.clickSelectedSubject.OnNext(this.pos);
+            this.clickSelectedSubject.OnNext(this);
             //Debug.Log("鼠标点击");
         }
     }
