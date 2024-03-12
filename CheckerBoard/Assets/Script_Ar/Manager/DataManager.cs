@@ -56,7 +56,7 @@ namespace MANAGER
         /// </summary>
         public void Init()
         {
-            this.wealth = 900;
+            this.wealth = 100;
             this.buildingResources = new int[3] { 5, 5, 5 };
             this.execution = 5;
             this.levelPromptionAmount = 0;
@@ -140,6 +140,8 @@ namespace MANAGER
         public void RoundOver()
         {
             this.execution = 5;
+
+            this.ChangeWealth(-10*WandererManager.Instance.wanderer.level);
         }
     }
 

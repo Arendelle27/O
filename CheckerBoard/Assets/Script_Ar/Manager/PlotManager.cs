@@ -114,7 +114,8 @@ namespace MANAGER
         /// <param name="y"></param>
         void GetGrid(Vector2Int pos)
         {
-            GameObject gO = Instantiate(GameObjectPool.Instance.Plots.Get(), this.transform);
+            GameObject gO = GameObjectPool.Instance.Plots.Get();
+            gO.transform.parent = this.transform;
             Vector3Int v3= new Vector3Int(pos.x, pos.y, 0);
             gO.transform.position = this.map.GetCellCenterWorld(v3);
 
@@ -136,7 +137,7 @@ namespace MANAGER
                 {
                     if(this.isUIBuildingWindowExist)
                     {
-                        UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
+                        //UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
                         this.isUIBuildingWindowExist = false;
                     }
                 }
@@ -167,6 +168,11 @@ namespace MANAGER
 
                     UIMain.Instance.ChangeToGamePanel(1);//选择落点时关闭UI界面
 
+                    if (this.isUIBuildingWindowExist)
+                    {
+                        this.isUIBuildingWindowExist = false;
+                    }
+
                     this.select.Dispose();
                 });
         }
@@ -177,10 +183,9 @@ namespace MANAGER
         void MoveWanderer(Plot des)
         {
             this.map_Mode = Map_Mode.正常;
-            WandererManager.Instance.DestinationSignMoveTo(des);//将目的地提示牌移动到指定的板块
+            WandererManager.Instance.WandererMoveTo(des);//将流浪者移动到指定的板块
 
             UIMain.Instance.ChangeToGamePanel(1);//选择完落点打开UI界面
-            //(UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(true);//选择完落点打开UI界面
 
             if (this.cancel!=null)
             {
@@ -202,7 +207,6 @@ namespace MANAGER
                     this.map_Mode = Map_Mode.正常;
 
                     UIMain.Instance.ChangeToGamePanel(1);//取消选择落点后打开UI界面
-                    //(UIMain.Instance.uiPanels[1] as UIGamePanel).gameObject.SetActive(true);//取消选择落点后打开UI界面
 
                     cancel.Dispose();
                 });
@@ -215,7 +219,9 @@ namespace MANAGER
         /// <param name="enterPlot"></param>
         public void WanderEnter(Plot enterPlot)
         {
-            enterPlot.wanderer = WandererManager.Instance.wanderer;
+            enterPlot.wanderer = WandererManager.Instance.wanderer;//流浪者进入人类聚落
+            SettlementManager.Instance.TriggerEvent(Event_Type.交易,enterPlot.pos);//判断与与聚落触发交易事件
+
             this.ExpTeamEnterOrLeave(enterPlot, true);//探索小队伴随着流浪者进入
         }
 

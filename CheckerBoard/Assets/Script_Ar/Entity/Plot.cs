@@ -51,7 +51,6 @@ namespace ENTITY
         #region 事件
         [SerializeField, LabelText("点击板块"), ReadOnly]
         public Subject<Plot> clickSelectedSubject = new Subject<Plot>();
-        //public IObservable<Vector2Int> Selected => selectedSubject;
 
         [SerializeField, LabelText("进入板块"), ReadOnly]
         public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();

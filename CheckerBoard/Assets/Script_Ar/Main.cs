@@ -8,7 +8,7 @@ public class Main : MonoSingleton<Main>
 {
     private void Awake()
     {
-        GameObjectPool.Instance.Init();
+        //GameObjectPool.Instance.Init();
         
     }
 
@@ -17,7 +17,11 @@ public class Main : MonoSingleton<Main>
         UIMain.Instance.ChangeToGamePanel(0);
     }
 
-    public IEnumerator Init()
+    /// <summary>
+    /// ≥ı ºªØ
+    /// </summary>
+    /// <returns></returns>
+     public IEnumerator Init()
     {
         RoundManager.Instance.Init();
         yield return null;
@@ -40,6 +44,7 @@ public class Main : MonoSingleton<Main>
     /// </summary>
     public void GameOver()
     {
+        UIMain.Instance.ChangeToGamePanel(3);
         UIManager.Instance.Show<UIScoreWindow>();
     }
 }

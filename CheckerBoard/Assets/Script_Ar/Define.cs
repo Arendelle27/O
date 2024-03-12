@@ -27,3 +27,11 @@ public enum Map_Mode
     拓展探索小队,
 }
 
+public enum Event_Type
+{
+    正常=0,
+    交易,
+    战斗,
+    特殊
+}
+

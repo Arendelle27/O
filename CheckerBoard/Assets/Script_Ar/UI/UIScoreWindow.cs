@@ -2,13 +2,38 @@ using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIScoreWindow : UIWindow
 {
     [SerializeField, LabelText("存活天数"), Tooltip("重新开始游戏")]
     public Text roundnumber;
+
+
+    public Button RestartButton;
+
+    public Button ExitButton;
+
+    private void Start()
+    {
+        this.RestartButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            //重新开始游戏
+            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Init());
+            this.OnCloseClick();
+        });
+
+        this.ExitButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            //退出游戏
+            UIMain.Instance.ChangeToGamePanel(0);
+            this.OnCloseClick();
+        });
+    }
 
     private void OnEnable()
     {
@@ -22,5 +47,4 @@ public class UIScoreWindow : UIWindow
     {
         this.roundnumber.text = RoundManager.Instance.roundNumber.ToString();
     }
-
 }

@@ -4,7 +4,7 @@ using UIBUILDING;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GameObjectPool :Singleton<GameObjectPool>
+public class GameObjectPool :MonoSingleton<GameObjectPool>
 {
     //地块对象池
     public ObjectPool<GameObject> Plots { get; set; }
@@ -12,8 +12,8 @@ public class GameObjectPool :Singleton<GameObjectPool>
     public ObjectPool<GameObject> Buildings { get; set; }
     //流浪者对象
     public GameObject Wanderer { get; set; }
-    //目的地提示牌对象
-    public GameObject DestinationSigns { get; set; }
+    ////目的地提示牌对象
+    //public GameObject DestinationSigns { get; set; }
     //人类聚落对象池
     public ObjectPool<GameObject> HumanSettlements { get; set; }
     //机械聚落对象池
@@ -22,12 +22,12 @@ public class GameObjectPool :Singleton<GameObjectPool>
     //UI建筑物品对象池
     public ObjectPool<GameObject> UIBuildingItems { get; set; }
 
-    public GameObjectPool()
+    public void Awake()
     {
         this.Plots = new ObjectPool<GameObject>(GetObject_Plot, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 100);
         this.Buildings = new ObjectPool<GameObject>(GetObject_Building, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 50);
         this.Wanderer = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Wanderer"));
-        this.DestinationSigns = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign"));
+        //this.DestinationSigns = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign"));
         this.HumanSettlements = new ObjectPool<GameObject>(GetObject_HumanSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
         this.RobotSettlements = new ObjectPool<GameObject>(GetObject_RobotSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
 
@@ -35,9 +35,29 @@ public class GameObjectPool :Singleton<GameObjectPool>
 
     }
 
-    public void Init()
-    {
 
+    /// <summary>
+    /// 获得实体对象
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    GameObject GetEntityObject(string name)
+    {
+        GameObject prefab = Instantiate( Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath(name)),this.transform);
+        prefab.SetActive(false);
+        return prefab;
+    }
+
+    /// <summary>
+    /// 获得UI对象
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    GameObject GetUIObject(string name)
+    {
+        GameObject prefab = Instantiate(Resources.Load<GameObject>(PathConfig.GetUIPrefabPath(name)),this.transform);
+        prefab.SetActive(false);
+        return prefab;
     }
 
     #region 实体对象池对象获取
@@ -47,8 +67,7 @@ public class GameObjectPool :Singleton<GameObjectPool>
     /// <returns></returns>
     GameObject GetObject_Plot()
     {
-        GameObject prefab = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Plot"));
-        return prefab;
+        return this.GetEntityObject("Plot");
     }
 
     /// <summary>
@@ -57,8 +76,7 @@ public class GameObjectPool :Singleton<GameObjectPool>
     /// <returns></returns>
     GameObject GetObject_Building()
     {
-        GameObject prefab = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Building"));
-        return prefab;
+        return this.GetEntityObject("Building");
     }
 
     /// <summary>
@@ -67,8 +85,7 @@ public class GameObjectPool :Singleton<GameObjectPool>
     /// <returns></returns>
     GameObject GetObject_HumanSettlement()
     {
-        GameObject prefab = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("HumanSettlement"));
-        return prefab;
+        return this.GetEntityObject("HumanSettlement");
     }
 
     /// <summary>
@@ -77,8 +94,7 @@ public class GameObjectPool :Singleton<GameObjectPool>
     /// <returns></returns>
     GameObject GetObject_RobotSettlement()
     {
-        GameObject prefab = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("RobotSettlement"));
-        return prefab;
+        return this.GetEntityObject("RobotSettlement");
     }
 
     #endregion
@@ -90,8 +106,7 @@ public class GameObjectPool :Singleton<GameObjectPool>
     /// <returns></returns>
     GameObject GetObject_UIBuildingItem()
     {
-        GameObject prefab = Resources.Load<GameObject>(PathConfig.GetUIPrefabPath("UIBuildingItem"));
-        return prefab;
+        return this.GetUIObject("UIBuildingItem");
     }
     #endregion
 
@@ -108,5 +123,6 @@ public class GameObjectPool :Singleton<GameObjectPool>
 
     void ActionOnDestory(GameObject g)
     {
+        Destroy(g);
     }
 }

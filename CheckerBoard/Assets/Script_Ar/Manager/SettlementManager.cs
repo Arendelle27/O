@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System.Linq;
+using System.Xml.Schema;
 
 namespace MANAGER
 {
@@ -20,38 +22,48 @@ namespace MANAGER
         /// </summary>
         public void Init()
         {
-            this.humanSettlements.Clear();
-            this.robotSettlements.Clear();
+            this.EliminateSettlements();
 
-            for(int i=0;i<6;i++)
-            {
-                this.GetSettlement(i>=3);
-            }
+            MainThreadDispatcher.StartUpdateMicroCoroutine(GetSettlements());
         }
 
         /// <summary>
         /// 生成聚落
         /// </summary>
+        /// <returns></returns>
+        IEnumerator GetSettlements()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                GetSettlement(i >= 3);
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// 生成单个聚落
+        /// </summary>
         /// <param name="isHumanSettlement"></param>
         public void GetSettlement(bool isHumanSettlement)
         {
             GameObject gameObject = isHumanSettlement ? GameObjectPool.Instance.HumanSettlements.Get() : GameObjectPool.Instance.RobotSettlements.Get();
-            Instantiate(gameObject, this.transform);
+            gameObject.transform.parent = this.transform;
 
-            Vector2Int v2= GetRandomPos();
+            Vector2Int v2 = GetRandomPos();
 
             var settlement = gameObject.GetComponent<Settlement>();
-            settlement.SetInfo(v2);//设置聚落信息
+            Plot plot = PlotManager.Instance.grids[v2];
+            settlement.SetInfo(plot);//设置聚落信息
             settlement.eliminateSettlement.Subscribe(sm =>
             {
-                this.eliminateSettlement(sm,isHumanSettlement);
+                this.EliminateSettlement(sm, isHumanSettlement);
             });
 
 
-            PlotManager.Instance.grids[v2].settlement = settlement;
+            plot.settlement = settlement;
 
 
-            if(isHumanSettlement)
+            if (isHumanSettlement)
             {
                 this.humanSettlements.Add(v2, settlement as HumanSettlement);
             }
@@ -86,23 +98,75 @@ namespace MANAGER
             //}
         }
 
+        void EliminateSettlements()
+        {
+            for (int i = 0; i < humanSettlements.Count;)
+            {
+                var item = humanSettlements.ElementAt(i);
+                this.EliminateSettlement(item.Value, true);
+            }
+            for (int i = 0; i < robotSettlements.Count;)
+            {
+                var item = robotSettlements.ElementAt(i);
+                this.EliminateSettlement(item.Value, false);
+            }
+        }
+
+
         /// <summary>
         /// 消除聚落
         /// </summary>
         /// <param name="aimSettlement"></param>
         /// <param name="isHumeSettlement"></param>
-        void eliminateSettlement(Settlement aimSettlement,bool isHumeSettlement)
+        void EliminateSettlement(Settlement aimSettlement,bool isHumeSettlement)
         {
             PlotManager.Instance.grids[aimSettlement.pos].settlement = null;
-            if(isHumeSettlement)
+            if (isHumeSettlement)
             {
-                humanSettlements.Remove(aimSettlement.pos);
+                GameObjectPool.Instance.HumanSettlements.Release(aimSettlement.gameObject);
+                this.humanSettlements.Remove(aimSettlement.pos);
             }
             else
             {
+                GameObjectPool.Instance.RobotSettlements.Release(aimSettlement.gameObject);
                 this.robotSettlements.Remove(aimSettlement.pos);
             }
-            (isHumeSettlement ? GameObjectPool.Instance.HumanSettlements : GameObjectPool.Instance.RobotSettlements).Release(aimSettlement.gameObject);
+        }
+
+        /// <summary>
+        ///  与聚落触发事件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="pos"></param>
+        public void TriggerEvent(Event_Type type, Vector2Int pos)
+        {
+            Settlement settlement = null;
+            if(this.humanSettlements.ContainsKey(pos))
+            {
+                settlement = this.humanSettlements[pos];
+            }
+            else if (this.robotSettlements.ContainsKey(pos))
+            {
+                settlement = this.robotSettlements[pos];
+            }
+
+            if(settlement==null)
+            {
+                return;
+            }
+
+            switch (type)
+            {
+                case Event_Type.交易:
+                    settlement.Transaction();
+                    break;
+                case Event_Type.战斗:
+                    settlement.Confrontation();
+                    break;
+                case Event_Type.正常:
+                    settlement.Normal();
+                    break;
+            }
         }
     }
 }

@@ -16,9 +16,9 @@ namespace MANAGER
         [SerializeField, LabelText("储存探索小队的相对于流浪者位置"), ReadOnly]
         public HashSet<Vector2Int> exploratoryTeams;
 
-        //储存当前存在的目的地提示牌
-        [SerializeField, LabelText("目的地提示牌"), ReadOnly]
-        public DestinationSign destinationSign;
+        ////储存当前存在的目的地提示牌
+        //[SerializeField, LabelText("目的地提示牌"), ReadOnly]
+        //public DestinationSign destinationSign;
 
         //储存本次拓展的板块
         [SerializeField, LabelText("本次拓展的板块"), ReadOnly]
@@ -48,12 +48,12 @@ namespace MANAGER
             }
             this.GetWanderer(PlotManager.Instance.grids[new Vector2Int(0, 0)]);
 
-            if(this.destinationSign==null)
-            {
-                GameObject des=Instantiate(GameObjectPool.Instance.DestinationSigns, this.transform);
-                this.destinationSign = des.GetComponent<DestinationSign>();
-            }
-            this.destinationSign.gameObject.SetActive(false);
+            //if(this.destinationSign==null)
+            //{
+            //    GameObject des=Instantiate(GameObjectPool.Instance.DestinationSigns, this.transform);
+            //    this.destinationSign = des.GetComponent<DestinationSign>();
+            //}
+            //this.destinationSign.gameObject.SetActive(false);
 
         }
 
@@ -74,28 +74,36 @@ namespace MANAGER
                 this.wanderer.gameObject.SetActive(true);
             }
 
-            StartCoroutine( this.WandererMoveTo(plot));
+            StartCoroutine( this.WandererMoveToCos(plot));
         }
 
         /// <summary>
         /// 流浪者是否移动到目的地提示牌在的位置
         /// </summary>
         /// <param name="ini"></param>
-        public void WandererMoveToDestination()
+        //public void WandererMoveToDestination()
+        //{
+        //    if(this.destinationSign.plot!=null)
+        //    {
+        //        StartCoroutine(this.WandererMoveTo(this.destinationSign.plot));
+        //        this.destinationSign.plot = null;
+        //        this.destinationSign.gameObject.SetActive(false);
+        //    }
+        //}
+        
+        /// <summary>
+        /// 移动到指定的板块
+        /// </summary>
+        public void WandererMoveTo(Plot des)
         {
-            if(this.destinationSign.plot!=null)
-            {
-                StartCoroutine(this.WandererMoveTo(this.destinationSign.plot));
-                this.destinationSign.plot = null;
-                this.destinationSign.gameObject.SetActive(false);
-            }
+            StartCoroutine(this.WandererMoveToCos(des));
         }
 
         /// <summary>
         /// 流浪者移动到指定的板块
         /// </summary>
         /// <param name="des"></param>
-        IEnumerator WandererMoveTo(Plot des)
+        IEnumerator WandererMoveToCos(Plot des)
         {
             if (this.wanderer.plot != null)
             {
@@ -112,16 +120,16 @@ namespace MANAGER
 
         }
 
-        /// <summary>
-        /// 目的提示牌移动到指定的板块
-        /// </summary>
-        /// <param name="des"></param>
-        public void DestinationSignMoveTo( Plot des)
-        {
-            this.destinationSign.plot = des;
-            this.destinationSign.transform.position = des.transform.position-new Vector3(0,0,0.1f);
-            this.destinationSign.gameObject.SetActive(true);
-        }
+        ///// <summary>
+        ///// 目的提示牌移动到指定的板块
+        ///// </summary>
+        ///// <param name="des"></param>
+        //public void DestinationSignMoveTo( Plot des)
+        //{
+        //    this.destinationSign.plot = des;
+        //    this.destinationSign.transform.position = des.transform.position-new Vector3(0,0,0.1f);
+        //    this.destinationSign.gameObject.SetActive(true);
+        //}
         /// <summary>
         /// 流浪者升级
         /// </summary>

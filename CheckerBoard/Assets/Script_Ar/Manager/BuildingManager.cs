@@ -2,6 +2,7 @@ using ENTITY;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MANAGER
@@ -26,9 +27,10 @@ namespace MANAGER
 
         public void Init()
         {
-            foreach(var building in this.buildings)
+            for (int i = 0; i < buildings.Count;)
             {
-                this.RemoveBuilding(building.Key);
+                var item = buildings.ElementAt(i);
+                this.RemoveBuilding(item.Value);
             }
             this.ids = 0;
 
@@ -46,14 +48,17 @@ namespace MANAGER
                 DataManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
                 DataManager.Instance.ChangeExecution(-1);
 
-                GameObject go = Instantiate(GameObjectPool.Instance.Buildings.Get(), this.transform);
+                GameObject go = GameObjectPool.Instance.Buildings.Get();
+                go.transform.parent = this.transform;
                 go.transform.position = plot.transform.position - new Vector3(0, 0, 0.3f);
 
                 Building building = go.GetComponent<Building>();
                 building.SetInfo(this.ids, type);
-
+                this.buildings.Add(this.ids, building);//添加到建筑列表
 
                 plot.building = building;
+
+                plot.settlement?.AddHotility(false);//建造建筑增加敌意值
 
                 this.ids++;
             }
@@ -68,10 +73,10 @@ namespace MANAGER
         /// 删除建筑
         /// </summary>
         /// <param name="removeId"></param>
-        public void RemoveBuilding(int removeId)
+        public void RemoveBuilding(Building building)
         {
-            GameObjectPool.Instance.Buildings.Release(this.buildings[removeId].gameObject);
-            this.buildings.Remove(removeId);
+            GameObjectPool.Instance.Buildings.Release(building.gameObject);
+            this.buildings.Remove(building.id);
 
         }
 
