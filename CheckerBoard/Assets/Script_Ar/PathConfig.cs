@@ -12,6 +12,9 @@ public class PathConfig
 
     public const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
 
+    public const string Music_Path = "Music/{0}";
+    public const string Sound_Path = "Voice/{0}";
+
     //获取实体预制体位置
     public static string GetEntityPrefabPath(string name)
     {
@@ -34,4 +37,14 @@ public class PathConfig
         return string.Format(BuildingItem_Sprite_Paths, name);
     }
     //BuildingItemSprite
+
+    public static string GetMusicPath(string name)
+    {
+        return string.Format(Music_Path, name);
+    }
+
+    public static string GetVoicePath(string name)
+    {
+        return string.Format(Sound_Path, name);
+    }
 }

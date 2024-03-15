@@ -1,12 +1,22 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using Managers;
+using Unity.VisualScripting.FullSerializer;
 
 public class UISettingWindow: UIWindow
 {
+    [SerializeField, LabelText("音乐开关"), Tooltip("音乐开关")]
+    public Toggle toggleMusic;
+    [SerializeField, LabelText("音效开关"), Tooltip("音效开关")]
+    public Toggle toggleVoice;
+
+    [SerializeField, LabelText("音乐音量"), Tooltip("音乐音量")]
+    public Slider sliderMusic;
+    [SerializeField, LabelText("音效音量"), Tooltip("音效音量")]
+    public Slider sliderVoice;
+
     [SerializeField, LabelText("保存"), Tooltip("保存游戏")]
     public Button SaveButton;
 
@@ -41,5 +51,63 @@ public class UISettingWindow: UIWindow
         {
             Application.Quit();
         });
+
+        this.toggleMusic.isOn = SoundConfig.MusicOn;
+        this.toggleVoice.isOn = SoundConfig.VoiceOn;
+        this.sliderMusic.value = SoundConfig.MusicVolume;
+        this.sliderVoice.value = SoundConfig.VoiceVolume;
+
+        this.toggleMusic.OnValueChangedAsObservable().Subscribe(isOn =>
+        {
+            SoundManager.Instance.MusicOn = isOn;
+        });
+
+        this.toggleVoice.OnValueChangedAsObservable().Subscribe(isOn =>
+        {
+            SoundManager.Instance.VoiceOn = isOn;
+        });
+
+        this.sliderMusic.OnValueChangedAsObservable().Subscribe(value =>
+        {
+            SoundConfig.MusicVolume = (int)value;
+            if (!this.toggleMusic.isOn)
+            {
+                this.toggleMusic.isOn = true;
+            }
+        });
+
+        this.sliderVoice.OnValueChangedAsObservable().Subscribe(value =>
+        {
+            SoundConfig.VoiceVolume = (int)value;
+            if (!this.toggleVoice.isOn)
+            {
+                this.toggleVoice.isOn = true;
+            }
+        });
+    }
+
+    private void OnEnable()
+    {
+        if(UIMain.Instance.curPanelIndex == 0)
+        {
+            this.SaveButton.gameObject.SetActive(false);
+            this.BackButton.gameObject.SetActive(false);
+            this.QuitButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            if(!this.SaveButton.gameObject.activeSelf)
+            {
+                this.SaveButton.gameObject.SetActive(true);
+            }
+            if(!this.BackButton.gameObject.activeSelf)
+            {
+                this.BackButton.gameObject.SetActive(true) ;
+            }
+            if (!this.QuitButton.gameObject.activeSelf)
+            {
+                this.QuitButton.gameObject.SetActive(true);
+            }
+        }
     }
 }

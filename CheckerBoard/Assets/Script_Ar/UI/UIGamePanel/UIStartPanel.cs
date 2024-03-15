@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using MANAGER;
+using Managers;
 
 public class UIStartPanel : UIPanel
 {
@@ -41,6 +42,7 @@ public class UIStartPanel : UIPanel
 
         this.setting.OnClickAsObservable().Subscribe(_ =>
         {
+            UIManager.Instance.Show<UISettingWindow>();
             //打开设置界面
 
         });

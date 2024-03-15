@@ -95,7 +95,7 @@ namespace MANAGER
                 this.wanderer.gameObject.SetActive(true);
             }
 
-            StartCoroutine( this.WandererMoveTo(plot));
+            MainThreadDispatcher.StartUpdateMicroCoroutine( this.WandererMoveTo(plot,true));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace MANAGER
         /// 流浪者移动到指定的板块
         /// </summary>
         /// <param name="des"></param>
-        public IEnumerator WandererMoveTo(Plot des)
+        public IEnumerator WandererMoveTo(Plot des,bool isFirst=false)
         {
             if (this.wanderer.plot != null)
             {
@@ -130,8 +130,11 @@ namespace MANAGER
             this.wanderer.plot = des;
 
             PlotManager.Instance.WanderEnter(des);
-
-
+            //消耗行动点
+            if(!isFirst)
+            {
+                DataManager.Instance.ChangeExecution(-1);
+            }
         }
 
         ///// <summary>

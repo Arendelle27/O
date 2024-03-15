@@ -11,6 +11,10 @@ public class UIMain : MonoSingleton<UIMain>
     //1.游戏开始的面板
     //2.游戏中的UI界面
     //3.选择拓展探索小队的UI界面
+    //4.结束面板
+
+    [SerializeField, LabelText("当前面板索引"),ReadOnly]
+    public int curPanelIndex = -1;
 
     /// <summary>
     /// 切换开始面板和游戏面板
@@ -22,6 +26,7 @@ public class UIMain : MonoSingleton<UIMain>
         {
             if(i==index)
             {
+                this.curPanelIndex = i;
                 if (!uiPanels[i].gameObject.activeSelf)
                 {
                     uiPanels[i].gameObject.SetActive(true);

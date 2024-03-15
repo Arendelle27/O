@@ -6,18 +6,28 @@ using UnityEngine;
 
 public static class ArchiveTool
 {
-        /// <summary>
+    public static readonly string DataPath = Application.dataPath + "/Data/";
+
+    /// <summary>
     /// 保存到本地
     /// </summary>
     /// <param name="saveFileName"></param>
     /// <param name="json"></param>
     public static void SaveByJson(string saveFileName,string json)
     {
-        var path = Path.Combine(Application.streamingAssetsPath, saveFileName);
+        if (!Directory.Exists(DataPath))
+        {
+            Directory.CreateDirectory(DataPath);
+        }
+
+        var path = Path.Combine(DataPath, saveFileName);
 
         try
         {
-
+            //if (!File.Exists(path))
+            //{
+            //    File.Create(path);
+            //}
             File.WriteAllText(path, json);
             #if UNITY_EDITOR
             Debug.Log($"保存成功{path}");
@@ -39,7 +49,7 @@ public static class ArchiveTool
     /// <returns></returns>
     public static String LoadByJson(string saveFileName)
     {
-        var path=Path.Combine(Application.streamingAssetsPath, saveFileName);
+        var path=Path.Combine(DataPath, saveFileName);
 
         try
         {
