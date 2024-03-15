@@ -24,6 +24,8 @@ namespace Managers
             this.UIResources.Add(typeof(UIScoreWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIScoreWindow"), Cache = true });
 
             this.UIResources.Add(typeof(UIUpgradeWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIUpgradeWindow"), Cache = true });
+
+            this.UIResources.Add(typeof(UISettingWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UISettingWindow"), Cache = true });
         }
 
         ~UIManager()

@@ -20,11 +20,21 @@ namespace MANAGER
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        void Init()
         {
             this.EliminateSettlements();
+        }
 
+        public void Restart()
+        {
+            this.Init();
             MainThreadDispatcher.StartUpdateMicroCoroutine(GetSettlements());
+        }
+
+        public void ReadArchive()
+        {
+            this.Init();
+            MainThreadDispatcher.StartUpdateMicroCoroutine(ReadSettlements());
         }
 
         /// <summary>
@@ -35,7 +45,20 @@ namespace MANAGER
         {
             for (int i = 0; i < 6; i++)
             {
-                GetSettlement(i >= 3);
+                Vector2Int v2 = GetRandomPos();
+                this.GetSettlement(i >= 3, v2);
+                yield return null;
+            }
+        }
+        /// <summary>
+        /// 读取聚落协程
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator ReadSettlements()
+        {
+            foreach (var settlementData in ArchiveManager.archive.settlementData)
+            {
+                this.GetSettlement(settlementData.isHumanSettlement, settlementData.pos);
                 yield return null;
             }
         }
@@ -44,15 +67,13 @@ namespace MANAGER
         /// 生成单个聚落
         /// </summary>
         /// <param name="isHumanSettlement"></param>
-        public void GetSettlement(bool isHumanSettlement)
+        void GetSettlement(bool isHumanSettlement,Vector2Int pos)
         {
             GameObject gameObject = isHumanSettlement ? GameObjectPool.Instance.HumanSettlements.Get() : GameObjectPool.Instance.RobotSettlements.Get();
             gameObject.transform.parent = this.transform;
 
-            Vector2Int v2 = GetRandomPos();
-
             var settlement = gameObject.GetComponent<Settlement>();
-            Plot plot = PlotManager.Instance.grids[v2];
+            Plot plot = PlotManager.Instance.plots[pos];
             settlement.SetInfo(plot);//设置聚落信息
             settlement.eliminateSettlement.Subscribe(sm =>
             {
@@ -65,18 +86,18 @@ namespace MANAGER
 
             if (isHumanSettlement)
             {
-                this.humanSettlements.Add(v2, settlement as HumanSettlement);
+                this.humanSettlements.Add(pos, settlement as HumanSettlement);
             }
             else
             {
-                this.robotSettlements.Add(v2, settlement as RobotSettlement);
+                this.robotSettlements.Add(pos, settlement as RobotSettlement);
             }
         }
         /// <summary>
         /// 获得随机位置
         /// </summary>
         /// <returns></returns>
-        public Vector2Int GetRandomPos()
+        Vector2Int GetRandomPos()
         {
             //try
             //{
@@ -120,7 +141,7 @@ namespace MANAGER
         /// <param name="isHumeSettlement"></param>
         void EliminateSettlement(Settlement aimSettlement,bool isHumeSettlement)
         {
-            PlotManager.Instance.grids[aimSettlement.pos].settlement = null;
+            PlotManager.Instance.plots[aimSettlement.pos].settlement = null;
             if (isHumeSettlement)
             {
                 GameObjectPool.Instance.HumanSettlements.Release(aimSettlement.gameObject);

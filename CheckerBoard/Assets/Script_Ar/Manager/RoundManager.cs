@@ -24,9 +24,27 @@ namespace MANAGER
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        void Init()
         {
+
+        }
+
+        /// <summary>
+        /// 重开
+        /// </summary>
+        public void Restart()
+        {
+            this.Init();
             this.roundNumber = 1;
+        }
+
+        /// <summary>
+        /// 读档
+        /// </summary>
+        public void ReadArchive()
+        {
+            this.Init();
+            this.roundNumber = ArchiveManager.archive.roundNumber;
         }
 
         /// <summary>

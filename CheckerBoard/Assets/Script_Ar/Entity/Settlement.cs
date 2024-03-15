@@ -11,14 +11,14 @@ namespace ENTITY
         [SerializeField, LabelText("聚落的位置"), ReadOnly]
         public Vector2Int pos;
 
-        [SerializeField, LabelText("消除聚落事件"), ReadOnly]
-        public Subject<Settlement> eliminateSettlement = new Subject<Settlement>();
-
         [SerializeField, LabelText("聚落的敌意值"), ReadOnly]
         public int hotility = 0;
 
         [SerializeField, LabelText("聚落的交易状态"), ReadOnly]
         public bool canTransaction = true;
+
+        [SerializeField, LabelText("消除聚落事件"), ReadOnly]
+        public Subject<Settlement> eliminateSettlement = new Subject<Settlement>();
 
         /// <summary>
         /// 设置信息

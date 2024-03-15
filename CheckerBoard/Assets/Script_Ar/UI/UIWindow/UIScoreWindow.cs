@@ -23,7 +23,7 @@ public class UIScoreWindow : UIWindow
         this.RestartButton.OnClickAsObservable().Subscribe(_ =>
         {
             //重新开始游戏
-            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Init());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Restart());
             this.OnCloseClick();
         });
 

@@ -12,7 +12,7 @@ namespace MANAGER
         public int wealth;
 
         [SerializeField, LabelText("建筑资源"), ReadOnly]
-        public int[] buildingResources = new int[3];
+        public List<int> buildingResources = new List<int>() {0,0,0 };
 
         [SerializeField, LabelText("行动点"), ReadOnly]
         public int execution;
@@ -54,14 +54,26 @@ namespace MANAGER
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        void Init()
         {
-            this.wealth = 100;
-            this.buildingResources = new int[3] { 5, 5, 5 };
-            this.execution = 5;
             this.levelPromptionAmount = 0;
         }
 
+        public void Restart()
+        {
+            this.Init();
+            this.wealth = 100;
+            this.buildingResources = new List<int> { 5, 5, 5 };
+            this.execution = 5;
+        }
+
+        public void ReadArchive()
+        {
+            this.Init();
+            this.wealth = ArchiveManager.archive.wealth;
+            this.buildingResources = ArchiveManager.archive.buildingRes;
+            this.execution = ArchiveManager.archive.execution;
+        }
 
         /// <summary>
         /// 增减能量
@@ -85,7 +97,7 @@ namespace MANAGER
             int i1 = this.buildingResources[0] + variations[0];
             int i2 = this.buildingResources[1] + variations[1];
             int i3 = this.buildingResources[2] + variations[2];
-            this.buildingResources = new int[3] { i1, i2, i3 };
+            this.buildingResources = new List<int>{ i1, i2, i3 };
 
 
         }
@@ -106,7 +118,7 @@ namespace MANAGER
         /// <returns></returns>
         public bool CanBuild(Building_Type type)
         {
-            for (int i = 0; i < buildingResources.Length; i++)
+            for (int i = 0; i < buildingResources.Count; i++)
             {
                 if (buildingResources[i] < 1)
                 {

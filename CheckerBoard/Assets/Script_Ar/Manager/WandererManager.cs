@@ -14,7 +14,7 @@ namespace MANAGER
         public Wanderer wanderer;
 
         [SerializeField, LabelText("储存探索小队的相对于流浪者位置"), ReadOnly]
-        public HashSet<Vector2Int> exploratoryTeams;
+        public List<Vector2Int> exploratoryTeams;
 
         ////储存当前存在的目的地提示牌
         //[SerializeField, LabelText("目的地提示牌"), ReadOnly]
@@ -27,11 +27,33 @@ namespace MANAGER
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        void Init()
         {
             this.exploredV2.Clear();
 
-            this.exploratoryTeams=new HashSet<Vector2Int>() {
+            if (this.wanderer != null)
+            {
+                this.wanderer.gameObject.SetActive(false);
+            }
+
+            //if(this.destinationSign==null)
+            //{
+            //    GameObject des=Instantiate(GameObjectPool.Instance.DestinationSigns, this.transform);
+            //    this.destinationSign = des.GetComponent<DestinationSign>();
+            //}
+            //this.destinationSign.gameObject.SetActive(false);
+
+        }
+
+        /// <summary>
+        /// 重开
+        /// </summary>
+        public void Restart()
+        {
+            this.Init();
+            this.GetWanderer(PlotManager.Instance.plots[new Vector2Int(0, 0)]);
+
+            this.exploratoryTeams = new List<Vector2Int>() {
                 new Vector2Int(1,1),
                 new Vector2Int(1,0),
                 new Vector2Int(1,-1),
@@ -41,19 +63,18 @@ namespace MANAGER
                 new Vector2Int(-1,0),
                 new Vector2Int(-1,-1)
             };
+        }
 
-            if (this.wanderer != null)
-            {
-                this.wanderer.gameObject.SetActive(false);
-            }
-            this.GetWanderer(PlotManager.Instance.grids[new Vector2Int(0, 0)]);
+        /// <summary>
+        /// 读取存档
+        /// </summary>
+        public void ReadArchive()
+        {
+            this.Init();
+            this.GetWanderer(PlotManager.Instance.plots[ArchiveManager.archive.wandererData.pos]);
+            this.wanderer.level = ArchiveManager.archive.wandererData.level;
 
-            //if(this.destinationSign==null)
-            //{
-            //    GameObject des=Instantiate(GameObjectPool.Instance.DestinationSigns, this.transform);
-            //    this.destinationSign = des.GetComponent<DestinationSign>();
-            //}
-            //this.destinationSign.gameObject.SetActive(false);
+            this.exploratoryTeams = ArchiveManager.archive.wandererData.exploratoryTeams;
 
         }
 
@@ -74,7 +95,7 @@ namespace MANAGER
                 this.wanderer.gameObject.SetActive(true);
             }
 
-            StartCoroutine( this.WandererMoveToCos(plot));
+            StartCoroutine( this.WandererMoveTo(plot));
         }
 
         /// <summary>
@@ -91,19 +112,12 @@ namespace MANAGER
         //    }
         //}
         
-        /// <summary>
-        /// 移动到指定的板块
-        /// </summary>
-        public void WandererMoveTo(Plot des)
-        {
-            StartCoroutine(this.WandererMoveToCos(des));
-        }
 
         /// <summary>
         /// 流浪者移动到指定的板块
         /// </summary>
         /// <param name="des"></param>
-        IEnumerator WandererMoveToCos(Plot des)
+        public IEnumerator WandererMoveTo(Plot des)
         {
             if (this.wanderer.plot != null)
             {
@@ -175,7 +189,7 @@ namespace MANAGER
             {
                 Vector2Int v2 = this.exploredV2.Pop();
                 this.exploratoryTeams.Remove(v2);
-                Plot aimPlot = PlotManager.Instance.grids[this.wanderer.plot.pos + v2];
+                Plot aimPlot = PlotManager.Instance.plots[this.wanderer.plot.pos + v2];
                 aimPlot.HaveExploratoryTeam = false;
                 DataManager.Instance.levelPromptionAmount++;
             }

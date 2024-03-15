@@ -61,7 +61,7 @@ namespace UIBUILDING
             else
             {
                 Debug.LogFormat("½¨Ôì½¨Öþ£º{0}", buildingtypeSelected);
-                BuildingManager.Instance.GetBuilding(buildingtypeSelected, PlotManager.Instance.SelectedPlot);
+                BuildingManager.Instance.Build(buildingtypeSelected, PlotManager.Instance.SelectedPlot);
             }
         }
 

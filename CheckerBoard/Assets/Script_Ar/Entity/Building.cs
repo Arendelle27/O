@@ -7,15 +7,15 @@ namespace ENTITY
 {
     public class Building : Entity
     {
+        [SerializeField, LabelText("建筑的位置"), ReadOnly]
+        public Vector2Int pos;
+
         [SerializeField, LabelText("建筑的类型"), ReadOnly]
         public Building_Type type;
 
-        [SerializeField, LabelText("建筑的Id"), ReadOnly]
-        public int id;
-
-        public void SetInfo(int id,Building_Type type)
+        public void SetInfo(Vector2Int pos,Building_Type type)
         {
-            this.id = id;
+            this.pos = pos;
             this.type = type;
         }
 

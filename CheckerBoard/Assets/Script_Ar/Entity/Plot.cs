@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static ArchiveManager;
 
 namespace ENTITY
 {
@@ -104,13 +105,27 @@ namespace ENTITY
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        void Init()
         {
-            ChangeType(Plot_Type.未探明);
-
             this.wanderer = null;
             this.building = null;
             this.HaveExploratoryTeam = false;
+        }
+
+        public void Restart()
+        {
+            this.Init();
+            ChangeType(Plot_Type.未探明);
+        }
+
+        /// <summary>
+        /// 读档
+        /// </summary>
+        /// <param name="plotData"></param>
+        public void ReadArchive(PlotData plotData)
+        {
+            this.Init();
+            this.ChangeType(plotData.plotType);
         }
 
         #region 改变格子状态

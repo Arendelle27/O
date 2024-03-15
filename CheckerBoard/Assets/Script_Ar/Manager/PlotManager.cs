@@ -17,16 +17,13 @@ namespace MANAGER
     public class PlotManager : MonoSingleton<PlotManager>
     {
         //储存当前存在的格子
-        public Dictionary<Vector2Int, Plot> grids = new Dictionary<Vector2Int, Plot>();
+        public Dictionary<Vector2Int, Plot> plots = new Dictionary<Vector2Int, Plot>();
 
         [SerializeField, LabelText("地图"), Tooltip("瓦片地图")]
         public Tilemap map;
 
         [SerializeField, LabelText("地图模式"), ReadOnly]
         public Map_Mode map_Mode = Map_Mode.正常;
-
-        //建筑UI选择界面是否存在
-        bool isUIBuildingWindowExist;
 
         //是否右键选择移动格子中的流浪者
         IDisposable select;
@@ -80,7 +77,7 @@ namespace MANAGER
             }
         }
 
-        void Awake()
+        void Start()
         {
             for (int i = -4; i < 5; i++)
                 for (int j = -4; j < 5; j++)
@@ -94,18 +91,34 @@ namespace MANAGER
         /// </summary>
         public void Init()
         {
-            this.SelectedPlot = this.grids[new Vector2Int(0, 0)];
+            this.SelectedPlot = this.plots[new Vector2Int(0, 0)];
+            this.map_Mode = Map_Mode.正常;
+        }
+
+        /// <summary>
+        /// 重开
+        /// </summary>
+        public void Restart()
+        {
+            this.Init();
             for (int i = -4; i < 5; i++)
                 for (int j = -4; j < 5; j++)
                 {
-                    this.grids[new Vector2Int(i, j)].Init();
+                    this.plots[new Vector2Int(i, j)].Restart();
                 }
-
-            this.map_Mode = Map_Mode.正常;
-            this.isUIBuildingWindowExist = false;//建筑UI选择界面关闭
         }
 
-        
+        /// <summary>
+        /// 读取存档
+        /// </summary>
+        public void ReadArchive()
+        {
+            foreach (var plot in ArchiveManager.archive.plotData)
+            {
+                this.plots[plot.pos].ReadArchive(plot);
+            }
+        }
+
 
         /// <summary>
         /// 在给定的位置产生格子
@@ -122,7 +135,7 @@ namespace MANAGER
             Plot plot = gO.GetComponent<Plot>();
             plot.pos = pos;
 
-            this.grids.Add(pos, plot);
+            this.plots.Add(pos, plot);
 
             plot.clickSelectedSubject.Subscribe(p =>
             {
@@ -131,15 +144,6 @@ namespace MANAGER
                     /*&& p.settlement==null*/)
                 {
                     UIManager.Instance.Show<UIBuildingWindow>();//打开建筑UI选择界面
-                    this.isUIBuildingWindowExist = true;
-                }
-                else
-                {
-                    if(this.isUIBuildingWindowExist)
-                    {
-                        //UIManager.Instance.Close<UIBuildingWindow>();//关闭建筑UI选择界面
-                        this.isUIBuildingWindowExist = false;
-                    }
                 }
                 this.SelectedPlot = p;
             });
@@ -168,11 +172,6 @@ namespace MANAGER
 
                     UIMain.Instance.ChangeToGamePanel(1);//选择落点时关闭UI界面
 
-                    if (this.isUIBuildingWindowExist)
-                    {
-                        this.isUIBuildingWindowExist = false;
-                    }
-
                     this.select.Dispose();
                 });
         }
@@ -183,7 +182,7 @@ namespace MANAGER
         void MoveWanderer(Plot des)
         {
             this.map_Mode = Map_Mode.正常;
-            WandererManager.Instance.WandererMoveTo(des);//将流浪者移动到指定的板块
+            MainThreadDispatcher.StartUpdateMicroCoroutine( WandererManager.Instance.WandererMoveTo(des));//将流浪者移动到指定的板块
 
             UIMain.Instance.ChangeToGamePanel(1);//选择完落点打开UI界面
 
@@ -246,9 +245,9 @@ namespace MANAGER
             foreach (var expTeam in WandererManager.Instance.exploratoryTeams)
             {
                 Vector2Int v2 = new Vector2Int(WandererPlot.pos.x + expTeam.x, WandererPlot.pos.y + expTeam.y);
-                if (this.grids.ContainsKey(v2))
+                if (this.plots.ContainsKey(v2))
                 {
-                    this.grids[v2].HaveExploratoryTeam = isEnter;
+                    this.plots[v2].HaveExploratoryTeam = isEnter;
                 }
             }
         }
@@ -265,9 +264,9 @@ namespace MANAGER
             foreach (var expTeam in WandererManager.Instance.exploratoryTeams)
             {
                 var v2 = expTeam + WandererManager.Instance.wanderer.plot.pos;
-                if (this.grids[v2] != null)
+                if (this.plots[v2] != null)
                 {
-                    this.grids[v2].ShowSelectedColor(isEnter);
+                    this.plots[v2].ShowSelectedColor(isEnter);
                 }
             }
         }

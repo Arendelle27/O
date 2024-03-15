@@ -18,7 +18,7 @@ public class UIGamePanel : UIPanel
     public Text wealthAmount;
 
     [SerializeField, LabelText("升级按钮"), Tooltip("点击选择升级")]
-    public Button upgrade;
+    public Button upgradeButton;
 
     [SerializeField, LabelText("各种资源的数量"), Tooltip("各种资源的数量的显示")]
     public List<Text> resourcesAmounts = new List<Text>();
@@ -30,19 +30,28 @@ public class UIGamePanel : UIPanel
     public Text roundNumber;
 
     [SerializeField, LabelText("回合结束"), Tooltip("点击进入下一个回合")]
-    public Button roundOver;
+    public Button roundOverButton;
+
+    [SerializeField, LabelText("设置"), Tooltip("打开设置")]
+    public Button SettingButton
+        ;
 
     private void Start()
     {
-        this.upgrade.OnClickAsObservable().Subscribe(_ =>
+        this.upgradeButton.OnClickAsObservable().Subscribe(_ =>
         {
             //打开升级界面
             UIManager.Instance.Show<UIUpgradeWindow>();
         });
 
-        this.roundOver.OnClickAsObservable().Subscribe(_ =>
+        this.roundOverButton.OnClickAsObservable().Subscribe(_ =>
         {
             RoundManager.Instance.RoundOver();
+        });
+
+        this.SettingButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            UIManager.Instance.Show<UISettingWindow>();
         });
     }
 }

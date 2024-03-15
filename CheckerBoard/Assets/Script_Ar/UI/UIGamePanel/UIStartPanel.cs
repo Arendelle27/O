@@ -26,12 +26,16 @@ public class UIStartPanel : UIPanel
         this.restartGame.OnClickAsObservable().Subscribe(_ =>
         {
             //重新开始游戏
-            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Init());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Restart());
         });
 
         this.continueGame.OnClickAsObservable().Subscribe(_ =>
         {
             //加载上次保存的游戏进度
+            if(ArchiveManager.archive!=null)
+            {
+                MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.ReadArchive());
+            }
 
         });
 
