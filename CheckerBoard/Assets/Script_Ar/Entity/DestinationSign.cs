@@ -10,11 +10,6 @@ namespace ENTITY
         [SerializeField, LabelText("目的地提示牌的位置"), ReadOnly]
         public Plot plot;
 
-
-        private void Update()
-        {
-            this.LookToCamera();
-        }
     }
 }
 

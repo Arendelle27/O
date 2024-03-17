@@ -7,13 +7,21 @@ public class PathConfig
 {
     //实体预制体位置
     const string Entity_Prefab_Path = "Prefabs/{0}";
+
+    const string Building_Prefab_Path = "Prefabs/Building/{0}";
+
+    const string Settlement_Prefab_Path = "Prefabs/Settlement/{0}";
+
     //UI预制体位置
-    public const string UI_Prefab_Path = "Prefabs/UI/{0}";
+    const string UI_Prefab_Path = "Prefabs/UI/{0}";
 
-    public const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
+    const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
 
-    public const string Music_Path = "Music/{0}";
-    public const string Sound_Path = "Voice/{0}";
+    const string Music_Path = "Music/{0}";
+    const string Sound_Path = "Voice/{0}";
+
+
+    const string Scriptable_List_Path = "ScriptableObject/List/{0}";
 
     //获取实体预制体位置
     public static string GetEntityPrefabPath(string name)
@@ -23,6 +31,16 @@ public class PathConfig
     }
     //Plot,Buildings,Wander,DestinationSign
     //HumanSettlement,RobotSettlement
+
+    public static string GetBuildingPrefabPath(string name)
+    {
+        return string.Format(Building_Prefab_Path, name);
+    }
+
+    public static string GetSettlementPrefabPath(string name)
+    {
+        return string.Format(Settlement_Prefab_Path, name);
+    }
 
     //获取UI预制体位置
     public static string GetUIPrefabPath(string name)
@@ -46,5 +64,10 @@ public class PathConfig
     public static string GetVoicePath(string name)
     {
         return string.Format(Sound_Path, name);
+    }
+
+    public static string GetScriptableList(string name)
+    {
+        return string.Format(Scriptable_List_Path, name);
     }
 }

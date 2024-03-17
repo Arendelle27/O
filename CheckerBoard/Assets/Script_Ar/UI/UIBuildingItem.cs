@@ -28,16 +28,23 @@ namespace UIBUILDING
             this.background.sprite = normalBg;
         }
 
+        /// <summary>
+        /// 被选中
+        /// </summary>
+        /// <param name="selected"></param>
         public override void onSelected(bool selected)
         {
             this.background.sprite = selected ? selectedBg : normalBg;
         }
 
-
-        public void SetInfo(Building_Type type,Sprite sprite )
+        /// <summary>
+        /// 设置信息
+        /// </summary>
+        /// <param name="type"></param>
+        public void SetInfo(Building_Type type)
         {
             this.type = type;
-            this.buildingImage.sprite = sprite;
+            this.buildingImage.sprite = ScriptableObjectPool.buildingScriptList[(int)type].sprite;
         }
 
     }

@@ -21,7 +21,7 @@ public static class ArchiveManager
         public int wealth;
         public List<int> buildingRes=new List<int>();
         public int execution;
-
+        public Vector3 CameraPos;
     }
 
     [Serializable]
@@ -54,6 +54,7 @@ public static class ArchiveManager
         public int hotility;
     }
 
+    //´æµµ
     public static Archive archive;
 
     /// <summary>
@@ -79,7 +80,25 @@ public static class ArchiveManager
             exploratoryTeams=WandererManager.Instance.exploratoryTeams
         };
 
-        foreach (var building in BuildingManager.Instance.buildings.Values)
+        foreach (var building in BuildingManager.Instance.gatheringBuildings.Values)
+        {
+            arc.buildingData.Add(new BuildingData
+            {
+                pos = building.pos,
+                buildingType = building.type
+            });
+        }
+
+        foreach (var building in BuildingManager.Instance.productionBuildings.Values)
+        {
+            arc.buildingData.Add(new BuildingData
+            {
+                pos = building.pos,
+                buildingType = building.type
+            });
+        }
+
+        foreach (var building in BuildingManager.Instance.battleBuildings.Values)
         {
             arc.buildingData.Add(new BuildingData
             {
@@ -115,7 +134,7 @@ public static class ArchiveManager
 
         arc.execution = DataManager.Instance.execution;
 
-        //string ar=arc.ToString();
+        arc.CameraPos = Camera.main.transform.position;
 
         string json = JsonUtility.ToJson(arc);
         ArchiveTool.SaveByJson("Archive.json", json);

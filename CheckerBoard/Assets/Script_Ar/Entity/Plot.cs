@@ -11,9 +11,6 @@ namespace ENTITY
 {
     public class Plot : Entity
     {
-        [SerializeField, LabelText("图形"), ReadOnly]
-        SpriteRenderer SR;
-
         [SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
         public List<Sprite> plot_Sps = new List<Sprite>();
 
@@ -56,15 +53,6 @@ namespace ENTITY
         [SerializeField, LabelText("进入板块"), ReadOnly]
         public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
         #endregion
-
-        public void Awake()
-        {
-            SpriteRenderer SR = GetComponent<SpriteRenderer>();
-            if (SR != null)
-            {
-                this.SR = SR;
-            }
-        }
 
         private void Start()
         {

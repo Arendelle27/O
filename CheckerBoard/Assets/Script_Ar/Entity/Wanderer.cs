@@ -23,16 +23,13 @@ namespace ENTITY
                 (UIMain.Instance.uiPanels[1] as UIGamePanel).leaveValue.text = this.level.ToString();
                 Debug.Log("等级变化");
             });
+
+            this.LookToCamera();
         }
 
         private void OnEnable()
         {
             this.level = 1;
-        }
-
-        private void Update()
-        {
-            this.LookToCamera();
         }
     }
 }

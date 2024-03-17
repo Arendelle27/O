@@ -16,8 +16,10 @@ public enum Building_Type
     无=-1,
     自动采集建筑_1,
     自动采集建筑_2,
+    自动采集建筑_3,
     生产建筑_1,
     生产建筑_2,
+    战斗建筑_1
 }
 
 public enum Map_Mode

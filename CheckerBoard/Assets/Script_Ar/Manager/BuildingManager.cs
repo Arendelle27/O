@@ -4,15 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static ArchiveManager;
 
 namespace MANAGER
 {
     public class BuildingManager : MonoSingleton<BuildingManager>
     {
         //储存当前存在的建筑
-        [SerializeField, LabelText("当前存在的建筑"), ReadOnly]
-        public Dictionary<Vector2Int,Building> buildings=new Dictionary<Vector2Int, Building>();
+        [SerializeField, LabelText("当前存在的采集建筑"), ReadOnly]
+        public Dictionary<Vector2Int,GatheringBuilding> gatheringBuildings=new Dictionary<Vector2Int, GatheringBuilding>();
+
+        [SerializeField, LabelText("当前存在的生产建筑"), ReadOnly]
+        public Dictionary<Vector2Int, ProductionBuilding> productionBuildings = new Dictionary<Vector2Int, ProductionBuilding>();
+
+        [SerializeField, LabelText("当前存在的战斗建筑"), ReadOnly]
+        public Dictionary<Vector2Int, BattleBuilding> battleBuildings = new Dictionary<Vector2Int, BattleBuilding>();
 
         [SerializeField, LabelText("采集建筑类型"),Tooltip("采集建筑物的类型")]
         public List<Building_Type> GatheringTypes = new List<Building_Type>() {
@@ -26,12 +31,33 @@ namespace MANAGER
             //Building_Type.生产建筑_2
         };
 
+        [SerializeField, LabelText("战斗建筑类型"), Tooltip("生产建筑物的类型")]
+        public List<Building_Type> BattleTypes = new List<Building_Type>()
+        {
+            //Building_Type.战斗建筑_1,
+        };
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
         void Init()
         {
-            for (int i = 0; i < buildings.Count;)
+            for (int i = 0; i < this.gatheringBuildings.Count;)
             {
-                var item = buildings.ElementAt(i);
-                this.RemoveBuilding(item.Value);
+                var item = this.gatheringBuildings.ElementAt(i);
+                this.RemoveBuilding(0, item.Value);
+            }
+
+            for (int i = 0; i < this.productionBuildings.Count;)
+            {
+                var item = this.productionBuildings.ElementAt(i);
+                this.RemoveBuilding(1, item.Value);
+            }
+
+            for (int i = 0; i < this.battleBuildings.Count;)
+            {
+                var item = this.battleBuildings.ElementAt(i);
+                this.RemoveBuilding(2, item.Value);
             }
 
         }
@@ -44,19 +70,15 @@ namespace MANAGER
             this.Init();
         }
 
+        /// <summary>
+        /// 读档
+        /// </summary>
         public void ReadArchive()
         {
             this.Init();
             foreach(var buildingData in ArchiveManager.archive.buildingData)
             {
                 this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
-                //GameObject gO = GameObjectPool.Instance.Buildings.Get();
-                //gO.transform.parent = this.transform;
-                //gO.transform.position = PlotManager.Instance.plots[buildingData.pos].transform.position - new Vector3(0, 0, 0.3f);
-                //Building building = gO.GetComponent<Building>();
-                //building.SetInfo(buildingData.pos, buildingData.buildingType);
-                //this.buildings.Add(buildingData.pos, building);
-                //PlotManager.Instance.plots[buildingData.pos].building = building;
             }
         }
 
@@ -67,13 +89,33 @@ namespace MANAGER
         /// <param name="plot"></param>
         void GetBuilding(Building_Type type, Plot plot)
         {
-            GameObject gO = GameObjectPool.Instance.Buildings.Get();
+            int sort = (int)type;
+            GameObject gO;
+            if(sort<3)
+            {
+                gO = GameObjectPool.Instance.GatheringBuildings.Get();
+                GatheringBuilding building = gO.GetComponent<GatheringBuilding>();
+                this.gatheringBuildings.Add(plot.pos, building);
+                building.SetInfo(plot, type);
+                plot.building = building;
+            }
+            else if(sort<5)
+            {
+                gO = GameObjectPool.Instance.ProductionBuildings.Get();
+                ProductionBuilding building = gO.GetComponent<ProductionBuilding>();
+                this.productionBuildings.Add(plot.pos, building);
+                building.SetInfo(plot, type);
+                plot.building = building;
+            }
+            else
+            {
+                gO = GameObjectPool.Instance.BattleBuildings.Get();
+                BattleBuilding building = gO.GetComponent<BattleBuilding>();
+                this.battleBuildings.Add(plot.pos, building);
+                building.SetInfo(plot, type);
+                plot.building = building;
+            }
             gO.transform.parent = this.transform;
-            gO.transform.position = plot.transform.position - new Vector3(0, 0, 0.3f);
-            Building building = gO.GetComponent<Building>();
-            building.SetInfo(plot.pos, type);
-            this.buildings.Add(plot.pos, building);
-            plot.building = building;
         }
 
         /// <summary>
@@ -104,11 +146,23 @@ namespace MANAGER
         /// 删除建筑
         /// </summary>
         /// <param name="removeId"></param>
-        public void RemoveBuilding(Building building)
+        public void RemoveBuilding(int sort, Building building)
         {
-            GameObjectPool.Instance.Buildings.Release(building.gameObject);
-            this.buildings.Remove(building.pos);
-
+            switch(sort)
+            {
+                case 0:
+                    GameObjectPool.Instance.GatheringBuildings.Release(building.gameObject);
+                    this.gatheringBuildings.Remove(building.pos);
+                    break;
+                case 1:
+                    GameObjectPool.Instance.ProductionBuildings.Release(building.gameObject);
+                    this.productionBuildings.Remove(building.pos);
+                    break;
+                case 2:
+                    GameObjectPool.Instance.BattleBuildings.Release(building.gameObject);
+                    this.battleBuildings.Remove(building.pos);
+                    break;
+            }
         }
 
         /// <summary>

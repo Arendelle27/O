@@ -12,19 +12,12 @@ namespace UIBUILDING
 {
     public class UIBuildingWindow : UIWindow, IDeselectHandler
     {
-        //建筑UI图像
-        UIBuildingSprites define;
-
         [SerializeField, LabelText("建筑列表"), Tooltip("收集建筑和生产建筑列表")]
         public TabView tabView;
 
         [SerializeField, LabelText("被选中的建筑UI类型"), ReadOnly]
         Building_Type buildingtypeSelected;//被选中的建筑UI类型
 
-        private void Awake()
-        {
-            this.define = new UIBuildingSprites();
-        }
 
         private void Start()
         {
@@ -86,7 +79,7 @@ namespace UIBUILDING
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
                 go.transform.parent = this.tabView.tabPages[0].transform;//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
+                ui.SetInfo(buType);//设置建筑UIItem信息
                 this.tabView.tabPages[0].AddItem(ui);
             }
 
@@ -95,7 +88,16 @@ namespace UIBUILDING
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
                 go.transform.parent = this.tabView.tabPages[1].transform;//在建筑列表第二页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType, this.define.sprites[(int)buType]);//设置建筑UIItem信息
+                ui.SetInfo(buType);//设置建筑UIItem信息
+                this.tabView.tabPages[1].AddItem(ui);
+            }
+
+            foreach (var buType in BuildingManager.Instance.BattleTypes)
+            {
+                GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
+                go.transform.parent = this.tabView.tabPages[2].transform;//在建筑列表第二页生成
+                UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
+                ui.SetInfo(buType);//设置建筑UIItem信息
                 this.tabView.tabPages[1].AddItem(ui);
             }
         }

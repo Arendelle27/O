@@ -83,16 +83,29 @@ namespace Managers
             this.VoiceVolume = SoundConfig.VoiceVolume;
         }
 
+        /// <summary>
+        /// 音乐是否静音
+        /// </summary>
+        /// <param name="mute"></param>
         public void MusicMute(bool mute)
         {
             this.SetVolume("MusicVolume", mute?0:musicVolume);
         }
 
+        /// <summary>
+        /// 音效是否静音
+        /// </summary>
+        /// <param name="mute"></param>
         public void SoundMute(bool mute)
         {
             this.SetVolume("SoundVolume", mute?0:voiceVolume);
         }
 
+        /// <summary>
+        /// 设置音量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         private void SetVolume(string name,int value)
         {
             float volume = value * 0.5f - 50f;
