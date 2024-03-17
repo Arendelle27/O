@@ -125,6 +125,11 @@ namespace MANAGER
         /// <param name="plot"></param>
         public void Build(Building_Type type,Plot plot)
         {
+            if(plot.building!=null)
+            {
+                Debug.Log("已经有建筑了");
+                return;
+            }
             if(DataManager.Instance.CanBuild(type))
             {
                 this.GetBuilding(type, plot);
