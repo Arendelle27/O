@@ -20,22 +20,14 @@ namespace MANAGER
         public Dictionary<Vector2Int, BattleBuilding> battleBuildings = new Dictionary<Vector2Int, BattleBuilding>();
 
         [SerializeField, LabelText("采集建筑类型"),Tooltip("采集建筑物的类型")]
-        public List<Building_Type> GatheringTypes = new List<Building_Type>() {
-            //Building_Type.自动采集建筑_1,
-            //Building_Type.自动采集建筑_2,
-        };
+        public List<Building_Type> GatheringTypes = new List<Building_Type>() {};
 
         [SerializeField, LabelText("生产建筑类型"), Tooltip("生产建筑物的类型")]
-        public List<Building_Type> ProductionTypes = new List<Building_Type>() {
-            //Building_Type.生产建筑_1,
-            //Building_Type.生产建筑_2
-        };
+        public List<Building_Type> ProductionTypes = new List<Building_Type>() {};
 
         [SerializeField, LabelText("战斗建筑类型"), Tooltip("生产建筑物的类型")]
-        public List<Building_Type> BattleTypes = new List<Building_Type>()
-        {
-            //Building_Type.战斗建筑_1,
-        };
+        public List<Building_Type> BattleTypes = new List<Building_Type>()  {};
+
 
         /// <summary>
         /// 初始化
@@ -91,7 +83,7 @@ namespace MANAGER
         {
             int sort = (int)type;
             GameObject gO;
-            if(sort<3)
+            if(sort>(int)Building_Type.自动采集建筑&&sort<(int)Building_Type.生产建筑)
             {
                 gO = GameObjectPool.Instance.GatheringBuildings.Get();
                 GatheringBuilding building = gO.GetComponent<GatheringBuilding>();
@@ -99,7 +91,7 @@ namespace MANAGER
                 building.SetInfo(plot, type);
                 plot.building = building;
             }
-            else if(sort<5)
+            else if(sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
             {
                 gO = GameObjectPool.Instance.ProductionBuildings.Get();
                 ProductionBuilding building = gO.GetComponent<ProductionBuilding>();
@@ -130,14 +122,13 @@ namespace MANAGER
                 Debug.Log("已经有建筑了");
                 return;
             }
-            if(DataManager.Instance.CanBuild(type))
+            if(ResourcesManager.Instance.CanBuild(type))
             {
                 this.GetBuilding(type, plot);
                 //消耗资源
-                DataManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
-                DataManager.Instance.ChangeExecution(-1);
+                //ResourcesManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
+                ResourcesManager.Instance.ChangeExecution(-1);
                 //建造建筑增加敌意值
-                plot.settlement?.AddHotility(false);
 
             }
             else
@@ -171,11 +162,38 @@ namespace MANAGER
         }
 
         /// <summary>
+        /// 生产建筑生产资源总和
+        /// </summary>
+        void GatherBuildingResources()
+        {
+            int[] buildingResourcesGathering = new int[3] { 0, 0, 0 };
+            foreach (var item in this.gatheringBuildings)
+            {
+                List<int> resource = item.Value.Gather();
+                buildingResourcesGathering[resource[0]] += resource[1];
+            }
+            ResourcesManager.Instance.ChangeBuildingResources(buildingResourcesGathering);
+        }
+
+        void ProduceWealth()
+        {
+            int wealthProduction = 0;
+            foreach (var item in this.productionBuildings)
+            {
+                int wealth = item.Value.Produce();
+                wealthProduction += wealth;
+            }
+            ResourcesManager.Instance.ChangeWealth(wealthProduction);
+        }
+
+
+        /// <summary>
         /// 回合结束，进行结算
         /// </summary>
         public void RoundOver()
         {
-
+            this.GatherBuildingResources();
+            this.ProduceWealth();
         }
     }
 }

@@ -98,9 +98,9 @@ public class UIUpgradeWindow : UIWindow
             }
         }
 
-        if(DataManager.Instance.levelPromptionAmount>0)
+        if(ResourcesManager.Instance.levelPromptionAmount>0)
         {
-            this.expTeamExtendAmountText.text = DataManager.Instance.levelPromptionAmount.ToString();
+            this.expTeamExtendAmountText.text = ResourcesManager.Instance.levelPromptionAmount.ToString();
 
             if(this.closeButton.gameObject.activeSelf)
             {
@@ -129,7 +129,7 @@ public class UIUpgradeWindow : UIWindow
     /// </summary>
     public override void OnYesClick()
     {
-        if(DataManager.Instance.CanUpgrade())
+        if(ResourcesManager.Instance.CanUpgrade())
         {
             this.UpdateUI();
 

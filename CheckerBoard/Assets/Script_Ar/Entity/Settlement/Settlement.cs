@@ -20,7 +20,7 @@ namespace ENTITY
         [SerializeField, LabelText("消除聚落事件"), ReadOnly]
         public Subject<Settlement> eliminateSettlement = new Subject<Settlement>();
 
-        private void Start()
+        public virtual void Start()
         {
             this.LookToCamera();
         }
@@ -41,8 +41,9 @@ namespace ENTITY
         /// <summary>
         /// 增加敌意值(是否通过交易增加)
         /// </summary>
-        public virtual void AddHotility(bool isTransaction)
+        public virtual void AddHotility(int value)
         {
+            this.hotility+=value;
         }
 
         /// <summary>
@@ -63,7 +64,6 @@ namespace ENTITY
 
             this.canTransaction = false;
 
-            this.AddHotility(true);
             
         }
 

@@ -6,14 +6,6 @@ namespace ENTITY
 {
     public class HumanSettlement : Settlement
     {
-        public override void AddHotility(bool isTransaction)
-        {
-            if(isTransaction)
-            {
-                this.hotility += 10;//通过交易增加
-                Debug.Log("人类聚落通过交易增加敌意值");
-            }
-        }
 
         /// <summary>
         /// 交易

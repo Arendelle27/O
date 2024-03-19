@@ -41,10 +41,22 @@ namespace UIBUILDING
         /// 设置信息
         /// </summary>
         /// <param name="type"></param>
-        public void SetInfo(Building_Type type)
+        public void SetInfo(int sort,Building_Type type)
         {
             this.type = type;
-            this.buildingImage.sprite = ScriptableObjectPool.buildingScriptList[(int)type].sprite;
+
+            switch (sort)
+            {
+                case 0:
+                    this.buildingImage.sprite = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1].sprite;//设置建筑的图片
+                    break;
+                case 1:
+                    this.buildingImage.sprite = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1].sprite;//设置建筑的图片
+                    break;
+                case 2:
+                    this.buildingImage.sprite = DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1].sprite;//设置建筑的图片
+                    break;
+            }
         }
 
     }

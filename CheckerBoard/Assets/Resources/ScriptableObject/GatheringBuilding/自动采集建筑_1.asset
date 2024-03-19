@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b632e8d28271dd24889df7c37fb71172, type: 3}
+  m_Name: "\u81EA\u52A8\u91C7\u96C6\u5EFA\u7B51_1"
+  m_EditorClassIdentifier: 
+  TID: 0
+  Name: 
+  Class: 0
+  Type: 0
+  Resource: 
+  Description: 
+  Condition: 
+  NumericalValue: 0
+  Resource1Cost: 0
+  Resource2Cost: 0
+  Resource3Cost: 0
+  Attack: 0
+  HostilityToRobot: 0
+  HostilityToHuman: 0
+  sprite: {fileID: 0}
+  GatherResourceType: 0
+  GatherResourceAmount: 0
+  GatherResourceRounds: 0

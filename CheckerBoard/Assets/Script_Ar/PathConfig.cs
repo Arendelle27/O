@@ -23,6 +23,11 @@ public class PathConfig
 
     const string Scriptable_List_Path = "ScriptableObject/List/{0}";
 
+    const string Data_Txt_Path = "Data/{0}";
+
+    //建筑数据名称
+    public static List<string> Building_Names = new List<string> { "自动采集建筑", "生产建筑", "战斗建筑" };
+
     //获取实体预制体位置
     public static string GetEntityPrefabPath(string name)
     {
@@ -69,5 +74,10 @@ public class PathConfig
     public static string GetScriptableList(string name)
     {
         return string.Format(Scriptable_List_Path, name);
+    }
+
+    public static string GetDataTxtPath(string name)
+    {
+        return string.Format(Data_Txt_Path, name);
     }
 }

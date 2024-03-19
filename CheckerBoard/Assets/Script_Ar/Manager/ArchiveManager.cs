@@ -3,9 +3,6 @@ using MANAGER;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
-using TreeEditor;
 using UnityEngine;
 
 public static class ArchiveManager
@@ -128,11 +125,11 @@ public static class ArchiveManager
 
         arc.roundNumber = RoundManager.Instance.roundNumber;
 
-        arc.wealth = DataManager.Instance.wealth;
+        arc.wealth = ResourcesManager.Instance.wealth;
 
-        arc.buildingRes = DataManager.Instance.buildingResources;
+        arc.buildingRes = ResourcesManager.Instance.buildingResources;
 
-        arc.execution = DataManager.Instance.execution;
+        arc.execution = ResourcesManager.Instance.execution;
 
         arc.CameraPos = Camera.main.transform.position;
 

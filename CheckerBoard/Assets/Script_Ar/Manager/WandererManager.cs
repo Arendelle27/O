@@ -133,7 +133,7 @@ namespace MANAGER
             //消耗行动点
             if(!isFirst)
             {
-                DataManager.Instance.ChangeExecution(-1);
+                ResourcesManager.Instance.ChangeExecution(-1);
             }
         }
 
@@ -152,8 +152,8 @@ namespace MANAGER
         /// </summary>
         public void Upgrade()
         {
-            DataManager.Instance.ChangeWealth(-this.wanderer.level * 10);
-            DataManager.Instance.levelPromptionAmount++;
+            ResourcesManager.Instance.ChangeWealth(-this.wanderer.level * 10);
+            ResourcesManager.Instance.levelPromptionAmount++;
             this.wanderer.level++;
         }
 
@@ -176,7 +176,7 @@ namespace MANAGER
                     aimPlot.ShowSelectedColor(true);
 
                     this.exploredV2.Push(v2);//储存本次拓展的板块
-                    DataManager.Instance.levelPromptionAmount--;
+                    ResourcesManager.Instance.levelPromptionAmount--;
 
                     break;
                 }
@@ -194,7 +194,7 @@ namespace MANAGER
                 this.exploratoryTeams.Remove(v2);
                 Plot aimPlot = PlotManager.Instance.plots[this.wanderer.plot.pos + v2];
                 aimPlot.HaveExploratoryTeam = false;
-                DataManager.Instance.levelPromptionAmount++;
+                ResourcesManager.Instance.levelPromptionAmount++;
             }
         }   
     }

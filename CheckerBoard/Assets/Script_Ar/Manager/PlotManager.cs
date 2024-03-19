@@ -66,7 +66,7 @@ namespace MANAGER
                             }
                             break;
                         case Map_Mode.拓展探索小队:
-                            if(DataManager.Instance.levelPromptionAmount>0)
+                            if(ResourcesManager.Instance.levelPromptionAmount>0)
                             {
                                 WandererManager.Instance.ExtendExpTeam(value);//拓展探索小队
                             }

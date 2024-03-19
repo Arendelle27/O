@@ -1,160 +1,62 @@
-using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UniRx;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
-namespace MANAGER
+public class DataManager
 {
-    public class DataManager :Singleton<DataManager>
+
+    ////建筑脚本属性列表
+    public static List<List<BuildingType>> BuildingScriptLists = new List<List<BuildingType>>();
+    /// <summary>
+    /// 读取建筑脚本列表
+    /// </summary>
+    public static void Load()
     {
-        [SerializeField, LabelText("金钱"), ReadOnly]
-        public int wealth;
+        Dictionary<int, Dictionary<int, BuildingDefine>> BuildingDefines;
+        string json = File.ReadAllText(PathConfig.GetDataTxtPath("BuildingDefine.txt"));
+        BuildingDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, BuildingDefine>>>(json);
 
-        [SerializeField, LabelText("建筑资源"), ReadOnly]
-        public List<int> buildingResources = new List<int>() {0,0,0 };
 
-        [SerializeField, LabelText("行动点"), ReadOnly]
-        public int execution;
-
-        [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
-        public int levelPromptionAmount;
-        public DataManager()
+        for (int i = 0; i < 3; i++)
         {
-            this.ObserveEveryValueChanged(_ => this.wealth).Subscribe(_ =>
+            List<BuildingType> buildingList = (Resources.Load<BuildingTypeList>(PathConfig.GetScriptableList(BuildingDefines[i][0].Class.ToString()))).buildingTypeList;
+            for (int j = 0; j < BuildingDefines[i].Keys.Count; j++)
             {
-                //变化时更新能量UI
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).wealthAmount.text = this.wealth.ToString();
-                Debug.Log("能量变化");
-            });
+                buildingList[j].TID = BuildingDefines[i][j].TID;
+                buildingList[j].Name = BuildingDefines[i][j].Name;
+                buildingList[j].Class = BuildingDefines[i][j].Class;
+                buildingList[j].Type = BuildingDefines[i][j].Type;
+                buildingList[j].Resource = BuildingDefines[i][j].Resource;
+                buildingList[j].Description = BuildingDefines[i][j].Description;
+                buildingList[j].Condition = BuildingDefines[i][j].Condition;
+                buildingList[j].NumericalValue = BuildingDefines[i][j].NumericalValue;
+                buildingList[j].ResourcesCost[0] = BuildingDefines[i][j].Resource1Cost;
+                buildingList[j].ResourcesCost[1] = BuildingDefines[i][j].Resource2Cost;
+                buildingList[j].ResourcesCost[2] = BuildingDefines[i][j].Resource3Cost;
+                buildingList[j].Attack = BuildingDefines[i][j].Attack;
+                buildingList[j].HostilityToRobot = BuildingDefines[i][j].HostilityToRobot;
+                buildingList[j].HostilityToHuman = BuildingDefines[i][j].HostilityToHuman;
+                buildingList[j].sprite = Resources.Load<Sprite>(PathConfig.GetBuildingItemSpritePath(BuildingDefines[i][j].Type.ToString()));
 
-            this.ObserveEveryValueChanged(_ => this.buildingResources).Subscribe(_ =>
-            {
-                //变化时更资源UI
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[0].text = this.buildingResources[0].ToString();
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[1].text = this.buildingResources[1].ToString();
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[2].text = this.buildingResources[2].ToString();
-                Debug.Log("资源变化");
-            });
-
-            this.ObserveEveryValueChanged(_ => this.execution).Subscribe(_ =>
-            {
-                //变化时更新行动点UI
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).executionAmount.text = this.execution.ToString();
-                Debug.Log("行动点变化");
-            });
-
-            this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
-            {
-                (UIMain.Instance.uiPanels[2] as UIExtendExpTeamPanel).UpdateUI(this.levelPromptionAmount);
-
-            });
-        }
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        void Init()
-        {
-            this.levelPromptionAmount = 0;
-        }
-
-        public void Restart()
-        {
-            this.Init();
-            this.wealth = 100;
-            this.buildingResources = new List<int> { 5, 5, 5 };
-            this.execution = 5;
-        }
-
-        public void ReadArchive()
-        {
-            this.Init();
-            this.wealth = ArchiveManager.archive.wealth;
-            this.buildingResources = ArchiveManager.archive.buildingRes;
-            this.execution = ArchiveManager.archive.execution;
-        }
-
-        /// <summary>
-        /// 增减能量
-        /// </summary>
-        /// <param name="variation"></param>
-        public void ChangeWealth(int variation)
-        {
-            this.wealth += variation;
-            //if(this.wealth<=0)
-            //{
-            //    Main.Instance.GameOver();//金钱不足时
-            //}
-        }
-
-        /// <summary>
-        /// 增减建筑资源
-        /// </summary>
-        /// <param name="variations"></param>
-        public void ChangeBuildingResources(int[] variations)
-        {
-            int i1 = this.buildingResources[0] + variations[0];
-            int i2 = this.buildingResources[1] + variations[1];
-            int i3 = this.buildingResources[2] + variations[2];
-            this.buildingResources = new List<int>{ i1, i2, i3 };
-
-
-        }
-
-        /// <summary>
-        /// 增减行动点
-        /// </summary>
-        /// <param name="variation"></param>
-        public void ChangeExecution(int variation)
-        {
-            this.execution += variation;
-        }
-
-        /// <summary>
-        /// 判断资源是否足够建造
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public bool CanBuild(Building_Type type)
-        {
-            for (int i = 0; i < buildingResources.Count; i++)
-            {
-                if (buildingResources[i] < 1)
+                switch (i)
                 {
-                    return false;
+                    case 0:
+                        (buildingList[j] as GatheringBuildingType).GatherResourceRounds = BuildingDefines[i][j].GatherResourceRounds;
+                        (buildingList[j] as GatheringBuildingType).GatherResourceType = BuildingDefines[i][j].GatherResourceType;
+                        (buildingList[j] as GatheringBuildingType).GatherResourceAmount = BuildingDefines[i][j].GatherResourceAmount;
+                        break;
+                    case 1:
+                        (buildingList[j] as ProductionBuildingType).Production = BuildingDefines[i][j].Production;
+                        break;
+                    case 2:
+
+                        break;
                 }
             }
-            if(this.execution<1)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 判断是否能升级
-        /// </summary>
-        /// <returns></returns>
-        public bool CanUpgrade()
-        {
-            if(this.wealth>=WandererManager.Instance.wanderer.level*10)
-            {
-                WandererManager.Instance.Upgrade();//升级
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void RoundOver()
-        {
-            this.execution = 5;
-
-            this.ChangeWealth(-10*WandererManager.Instance.wanderer.level);
+            BuildingScriptLists.Add(buildingList);
         }
     }
-
 }

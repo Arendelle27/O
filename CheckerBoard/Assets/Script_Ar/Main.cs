@@ -3,6 +3,7 @@ using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class Main : MonoSingleton<Main>
@@ -11,10 +12,16 @@ public class Main : MonoSingleton<Main>
     public MainCamera mainCamera;
     private void Awake()
     {
-        //GameObjectPool.Instance.Init();
+        MainThreadDispatcher.StartUpdateMicroCoroutine(this.OnAwake());
+
+    }
+
+    IEnumerator OnAwake()
+    {
         ArchiveManager.LoadData();//加载存档
-        ScriptableObjectPool.ReadBuildingScriptList();//读取建筑脚本列表
-        
+        yield return null;
+        DataManager.Load();//读取建筑脚本列表
+        yield return null;
     }
 
     private void Start()
@@ -37,7 +44,7 @@ public class Main : MonoSingleton<Main>
         yield return null;
         RoundManager.Instance.Restart();
         yield return null;
-        DataManager.Instance.Restart();
+        ResourcesManager.Instance.Restart();
         yield return null;
         PlotManager.Instance.Restart();
         yield return null;
@@ -57,7 +64,7 @@ public class Main : MonoSingleton<Main>
         yield return null;
         RoundManager.Instance.ReadArchive();
         yield return null;
-        DataManager.Instance.ReadArchive();
+        ResourcesManager.Instance.ReadArchive();
         yield return null;
         PlotManager.Instance.ReadArchive();
         yield return null;

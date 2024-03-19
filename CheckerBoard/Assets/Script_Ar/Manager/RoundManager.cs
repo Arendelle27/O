@@ -53,13 +53,14 @@ namespace MANAGER
         public void RoundOver()
         {
 
-            this.roundNumber++;//回合数加1
 
             BuildingManager.Instance.RoundOver();//建筑结束回合
 
-            DataManager.Instance.RoundOver();//资源结束回合
+            ResourcesManager.Instance.RoundOver();//资源结束回合
 
             this.StageDecision();//阶段决策
+
+            this.roundNumber++;//回合数加1
 
             //下一回合开始
 
@@ -73,8 +74,8 @@ namespace MANAGER
             if(this.roundNumber%5==0)
             {
                 Debug.Log("阶段结算");
-                DataManager.Instance.wealth-=roundNumber*10;
-                if(DataManager.Instance.wealth<0)
+                ResourcesManager.Instance.wealth-=roundNumber*10;
+                if(ResourcesManager.Instance.wealth<0)
                 {
                     Main.Instance.GameOver();
                 }

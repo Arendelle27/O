@@ -79,7 +79,7 @@ namespace UIBUILDING
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
                 go.transform.parent = this.tabView.tabPages[0].transform;//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType);//设置建筑UIItem信息
+                ui.SetInfo(0,buType);//设置建筑UIItem信息
                 this.tabView.tabPages[0].AddItem(ui);
             }
 
@@ -88,7 +88,7 @@ namespace UIBUILDING
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
                 go.transform.parent = this.tabView.tabPages[1].transform;//在建筑列表第二页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType);//设置建筑UIItem信息
+                ui.SetInfo(1, buType);//设置建筑UIItem信息
                 this.tabView.tabPages[1].AddItem(ui);
             }
 
@@ -97,7 +97,7 @@ namespace UIBUILDING
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
                 go.transform.parent = this.tabView.tabPages[2].transform;//在建筑列表第二页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(buType);//设置建筑UIItem信息
+                ui.SetInfo(2,buType);//设置建筑UIItem信息
                 this.tabView.tabPages[1].AddItem(ui);
             }
         }
