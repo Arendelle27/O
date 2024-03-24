@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UILIST;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,24 +22,29 @@ namespace UIBUILDING
 
         private void Start()
         {
+            tabView.OnTabSelect = this.OnTabSelect;
             foreach(var listView in this.tabView.tabPages)
             {
                 listView.onItemSelected += this.OnBuildingItemSelected;
             }
-            this.ClearBuildingList();
-            this.InitBuildingList();
+            //MainThreadDispatcher.StartUpdateMicroCoroutine(BeSelected());
+
+            this.OnCloseClick();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             StartCoroutine(BeSelected());
         }
 
-        private void OnDisable()
+        /// <summary>
+        /// 按下q切换按键
+        /// </summary>
+        /// <param name="index"></param>
+        void OnTabSelect(int index)
         {
-            this.buildingtypeSelected=Building_Type.无;
+            StartCoroutine(BeSelected());
         }
-
 
         /// <summary>
         /// 选中想要建造的建筑,第二次点击后确认建造
@@ -47,11 +53,11 @@ namespace UIBUILDING
         public void OnBuildingItemSelected(ListView.ListViewItem item)
         {
             UIBuildingItem buildingItem = item as UIBuildingItem;
-            if (this.buildingtypeSelected != buildingItem.type) 
+            if (this.buildingtypeSelected != buildingItem.type)//第一次点击选中
             {
                 this.buildingtypeSelected = buildingItem.type;
             }
-            else
+            else//第二次点击确认建造
             {
                 Debug.LogFormat("建造建筑：{0}", buildingtypeSelected);
                 BuildingManager.Instance.Build(buildingtypeSelected, PlotManager.Instance.SelectedPlot);
@@ -61,44 +67,24 @@ namespace UIBUILDING
         /// <summary>
         /// 清空建筑列表UI
         /// </summary>
-        void ClearBuildingList()
+        void ClearBuildingList(int sort)
         {
-            foreach (var listView in this.tabView.tabPages)
-            {
-                listView.RemoveAll();
-            }
+            this.tabView.tabPages[sort].RemoveAll();
         }
 
         /// <summary>
         /// 初始化建筑列表UI
         /// </summary>
-        void InitBuildingList()
+        public void UpdateBuildingList(int sort)
         {
-            foreach(var buType in BuildingManager.Instance.GatheringTypes)
+            ClearBuildingList(sort);
+            foreach (var buType in BuildingManager.Instance.buildingTypes[sort])
             {
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
-                go.transform.parent = this.tabView.tabPages[0].transform;//在建筑列表第一页生成
+                go.transform.SetParent(this.tabView.tabPages[sort].transform);//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(0,buType);//设置建筑UIItem信息
-                this.tabView.tabPages[0].AddItem(ui);
-            }
-
-            foreach (var buType in BuildingManager.Instance.ProductionTypes)
-            {
-                GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
-                go.transform.parent = this.tabView.tabPages[1].transform;//在建筑列表第二页生成
-                UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(1, buType);//设置建筑UIItem信息
-                this.tabView.tabPages[1].AddItem(ui);
-            }
-
-            foreach (var buType in BuildingManager.Instance.BattleTypes)
-            {
-                GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
-                go.transform.parent = this.tabView.tabPages[2].transform;//在建筑列表第二页生成
-                UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
-                ui.SetInfo(2,buType);//设置建筑UIItem信息
-                this.tabView.tabPages[1].AddItem(ui);
+                ui.SetInfo(sort, buType);//设置建筑UIItem信息
+                this.tabView.tabPages[sort].AddItem(ui);
             }
         }
 
@@ -109,7 +95,7 @@ namespace UIBUILDING
         /// <returns></returns>
         IEnumerator BeSelected()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             this.GetComponent<Selectable>().Select();
         }
 

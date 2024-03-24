@@ -25,7 +25,7 @@ public static class ArchiveManager
     public class PlotData
     {
         public Vector2Int pos;
-        public Plot_Type plotType;
+        public Plot_Statue plotType;
     }
 
     [Serializable]
@@ -65,7 +65,7 @@ public static class ArchiveManager
             arc.plotData.Add(new PlotData
             {
                 pos = plot.pos,
-                plotType = plot.plot_Type
+                plotType = plot.plot_Statue
             });
         }
 

@@ -33,8 +33,11 @@ public class UIGamePanel : UIPanel
     public Button roundOverButton;
 
     [SerializeField, LabelText("设置"), Tooltip("打开设置")]
-    public Button SettingButton
-        ;
+    public Button SettingButton;
+
+    [SerializeField, LabelText("任务"), Tooltip("打开任务界面")]
+    public Button QuestButton;
+
 
     private void Start()
     {

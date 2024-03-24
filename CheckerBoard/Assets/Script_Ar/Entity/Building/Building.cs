@@ -1,3 +1,4 @@
+using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,14 +46,30 @@ namespace ENTITY
 
         }
 
-        public virtual void SpendResource()
+        /// <summary>
+        /// 建筑消耗资源
+        /// </summary>
+        public void SpendResource()
         {
-
+            int[] cost = new int[3] { -this.resourcesCost[0], -this.resourcesCost[1], -this.resourcesCost[2] };
+            ResourcesManager.Instance.ChangeBuildingResources(cost);
         }
 
-        public virtual void AddHostility()
+        /// <summary>
+        /// 增加敌意值
+        /// </summary>
+        public void AddHostility()
         {
-
+            if (SettlementManager.Instance.humanSettlements.ContainsKey(this.pos))
+            {
+                int hostility = this.hostilityToHuman;
+                SettlementManager.Instance.humanSettlements[this.pos].AddHotility(hostility);
+            }
+            else if (SettlementManager.Instance.robotSettlements.ContainsKey(this.pos))
+            {
+                int hostility = this.hostilityToRobot;
+                SettlementManager.Instance.robotSettlements[this.pos].AddHotility(hostility);
+            }
         }
 
     }

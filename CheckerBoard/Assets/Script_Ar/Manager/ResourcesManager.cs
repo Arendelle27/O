@@ -14,6 +14,9 @@ namespace MANAGER
         [SerializeField, LabelText("建筑资源"), ReadOnly]
         public List<int> buildingResources = new List<int>() {0,0,0 };
 
+        [SerializeField, LabelText("所有收集的建筑资源"), ReadOnly]
+        public List<int> allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
+
         [SerializeField, LabelText("行动点"), ReadOnly]
         public int execution;
 
@@ -57,7 +60,8 @@ namespace MANAGER
         void Init()
         {
             this.levelPromptionAmount = 0;
-        }
+            this.allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
+    }
 
         public void Restart()
         {
@@ -99,16 +103,37 @@ namespace MANAGER
             int i3 = this.buildingResources[2] + variations[2];
             this.buildingResources = new List<int>{ i1, i2, i3 };
 
-
+            if (variations[0] > 0)
+            {
+                for (int i = 0; i < allBuildingResourcesGathered.Count; i++)
+                {
+                    this.allBuildingResourcesGathered[i] += variations[i];
+                }
+            }
         }
 
         /// <summary>
         /// 增减行动点
         /// </summary>
         /// <param name="variation"></param>
-        public void ChangeExecution(int variation)
+       public void ChangeExecution(int variation)
         {
             this.execution += variation;
+        }
+
+        /// <summary>
+        /// 是否有足够的行动点，是则返回true，消耗行动点
+        /// </summary>
+        /// <param name="excutionCost"></param>
+        /// <returns></returns>
+        public bool CanMove(int excutionCost)
+        {
+            if(this.execution>=excutionCost)
+            {
+                this.ChangeExecution(-excutionCost);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -149,11 +174,47 @@ namespace MANAGER
             }
         }
 
+        /// <summary>
+        /// 回合结束
+        /// </summary>
         public void RoundOver()
         {
             this.execution = 5;
 
             this.ChangeWealth(-10*WandererManager.Instance.wanderer.level);
+        }
+
+        /// <summary>
+        /// 根据获得资源总数解锁建筑
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public bool UnlockBuildingTypeByResource(int type,int amount)
+        {
+            switch(type)
+            {
+                case 0:
+                    if (this.allBuildingResourcesGathered[0]>=amount)
+                    {
+                        return true;
+                    }
+                    break;
+                case 1:
+                    if (this.allBuildingResourcesGathered[1] >= amount)
+                    {
+                        return true;
+                    }
+                    break;
+                case 2:
+                    if (this.allBuildingResourcesGathered[2] >= amount)
+
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            return false;
         }
     }
 

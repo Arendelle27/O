@@ -10,10 +10,12 @@ public class DataManager
 
     ////建筑脚本属性列表
     public static List<List<BuildingType>> BuildingScriptLists = new List<List<BuildingType>>();
+
+    public static Dictionary<int,PlotDefine> PlotDefines = new Dictionary<int, PlotDefine>();
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
-    public static void Load()
+    public static IEnumerator Load()
     {
         Dictionary<int, Dictionary<int, BuildingDefine>> BuildingDefines;
         string json = File.ReadAllText(PathConfig.GetDataTxtPath("BuildingDefine.txt"));
@@ -58,5 +60,13 @@ public class DataManager
             }
             BuildingScriptLists.Add(buildingList);
         }
+
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("PlotDefine.txt"));
+        PlotDefines = JsonConvert.DeserializeObject<Dictionary<int, PlotDefine>>(json);
+        yield return null;
+
+
     }
 }

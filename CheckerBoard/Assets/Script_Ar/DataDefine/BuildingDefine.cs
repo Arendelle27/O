@@ -7,7 +7,7 @@
         public Building_Type Type { get; set; }
         public string Resource { get; set; }
         public string Description { get; set; }
-        public string Condition { get; set; }
+        public Building_Condition_Type Condition { get; set; }
         public int NumericalValue { get; set; }
         public int Resource1Cost { get; set; }
         public int Resource2Cost { get; set; }

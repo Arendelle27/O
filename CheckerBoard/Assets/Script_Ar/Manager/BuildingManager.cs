@@ -1,8 +1,11 @@
 using ENTITY;
+using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UIBUILDING;
+using UniRx;
 using UnityEngine;
 
 namespace MANAGER
@@ -19,14 +22,39 @@ namespace MANAGER
         [SerializeField, LabelText("当前存在的战斗建筑"), ReadOnly]
         public Dictionary<Vector2Int, BattleBuilding> battleBuildings = new Dictionary<Vector2Int, BattleBuilding>();
 
-        [SerializeField, LabelText("采集建筑类型"),Tooltip("采集建筑物的类型")]
-        public List<Building_Type> GatheringTypes = new List<Building_Type>() {};
+        [SerializeField, LabelText("当前存在的建筑类型"), ReadOnly]
+        public List<List<Building_Type>> buildingTypes = new List<List<Building_Type>>()
+        {
+            new List<Building_Type>(),
+            new List<Building_Type>(),
+            new List<Building_Type>(),
+        };
 
-        [SerializeField, LabelText("生产建筑类型"), Tooltip("生产建筑物的类型")]
-        public List<Building_Type> ProductionTypes = new List<Building_Type>() {};
+        [SerializeField, LabelText("建筑蓝图"), ReadOnly]
+        Dictionary<int, bool> bluePrints;
 
-        [SerializeField, LabelText("战斗建筑类型"), Tooltip("生产建筑物的类型")]
-        public List<Building_Type> BattleTypes = new List<Building_Type>()  {};
+        [SerializeField, LabelText("建筑UI窗口"), ReadOnly]
+        public UIBuildingWindow buildingWindow;
+
+        private void Start()
+        {
+            this.buildingWindow = UIManager.Instance.Show<UIBuildingWindow>();
+
+            this.ObserveEveryValueChanged(_ => this.buildingTypes[0].Count).Subscribe(_ =>
+            {
+                this.buildingWindow?.UpdateBuildingList(0);
+            });
+
+            this.ObserveEveryValueChanged(_ => this.buildingTypes[1].Count).Subscribe(_ =>
+            {
+                this.buildingWindow?.UpdateBuildingList(1);
+            });
+
+            this.ObserveEveryValueChanged(_ => this.buildingTypes[2].Count).Subscribe(_ =>
+            {
+                this.buildingWindow?.UpdateBuildingList(2);
+            });
+        }
 
 
         /// <summary>
@@ -52,6 +80,19 @@ namespace MANAGER
                 this.RemoveBuilding(2, item.Value);
             }
 
+            this.bluePrints = new Dictionary<int, bool>()
+            {
+                {1,false },
+                {2,false },
+            };
+
+            //初始化建筑类型
+            for (int i = 0; i < this.buildingTypes.Count; i++)
+            {
+                this.buildingTypes[i].Clear();
+            }
+
+            this.GetBuildingType();
         }
 
         /// <summary>
@@ -71,6 +112,85 @@ namespace MANAGER
             foreach(var buildingData in ArchiveManager.archive.buildingData)
             {
                 this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
+            }
+        }
+
+        /// <summary>
+        /// h获取建筑类型
+        /// </summary>
+        void GetBuildingType()
+        {
+            foreach(var list in DataManager.BuildingScriptLists)
+            {
+                foreach(var building in list)
+                {
+                    for(int i = 0; i < this.buildingTypes.Count; i++)
+                    {
+                        if(buildingTypes[i].Contains(building.Type))
+                        {
+                            return;
+                        }
+                    }
+
+                    bool isUnlock = false;
+                    switch (building.Class)
+                    {
+                        case Building_Type.自动采集建筑:
+                            switch (building.Condition)
+                            {
+                                case Building_Condition_Type.资源1:
+                                    isUnlock=ResourcesManager.Instance.UnlockBuildingTypeByResource(0,building.NumericalValue);
+                                    break;
+                                case Building_Condition_Type.资源2:
+                                    isUnlock=ResourcesManager.Instance.UnlockBuildingTypeByResource(1, building.NumericalValue);
+                                    break;
+                                case Building_Condition_Type.资源3:
+                                    isUnlock=ResourcesManager.Instance.UnlockBuildingTypeByResource(2, building.NumericalValue);
+                                    break;
+                                case Building_Condition_Type.蓝图:
+                                    isUnlock = this.bluePrints[building.NumericalValue];
+                                    break;
+                            }
+                            if(isUnlock)
+                            {
+                                this.buildingTypes[0].Add(building.Type);
+                            }
+                            break;
+                        case Building_Type.生产建筑:
+                            switch (building.Condition)
+                            {
+                                case Building_Condition_Type.无:
+                                    isUnlock = true;
+                                    break;
+                                case Building_Condition_Type.回合数:
+                                    isUnlock=RoundManager.Instance.UnlockBuildingTypeByResource(building.NumericalValue);
+                                    break;
+                            }
+                            if(isUnlock)
+                            {
+                                this.buildingTypes[1].Add(building.Type);
+                            }
+                            break;
+                        case Building_Type.战斗建筑:
+                            switch (building.Condition)
+                            {
+                                case Building_Condition_Type.蓝图:
+                                    isUnlock = this.bluePrints[building.NumericalValue];
+                                    break;
+                                case Building_Condition_Type.厉害的战斗机器:
+                                    if(this.battleBuildings.Count>building.NumericalValue)
+                                    {
+                                        isUnlock = true;
+                                    }
+                                    break;
+                            }
+                            if(isUnlock)
+                            {
+                                this.buildingTypes[2].Add(building.Type);
+                            }
+                            break;
+                    }
+                }
             }
         }
 
@@ -127,7 +247,7 @@ namespace MANAGER
                 this.GetBuilding(type, plot);
                 //消耗资源
                 //ResourcesManager.Instance.ChangeBuildingResources(new int[3] {-1,-1,-1});
-                ResourcesManager.Instance.ChangeExecution(-1);
+                ResourcesManager.Instance.ChangeExecution(-1);//消耗一点行动力
                 //建造建筑增加敌意值
 
             }
@@ -194,6 +314,7 @@ namespace MANAGER
         {
             this.GatherBuildingResources();
             this.ProduceWealth();
+            this.GetBuildingType();
         }
     }
 }

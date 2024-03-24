@@ -16,7 +16,7 @@ public class BuildingType : ScriptableObject
     [SerializeField, LabelText("描述"), ReadOnly]
     public string Description;
     [SerializeField, LabelText("解锁条件"), ReadOnly]
-    public string Condition;
+    public Building_Condition_Type Condition;
     [SerializeField, LabelText("条件数值"), ReadOnly]
     public int NumericalValue;
     [SerializeField, LabelText("建造时消耗资源"), ReadOnly]

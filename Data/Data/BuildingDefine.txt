@@ -171,7 +171,7 @@
       "ResourceName": "BattleBuilding",
       "Description": "探索遗迹发现的具有较高战斗力的机械，破译编码后发现了一段不完整的注释文字：\n“成功了！她很能打架，就叫'厉害的战斗机器'吧，希望我们能一起活下去”",
       "Condition": "蓝图",
-      "NumericalValue": 1,
+      "NumericalValue": 2,
       "Resource1Cost": 20,
       "Resource2Cost2": 8,
       "Resource3Cost22": 4,

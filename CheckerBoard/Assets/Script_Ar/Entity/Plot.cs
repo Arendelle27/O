@@ -1,3 +1,4 @@
+using MANAGER;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -5,21 +6,33 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static ArchiveManager;
 
 namespace ENTITY
 {
     public class Plot : Entity
     {
-        [SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
-        public List<Sprite> plot_Sps = new List<Sprite>();
+        [SerializeField, LabelText("格子定义"), ReadOnly]
+        public PlotDefine plotDefine;
+
+        //[SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
+        //public List<Sprite> plot_Sps = new List<Sprite>();
+
+        [SerializeField, LabelText("板块状态"), ReadOnly]
+        public Plot_Statue plot_Statue;
 
         [SerializeField, LabelText("板块类型"), ReadOnly]
-        public Plot_Type plot_Type;
+        public int plotType;
+        //0为资源类，1为事件类
+
         //临时 当前颜色
         public Color curColor;
         //被选中时的颜色
         public Color selectedColor=Color.blue;
+
+        [SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
+        public Text figure;
 
         [SerializeField, LabelText("位置"), ReadOnly]
         public Vector2Int pos;
@@ -46,12 +59,26 @@ namespace ENTITY
             }
         }
 
+        [SerializeField, LabelText("是否是第一次探索"), ReadOnly]
+        public bool isFirstExplored;
+
+        [SerializeField, LabelText("资源数量"), ReadOnly]
+        public List<int> buildingResources = new List<int>() { 0, 0 };
+        //0为资源类型，1为资源数量
+        //资源类型  1，2，3，0为无资源
+
+        [SerializeField, LabelText("是否可以进入"), ReadOnly]
+        public bool canEnter;
+
         #region 事件
-        [SerializeField, LabelText("点击板块"), ReadOnly]
+        [SerializeField, LabelText("鼠标点击板块"), ReadOnly]
         public Subject<Plot> clickSelectedSubject = new Subject<Plot>();
 
-        [SerializeField, LabelText("进入板块"), ReadOnly]
+        [SerializeField, LabelText("鼠标进入板块"), ReadOnly]
         public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
+
+        [SerializeField, LabelText("通过板块解锁板块"), ReadOnly]
+        public Subject<int> unLoadByPlot=new Subject<int>();
         #endregion
 
         private void Start()
@@ -98,12 +125,29 @@ namespace ENTITY
             this.wanderer = null;
             this.building = null;
             this.HaveExploratoryTeam = false;
+
         }
 
-        public void Restart()
+        /// <summary>
+        /// 设置信息
+        /// </summary>
+        /// <param name="plotdefine"></param>
+        public void SetInfo(PlotDefine plotdefine,bool canEnter=true)
         {
+            this.plotDefine= plotdefine;
+            this.plotType = plotdefine.Type;
+            this.figure.text = plotdefine.ID.ToString();
+
+            if (this.plotType == 0)
+            {
+                this.buildingResources[0]= plotdefine.ResourceType;
+                this.buildingResources[1] = plotdefine.ResourceTotal;
+            }
+
             this.Init();
-            ChangeType(Plot_Type.未探明);
+            ChangeType(Plot_Statue.未探明);
+            this.isFirstExplored = true;
+            this.canEnter = canEnter;
         }
 
         /// <summary>
@@ -121,20 +165,20 @@ namespace ENTITY
         /// 随格子类型改变而改变
         /// </summary>
         /// <param name="plot_Type"></param>
-        void ChangeType(Plot_Type plot_Type)
+        void ChangeType(Plot_Statue plot_Type)
         {
             switch (plot_Type)
             {
-                case Plot_Type.未探明:
+                case Plot_Statue.未探明:
                     ChangeToUndiscoverd();
                     break;
-                case Plot_Type.可探索:
+                case Plot_Statue.可探索:
                     ChangeToCanDisCover();
                     break;
-                case Plot_Type.已探索:
+                case Plot_Statue.已探索:
                     ChangeToDiscovered();
                     break;
-                case Plot_Type.已开发:
+                case Plot_Statue.已开发:
                     ChangeToDeveloped();
                     break;
                 default:
@@ -147,7 +191,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToUndiscoverd()
         {
-            this.plot_Type = Plot_Type.未探明;
+            this.plot_Statue = Plot_Statue.未探明;
             this.curColor = Color.black;
         }
 
@@ -156,7 +200,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToCanDisCover()
         {
-            this.plot_Type = Plot_Type.可探索;
+            this.plot_Statue = Plot_Statue.可探索;
             this.curColor = Color.red;
         }
 
@@ -165,7 +209,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToDiscovered()
         {
-            this.plot_Type = Plot_Type.已探索;
+            this.plot_Statue = Plot_Statue.已探索;
             this.curColor = Color.yellow;
         }
 
@@ -174,7 +218,7 @@ namespace ENTITY
         /// </summary>
         void ChangeToDeveloped()
         {
-            this.plot_Type = Plot_Type.已开发;
+            this.plot_Statue = Plot_Statue.已开发;
             this.curColor = Color.green;
         }
         #endregion
@@ -187,18 +231,25 @@ namespace ENTITY
         {
             if(isEnter)
             {
-                if(this.plot_Type==Plot_Type.可探索||this.plot_Type==Plot_Type.未探明)
+                if(this.plot_Statue==Plot_Statue.可探索||this.plot_Statue==Plot_Statue.未探明)
                 {
-                    this.ChangeType(Plot_Type.已探索);
+                    this.ChangeType(Plot_Statue.已探索);
+                }
+                if(isFirstExplored)///第一次探索
+                {
+                    this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
+                    ResourcesManager.Instance.ChangeBuildingResources(new int[3] {1,1,1});
+
+                    this.isFirstExplored = false;
                 }
             }
-            else
-            {
-                if(this.plot_Type==Plot_Type.已探索)
-                {
-                    this.ChangeType(Plot_Type.未探明);
-                }
-            }
+            //else
+            //{
+            //    if(this.plot_Type==Plot_Type.已探索)
+            //    {
+            //        this.ChangeType(Plot_Type.未探明);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -209,11 +260,14 @@ namespace ENTITY
         {
             if(isbuild)
             {
-                this.ChangeType(Plot_Type.已开发);
+                this.ChangeType(Plot_Statue.已开发);
             }
             else
             {
-                this.ChangeType(Plot_Type.已探索);
+                if(this.plot_Statue==Plot_Statue.已开发)
+                {
+                    this.ChangeType(Plot_Statue.已探索);
+                }
             }
         }
 
@@ -225,16 +279,16 @@ namespace ENTITY
         {
             if (isEnter)
             {
-                if(this.plot_Type == Plot_Type.未探明)
+                if(this.plot_Statue == Plot_Statue.未探明)
                 {
-                    this.ChangeType(Plot_Type.可探索);
+                    this.ChangeType(Plot_Statue.可探索);
                 }
             }
             else
             {
-                if (this.plot_Type == Plot_Type.可探索)
+                if (this.plot_Statue == Plot_Statue.可探索)
                 {
-                    this.ChangeType(Plot_Type.未探明);
+                    this.ChangeType(Plot_Statue.未探明);
                 }
             }
         }

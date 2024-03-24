@@ -46,26 +46,4 @@ public class GatheringBuilding : Building
         return resource;
     }
 
-    /// <summary>
-    /// 建造消耗
-    /// </summary>
-    public override void SpendResource()
-    {
-        int[] cost= DataManager.BuildingScriptLists[0][(int)this.type - (int)Building_Type.自动采集建筑 - 1].ResourcesCost;
-        ResourcesManager.Instance.ChangeBuildingResources(cost);
-    }
-
-    public override void AddHostility()
-    {
-        if (SettlementManager.Instance.humanSettlements.ContainsKey(this.pos))
-        {
-            int hostility = DataManager.BuildingScriptLists[0][(int)this.type - (int)Building_Type.自动采集建筑 - 1].HostilityToHuman;
-            SettlementManager.Instance.humanSettlements[this.pos].AddHotility(hostility);
-        }
-        else if (SettlementManager.Instance.robotSettlements.ContainsKey(this.pos))
-        {
-            int hostility = DataManager.BuildingScriptLists[0][(int)this.type - (int)Building_Type.自动采集建筑 - 1].HostilityToRobot;
-            SettlementManager.Instance.robotSettlements[this.pos].AddHotility(hostility);
-        }
-    }
 }

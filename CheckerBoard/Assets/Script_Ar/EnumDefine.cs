@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Plot_Type
+public enum Plot_Statue
 {
     无=-1,
     未探明,
@@ -44,5 +44,24 @@ public enum Event_Type
     交易,
     战斗,
     特殊
+}
+
+public enum Building_Condition_Type
+{
+    无=-1,
+    资源1,
+    资源2,
+    资源3,
+    回合数,
+    蓝图,
+    厉害的战斗机器
+}
+
+public enum Plot_Condition_Type
+{
+    无=-1,
+    回合,
+    板块,
+    道具
 }
 

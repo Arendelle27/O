@@ -24,27 +24,6 @@ public class BattleBuilding :Building
 
     }
 
-    /// <summary>
-    /// ½¨ÔìÏûºÄ
-    /// </summary>
-    public override void SpendResource()
-    {
-        int[] cost = this.resourcesCost;
-        ResourcesManager.Instance.ChangeBuildingResources(cost);
-    }
 
-    public override void AddHostility()
-    {
-        if(SettlementManager.Instance.humanSettlements.ContainsKey(this.pos))
-        {
-            int hostility = this.hostilityToHuman;
-            SettlementManager.Instance.humanSettlements[this.pos].AddHotility(hostility);
-        }
-        else if(SettlementManager.Instance.robotSettlements.ContainsKey(this.pos))
-        {
-            int hostility = this.hostilityToRobot;
-            SettlementManager.Instance.robotSettlements[this.pos].AddHotility(hostility);
-        }
-    }
 
 }

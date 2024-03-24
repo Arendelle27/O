@@ -28,29 +28,11 @@ public class ProductionBuilding : Building
     /// </summary>
     public int Produce()
     {
-        return this.production;
+        if (PlotManager.Instance.plots[this.pos].HaveExploratoryTeam)
+        {
+            return this.production;
+        }
+        return 0;
     }
 
-    /// <summary>
-    /// 建造消耗
-    /// </summary>
-    public override void SpendResource()
-    {
-        int[] cost = DataManager.BuildingScriptLists[1][(int)this.type - (int)Building_Type.生产建筑 - 1].ResourcesCost;
-        ResourcesManager.Instance.ChangeBuildingResources(cost);
-    }
-
-    public override void AddHostility()
-    {
-        if (SettlementManager.Instance.humanSettlements.ContainsKey(this.pos))
-        {
-            int hostility = DataManager.BuildingScriptLists[1][(int)this.type - (int)Building_Type.生产建筑 - 1].HostilityToHuman;
-            SettlementManager.Instance.humanSettlements[this.pos].AddHotility(hostility);
-        }
-        else if (SettlementManager.Instance.robotSettlements.ContainsKey(this.pos))
-        {
-            int hostility = DataManager.BuildingScriptLists[1][(int)this.type - (int)Building_Type.生产建筑 - 1].HostilityToRobot;
-            SettlementManager.Instance.robotSettlements[this.pos].AddHotility(hostility);
-        }
-    }
 }

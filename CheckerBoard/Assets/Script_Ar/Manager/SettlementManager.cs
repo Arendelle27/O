@@ -106,8 +106,8 @@ namespace MANAGER
                 Vector2Int v2 = Vector2Int.zero;
                 do
                 {
-                    x = Random.value > 0.5f ? Random.Range(-4, -1) : Random.Range(2, 5);
-                    y = Random.value > 0.5f ? Random.Range(-4, -1) : Random.Range(2, 5);
+                    x = Random.value > 0.5f ? Random.Range(-5, -1) : Random.Range(2, 6);
+                    y = Random.value > 0.5f ? Random.Range(-3, -1) : Random.Range(2, 4);
                     v2 = new Vector2Int(x, y);
                 }
                 while (this.humanSettlements.ContainsKey(v2) || this.robotSettlements.ContainsKey(v2));

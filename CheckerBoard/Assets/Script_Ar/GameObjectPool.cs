@@ -33,7 +33,7 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
 
     public void Awake()
     {
-        this.Plots = new ObjectPool<GameObject>(GetObject_Plot, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 100);
+        this.Plots = new ObjectPool<GameObject>(GetObject_Plot, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 80, 400);
         this.GatheringBuildings = new ObjectPool<GameObject>(GetObject_GatheringBuilding, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
         this.ProductionBuildings = new ObjectPool<GameObject>(GetObject_ProductionBuilding, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
         this.BattleBuildings = new ObjectPool<GameObject>(GetObject_BattleBuilding, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);

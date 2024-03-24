@@ -20,7 +20,7 @@ public class Main : MonoSingleton<Main>
     {
         ArchiveManager.LoadData();//加载存档
         yield return null;
-        DataManager.Load();//读取建筑脚本列表
+        MainThreadDispatcher.StartUpdateMicroCoroutine(DataManager.Load());//读取建筑脚本列表
         yield return null;
     }
 
@@ -46,7 +46,7 @@ public class Main : MonoSingleton<Main>
         yield return null;
         ResourcesManager.Instance.Restart();
         yield return null;
-        PlotManager.Instance.Restart();
+        MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
         yield return null;
         SettlementManager.Instance.Restart();
         yield return null;
