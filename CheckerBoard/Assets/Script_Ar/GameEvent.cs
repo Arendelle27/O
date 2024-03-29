@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GameEvent
 {
-    PlotDefine eventDefine;
+    //PlotDefine eventDefine;
 }

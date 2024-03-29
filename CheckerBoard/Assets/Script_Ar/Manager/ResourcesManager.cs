@@ -1,3 +1,4 @@
+using ENTITY;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,15 @@ namespace MANAGER
 
         [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
         public int levelPromptionAmount;
+
+        [SerializeField, LabelText("通过资源解锁建筑"), ReadOnly]
+        public List<Subject<int>> unlockByResouces = new List<Subject<int>>() 
+        {
+            new Subject<int>(),
+            new Subject<int>(),
+            new Subject<int>()
+        };
+
         public ResourcesManager()
         {
             this.ObserveEveryValueChanged(_ => this.wealth).Subscribe(_ =>
@@ -38,6 +48,13 @@ namespace MANAGER
                 (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[1].text = this.buildingResources[1].ToString();
                 (UIMain.Instance.uiPanels[1] as UIGamePanel).resourcesAmounts[2].text = this.buildingResources[2].ToString();
                 Debug.Log("资源变化");
+                for (int i = 0; i < this.buildingResources.Count; i++)
+                {
+                    if (this.unlockByResouces[i] != null)
+                    {
+                        this.unlockByResouces[i].OnNext(this.buildingResources[i]);
+                    }
+                }
             });
 
             this.ObserveEveryValueChanged(_ => this.execution).Subscribe(_ =>
@@ -66,8 +83,8 @@ namespace MANAGER
         public void Restart()
         {
             this.Init();
-            this.wealth = 100;
-            this.buildingResources = new List<int> { 5, 5, 5 };
+            this.wealth = 5000;
+            this.buildingResources = new List<int> { 0,0,0 };
             this.execution = 5;
         }
 
@@ -96,20 +113,35 @@ namespace MANAGER
         /// 增减建筑资源
         /// </summary>
         /// <param name="variations"></param>
-        public void ChangeBuildingResources(int[] variations)
+        public void ChangeBuildingResources(int[] variations,bool isAdd)//是否是增加资源
         {
-            int i1 = this.buildingResources[0] + variations[0];
-            int i2 = this.buildingResources[1] + variations[1];
-            int i3 = this.buildingResources[2] + variations[2];
-            this.buildingResources = new List<int>{ i1, i2, i3 };
+            List<int> buildingResources=new List<int>();
 
-            if (variations[0] > 0)
+            int res = 0;
+            for (int i = 0; i < this.buildingResources.Count; i++)
             {
-                for (int i = 0; i < allBuildingResourcesGathered.Count; i++)
+                if(isAdd)//增加资源
                 {
-                    this.allBuildingResourcesGathered[i] += variations[i];
+                    res = this.buildingResources[i] + variations[i];
+
+                    this.allBuildingResourcesGathered[i] += variations[i];//增加总资源
                 }
+                else
+                {
+                    res = this.buildingResources[i] - variations[i];
+                }
+                buildingResources.Add(res);
             }
+
+            this.buildingResources = buildingResources;
+
+            //if (isAdd)
+            //{
+            //    for (int i = 0; i < allBuildingResourcesGathered.Count; i++)
+            //    {
+            //        this.allBuildingResourcesGathered[i] += variations[i];
+            //    }
+            //}
         }
 
         /// <summary>
@@ -143,17 +175,38 @@ namespace MANAGER
         /// <returns></returns>
         public bool CanBuild(Building_Type type)
         {
+            if (this.execution < 1)
+            {
+                Debug.Log("行动力不足");
+                return false;
+            }
+
+            int[] cost = new int[3];
+            int sort = (int)type;
+            if (sort > (int)Building_Type.自动采集建筑 && sort < (int)Building_Type.生产建筑)
+            {
+                cost= DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1].ResourcesCost;
+            }
+            else if (sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
+            {
+                cost = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1].ResourcesCost;
+            }
+            else
+            {
+                cost= DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1].ResourcesCost;
+            }
+
             for (int i = 0; i < buildingResources.Count; i++)
             {
-                if (buildingResources[i] < 1)
+                if (buildingResources[i] < cost[i])
                 {
+                    Debug.LogFormat("资源{0}不足",i);
                     return false;
                 }
             }
-            if(this.execution<1)
-            {
-                return false;
-            }
+            //消耗资源
+            this.ChangeBuildingResources(cost,false);
+            this.ChangeExecution(-1);//消耗一点行动力
             return true;
         }
 

@@ -193,7 +193,17 @@ namespace MANAGER
                 aimPlot.HaveExploratoryTeam = false;
                 ResourcesManager.Instance.levelPromptionAmount++;
             }
-        }   
+        }
+
+        //结束回合判定
+        public void RoundOver()
+        {
+            foreach (var expTeam in this.exploratoryTeams)
+            {
+                Plot aimPlot = PlotManager.Instance.plots[this.wanderer.plot.pos + expTeam];
+                aimPlot.TeamExp();
+            }
+        }
     }
 }
 

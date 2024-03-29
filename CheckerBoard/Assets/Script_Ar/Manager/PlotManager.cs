@@ -13,13 +13,12 @@ using Managers;
 using UIBUILDING;
 using System.Linq;
 using System.Reflection;
+using static UnityEditor.PlayerSettings;
 
 namespace MANAGER
 {
     public class PlotManager : MonoSingleton<PlotManager>
     {
-        //储存当前存在的格子
-        public Dictionary<Vector2Int, Plot> plots = new Dictionary<Vector2Int, Plot>();
 
         [SerializeField, LabelText("地图"), Tooltip("瓦片地图")]
         public Tilemap map;
@@ -30,6 +29,10 @@ namespace MANAGER
 
         [SerializeField, LabelText("所有的特殊生成的地块"), ReadOnly]
         public Dictionary<Vector2Int,int> plotTypeSepical;//key为位置，value为格子类型
+
+        #region 每局游戏开始时初始化的数据
+        //储存当前存在的格子
+        public Dictionary<Vector2Int, Plot> plots = new Dictionary<Vector2Int, Plot>();
 
         [SerializeField, LabelText("当前存在的非特殊生成地块"), ReadOnly]
         Dictionary<int, PlotDefine> plotTypeDesepical = new Dictionary<int, PlotDefine>();
@@ -104,15 +107,10 @@ namespace MANAGER
                 }
             }
         }
+        #endregion
 
         void Start()
         {
-            for (int i = -5; i <=5; i++)
-                for (int j = -3; j <=3; j++)
-                {
-                    this.GetGrid(new Vector2Int(i, j));
-                }
-
             this.ObserveEveryValueChanged(_ => this.plotType[0].Count).Subscribe(_ =>
             {
                 this.UpdateWeightTotalsAndDespeicalType();
@@ -131,22 +129,19 @@ namespace MANAGER
         /// </summary>
         public void Init()
         {
-            this.SelectedPlot = this.plots[new Vector2Int(0, 0)];
-            this.map_Mode = Map_Mode.正常;  
-
-            if(this.plotTypeSepical==null)
+            if (this.plotTypeSepical == null)
             {
                 this.plotTypeSepical = new Dictionary<Vector2Int, int>();
                 foreach (var pD in DataManager.PlotDefines.Values)
                 {
                     if (pD.IsSpecialGeneration)
                     {
-                        for(int i = pD.HorizontalMin; i <= pD.HorizontalMax; i++)
+                        for (int i = pD.HorizontalMin; i <= pD.HorizontalMax; i++)
                         {
                             for (int j = pD.VerticalMin; j <= pD.VerticalMax; j++)
                             {
-                                Vector2Int v2= new Vector2Int(i, j);
-                                if(this.plotTypeSepical.ContainsKey(v2))
+                                Vector2Int v2 = new Vector2Int(i, j);
+                                if (this.plotTypeSepical.ContainsKey(v2))
                                 {
                                     this.plotTypeSepical[v2] = pD.ID;
                                 }
@@ -159,6 +154,20 @@ namespace MANAGER
                     }
                 }
             }//初始化特殊生成的格子类型
+
+            if(this.unlockByRound!=null)//取消订阅回合解锁格子
+            {
+                unlockByRound.Dispose();
+            }
+
+            this.RemoveAllPlot();
+
+            this.plotType = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
+            this.weightTotal = 0;
+            this.plotCondition = new List<Dictionary<int, string>>(3) { new Dictionary<int, string>(), new Dictionary<int, string>(), new Dictionary<int, string>() };
+            this.unloadProp = new Dictionary<string, bool>();
+
+            this.map_Mode = Map_Mode.正常;
         }
 
         /// <summary>
@@ -167,82 +176,17 @@ namespace MANAGER
         public IEnumerator Restart()
         {
             this.Init();
-            this.plotType = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
-            this.weightTotal = 0;
-            this.plotCondition = new List<Dictionary<int, string>>(3) { new Dictionary<int, string>(), new Dictionary<int, string>(), new Dictionary<int, string>()};
-            this.unloadProp = new Dictionary<string, bool>();
             yield return null;
             this.InitPlotType();
             yield return null;
-            foreach (var pos in this.plots.Keys)
-            {
-                PlotDefine pD= this.GetPlotDefine(pos);
-                if(pD.IsSpecialGeneration)//是否是特殊生成
+            for (int i = -5; i <= 5; i++)
+                for (int j = -3; j <= 3; j++)
                 {
-                    if (this.plotType[0].Contains(pD.ID) || this.plotType[1].Contains(pD.ID))//是否已解锁
-                    {
-                        this.plots[pos].SetInfo(pD);
-                    }
-                    else
-                    {
-                        this.plots[pos].SetInfo(pD,false);
-                    }
+                    this.GetPlotAndDefine(new Vector2Int(i, j));
                 }
-                else
-                {
-                    this.plots[pos].SetInfo(pD);
-                }
-                this.UnlockPlotByPlot(plots[pos]);//订阅解锁格子
-            }
             yield return null;
 
-            //Dictionary<int,PlotDefine> dic = new Dictionary<int, PlotDefine>();
-            //for(int n=0;n<this.plotType.Count;n++)
-            //{
-            //    foreach (var id in this.plotType[n])
-            //    {
-            //        if (DataManager.PlotDefines[id].IsSpecialGeneration)
-            //        {
-            //            for (int i = DataManager.PlotDefines[id].HorizontalMin; i <= DataManager.PlotDefines[id].HorizontalMax; i++)
-            //            {
-            //                for (int j = DataManager.PlotDefines[id].VerticalMin; j <= DataManager.PlotDefines[id].VerticalMax; j++)
-            //                {
-            //                    Vector2Int v = new Vector2Int(i, j);
-            //                    if (this.plots.ContainsKey(v))
-            //                    {
-            //                        this.plots[v].SetInfo(DataManager.PlotDefines[id]);
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            dic.Add(id, DataManager.PlotDefines[id]);
-            //        }
-            //    }
-            //}
-
-            //foreach (var plot in this.plots.Values)
-            //{
-            //    if(plot.plotDefine==null)
-            //    {
-            //        int r = UnityEngine.Random.Range(0, this.curWeightTotals[0] + this.curWeightTotals[1]);
-            //        int left=0;
-            //        int right=0;
-
-            //        for(int i=0;i<dic.Count;i++)
-            //        {
-            //            var item = dic.ElementAt(i);
-            //            right += item.Value.Weights;
-            //            if (r >= left && r <= right)
-            //            {
-            //                plot.SetInfo(item.Value);
-            //                break;
-            //            }
-            //            left = right;
-            //        }
-            //    }
-            //}
+            this.SelectedPlot = this.plots[new Vector2Int(0, 0)];
         }
 
         /// <summary>
@@ -250,19 +194,36 @@ namespace MANAGER
         /// </summary>
         public void ReadArchive()
         {
-            foreach (var plot in ArchiveManager.archive.plotData)
-            {
-                this.plots[plot.pos].ReadArchive(plot);
-            }
+            //foreach (var plot in ArchiveManager.archive.plotData)
+            //{
+            //    this.plots[plot.pos].ReadArchive(plot);
+            //}
         }
 
+        /// <summary>
+        /// 生成格子
+        /// </summary>
+        /// <param name="pos"></param>
+        void GetPlotAndDefine(Vector2Int pos)
+        {
+            Plot plot = this.GetGrid(pos);
+            if(pos==new Vector2Int(0,0))
+            {
+                plot.SetInfo(DataManager.PlotDefines[6]);
+            }
+            else
+            {
+                plot.SetInfo(this.GetPlotDefine(pos));
+            }
+            this.UnlockPlotByPlot(plots[plot.pos]);//订阅解锁格子
+        }
 
         /// <summary>
         /// 在给定的位置产生格子
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        void GetGrid(Vector2Int pos)
+        Plot GetGrid(Vector2Int pos)
         {
             GameObject gO = GameObjectPool.Instance.Plots.Get();
             gO.transform.parent = this.transform;
@@ -274,18 +235,38 @@ namespace MANAGER
 
             this.plots.Add(pos, plot);
 
+            //订阅点击格子事件
             plot.clickSelectedSubject.Subscribe(p =>
             {
-                if(p.plot_Statue==Plot_Statue.已探索//板块为已探索
-                    && this.map_Mode == Map_Mode.正常//地图模式为正常
-                    && p.plotDefine.CanBuild//板块可以建造
-                    )
-                    
+                if(this.map_Mode == Map_Mode.正常)//地图模式为正常
                 {
-                    UIManager.Instance.Show<UIBuildingWindow>();
+                    if (p.wanderer != null//流浪者处于该板块上
+                        && p.plotDefine.CanBuild//板块可以建造
+                        && p.building == null//板块上没有建筑
+                        )
+                    {
+                        UISelectedWindow uSW= UIManager.Instance.Show<UISelectedWindow>();
+                        uSW.OpenWindow(0);
+
+                    }
+                    if (p.building != null)//板块上有建筑
+                    {
+                        BuildingManager.Instance.selectedBuilding = p.building;
+                        UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
+                        uSW.OpenWindow(1);
+                    }
+                    if(p.eventArea!=null)//板块上有事件地区
+                    {
+                        EventAreaManager.Instance.selectedEventArea = p.eventArea;
+                        UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
+                        uSW.OpenWindow(2);
+                    }
                 }
+
                 this.SelectedPlot = p;
             });
+
+            return plot;
         }
 
         /// <summary>
@@ -341,7 +322,7 @@ namespace MANAGER
                 }
             }
 
-            unlockByRound=RoundManager.Instance.unLoadByRound
+            unlockByRound=RoundManager.Instance.unlockPlotByRound
                 .Subscribe(roundNumber =>
                 {
                     for(int i = 0; i < this.plotCondition[1].Count;)
@@ -490,20 +471,20 @@ namespace MANAGER
                 List<int> ys = new List<int>() { 0 };
                 if (expTeam.x >= 0)
                 {
-                    xs.Add(1);
+                    xs.AddRange(new List<int>{1,2});
                 }
                 else if (expTeam.x <= 0)
                 {
-                    xs.Add(-1);
+                    xs.AddRange(new List<int> { -1, -2 });
                 }
 
                 if (expTeam.y >= 0)
                 {
-                    ys.Add(1);
+                    ys.AddRange(new List<int> { 1, 2 });
                 }
                 else if (expTeam.y <= 0)
                 {
-                    ys.Add(-1);
+                    ys.AddRange(new List<int> { -1, -2 });
                 }
 
                 foreach (var x in xs)
@@ -523,23 +504,24 @@ namespace MANAGER
                         }
                         if (!this.plots.ContainsKey(v2))
                         {
-                            this.GetGrid(v2);//生成格子
-                            PlotDefine pD = this.GetPlotDefine(v2);
-                            if (pD.IsSpecialGeneration)//是否是特殊生成
-                            {
-                                if (this.plotType[0].Contains(pD.ID) || this.plotType[1].Contains(pD.ID))//是否已解锁
-                                {
-                                    this.plots[v2].SetInfo(pD);
-                                }
-                                else
-                                {
-                                    this.plots[v2].SetInfo(pD, false);
-                                }
-                            }
-                            else
-                            {
-                                this.plots[v2].SetInfo(pD);
-                            }
+                            Plot plot= this.GetGrid(v2);//生成格子
+                            //PlotDefine pD = this.GetPlotDefine(v2);
+                            //if (pD.IsSpecialGeneration)//是否是特殊生成
+                            //{
+                            //    if (this.plotType[0].Contains(pD.ID) || this.plotType[1].Contains(pD.ID))//是否已解锁
+                            //    {
+                            //        this.plots[v2].SetInfo(pD);
+                            //    }
+                            //    else
+                            //    {
+                            //        this.plots[v2].SetInfo(pD, false);
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    this.plots[v2].SetInfo(pD);
+                            //}
+                            this.plots[plot.pos].SetInfo(this.GetPlotDefine(plot.pos));
                             this.UnlockPlotByPlot(plots[v2]);//订阅解锁格子
                         }
                     }
@@ -580,6 +562,19 @@ namespace MANAGER
                         this.RegenerateDespecialPlotDefine();
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// 清除所有板块
+        /// </summary>
+        void RemoveAllPlot()
+        {
+            for(int i=0;i<this.plots.Count;)
+            {
+                var plot = this.plots.ElementAt(i).Value;
+                GameObjectPool.Instance.Plots.Release(plot.gameObject);
+                this.plots.Remove(plot.pos);
             }
         }
 
@@ -665,7 +660,6 @@ namespace MANAGER
         public void WanderEnter(Plot enterPlot)
         {
             enterPlot.wanderer = WandererManager.Instance.wanderer;//流浪者进入人类聚落
-            SettlementManager.Instance.TriggerEvent(Event_Type.交易,enterPlot.pos);//判断与与聚落触发交易事件
 
             this.ExpTeamEnterOrLeave(enterPlot, true);//探索小队伴随着流浪者进入
 

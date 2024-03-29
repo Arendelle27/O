@@ -14,10 +14,10 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     public GameObject Wanderer { get; set; }
     ////目的地提示牌对象
     //public GameObject DestinationSigns { get; set; }
-    //人类聚落对象池
-    public ObjectPool<GameObject> HumanSettlements { get; set; }
-    //机械聚落对象池
-    public ObjectPool<GameObject> RobotSettlements { get; set; }
+    ////人类聚落对象池
+    //public ObjectPool<GameObject> HumanSettlements { get; set; }
+    ////机械聚落对象池
+    //public ObjectPool<GameObject> RobotSettlements { get; set; }
 
     //采集建筑对象池
     public ObjectPool<GameObject> GatheringBuildings { get; set; }
@@ -30,6 +30,10 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
 
     //UI建筑物品对象池
     public ObjectPool<GameObject> UIBuildingItems { get; set; }
+    //UI商品物品对象池
+    public ObjectPool<GameObject> UICommodityItems { get; set; }
+    //UI物品对象池
+    public ObjectPool<GameObject> UIGoodItems { get; set; }
 
     public void Awake()
     {
@@ -40,11 +44,12 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
 
         this.Wanderer = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Wanderer"));
         //this.DestinationSigns = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign"));
-        this.HumanSettlements = new ObjectPool<GameObject>(GetObject_HumanSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
-        this.RobotSettlements = new ObjectPool<GameObject>(GetObject_RobotSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
+        //this.HumanSettlements = new ObjectPool<GameObject>(GetObject_HumanSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
+        //this.RobotSettlements = new ObjectPool<GameObject>(GetObject_RobotSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
 
         this.UIBuildingItems = new ObjectPool<GameObject>(GetObject_UIBuildingItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
-
+        this.UICommodityItems = new ObjectPool<GameObject>(GetObject_UICommodityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
+        this.UIGoodItems = new ObjectPool<GameObject>(GetObject_UIGoodItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
     }
 
 
@@ -67,12 +72,12 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         return prefab;
     }
 
-    GameObject GetSettlementObject(string name)
-    {
-        GameObject prefab = Instantiate(Resources.Load<GameObject>(PathConfig.GetSettlementPrefabPath(name)), this.transform);
-        prefab.SetActive(false);
-        return prefab;
-    }
+    //GameObject GetSettlementObject(string name)
+    //{
+    //    GameObject prefab = Instantiate(Resources.Load<GameObject>(PathConfig.GetSettlementPrefabPath(name)), this.transform);
+    //    prefab.SetActive(false);
+    //    return prefab;
+    //}
 
     /// <summary>
     /// 获得UI对象
@@ -115,23 +120,23 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         return this.GetBuildingObject("BattleBuilding");
     }
 
-    /// <summary>
-    /// 获得人类聚落对象
-    /// </summary>
-    /// <returns></returns>
-    GameObject GetObject_HumanSettlement()
-    {
-        return this.GetSettlementObject("HumanSettlement");
-    }
+    ///// <summary>
+    ///// 获得人类聚落对象
+    ///// </summary>
+    ///// <returns></returns>
+    //GameObject GetObject_HumanSettlement()
+    //{
+    //    return this.GetSettlementObject("HumanSettlement");
+    //}
 
-    /// <summary>
-    /// 获得机械聚落对象
-    /// </summary>
-    /// <returns></returns>
-    GameObject GetObject_RobotSettlement()
-    {
-        return this.GetSettlementObject("RobotSettlement");
-    }
+    ///// <summary>
+    ///// 获得机械聚落对象
+    ///// </summary>
+    ///// <returns></returns>
+    //GameObject GetObject_RobotSettlement()
+    //{
+    //    return this.GetSettlementObject("RobotSettlement");
+    //}
 
     #endregion
 
@@ -144,6 +149,21 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     {
         return this.GetUIObject("UIBuildingItem");
     }
+
+    /// <summary>
+    /// 获得UI商品物品预制体
+    /// </summary>
+    /// <returns></returns>
+    GameObject GetObject_UICommodityItem()
+    {
+        return this.GetUIObject("UICommodityItem");
+    }
+
+    GameObject GetObject_UIGoodItem()
+    {
+        return this.GetUIObject("UIGoodItem");
+    }
+
     #endregion
 
 

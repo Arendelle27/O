@@ -13,7 +13,7 @@ public static class ArchiveManager
         public List<PlotData> plotData=new List<PlotData>();
         public WandererData wandererData;
         public List<BuildingData> buildingData=new List<BuildingData>();
-        public List<SettlementData> settlementData=new List<SettlementData>();
+        //public List<SettlementData> settlementData=new List<SettlementData>();
         public int roundNumber;
         public int wealth;
         public List<int> buildingRes=new List<int>();
@@ -104,24 +104,24 @@ public static class ArchiveManager
             });
         }
 
-        foreach(var settlement in SettlementManager.Instance.humanSettlements.Values)
-        {
-            arc.settlementData.Add(new SettlementData
-            {
-                pos=settlement.pos,
-                isHumanSettlement=true,
-                hotility=settlement.hotility
-            });
-        }
-        foreach (var settlement in SettlementManager.Instance.robotSettlements.Values)
-        {
-            arc.settlementData.Add(new SettlementData
-            {
-                pos = settlement.pos,
-                isHumanSettlement = false,
-                hotility = settlement.hotility
-            });
-        }
+        //foreach(var settlement in EventAreaManager.Instance.humanSettlements.Values)
+        //{
+        //    arc.settlementData.Add(new SettlementData
+        //    {
+        //        pos=settlement.pos,
+        //        isHumanSettlement=true,
+        //        hotility=settlement.hotility
+        //    });
+        //}
+        //foreach (var settlement in EventAreaManager.Instance.robotSettlements.Values)
+        //{
+        //    arc.settlementData.Add(new SettlementData
+        //    {
+        //        pos = settlement.pos,
+        //        isHumanSettlement = false,
+        //        hotility = settlement.hotility
+        //    });
+        //}
 
         arc.roundNumber = RoundManager.Instance.roundNumber;
 

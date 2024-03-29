@@ -15,6 +15,10 @@ namespace ENTITY
         public Building_Type type;
 
         public int TID;
+        [SerializeField, LabelText("机械名称"), ReadOnly]
+        public string buildingname;
+        [SerializeField, LabelText("描述"), ReadOnly]
+        public string description;
         [SerializeField, LabelText("建造时消耗资源"), ReadOnly]
         public int[] resourcesCost = new int[3];
         [SerializeField, LabelText("战力"), ReadOnly]
@@ -41,18 +45,9 @@ namespace ENTITY
             this.pos = plot.pos;
             this.type = type;
 
-            this.SpendResource();
+            //this.SpendResource();
+
             this.AddHostility();
-
-        }
-
-        /// <summary>
-        /// 建筑消耗资源
-        /// </summary>
-        public void SpendResource()
-        {
-            int[] cost = new int[3] { -this.resourcesCost[0], -this.resourcesCost[1], -this.resourcesCost[2] };
-            ResourcesManager.Instance.ChangeBuildingResources(cost);
         }
 
         /// <summary>
@@ -60,15 +55,10 @@ namespace ENTITY
         /// </summary>
         public void AddHostility()
         {
-            if (SettlementManager.Instance.humanSettlements.ContainsKey(this.pos))
+            //增加聚落板块的敌意
+            if (EventAreaManager.Instance.EventAreas[0].ContainsKey(pos))//如果该板块为聚落
             {
-                int hostility = this.hostilityToHuman;
-                SettlementManager.Instance.humanSettlements[this.pos].AddHotility(hostility);
-            }
-            else if (SettlementManager.Instance.robotSettlements.ContainsKey(this.pos))
-            {
-                int hostility = this.hostilityToRobot;
-                SettlementManager.Instance.robotSettlements[this.pos].AddHotility(hostility);
+                (EventAreaManager.Instance.EventAreas[0][pos] as Settle).AddHotility(this.hostilityToHuman);
             }
         }
 

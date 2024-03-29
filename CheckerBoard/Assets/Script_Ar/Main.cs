@@ -42,13 +42,13 @@ public class Main : MonoSingleton<Main>
     {
         this.mainCamera?.Restart();
         yield return null;
+        MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
+        yield return null;
         RoundManager.Instance.Restart();
         yield return null;
         ResourcesManager.Instance.Restart();
         yield return null;
-        MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
-        yield return null;
-        SettlementManager.Instance.Restart();
+        EventAreaManager.Instance.Restart();
         yield return null;
         BuildingManager.Instance.Restart();
         yield return null;
@@ -68,7 +68,7 @@ public class Main : MonoSingleton<Main>
         yield return null;
         PlotManager.Instance.ReadArchive();
         yield return null;
-        SettlementManager.Instance.ReadArchive();
+        EventAreaManager.Instance.ReadArchive();
         yield return null;
         BuildingManager.Instance.ReadArchive();
         yield return null;

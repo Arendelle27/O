@@ -14,6 +14,8 @@ public class ProductionBuilding : Building
         base.SetInfo(plot, type);
         this.TID = DataManager.BuildingScriptLists[1][(int)this.type - (int)Building_Type.Éú²ú½¨Öþ - 1].TID;
 
+        this.buildingname = DataManager.BuildingScriptLists[1][this.TID].Name;
+        this.description = DataManager.BuildingScriptLists[1][this.TID].Description;
         this.resourcesCost = DataManager.BuildingScriptLists[1][this.TID].ResourcesCost;
         this.attack = DataManager.BuildingScriptLists[1][this.TID].Attack;
         this.hostilityToRobot = DataManager.BuildingScriptLists[1][this.TID].HostilityToRobot;

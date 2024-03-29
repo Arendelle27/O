@@ -65,3 +65,25 @@ public enum Plot_Condition_Type
     道具
 }
 
+public enum Event_Area_Type
+{
+    无=-1,
+    交易,
+    对抗,
+    遗迹,
+    剧情
+}
+
+public enum Resource_Type
+{
+    断裂电缆,
+    废弃金属,
+    影像芯片
+}
+
+public enum Transaction_Type
+{
+    无=-1,
+    资源,
+    蓝图
+}

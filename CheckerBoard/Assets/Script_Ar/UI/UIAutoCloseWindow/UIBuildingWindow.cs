@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace UIBUILDING
 {
-    public class UIBuildingWindow : UIWindow, IDeselectHandler
+    public class UIBuildingWindow : UISelectWindow
     {
         [SerializeField, LabelText("建筑列表"), Tooltip("收集建筑和生产建筑列表")]
         public TabView tabView;
@@ -29,21 +29,20 @@ namespace UIBUILDING
             }
             //MainThreadDispatcher.StartUpdateMicroCoroutine(BeSelected());
 
-            this.OnCloseClick();
         }
 
         void OnEnable()
         {
-            StartCoroutine(BeSelected());
+ 
         }
 
         /// <summary>
-        /// 按下q切换按键
+        /// 按下切换按键
         /// </summary>
         /// <param name="index"></param>
         void OnTabSelect(int index)
         {
-            StartCoroutine(BeSelected());
+            StartCoroutine( this.selectedWindow.BeSelected());
         }
 
         /// <summary>
@@ -60,7 +59,12 @@ namespace UIBUILDING
             else//第二次点击确认建造
             {
                 Debug.LogFormat("建造建筑：{0}", buildingtypeSelected);
-                BuildingManager.Instance.Build(buildingtypeSelected, PlotManager.Instance.SelectedPlot);
+
+                if(BuildingManager.Instance.Build(buildingtypeSelected, PlotManager.Instance.SelectedPlot))
+                {
+                    this.selectedWindow.OnCloseClick();
+                }
+                
             }
         }
 
@@ -81,37 +85,11 @@ namespace UIBUILDING
             foreach (var buType in BuildingManager.Instance.buildingTypes[sort])
             {
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
-                go.transform.SetParent(this.tabView.tabPages[sort].transform);//在建筑列表第一页生成
+                go.transform.SetParent(this.tabView.tabPages[sort].content);//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
                 ui.SetInfo(sort, buType);//设置建筑UIItem信息
                 this.tabView.tabPages[sort].AddItem(ui);
             }
         }
-
-        #region 实现关闭建筑UI选择界面
-        /// <summary>
-        /// 0.1秒后被选中
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator BeSelected()
-        {
-            yield return new WaitForSeconds(0.01f);
-            this.GetComponent<Selectable>().Select();
-        }
-
-        /// <summary>
-        /// 未选中建筑UI时关闭建筑UI选择界面
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnDeselect(BaseEventData eventData)
-        {
-            var ed = eventData as PointerEventData;
-            if (ed.hovered.Contains(this.gameObject))
-            {
-                return;
-            }
-            this.OnCloseClick();
-        }
-        #endregion
     }
 }

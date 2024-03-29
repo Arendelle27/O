@@ -19,7 +19,9 @@ namespace Managers
 
         public UIManager()
         {
-            this.UIResources.Add(typeof(UIBuildingWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIBuildingWindow"), Cache = true });
+            this.UIResources.Add(typeof(UISelectedWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UISelectedWindow"), Cache = true });
+
+            //this.UIResources.Add(typeof(UIBuildingWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIBuildingWindow"), Cache = true });
 
             this.UIResources.Add(typeof(UIScoreWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIScoreWindow"), Cache = true });
 
@@ -29,6 +31,13 @@ namespace Managers
 
             this.UIResources.Add(typeof(UIEventWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIEventWindow"), Cache = true });
 
+            this.UIResources.Add(typeof(UITransactionWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UITransactionWindow"), Cache = true });
+
+            this.UIResources.Add(typeof(UITransactionAmountWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UITransactionAmountWindow"), Cache = true });
+
+            //this.UIResources.Add(typeof(UIBuildingInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UBuildingInfoWindow"), Cache = true });
+
+            //this.UIResources.Add(typeof(UIEventAreaInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIEventAreaInfoWindow"), Cache = true });
         }
 
         ~UIManager()
@@ -44,7 +53,10 @@ namespace Managers
                 UIElement info = this.UIResources[type];
                 if (info.Instance != null)
                 {
-                    info.Instance.SetActive(true);
+                    if(!info.Instance.activeSelf)
+                    {
+                        info.Instance.SetActive(true);
+                    }
                 }
                 else
                 {

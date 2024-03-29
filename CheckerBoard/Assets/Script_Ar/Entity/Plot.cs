@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -41,8 +42,8 @@ namespace ENTITY
         public Wanderer wanderer;
         [SerializeField, LabelText("建筑"), ReadOnly]
         public Building building;
-        [SerializeField, LabelText("聚落"), ReadOnly]
-        public Settlement settlement;
+        [SerializeField, LabelText("事件地区"), ReadOnly]
+        public EventArea eventArea;
 
         [SerializeField, LabelText("是否有探索小队"), ReadOnly]
         private bool haveExploratoryTeam;//是否有探索小队
@@ -117,6 +118,23 @@ namespace ENTITY
             });
         }
 
+        private void OnEnable()
+        {
+            this.clickSelectedSubject = new Subject<Plot>();
+            this.enterSelectedSubject = new Subject<Vector2Int>();
+            this.unLoadByPlot = new Subject<int>();
+        }
+
+        private void OnDisable()
+        {
+            this.clickSelectedSubject.OnCompleted();
+
+            this.enterSelectedSubject.OnCompleted();
+
+            this.unLoadByPlot.OnCompleted();
+
+        }
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -124,41 +142,65 @@ namespace ENTITY
         {
             this.wanderer = null;
             this.building = null;
+            this.eventArea = null;
             this.HaveExploratoryTeam = false;
-
         }
 
         /// <summary>
         /// 设置信息
         /// </summary>
         /// <param name="plotdefine"></param>
-        public void SetInfo(PlotDefine plotdefine,bool canEnter=true)
+        public void SetInfo(PlotDefine plotdefine)
         {
+            this.Init();
+
             this.plotDefine= plotdefine;
             this.plotType = plotdefine.Type;
             this.figure.text = plotdefine.ID.ToString();
 
-            if (this.plotType == 0)
+            switch (this.plotType)
             {
-                this.buildingResources[0]= plotdefine.ResourceType;
-                this.buildingResources[1] = plotdefine.ResourceTotal;
+                case 0://资源板块
+                    if (plotdefine.ResourceType!=-1)
+                    {
+                        this.buildingResources[0] = plotdefine.ResourceType;
+                    }
+                    else
+                    {
+                        this.buildingResources[0] = 0;
+                    }
+                    this.buildingResources[1] = plotdefine.ResourceTotal;
+                    this.figure.color = Color.white;
+                    break;
+                case 1://事件板块
+                    this.eventArea=EventAreaManager.Instance.GetEventArea(plotdefine.EventType, this);
+                    this.figure.color = Color.gray;
+                    break;
             }
 
-            this.Init();
             ChangeType(Plot_Statue.未探明);
             this.isFirstExplored = true;
-            this.canEnter = canEnter;
+            if(this.plotDefine.IsSpecialGeneration)
+            {
+                //特殊生成，根据是否解锁，判断是否可以进入
+                this.canEnter = PlotManager.Instance.plotType[0].Contains(this.plotDefine.ID)|| PlotManager.Instance.plotType[1].Contains(this.plotDefine.ID);
+            }
+            else
+            {
+                this.canEnter = true;
+            }
+
         }
 
-        /// <summary>
-        /// 读档
-        /// </summary>
-        /// <param name="plotData"></param>
-        public void ReadArchive(PlotData plotData)
-        {
-            this.Init();
-            this.ChangeType(plotData.plotType);
-        }
+        ///// <summary>
+        ///// 读档
+        ///// </summary>
+        ///// <param name="plotData"></param>
+        //public void ReadArchive(PlotData plotData)
+        //{
+        //    this.Init();
+        //    this.ChangeType(plotData.plotType);
+        //}
 
         #region 改变格子状态
         /// <summary>
@@ -235,13 +277,23 @@ namespace ENTITY
                 {
                     this.ChangeType(Plot_Statue.已探索);
                 }
-                if(isFirstExplored)///第一次探索
+
+                if(isFirstExplored)
                 {
                     this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
-                    ResourcesManager.Instance.ChangeBuildingResources(new int[3] {1,1,1});
+                    if (this.plotDefine.Type == 0)//资源板块
+                    {
+                        int[] res = new int[3] { 0, 0, 0 };
+                        res[this.buildingResources[0]] = this.plotDefine.ResourceFristtime;
+                        ResourcesManager.Instance.ChangeBuildingResources(res, true);
 
+                        this.buildingResources[1] -= this.plotDefine.ResourceFristtime;
+                    }
                     this.isFirstExplored = false;
                 }
+
+                //触发角色进入事件
+                this.eventArea?.WandererEnter();
             }
             //else
             //{
@@ -323,6 +375,29 @@ namespace ENTITY
 
             this.clickSelectedSubject.OnNext(this);
             //Debug.Log("鼠标点击");
+        }
+
+        /// <summary>
+        /// 队伍探索
+        /// </summary>
+        public void TeamExp()
+        {
+            if ( this.plot_Statue == Plot_Statue.已探索 && this.plotDefine.Type == 0)
+            {
+                int[] res = new int[3] { 0, 0, 0 };
+                if (this.buildingResources[1] > this.plotDefine.ResourceByRound)//资源足够
+                {
+                    res[this.buildingResources[0]] = this.plotDefine.ResourceByRound;
+                    ResourcesManager.Instance.ChangeBuildingResources(res, true);
+                    this.buildingResources[1] -= this.plotDefine.ResourceByRound;
+                }
+                else if (this.buildingResources[1] > 0)//资源不足
+                {
+                    res[this.buildingResources[0]] = this.buildingResources[1];
+                    ResourcesManager.Instance.ChangeBuildingResources(res, true);
+                    this.buildingResources[1] = 0;
+                }
+            }
         }
     }
 }

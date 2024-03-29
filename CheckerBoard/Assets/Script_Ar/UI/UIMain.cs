@@ -1,3 +1,4 @@
+using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +14,16 @@ public class UIMain : MonoSingleton<UIMain>
     //3.选择拓展探索小队的UI界面
     //4.结束面板
 
+    [SerializeField, LabelText("自动关闭的游戏窗口界面"), ReadOnly]
+    public UISelectedWindow uISelectedWindow;
+
     [SerializeField, LabelText("当前面板索引"),ReadOnly]
     public int curPanelIndex = -1;
+
+    private void Awake()
+    {
+        this.uISelectedWindow = UIManager.Instance.Show<UISelectedWindow>();
+    }
 
     /// <summary>
     /// 切换开始面板和游戏面板

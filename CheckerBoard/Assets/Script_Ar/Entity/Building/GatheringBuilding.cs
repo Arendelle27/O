@@ -15,12 +15,14 @@ public class GatheringBuilding : Building
     public int gatherResourceRounds;
 
     [SerializeField, LabelText("已存在回合数"), ReadOnly]
-    int existReound = 0;
+    int existRound = 0;
     public override void SetInfo(Plot plot, Building_Type type)
     {
         base.SetInfo(plot, type);
         this.TID = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1].TID;
 
+        this.buildingname = DataManager.BuildingScriptLists[0][this.TID].Name;
+        this.description = DataManager.BuildingScriptLists[0][this.TID].Description;
         this.resourcesCost = DataManager.BuildingScriptLists[0][this.TID].ResourcesCost;
         this.attack = DataManager.BuildingScriptLists[0][this.TID].Attack;
         this.hostilityToRobot = DataManager.BuildingScriptLists[0][this.TID].HostilityToRobot;
@@ -38,10 +40,17 @@ public class GatheringBuilding : Building
     public List<int> Gather()
     {
         List<int> resource = new List<int>() { 0, 0 };
-        if (this.existReound != 0 && this.existReound%(gatherResourceRounds) == 0)
+        if (this.gatherResourceType == PlotManager.Instance.plots[this.pos].plotDefine.ResourceType)
         {
-            resource[0] = this.gatherResourceType;
-            resource[1] = this.gatherResourceAmount;
+            if (this.existRound != 0 && this.existRound % (gatherResourceRounds) == 0)
+            {
+                resource[0] = this.gatherResourceType;
+                resource[1] = this.gatherResourceAmount;
+            }
+        }
+        else
+        {
+            Debug.LogFormat("采集资源类型{0}与地块资源类型{1}不匹配", this.gatherResourceType, PlotManager.Instance.plots[this.pos].plotDefine.ResourceType);
         }
         return resource;
     }
