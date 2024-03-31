@@ -30,7 +30,7 @@ public class ProductionBuilding : Building
     /// </summary>
     public int Produce()
     {
-        if (PlotManager.Instance.plots[this.pos].HaveExploratoryTeam)
+        if (PlotManager.Instance.plots[this.pos].HaveExploratoryTeam || PlotManager.Instance.plots[this.pos].wanderer!=null)
         {
             return this.production;
         }

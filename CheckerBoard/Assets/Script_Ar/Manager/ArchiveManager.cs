@@ -1,17 +1,20 @@
 using ENTITY;
 using MANAGER;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static ArchiveManager.PlotManagerData;
 
 public static class ArchiveManager
 {
     [Serializable]
     public class Archive
     {
-        public List<PlotData> plotData=new List<PlotData>();
-        public WandererData wandererData;
+        public PlotManagerData plotManagerData=new PlotManagerData();//地块管理器数据
+        public WandererManagerData wandererManagerData=new WandererManagerData();
         public List<BuildingData> buildingData=new List<BuildingData>();
         //public List<SettlementData> settlementData=new List<SettlementData>();
         public int roundNumber;
@@ -22,18 +25,41 @@ public static class ArchiveManager
     }
 
     [Serializable]
-    public class PlotData
+    public class PlotManagerData
     {
-        public Vector2Int pos;
-        public Plot_Statue plotType;
+        [Serializable]
+        public class UnloadPropData
+        {
+            public string propName;
+            public bool isUnloaded;
+        }
+
+        [Serializable]
+        public class PlotData
+        {
+            public Vector2Int pos;
+            public int plotDefineId;
+            public Plot_Statue plotType;
+            public bool isFirstExplored;
+            public List<int> buildingResources;
+        }
+
+        public List<UnloadPropData> unloadPropsData = new List<UnloadPropData>();//地块管理器数据
+        public List<PlotData> plotsData = new List<PlotData>();
     }
 
     [Serializable]
-    public class WandererData  
+    public class WandererManagerData
     {
-        public Vector2Int pos;
-        public int level;
-        public List<Vector2Int> exploratoryTeams;
+        [Serializable]
+        public class WandererData
+        {
+            public Vector2Int pos;
+            public int level;
+        }
+
+        public WandererData wandererData=new WandererData();
+        public List<Vector2Int> exploratoryTeams=new List<Vector2Int>();
     }
 
     [Serializable]
@@ -60,22 +86,34 @@ public static class ArchiveManager
     public static void SaveData()
     {
         Archive arc = new Archive();//建立存档
-        foreach (var plot in PlotManager.Instance.plots.Values)
+        #region 地块管理器数据
+        foreach (var plot in PlotManager.Instance.unloadProp)
         {
-            arc.plotData.Add(new PlotData
+            arc.plotManagerData.unloadPropsData. Add(new UnloadPropData
             {
-                pos = plot.pos,
-                plotType = plot.plot_Statue
+                propName = plot.Key,
+                isUnloaded = plot.Value
             });
         }
 
-        var wanderer = WandererManager.Instance.wanderer;
-        arc.wandererData = new WandererData()
+        foreach (var plot in PlotManager.Instance.plots.Values)
         {
-            pos = wanderer.plot.pos,
-            level = wanderer.level,
-            exploratoryTeams=WandererManager.Instance.exploratoryTeams
-        };
+            arc.plotManagerData.plotsData.Add(new PlotData
+            {
+                pos = plot.pos,
+                plotDefineId = plot.plotDefine.ID,
+                plotType = plot.plot_Statue,
+                isFirstExplored = plot.isFirstExplored,
+                buildingResources=plot.buildingResources
+            });
+        }
+        #endregion
+
+        #region 流浪者管理器数据
+        arc.wandererManagerData.wandererData.pos= WandererManager.Instance.wanderer.plot.pos;
+        arc.wandererManagerData.wandererData.level = WandererManager.Instance.wanderer.level;
+        arc.wandererManagerData.exploratoryTeams = WandererManager.Instance.exploratoryTeams;
+        #endregion
 
         foreach (var building in BuildingManager.Instance.gatheringBuildings.Values)
         {

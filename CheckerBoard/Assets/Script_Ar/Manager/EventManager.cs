@@ -85,5 +85,21 @@ public class EventManager : Singleton<EventManager>
         //EventAreaManager.Instance.transactionObjectsStatue[settleSort][goodId][0]++;//数量增加
         Debug.Log("卖出成功");
     }
+
+    /// <summary>
+    /// 阶段结算
+    /// </summary>
+    public void StageDecision()
+    {
+        if (RoundManager.Instance.roundNumber % 5 == 0)
+        {
+            Debug.Log("阶段结算");
+            ResourcesManager.Instance.wealth -= RoundManager.Instance.roundNumber * 10;
+            if (ResourcesManager.Instance.wealth < 0)
+            {
+                Main.Instance.GameOver();
+            }
+        }
+    }
 }
 

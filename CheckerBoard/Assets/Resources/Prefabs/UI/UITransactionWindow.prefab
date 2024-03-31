@@ -393,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 7606246486977882374}
+  items: []
 --- !u!1 &693903538409080077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3548,6 +3549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 7422691350661742708}
+  items: []
 --- !u!1 &8163736436926468716
 GameObject:
   m_ObjectHideFlags: 0

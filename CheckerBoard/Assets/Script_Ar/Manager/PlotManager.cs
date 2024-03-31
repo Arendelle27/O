@@ -12,8 +12,6 @@ using UnityEngine.EventSystems;
 using Managers;
 using UIBUILDING;
 using System.Linq;
-using System.Reflection;
-using static UnityEditor.PlayerSettings;
 
 namespace MANAGER
 {
@@ -35,7 +33,7 @@ namespace MANAGER
         public Dictionary<Vector2Int, Plot> plots = new Dictionary<Vector2Int, Plot>();
 
         [SerializeField, LabelText("当前存在的非特殊生成地块"), ReadOnly]
-        Dictionary<int, PlotDefine> plotTypeDesepical = new Dictionary<int, PlotDefine>();
+        internal Dictionary<int, PlotDefine> plotTypeDesepical = new Dictionary<int, PlotDefine>();
 
         [SerializeField, LabelText("当前存在的地块种类"), ReadOnly]
         public List<HashSet<int>> plotType = new List<HashSet<int>>(2) {new HashSet<int>(), new HashSet<int>()};
@@ -45,11 +43,15 @@ namespace MANAGER
         int weightTotal = 0;//格子权重总和
 
         [SerializeField, LabelText("解锁格子条件"), ReadOnly]
-        List<Dictionary<int,string>> plotCondition = new List<Dictionary<int, string>>(3) {new Dictionary<int, string>(),new Dictionary<int, string>(),new Dictionary<int, string>() };
+        internal List<Dictionary<int,string>> plotCondition = new List<Dictionary<int, string>>(3) {new Dictionary<int, string>(),new Dictionary<int, string>(),new Dictionary<int, string>() };
         //存储格子条件,0为板块,1为回合,2为道具
 
         [SerializeField, LabelText("解锁格子的道具"), ReadOnly]
-        Dictionary<string, bool> unloadProp;
+        internal Dictionary<string, bool> unloadProp;
+
+        //回合数解锁格子
+        IDisposable unlockByRound;
+        #endregion
 
         [SerializeField, LabelText("地图模式"), ReadOnly]
         public Map_Mode map_Mode = Map_Mode.正常;
@@ -58,8 +60,6 @@ namespace MANAGER
         IDisposable select;
         //是否取消移动格子中的流浪者
         IDisposable cancel;
-        //回合数解锁格子
-        IDisposable unlockByRound;
 
         [SerializeField, LabelText("当前被选中的板块"), ReadOnly]
         private Plot selectedPlot;//当前被选中的板块
@@ -107,7 +107,6 @@ namespace MANAGER
                 }
             }
         }
-        #endregion
 
         void Start()
         {
@@ -209,7 +208,7 @@ namespace MANAGER
             Plot plot = this.GetGrid(pos);
             if(pos==new Vector2Int(0,0))
             {
-                plot.SetInfo(DataManager.PlotDefines[6]);
+                plot.SetInfo(DataManager.PlotDefines[7]);
             }
             else
             {
@@ -240,8 +239,10 @@ namespace MANAGER
             {
                 if(this.map_Mode == Map_Mode.正常)//地图模式为正常
                 {
-                    if (p.wanderer != null//流浪者处于该板块上
-                        && p.plotDefine.CanBuild//板块可以建造
+                    if(p.wanderer == null)//格子上没有流浪者
+                        return;
+
+                    if (p.plotDefine.CanBuild//板块可以建造
                         && p.building == null//板块上没有建筑
                         )
                     {

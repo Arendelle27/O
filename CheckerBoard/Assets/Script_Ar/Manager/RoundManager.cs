@@ -65,7 +65,7 @@ namespace MANAGER
 
             ResourcesManager.Instance.RoundOver();//资源结束回合
             /*结算前*/
-            this.StageDecision();//阶段决策
+            EventManager.Instance.StageDecision();//阶段决策
 
             EventAreaManager.Instance.RoundOver();//事件地区结束回合
 
@@ -82,22 +82,6 @@ namespace MANAGER
                 this.unlockBuildingByRound.OnNext(this.roundNumber);
             }
 
-        }
-
-        /// <summary>
-        /// 阶段结算
-        /// </summary>
-        void StageDecision()
-        {
-            if(this.roundNumber%5==0)
-            {
-                Debug.Log("阶段结算");
-                ResourcesManager.Instance.wealth-=roundNumber*10;
-                if(ResourcesManager.Instance.wealth<0)
-                {
-                    Main.Instance.GameOver();
-                }
-            }
         }
 
         /// <summary>

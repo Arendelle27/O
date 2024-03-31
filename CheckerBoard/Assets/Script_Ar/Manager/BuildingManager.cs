@@ -559,5 +559,29 @@ namespace MANAGER
             this.ProduceWealth();
             //this.GetBuildingType();
         }
+
+        /// <summary>
+        /// 根据建筑类型获取建筑
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static BuildingType GetBuildingByType(Building_Type type)
+        {
+            BuildingType buildingType;
+            int sort = (int)type;
+            if (sort > (int)Building_Type.自动采集建筑 && sort < (int)Building_Type.生产建筑)
+            {
+                buildingType = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1];
+            }
+            else if (sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
+            {
+                buildingType = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1];
+            }
+            else
+            {
+                buildingType = DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1];
+            }
+            return buildingType;
+        }
     }
 }

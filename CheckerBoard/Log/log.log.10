@@ -1,0 +1,56 @@
+2023-11-23 19:14:54,801 [ 1] INFO  Unity: LoadingManager start
+2023-11-23 19:14:57,887 [ 1] INFO  Unity: DataManager > DataManager()
+2023-11-23 19:15:00,492 [ 1] INFO  Unity: UserLoginRequest::user :111 psw:111
+2023-11-23 19:15:00,493 [ 1] INFO  Unity: ConnectToServer() Start 
+2023-11-23 19:15:00,494 [ 1] INFO  Unity: DoConnect
+2023-11-23 19:15:00,495 [ 1] INFO  Unity: NetClient.DoConnect on 127.0.0.1:8000
+2023-11-23 19:15:00,497 [ 1] INFO  Unity: Connect[0] to server 127.0.0.1:8000
+
+2023-11-23 19:15:00,499 [ 1] INFO  Unity: LoadingMesager::OnGameServerConnect :0 reason:Success
+2023-11-23 19:15:00,574 [ 1] INFO  Unity: OnLogin:Success [None]
+2023-11-23 19:15:00,576 [ 1] INFO  Unity: LoadLevel: CharSelect
+2023-11-23 19:15:00,664 [ 1] INFO  Unity: LevelLoadCompleted:1
+2023-11-23 19:15:01,221 [ 1] INFO  Unity: Select Char:[1]¶þ[Archer]
+2023-11-23 19:15:01,770 [ 1] INFO  Unity: UserGameEnterRequest::characterId :0 
+2023-11-23 19:15:01,786 [ 1] INFO  Unity: OnUserGameEnter:Success [None]
+2023-11-23 19:15:01,788 [ 1] INFO  Unity: ItemManager:Init[Id:1,Count:20]
+2023-11-23 19:15:01,788 [ 1] INFO  Unity: ItemManager:Init[Id:2,Count:20]
+2023-11-23 19:15:01,789 [ 1] INFO  Unity: ItemManager:Init[Id:1001,Count:2]
+2023-11-23 19:15:01,790 [ 1] INFO  Unity: ItemManager:Init[Id:3002,Count:1]
+2023-11-23 19:15:01,790 [ 1] INFO  Unity: ItemManager:Init[Id:1002,Count:1]
+2023-11-23 19:15:01,791 [ 1] INFO  Unity: ItemManager:Init[Id:3001,Count:1]
+2023-11-23 19:15:01,791 [ 1] INFO  Unity: ItemManager:Init[Id:3006,Count:1]
+2023-11-23 19:15:01,792 [ 1] INFO  Unity: ItemManager:Init[Id:3003,Count:1]
+2023-11-23 19:15:01,793 [ 1] INFO  Unity: ItemManager:Init[Id:3005,Count:1]
+2023-11-23 19:15:01,794 [ 1] INFO  Unity: ItemManager:Init[Id:2007,Count:1]
+2023-11-23 19:15:01,797 [ 1] INFO  Unity: OnMapCharacterEnter:Map:1 Count:1
+2023-11-23 19:15:01,798 [ 1] INFO  Unity: AddCharacter:18:¶þ Map:1 Entity:(18:pos:(5000,4000,820),dir:(100,0,0),spd:0
+2023-11-23 19:15:01,801 [ 1] INFO  Unity: LoadLevel: MainCity
+2023-11-23 19:15:02,277 [ 1] WARN  Unity: No mesh data available for mesh Sphere001 on particle system fx_portal. Make sure Read/Write Enabled is set in the importer to work on the particle system renderer
+
+2023-11-23 19:15:02,356 [ 1] WARN  Unity: UIWorldElementManager[439718] Awake
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+MonoSingleton`1:Awake() (at Assets/Scripts/Utilities/MonoSingleton.cs:23)
+
+2023-11-23 19:15:02,357 [ 1] WARN  Unity: GameObjectManager[440356] Awake
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+MonoSingleton`1:Awake() (at Assets/Scripts/Utilities/MonoSingleton.cs:23)
+
+2023-11-23 19:15:02,369 [ 1] WARN  Unity: MainPlayerCamera[440858] Awake
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+MonoSingleton`1:Awake() (at Assets/Scripts/Utilities/MonoSingleton.cs:23)
+
+2023-11-23 19:15:02,370 [ 1] WARN  Unity: UIMain[441006] Awake
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+MonoSingleton`1:Awake() (at Assets/Scripts/Utilities/MonoSingleton.cs:23)
+
+2023-11-23 19:15:02,396 [ 1] INFO  Unity: LevelLoadCompleted:1
+2023-11-23 19:15:02,993 [ 1] INFO  Unity: SetDirection:(98, 18, 0)
+2023-11-23 19:15:02,994 [ 1] INFO  Unity: MapEntityUpdateRequest:ID:18 POS:(5000,4000,820) DIR:(98,18,0) SPD:0
+2023-11-23 19:15:11,184 [ 1] INFO  Unity: OnDestroy NetworkManager.
+2023-11-23 19:15:11,185 [ 1] WARN  Unity: CloseConnection(), errorCode: 1007
+UnityEngine.Debug:LogWarning(Object)
+Network.NetClient:CloseConnection(Int32) (at Assets/Scripts/Network/NetClient.cs:176)
+Network.NetClient:OnDestroy() (at Assets/Scripts/Network/NetClient.cs:171)
+
+2023-11-23 19:15:11,187 [ 1] INFO  Unity: Character_18_¶þ OnDestory:ID:18 POS:(5000, 4000, 820) DIR:(98, 18, 0) SPD:0

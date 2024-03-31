@@ -18,6 +18,10 @@ public class Main : MonoSingleton<Main>
 
     IEnumerator OnAwake()
     {
+        log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo("log4net.xml"));
+        UnityLogger.Init();
+        Log.Init("Unity");
+        yield return null;
         ArchiveManager.LoadData();//加载存档
         yield return null;
         MainThreadDispatcher.StartUpdateMicroCoroutine(DataManager.Load());//读取建筑脚本列表

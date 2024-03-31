@@ -70,11 +70,11 @@ namespace MANAGER
         /// </summary>
         public void ReadArchive()
         {
-            this.Init();
-            this.GetWanderer(PlotManager.Instance.plots[ArchiveManager.archive.wandererData.pos]);
-            this.wanderer.level = ArchiveManager.archive.wandererData.level;
+            //this.Init();
+            //this.GetWanderer(PlotManager.Instance.plots[ArchiveManager.archive.wandererData.pos]);
+            //this.wanderer.level = ArchiveManager.archive.wandererData.level;
 
-            this.exploratoryTeams = ArchiveManager.archive.wandererData.exploratoryTeams;
+            //this.exploratoryTeams = ArchiveManager.archive.wandererData.exploratoryTeams;
 
         }
 

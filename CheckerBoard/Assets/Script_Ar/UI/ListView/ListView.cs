@@ -63,7 +63,7 @@ namespace UILIST
             }
         }
 
-        List<ListViewItem> items = new List<ListViewItem>();
+        public List<ListViewItem> items = new List<ListViewItem>();
 
         private ListViewItem selectedItem = null;
         public ListViewItem SelectedItem

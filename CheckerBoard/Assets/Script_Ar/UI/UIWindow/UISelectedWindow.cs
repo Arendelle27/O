@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UIBUILDING;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,28 +24,6 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
 
     void Start()
     {
-        //UISelectWindow uSW = UIManager.Instance.Show<UIBuildingWindow>();
-        //uSW.selectedWindow = this;
-        //this.uISelectedWindows["UIBuildingWindow"]= uSW;
-        ////uSW.transform.position=uSW.transform.position+this.transform.position;
-        //uSW.transform.SetParent(this.transform);
-        //uSW.gameObject. .RectTransform.localPosition = uSW.transform.position;
-
-
-        //uSW = UIManager.Instance.Show<UIBuildingInfoWindow>();
-        //uSW.selectedWindow = this;
-        //this.uISelectedWindows["UIBuildingInfoWindow"] = uSW;
-        ////uSW.transform.position = uSW.transform.position + this.transform.position;
-        //uSW.transform.SetParent(this.transform);
-        //uSW.transform.localPosition = uSW.transform.position;
-
-
-        //uSW = UIManager.Instance.Show<UIEventAreaInfoWindow>();
-        //uSW.selectedWindow = this;
-        //this.uISelectedWindows["UIEventAreaInfoWindow"] = uSW;
-        ////uSW.transform.position = uSW.transform.position + this.transform.position;
-        //uSW.transform.SetParent(this.transform);
-        //uSW.transform.localPosition = uSW.transform.position;
         foreach (var window in this.uISelectedWindows)
         {
             window.selectedWindow = this;

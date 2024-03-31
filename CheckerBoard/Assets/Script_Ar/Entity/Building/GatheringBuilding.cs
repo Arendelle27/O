@@ -32,6 +32,7 @@ public class GatheringBuilding : Building
         this.gatherResourceRounds = (DataManager.BuildingScriptLists[0][this.TID] as GatheringBuildingType).GatherResourceRounds;
 
         this.SR.sprite = DataManager.BuildingScriptLists[0][this.TID].sprite;//设置建筑的图片
+        this.existRound = 1;
     }
 
     /// <summary>
@@ -42,17 +43,27 @@ public class GatheringBuilding : Building
         List<int> resource = new List<int>() { 0, 0 };
         if (this.gatherResourceType == PlotManager.Instance.plots[this.pos].plotDefine.ResourceType)
         {
+            if (PlotManager.Instance.plots[this.pos].buildingResources[1] <this.gatherResourceAmount)
+            {
+                Debug.LogFormat("地块资源不足，无法采集");
+                return resource;
+            }
             if (this.existRound != 0 && this.existRound % (gatherResourceRounds) == 0)
             {
                 resource[0] = this.gatherResourceType;
                 resource[1] = this.gatherResourceAmount;
             }
+            PlotManager.Instance.plots[this.pos].buildingResources[1] -= resource[1];
         }
         else
         {
             Debug.LogFormat("采集资源类型{0}与地块资源类型{1}不匹配", this.gatherResourceType, PlotManager.Instance.plots[this.pos].plotDefine.ResourceType);
         }
+        existRound++;
+
         return resource;
     }
+
+    
 
 }

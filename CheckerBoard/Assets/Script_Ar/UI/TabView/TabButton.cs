@@ -16,7 +16,7 @@ public class TabButton : MonoBehaviour
 
     private Image tabImage;
 
-    void Start()
+    void Awake()
     {
         tabImage = this.GetComponent<Image>();
         normalImage = tabImage.sprite;
@@ -26,11 +26,16 @@ public class TabButton : MonoBehaviour
 
     public void Select(bool select)
     {
-        tabImage.overrideSprite = select ? activeImage : normalImage;
+        if (!this.gameObject.activeSelf)
+            return;
+        if(this.tabImage!=null)
+        {
+            tabImage.overrideSprite = select ? activeImage : normalImage;
+        }
     }
 
-    void OnClick()
+    public void OnClick()
     {
-        this.tabView.SelectTab(this.tabIndex);
+        this.tabView?.SelectTab(this.tabIndex);
     }
 }

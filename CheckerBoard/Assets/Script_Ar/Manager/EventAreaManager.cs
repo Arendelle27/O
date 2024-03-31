@@ -20,13 +20,16 @@ namespace MANAGER
             new Dictionary<Vector2Int, EventArea>()//剧情
         };
 
-        [SerializeField, LabelText("交易数量和冷却冷却"), ReadOnly]
+        //交易数量和冷却冷却
         public Dictionary<int,Dictionary<int,List<int>>> transactionObjectsStatue=new Dictionary<int, Dictionary<int, List<int>>>() 
         {
             {0, new Dictionary<int, List<int>>()},//聚集地
             {1, new Dictionary<int, List<int>>()} //黑市
         };
         //最后的值,0为剩余数量，1为冷却时间
+
+        //冲突地区
+        public List<ClashArea> clashAreas;
 
         //被选中的事件地区
         public EventArea selectedEventArea;
@@ -202,9 +205,9 @@ namespace MANAGER
         /// </summary>
         public void RoundOver()
         {
-            foreach (int i in DataManager.TransactionDefines.Keys)
+            foreach (int i in this.transactionObjectsStatue.Keys)
             {
-                foreach (int j in DataManager.TransactionDefines[i].Keys)
+                foreach (int j in this.transactionObjectsStatue[i].Keys)
                 {
                     if (DataManager.TransactionDefines[i][j].TransactionType==Transaction_Type.蓝图)
                     {

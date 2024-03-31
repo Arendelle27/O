@@ -16,6 +16,9 @@ namespace UIBUILDING
         [SerializeField, LabelText("建筑列表"), Tooltip("收集建筑和生产建筑列表")]
         public TabView tabView;
 
+        [SerializeField, LabelText("建筑信息"), Tooltip("放入建筑信息UI")]
+        public UIBuildingItemInfo uiBuildingItemInfo;
+
         [SerializeField, LabelText("被选中的建筑UI类型"), ReadOnly]
         Building_Type buildingtypeSelected;//被选中的建筑UI类型
 
@@ -33,7 +36,21 @@ namespace UIBUILDING
 
         void OnEnable()
         {
- 
+            this.uiBuildingItemInfo.gameObject.SetActive(false);
+            for(int i = 0; i < this.tabView.tabPages.Length; i++)
+            {
+                //this.tabView.tabPages[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
+                this.tabView.tabButtons[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
+            }
+        }
+
+        private void OnDisable()
+        {
+            for (int i = 0; i < this.tabView.tabButtons.Length; i++)
+            {
+                this.tabView.tabButtons[i].Select(false);
+            }
+            this.buildingtypeSelected=Building_Type.无;
         }
 
         /// <summary>
@@ -42,6 +59,7 @@ namespace UIBUILDING
         /// <param name="index"></param>
         void OnTabSelect(int index)
         {
+            this.buildingtypeSelected=Building_Type.无;
             StartCoroutine( this.selectedWindow.BeSelected());
         }
 
@@ -55,6 +73,9 @@ namespace UIBUILDING
             if (this.buildingtypeSelected != buildingItem.type)//第一次点击选中
             {
                 this.buildingtypeSelected = buildingItem.type;
+
+                this.uiBuildingItemInfo.gameObject.SetActive(true);
+                this.uiBuildingItemInfo.SetInfo(buildingItem.type);
             }
             else//第二次点击确认建造
             {
