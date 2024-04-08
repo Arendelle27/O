@@ -47,19 +47,6 @@ namespace ENTITY
 
             //this.SpendResource();
 
-            this.AddHostility();
-        }
-
-        /// <summary>
-        /// 增加敌意值
-        /// </summary>
-        public void AddHostility()
-        {
-            //增加聚落板块的敌意
-            if (EventAreaManager.Instance.EventAreas[0].ContainsKey(pos))//如果该板块为聚落
-            {
-                (EventAreaManager.Instance.EventAreas[0][pos] as Settle).AddHotility(this.hostilityToHuman);
-            }
         }
 
     }

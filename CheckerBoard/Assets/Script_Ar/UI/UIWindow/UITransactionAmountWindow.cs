@@ -14,7 +14,7 @@ public class UITransactionAmountWindow : UIWindow
     [SerializeField, LabelText("购买或出售"), Tooltip("购买或出售文本")]
     public Text purchaseOrSellText;
     [SerializeField, LabelText("数量输入框"), Tooltip("放入数量输入框")]
-    public InputField AmountText;
+    public InputField amountText;
     [SerializeField, LabelText("花费或赚取"), Tooltip("花费或赚取文本")]
     public Text spendOrEarnText;
     [SerializeField, LabelText("价格"), Tooltip("放入价格文本")]
@@ -45,18 +45,18 @@ public class UITransactionAmountWindow : UIWindow
                 {
                     this.amountSlider.value = this.amount;
                 }
-                if(this.AmountText.text != this.amount.ToString())
+                if(this.amountText.text != this.amount.ToString())
                 {
-                    this.AmountText.text = this.amount.ToString();
+                    this.amountText.text = this.amount.ToString();
                 }
 
                 int total = this.amount * this.singlePrice;
                 this.priceText.text = total.ToString();
             });
 
-        this.AmountText.OnValueChangedAsObservable().Subscribe(_ =>
+        this.amountText.OnValueChangedAsObservable().Subscribe(_ =>
         {
-            int result = int.Parse(this.AmountText.text);
+            int result = int.Parse(this.amountText.text);
 
             if (result > this.amountSlider.maxValue)
             {
@@ -72,7 +72,7 @@ public class UITransactionAmountWindow : UIWindow
                 this.amount = result;
             }
 
-            this.AmountText.text = this.amount.ToString();
+            this.amountText.text = this.amount.ToString();
         });
 
         this.amountSlider.OnValueChangedAsObservable().Subscribe(_ =>

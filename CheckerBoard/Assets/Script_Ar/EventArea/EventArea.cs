@@ -30,4 +30,12 @@ public class EventArea
     {
 
     }
+
+    /// <summary>
+    /// »ØºÏ½áÊø
+    /// </summary>
+    public virtual void RoundOver()
+    {
+
+    }
 }

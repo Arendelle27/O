@@ -3,6 +3,7 @@ using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UniRx;
 using UnityEngine;
 
@@ -18,9 +19,8 @@ public class Main : MonoSingleton<Main>
 
     IEnumerator OnAwake()
     {
-        log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo("log4net.xml"));
         UnityLogger.Init();
-        Log.Init("Unity");
+
         yield return null;
         ArchiveManager.LoadData();//加载存档
         yield return null;
@@ -40,6 +40,8 @@ public class Main : MonoSingleton<Main>
      void Init()
     {
         UIMain.Instance.ChangeToGamePanel(1);
+
+        MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
     }
 
     public IEnumerator Restart()
@@ -58,7 +60,8 @@ public class Main : MonoSingleton<Main>
         yield return null;
         WandererManager.Instance.Restart();
         yield return null;
-
+        MessageManager.Instance.ReStart();
+        yield return null;
         this.Init();
     }
 
@@ -78,6 +81,8 @@ public class Main : MonoSingleton<Main>
         yield return null;
         WandererManager.Instance.ReadArchive();
         yield return null;
+        MessageManager.Instance.ReadArchive();
+        yield return null;
 
         this.Init();
     }
@@ -86,10 +91,25 @@ public class Main : MonoSingleton<Main>
     /// <summary>
     /// 一局游戏结束
     /// </summary>
-    public void GameOver()
+    public IEnumerator GameOver()
     {
         this.mainCamera?.StopControl();
-        UIMain.Instance.ChangeToGamePanel(3);
+        UIMain.Instance.ChangeToGamePanel(4);
         UIManager.Instance.Show<UIScoreWindow>();
+
+        BuildingManager.Instance.GameOver();
+        yield return null; 
+        WandererManager.Instance.GameOver();
+        yield return null;
+        ResourcesManager.Instance.GameOver();
+        yield return null;
+        EventAreaManager.Instance.GameOver();
+        yield return null;
+        RoundManager.Instance.GameOver();
+        yield return null;
+        PlotManager.Instance.GameOver();
+        yield return null;
+        MessageManager.Instance.GameOver();
+
     }
 }

@@ -54,6 +54,11 @@ namespace MANAGER
             this.roundNumber = ArchiveManager.archive.roundNumber;
         }
 
+        public void GameOver()
+        {
+            this.roundNumber = 0;
+        }
+
         /// <summary>
         /// 结束回合
         /// </summary>
@@ -67,12 +72,16 @@ namespace MANAGER
             /*结算前*/
             EventManager.Instance.StageDecision();//阶段决策
 
-            EventAreaManager.Instance.RoundOver();//事件地区结束回合
-
             /*回合结束*/
             this.roundNumber++;//回合数加1
 
             /*回合开始*/
+            MessageManager.Instance.RoundOver();//刷新信息
+
+            EventAreaManager.Instance.RoundOver();//事件地区结束回合
+
+            EventManager.Instance.RoundOver();//事件结束回合
+
             if (this.unlockPlotByRound!=null)
             {
                 this.unlockPlotByRound.OnNext(this.roundNumber);

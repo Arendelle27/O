@@ -19,10 +19,10 @@ namespace MANAGER
         public List<int> allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
 
         [SerializeField, LabelText("行动点"), ReadOnly]
-        public int execution;
+        public int execution=0;
 
         [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
-        public int levelPromptionAmount;
+        public int levelPromptionAmount=0;
 
         [SerializeField, LabelText("通过资源解锁建筑"), ReadOnly]
         public List<Subject<int>> unlockByResouces = new List<Subject<int>>() 
@@ -66,7 +66,7 @@ namespace MANAGER
 
             this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
             {
-                (UIMain.Instance.uiPanels[2] as UIExtendExpTeamPanel).UpdateUI(this.levelPromptionAmount);
+                (UIMain.Instance.uiPanels[3] as UIExtendExpTeamPanel).UpdateUI(this.levelPromptionAmount);
 
             });
         }
@@ -76,15 +76,12 @@ namespace MANAGER
         /// </summary>
         void Init()
         {
-            this.levelPromptionAmount = 0;
-            this.allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
-    }
+        }
 
         public void Restart()
         {
             this.Init();
             this.wealth = 5000;
-            this.buildingResources = new List<int> { 0,0,0 };
             this.execution = 5;
         }
 
@@ -94,6 +91,15 @@ namespace MANAGER
             this.wealth = ArchiveManager.archive.wealth;
             this.buildingResources = ArchiveManager.archive.buildingRes;
             this.execution = ArchiveManager.archive.execution;
+        }
+
+        public void GameOver()
+        {
+            this.levelPromptionAmount = 0;
+            this.allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
+            this.wealth = 0;
+            this.buildingResources = new List<int> { 0, 0, 0 };
+            this.execution = 0;
         }
 
         /// <summary>
@@ -154,21 +160,6 @@ namespace MANAGER
         }
 
         /// <summary>
-        /// 是否有足够的行动点，是则返回true，消耗行动点
-        /// </summary>
-        /// <param name="excutionCost"></param>
-        /// <returns></returns>
-        public bool CanMove(int excutionCost)
-        {
-            if(this.execution>=excutionCost)
-            {
-                this.ChangeExecution(-excutionCost);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
         /// 判断资源是否足够建造
         /// </summary>
         /// <param name="type"></param>
@@ -178,29 +169,31 @@ namespace MANAGER
             if (this.execution < 1)
             {
                 Debug.Log("行动力不足");
+                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("行动力不足"));
                 return false;
             }
 
             int[] cost = new int[3];
-            int sort = (int)type;
-            if (sort > (int)Building_Type.自动采集建筑 && sort < (int)Building_Type.生产建筑)
+            int sort = BuildingManager.BuildingTypeToIndex(type);
+            switch (sort)
             {
-                cost= DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1].ResourcesCost;
-            }
-            else if (sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
-            {
-                cost = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1].ResourcesCost;
-            }
-            else
-            {
-                cost= DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1].ResourcesCost;
+                case 0:
+                    cost = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1].ResourcesCost;
+                    break;
+                case 1:
+                    cost = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1].ResourcesCost;
+                    break;
+                case 2:
+                    cost = DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1].ResourcesCost;
+                    break;
             }
 
             for (int i = 0; i < buildingResources.Count; i++)
             {
                 if (buildingResources[i] < cost[i])
                 {
-                    Debug.LogFormat("资源{0}不足",i);
+                    Debug.LogFormat("资源{0}不足", (Resource_Type)i);
+                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("资源{0}不足", (Resource_Type)i));
                     return false;
                 }
             }

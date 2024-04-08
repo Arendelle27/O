@@ -11,11 +11,8 @@ public class Settle : EventArea
     //交易定义
     public Dictionary<int, TransactionDefine> transactionDefines;
 
-    [SerializeField, LabelText("是否为黑市"), ReadOnly]
+    //是否为黑市
     public bool isBlackMarket = false;
-
-    [SerializeField, LabelText("聚落的敌意值"), ReadOnly]
-    public int hotility = 0;
 
 
     public Settle(Plot plot) : base(plot)
@@ -41,8 +38,6 @@ public class Settle : EventArea
             this.isBlackMarket = true;//不能建设的是黑市
             this.transactionDefines = DataManager.TransactionDefines[1];
         }
-
-        this.hotility = 0;
     }
 
     /// <summary>
@@ -58,14 +53,6 @@ public class Settle : EventArea
         {
             Debug.LogFormat("进入聚落{0}", this.plot.pos);
         }
-    }
-
-    /// <summary>
-    /// 增加敌意值(是否通过交易增加)
-    /// </summary>
-    public void AddHotility(int value)
-    {
-        this.hotility += value;
     }
 
 }

@@ -8,12 +8,15 @@ using UnityEngine;
 public class DataManager
 {
 
-    ////建筑脚本属性列表
+    //建筑脚本属性列表
     public static List<List<BuildingType>> BuildingScriptLists = new List<List<BuildingType>>();
     //板块属性列表
     public static Dictionary<int,PlotDefine> PlotDefines = new Dictionary<int, PlotDefine>();
     //交易属性列表
     public static Dictionary<int, Dictionary<int, TransactionDefine>> TransactionDefines;
+    //对抗属性列表
+    public static Dictionary<int,Dictionary<int,ConfrontDefine>> ConfrontDefines = new Dictionary<int, Dictionary<int, ConfrontDefine>>();
+
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
@@ -72,5 +75,8 @@ public class DataManager
         TransactionDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, TransactionDefine>>>(json);
         yield return null;
 
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("ConfrontDefine.txt"));
+        ConfrontDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, ConfrontDefine>>>(json);
+        yield return null;
     }
 }

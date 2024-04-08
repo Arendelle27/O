@@ -12,8 +12,10 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     //public ObjectPool<GameObject> Buildings { get; set; }
     //流浪者对象
     public GameObject Wanderer { get; set; }
-    ////目的地提示牌对象
-    //public GameObject DestinationSigns { get; set; }
+    //目的地提示牌对象
+    public GameObject DestinationSign { get; set; }
+    //探索小队对象
+    public ObjectPool<GameObject> ExploratoryTeams { get; set; }
     ////人类聚落对象池
     //public ObjectPool<GameObject> HumanSettlements { get; set; }
     ////机械聚落对象池
@@ -42,9 +44,13 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         this.ProductionBuildings = new ObjectPool<GameObject>(GetObject_ProductionBuilding, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
         this.BattleBuildings = new ObjectPool<GameObject>(GetObject_BattleBuilding, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
 
-        this.Wanderer = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Wanderer"));
+        this.Wanderer = Instantiate(Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("Wanderer")));
+        this.Wanderer.SetActive(false);
+
+        this.DestinationSign = Instantiate(Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign")));
+        this.DestinationSign.SetActive(false);
         //this.DestinationSigns = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign"));
-        //this.HumanSettlements = new ObjectPool<GameObject>(GetObject_HumanSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
+        this.ExploratoryTeams = new ObjectPool<GameObject>(GetExploratoryTeam, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
         //this.RobotSettlements = new ObjectPool<GameObject>(GetObject_RobotSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
 
         this.UIBuildingItems = new ObjectPool<GameObject>(GetObject_UIBuildingItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
@@ -99,6 +105,11 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     GameObject GetObject_Plot()
     {
         return this.GetEntityObject("Plot");
+    }
+
+    GameObject GetExploratoryTeam()
+    {
+        return this.GetEntityObject("ExploratoryTeam");
     }
 
     /// <summary>

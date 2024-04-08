@@ -12,12 +12,12 @@ namespace MANAGER
     public class EventAreaManager : Singleton<EventAreaManager>
     {
         //存在的事件地区
-        public List<Dictionary<Vector2Int,EventArea>> EventAreas = new List<Dictionary<Vector2Int, EventArea>>(4) 
+        public List<List<EventArea>> EventAreas = new List<List<EventArea>>(4) 
         {
-            new Dictionary<Vector2Int, EventArea>(),//交易
-            new Dictionary<Vector2Int, EventArea>(),//对抗
-            new Dictionary<Vector2Int, EventArea>(),//遗迹
-            new Dictionary<Vector2Int, EventArea>()//剧情
+            new List < EventArea >(),//交易
+            new List < EventArea >(),//对抗
+            new List < EventArea >(),//遗迹
+            new List < EventArea >()//剧情
         };
 
         //交易数量和冷却冷却
@@ -28,8 +28,9 @@ namespace MANAGER
         };
         //最后的值,0为剩余数量，1为冷却时间
 
-        //冲突地区
-        public List<ClashArea> clashAreas;
+        //敌意值
+        public List<float> hotility=new List<float>(2) {5f,5f};
+        //0为人类，1为机器人,基础仇恨值为5
 
         //被选中的事件地区
         public EventArea selectedEventArea;
@@ -41,7 +42,6 @@ namespace MANAGER
         /// </summary>
         void Init()
         {
-            this.EliminateAllEventArea();
 
         }
 
@@ -75,31 +75,14 @@ namespace MANAGER
             //MainThreadDispatcher.StartUpdateMicroCoroutine(ReadSettlements());
         }
 
-        /// <summary>
-        /// 生成聚落
-        /// </summary>
-        /// <returns></returns>
-        //IEnumerator GetSettlements()
-        //{
-        //    for (int i = 0; i < 6; i++)
-        //    {
-        //        Vector2Int v2 = GetRandomPos();
-        //        this.GetSettlement(i >= 3, v2);
-        //        yield return null;
-        //    }
-        //}
-        /// <summary>
-        /// 读取聚落协程
-        /// </summary>
-        /// <returns></returns>
-        //IEnumerator ReadSettlements()
-        //{
-        //    foreach (var settlementData in ArchiveManager.archive.settlementData)
-        //    {
-        //        this.GetSettlement(settlementData.isHumanSettlement, settlementData.pos);
-        //        yield return null;
-        //    }
-        //}
+        public void GameOver()
+        {
+            this.EliminateAllEventArea();
+            for(int i=0;i<this.hotility.Count;i++)
+            {
+                this.hotility[i] = 5f;
+            }
+        }   
 
         /// <summary>
         /// 生成单个聚落
@@ -110,15 +93,20 @@ namespace MANAGER
             switch (type)
             {
                 case Event_Area_Type.交易:
-                    return new Settle(plot);
+                    Settle settle = new Settle(plot);
+                    this.AddEventArea(0, settle);
+                    return settle;
                 case Event_Area_Type.对抗:
-                    return new ClashArea(plot);
+                    ClashArea clashArea = new ClashArea(plot);
+                    this.AddEventArea(1, clashArea);
+                    return clashArea;
                 case Event_Area_Type.遗迹:
                     return new MysteriousArea(plot);
                 default:
                     return new ClueArea(plot);
             }
         }
+
 
             //try
             //{
@@ -128,6 +116,16 @@ namespace MANAGER
             //{
             //    return Vector2Int.zero;
             //}
+
+        /// <summary>
+        /// 添加事件地区
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="eventArea"></param>
+        public void AddEventArea(int sort,EventArea eventArea)
+        {
+            this.EventAreas[sort].Add(eventArea);
+        }
         
         /// <summary>
         /// 清除所有事件地区
@@ -146,9 +144,9 @@ namespace MANAGER
         /// </summary>
         /// <param name="sort"></param>
         /// <param name="pos"></param>
-        void EliminateEventArea(int sort,Vector2Int pos)
+        public void EliminateEventArea(int sort,EventArea eventArea)
         {
-            this.EventAreas[sort].Remove(pos);//移除事件地区
+            this.EventAreas[sort].Remove(eventArea);//移除事件地区
         }
 
         /// <summary>
@@ -173,11 +171,13 @@ namespace MANAGER
                 if (DataManager.TransactionDefines[settleSort][transactionObjectId].TransactionType==Transaction_Type.蓝图)
                 {
                     Debug.Log("蓝图不会补货");
+                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("蓝图不会补货"));
                     return false;
                 }
                 if(this.transactionObjectsStatue[settleSort][transactionObjectId][0] == DataManager.TransactionDefines[settleSort][transactionObjectId].Amount)
                 {
                     Debug.Log("不需要补货");
+                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("不需要补货"));
                     return false;
                 }
 
@@ -185,19 +185,82 @@ namespace MANAGER
                 ResourcesManager.Instance.ChangeWealth(-10);
 
                 this.transactionObjectsStatue[settleSort][transactionObjectId][1] --;
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}加快一天补货", settleSort ==1? "黑市":"聚落",(Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
                 if (this.transactionObjectsStatue[settleSort][transactionObjectId][1] == 0)
                 {
                     this.transactionObjectsStatue[settleSort][transactionObjectId][0] = DataManager.TransactionDefines[settleSort][transactionObjectId].Amount;//补货
+                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}补货", settleSort==1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
                 }
 
                 return true;
             }
             else
             {
-                Debug.Log("金钱不足");
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("金钱不足够补货"));
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// 增减敌意值
+        /// </summary>
+        /// <param name="settleSort"></param>
+        /// <param name="value"></param>
+        /// <param name="isAdd"></param>
+        public void AddOrSubtractHotility(int settleSort,float value,bool isAdd)
+        {
+            if(isAdd)
+            {
+                if (this.hotility[settleSort] >= 100f)
+                {
+                    return;
+                }
+                this.hotility[settleSort] += value;
+
+                if (this.hotility[settleSort] > 100f)//敌意值不会超过100
+                {
+                    this.hotility[settleSort] = 100f;
+                }
+            }
+            else
+            {
+                if (this.hotility[settleSort] <= 1f)
+                {
+                    return;
+                }
+                this.hotility[settleSort] -= value;
+                if (this.hotility[settleSort] < 1f)
+                {
+                    this.hotility[settleSort] = 1f;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 扩张冲突区域
+        /// </summary>
+        /// <param name="pos"></param>
+        public void ExpendClashArea(Vector2Int pos,int clashType)
+        {
+            List<Vector2Int> relativePos= new List<Vector2Int>() { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
+            foreach(Vector2Int rP in relativePos)
+            {
+                Vector2Int newPos = pos + rP;
+                if (!PlotManager.Instance.plots.ContainsKey(newPos))//不在地图上
+                    continue;
+                if(PlotManager.Instance.plotTypeSepical.ContainsKey(newPos))//特殊地块
+                    continue;
+                if (PlotManager.Instance.plots[newPos].eventArea==null)
+                {
+                    int n = Random.Range(0, 100);
+                    if (n < 10)
+                    {
+                        PlotManager.Instance.plots[newPos].ChangeToClashType(clashType);
+                    }
+                }
+
+            }
         }
 
         /// <summary>
@@ -220,10 +283,24 @@ namespace MANAGER
                         if (this.transactionObjectsStatue[i][j][1]==0)
                         {
                             this.transactionObjectsStatue[i][j][0] = DataManager.TransactionDefines[i][j].Amount;//补货
+                            MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}补货", i==1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[i][j].Subtype));
                         }
                     }
                 }
             }
+
+            List<ClashArea> clashAreas = new List<ClashArea>();
+
+            foreach(ClashArea cA in this.EventAreas[1])//对抗区域
+            {
+                clashAreas.Add(cA);
+            }
+
+            foreach (ClashArea cA in clashAreas)
+            {
+                cA.RoundOver();
+            }
+
         }
     }
 }

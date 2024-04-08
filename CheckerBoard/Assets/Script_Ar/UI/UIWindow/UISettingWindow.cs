@@ -44,6 +44,7 @@ public class UISettingWindow: UIWindow
         this.BackButton.OnClickAsObservable().Subscribe(_ =>
         {
             UIMain.Instance.ChangeToGamePanel(0);
+            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
             this.OnCloseClick();
         });
 

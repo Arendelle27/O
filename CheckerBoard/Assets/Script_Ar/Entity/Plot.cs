@@ -29,8 +29,10 @@ namespace ENTITY
 
         //临时 当前颜色
         public Color curColor;
-        //被选中时的颜色
-        public Color selectedColor=Color.blue;
+        //被在可移动范围时的颜色
+        public Color inMoveScopeColor = Color.blue;
+
+        public bool canMovein = false;
 
         [SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
         public Text figure;
@@ -111,10 +113,8 @@ namespace ENTITY
 
             this.ObserveEveryValueChanged(_ => this.curColor).Subscribe(_ =>
             {
-                if(this.SR.color!=this.selectedColor)
-                {
-                    this.SR.color = this.curColor;
-                }
+                this.SR.color = this.curColor;
+                
             });
         }
 
@@ -144,36 +144,38 @@ namespace ENTITY
             this.building = null;
             this.eventArea = null;
             this.HaveExploratoryTeam = false;
+
+            this.canMovein = false;
         }
 
         /// <summary>
         /// 设置信息
         /// </summary>
-        /// <param name="plotdefine"></param>
-        public void SetInfo(PlotDefine plotdefine)
+        /// <param name="plotDefine"></param>
+        public void SetInfo(PlotDefine plotDefine)
         {
             this.Init();
 
-            this.plotDefine= plotdefine;
-            this.plotType = plotdefine.Type;
-            this.figure.text = plotdefine.ID.ToString();
+            this.plotDefine= plotDefine;
+            this.plotType = plotDefine.Type;
+            this.figure.text = plotDefine.ID.ToString();
 
             switch (this.plotType)
             {
                 case 0://资源板块
-                    if (plotdefine.ResourceType!=-1)
+                    if (plotDefine.ResourceType!=-1)
                     {
-                        this.buildingResources[0] = plotdefine.ResourceType;
+                        this.buildingResources[0] = plotDefine.ResourceType;
                     }
                     else
                     {
                         this.buildingResources[0] = 0;
                     }
-                    this.buildingResources[1] = plotdefine.ResourceTotal;
+                    this.buildingResources[1] = plotDefine.ResourceTotal;
                     this.figure.color = Color.white;
                     break;
                 case 1://事件板块
-                    this.eventArea=EventAreaManager.Instance.GetEventArea(plotdefine.EventType, this);
+                    this.eventArea=EventAreaManager.Instance.GetEventArea(plotDefine.EventType, this);
                     this.figure.color = Color.gray;
                     break;
             }
@@ -192,6 +194,50 @@ namespace ENTITY
 
         }
 
+        /// <summary>
+        /// 资源被消耗完或者结局冲突之后格子变为荒原
+        /// </summary>
+        public void ChangeToNormalType()
+        {
+            this.plotDefine = DataManager.PlotDefines[7];
+            this.plotType = this.plotDefine.Type;
+            this.figure.text = this.plotDefine.ID.ToString();
+            this.figure.color = Color.white;
+
+            this.eventArea= null;
+            this.buildingResources[0] = -1;
+            this.canEnter = true;
+        }
+
+        /// <summary>
+        /// 改变为冲突类型
+        /// </summary>
+        /// <param name="clashType"></param>
+        public void ChangeToClashType(int clashType)
+        {
+            switch (clashType)
+            {
+                case 0:
+                    this.plotDefine = DataManager.PlotDefines[11];
+                    break;
+                default:
+                    this.plotDefine = DataManager.PlotDefines[8];
+                    break;
+            }
+            this.plotType = this.plotDefine.Type;
+            this.figure.text = this.plotDefine.ID.ToString();
+            this.figure.color = Color.gray;
+
+            this.eventArea = EventAreaManager.Instance.GetEventArea(this.plotDefine.EventType, this);
+            this.canEnter = true;
+
+            if(this.building!=null)
+            {
+                BuildingManager.Instance.RemoveBuilding(BuildingManager.BuildingTypeToIndex(this.building.type), this.building);
+                this.building = null;
+            }
+        }
+
         ///// <summary>
         ///// 读档
         ///// </summary>
@@ -207,7 +253,7 @@ namespace ENTITY
         /// 随格子类型改变而改变
         /// </summary>
         /// <param name="plot_Type"></param>
-        void ChangeType(Plot_Statue plot_Type)
+        public void ChangeType(Plot_Statue plot_Type)
         {
             switch (plot_Type)
             {
@@ -283,11 +329,14 @@ namespace ENTITY
                     this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
                     if (this.plotDefine.Type == 0)//资源板块
                     {
+                        if (this.buildingResources[0] == -1)
+                        {
+                            return;
+                        }
                         int[] res = new int[3] { 0, 0, 0 };
-                        res[this.buildingResources[0]] = this.plotDefine.ResourceFristtime;
+                        res[this.buildingResources[0]] = this.ReduceResource( this.plotDefine.ResourceFristtime);
                         ResourcesManager.Instance.ChangeBuildingResources(res, true);
 
-                        this.buildingResources[1] -= this.plotDefine.ResourceFristtime;
                     }
                     this.isFirstExplored = false;
                 }
@@ -302,6 +351,28 @@ namespace ENTITY
             //        this.ChangeType(Plot_Type.未探明);
             //    }
             //}
+        }
+
+        /// <summary>
+        /// 减少资源
+        /// </summary>
+        /// <param name="amountNeeded"></param>
+        /// <returns></returns>
+        public int ReduceResource(int amountNeeded)
+        {
+            int amountResult= 0;
+            if (this.buildingResources[1] > amountNeeded)//资源足够
+            {
+                amountResult = amountNeeded;
+                this.buildingResources[1] -= amountNeeded;
+            }
+            else if (this.buildingResources[1] > 0)//资源不足
+            {
+                amountResult = this.buildingResources[1];
+                this.buildingResources[1] = 0;
+                this.ChangeToNormalType();//变为荒原
+            }
+            return amountResult;
         }
 
         /// <summary>
@@ -331,16 +402,9 @@ namespace ENTITY
         {
             if (isEnter)
             {
-                if(this.plot_Statue == Plot_Statue.未探明)
+                if (this.plot_Statue == Plot_Statue.未探明|| this.plot_Statue == Plot_Statue.可探索)
                 {
-                    this.ChangeType(Plot_Statue.可探索);
-                }
-            }
-            else
-            {
-                if (this.plot_Statue == Plot_Statue.可探索)
-                {
-                    this.ChangeType(Plot_Statue.未探明);
+                    this.ChangeType(Plot_Statue.已探索);
                 }
             }
         }
@@ -348,15 +412,17 @@ namespace ENTITY
         /// <summary>
         /// 进入选择拓展开拓小队中，被选择的状态
         /// </summary>
-        /// <param name="isShow"></param>
-        public void ShowSelectedColor(bool isShow)
+        /// <param name="canMove"></param>
+        public void CanMoveIn(bool canMove)
         {
-            if(isShow)
+            if (canMove)
             {
-                this.SR.color = this.selectedColor;
+                this.canMovein = true;
+                this.SR.color = this.inMoveScopeColor;
             }
             else
             {
+                this.canMovein = false;
                 this.SR.color = this.curColor;
             }
         }
@@ -384,19 +450,13 @@ namespace ENTITY
         {
             if ( this.plot_Statue == Plot_Statue.已探索 && this.plotDefine.Type == 0)
             {
+                if(this.buildingResources[0]==-1)
+                {
+                    return;
+                }
                 int[] res = new int[3] { 0, 0, 0 };
-                if (this.buildingResources[1] > this.plotDefine.ResourceByRound)//资源足够
-                {
-                    res[this.buildingResources[0]] = this.plotDefine.ResourceByRound;
-                    ResourcesManager.Instance.ChangeBuildingResources(res, true);
-                    this.buildingResources[1] -= this.plotDefine.ResourceByRound;
-                }
-                else if (this.buildingResources[1] > 0)//资源不足
-                {
-                    res[this.buildingResources[0]] = this.buildingResources[1];
-                    ResourcesManager.Instance.ChangeBuildingResources(res, true);
-                    this.buildingResources[1] = 0;
-                }
+                res[this.buildingResources[0]] =this.ReduceResource(this.plotDefine.ResourceByRound);
+                ResourcesManager.Instance.ChangeBuildingResources(res, true);
             }
         }
     }

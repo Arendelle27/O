@@ -1,4 +1,4 @@
-﻿using Managers;
+﻿using MANAGER;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

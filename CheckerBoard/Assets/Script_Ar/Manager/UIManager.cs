@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UIBUILDING;
 using UnityEngine;
 
-namespace Managers
+namespace MANAGER
 {
     public class UIManager : Singleton<UIManager>
     {
@@ -34,6 +33,8 @@ namespace Managers
             this.UIResources.Add(typeof(UITransactionWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UITransactionWindow"), Cache = true });
 
             this.UIResources.Add(typeof(UITransactionAmountWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UITransactionAmountWindow"), Cache = true });
+
+            this.UIResources.Add(typeof(UIConfrontEventWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIConfrontEventWindow"), Cache = true });
 
             //this.UIResources.Add(typeof(UIBuildingInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UBuildingInfoWindow"), Cache = true });
 

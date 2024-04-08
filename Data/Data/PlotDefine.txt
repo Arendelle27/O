@@ -116,18 +116,18 @@
   },
   "8": {
     "ID": 8,
-    "Name": "冲突区",
+    "Name": "冲突区（机器人）",
     "Description": "“不想见血就躲远点”",
     "PlotTexture": "ConflictZone",
     "CanBuild": "false",
     "Type": 1,
     "EventType": "对抗",
-    "EventValue": "随机",
+    "EventValue": "1",
     "Condition": "回合",
-    "UnlockValue": "6",
+    "UnlockValue": "2",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 10
+    "Weights": 100
   },
   "9": {
     "ID": 9,
@@ -164,5 +164,20 @@
     "HorizontalMax": 5,
     "VerticalMin": -3,
     "VerticalMax": -3
+  },
+  "11": {
+    "ID": 11,
+    "Name": "冲突区（人类）",
+    "Description": "“不想见血就躲远点”",
+    "PlotTexture": "ConflictZone",
+    "CanBuild": "false",
+    "Type": 1,
+    "EventType": "对抗",
+    "EventValue": "0",
+    "Condition": "回合",
+    "UnlockValue": "2",
+    "EventPool": 3,
+    "IsSpecialGeneration": "false",
+    "Weights": 100
   }
 }

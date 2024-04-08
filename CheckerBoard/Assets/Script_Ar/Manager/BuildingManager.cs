@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UIBUILDING;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MANAGER
@@ -23,6 +24,9 @@ namespace MANAGER
 
         [SerializeField, LabelText("当前存在的战斗建筑"), ReadOnly]
         public Dictionary<Vector2Int, BattleBuilding> battleBuildings = new Dictionary<Vector2Int, BattleBuilding>();
+
+        [SerializeField, LabelText("机械的总战力"), ReadOnly]
+        public int totalAttack = 0;
 
         [SerializeField, LabelText("建筑的解锁条件"), ReadOnly]
         public Dictionary<Building_Condition_Type,Dictionary<Building_Type,int>> buildCondition = new Dictionary<Building_Condition_Type, Dictionary<Building_Type, int>>()
@@ -81,56 +85,6 @@ namespace MANAGER
         /// </summary>
         void Init()
         {
-            for(int i=0; i<this.unlockIDisposableAmount.Count;)
-            {
-                var id = this.unlockIDisposableAmount.ElementAt(i);
-                if(id.Value!=null)
-                {
-                    id.Value.Dispose();
-                }
-                this.unlockIDisposableAmount.Remove(id.Key);
-            }
-
-            for (int i = 0; i < this.unlockIDisposableBlueprint.Count;)
-            {
-                var id = this.unlockIDisposableBlueprint.ElementAt(i);
-                if (id.Value != null)
-                {
-                    id.Value.Dispose();
-                }
-                this.unlockIDisposableBlueprint.Remove(id.Key);
-            }
-
-
-            for (int i = 0; i < this.gatheringBuildings.Count;)
-            {
-                var item = this.gatheringBuildings.ElementAt(i);
-                this.RemoveBuilding(0, item.Value);
-            }
-
-            for (int i = 0; i < this.productionBuildings.Count;)
-            {
-                var item = this.productionBuildings.ElementAt(i);
-                this.RemoveBuilding(1, item.Value);
-            }
-
-            for (int i = 0; i < this.battleBuildings.Count;)
-            {
-                var item = this.battleBuildings.ElementAt(i);
-                this.RemoveBuilding(2, item.Value);
-            }
-
-            //初始化建筑类型
-            for (int i = 0; i < this.buildingTypes.Count; i++)
-            {
-                this.buildingTypes[i].Clear();
-            }
-
-            foreach(var conditionType in buildCondition)
-            {
-                conditionType.Value.Clear();
-            }
-
             this.bluePrints.Clear();
 
             this.InitBuildingType();
@@ -154,6 +108,64 @@ namespace MANAGER
             {
                 this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
             }
+        }
+
+        /// <summary>
+        /// 游戏结束
+        /// </summary>
+        public void GameOver()
+        {
+            for (int i = 0; i < this.unlockIDisposableAmount.Count;)
+            {
+                var id = this.unlockIDisposableAmount.ElementAt(i);
+                if (id.Value != null)
+                {
+                    id.Value.Dispose();
+                }
+                this.unlockIDisposableAmount.Remove(id.Key);
+            }
+
+            for (int i = 0; i < this.unlockIDisposableBlueprint.Count;)
+            {
+                var id = this.unlockIDisposableBlueprint.ElementAt(i);
+                if (id.Value != null)
+                {
+                    id.Value.Dispose();
+                }
+                this.unlockIDisposableBlueprint.Remove(id.Key);
+            }
+
+
+            for (int i = 0; i < this.gatheringBuildings.Count;)
+            {
+                var item = this.gatheringBuildings.ElementAt(i);
+                this.RemoveBuilding(0, item.Value);
+            }
+            for (int i = 0; i < this.productionBuildings.Count;)
+            {
+                var item = this.productionBuildings.ElementAt(i);
+                this.RemoveBuilding(1, item.Value);
+            }
+
+            for (int i = 0; i < this.battleBuildings.Count;)
+            {
+                var item = this.battleBuildings.ElementAt(i);
+                this.RemoveBuilding(2, item.Value);
+            }
+
+            //初始化建筑类型
+            for (int i = 0; i < this.buildingTypes.Count; i++)
+            {
+                this.buildingTypes[i].Clear();
+            }
+
+            foreach (var conditionType in buildCondition)
+            {
+                conditionType.Value.Clear();
+            }
+
+            this.bluePrints.Clear();
+            this.totalAttack = 0;
         }
 
         /// <summary>
@@ -224,21 +236,10 @@ namespace MANAGER
                         var type = this.buildCondition[Building_Condition_Type.资源1].ElementAt(i).Key;
                         if (resource1 >= this.buildCondition[Building_Condition_Type.资源1][type])
                         {
-                            int sort;
-                            if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                            {
-                                sort = 0;
-                            }
-                            else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                            {
-                                sort = 1;
-                            }
-                            else
-                            {
-                                sort = 2;
-                            }
+                            int sort =BuildingTypeToIndex(type);
                             this.buildingTypes[sort].Add(type);
                             this.buildCondition[Building_Condition_Type.资源1].Remove(type);
+                            MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                             Debug.Log("解锁通过资源1解锁建筑");
                         }
                         else
@@ -262,21 +263,10 @@ namespace MANAGER
                             var type = this.buildCondition[Building_Condition_Type.资源2].ElementAt(i).Key;
                             if (resource2 >= this.buildCondition[Building_Condition_Type.资源2][type])
                             {
-                                int sort;
-                                if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                                {
-                                    sort = 0;
-                                }
-                                else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                                {
-                                    sort = 1;
-                                }
-                                else
-                                {
-                                    sort = 2;
-                                }
+                                int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
                                 this.buildCondition[Building_Condition_Type.资源2].Remove(type);
+                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过资源2解锁建筑");
                             }
                             else
@@ -299,21 +289,10 @@ namespace MANAGER
                             var type = this.buildCondition[Building_Condition_Type.资源3].ElementAt(i).Key;
                             if (resource3 >= this.buildCondition[Building_Condition_Type.资源3][type])
                             {
-                                int sort;
-                                if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                                {
-                                    sort = 0;
-                                }
-                                else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                                {
-                                    sort = 1;
-                                }
-                                else
-                                {
-                                    sort = 2;
-                                }
+                                int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
                                 this.buildCondition[Building_Condition_Type.资源3].Remove(type);
+                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过资源3解锁建筑");
                             }
                             else
@@ -336,21 +315,10 @@ namespace MANAGER
                             var type = this.buildCondition[Building_Condition_Type.回合数].ElementAt(i).Key;
                             if (roundNumber >= this.buildCondition[Building_Condition_Type.回合数][type])
                             {
-                                int sort;
-                                if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                                {
-                                    sort = 0;
-                                }
-                                else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                                {
-                                    sort = 1;
-                                }
-                                else
-                                {
-                                    sort = 2;
-                                }
+                                int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
                                 this.buildCondition[Building_Condition_Type.回合数].Remove(type);
+                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过回合数解锁建筑");
                             }
                             else
@@ -376,21 +344,10 @@ namespace MANAGER
                             {
                                 if (this.buildCondition[Building_Condition_Type.蓝图][type] == id)
                                 {
-                                    int sort;
-                                    if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                                    {
-                                        sort = 0;
-                                    }
-                                    else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                                    {
-                                        sort = 1;
-                                    }
-                                    else
-                                    {
-                                        sort = 2;
-                                    }
+                                    int sort = BuildingTypeToIndex(type);
                                     this.buildingTypes[sort].Add(type);
                                     this.buildCondition[Building_Condition_Type.蓝图].Remove(type);
+                                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                     Debug.LogFormat("解锁通过蓝图{0}解锁建筑", id);
                                     break;
                                 }
@@ -412,21 +369,10 @@ namespace MANAGER
                             var type = this.buildCondition[Building_Condition_Type.厉害的战斗机器].ElementAt(i).Key;
                             if (this.battleBuildings.Count >= this.buildCondition[Building_Condition_Type.厉害的战斗机器][type])
                             {
-                                int sort;
-                                if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-                                {
-                                    sort = 0;
-                                }
-                                else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-                                {
-                                    sort = 1;
-                                }
-                                else
-                                {
-                                    sort = 2;
-                                }
+                                int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
                                 this.buildCondition[Building_Condition_Type.厉害的战斗机器].Remove(type);
+                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过厉害的战斗机器解锁建筑");
                             }
                             else
@@ -448,33 +394,91 @@ namespace MANAGER
         /// <param name="plot"></param>
         void GetBuilding(Building_Type type, Plot plot)
         {
-            int sort = (int)type;
+            int sort = BuildingTypeToIndex(type);
             GameObject gO;
-            if(sort>(int)Building_Type.自动采集建筑&&sort<(int)Building_Type.生产建筑)
+            switch (sort)
             {
-                gO = GameObjectPool.Instance.GatheringBuildings.Get();
-                GatheringBuilding building = gO.GetComponent<GatheringBuilding>();
-                this.gatheringBuildings.Add(plot.pos, building);
-                building.SetInfo(plot, type);
-                plot.building = building;
+                case 0:
+                    gO = GameObjectPool.Instance.GatheringBuildings.Get();
+                    GatheringBuilding building = gO.GetComponent<GatheringBuilding>();
+                    this.gatheringBuildings.Add(plot.pos, building);
+
+                    this.AddAttackAndHotility(type, Building_Type.自动采集建筑, 0);
+
+                    building.SetInfo(plot, type);
+                    plot.building = building;
+                    break;
+                case 1:
+                    gO = GameObjectPool.Instance.ProductionBuildings.Get();
+                    ProductionBuilding building1 = gO.GetComponent<ProductionBuilding>();
+                    this.productionBuildings.Add(plot.pos, building1);
+
+                    this.AddAttackAndHotility(type, Building_Type.生产建筑, 1);
+
+                    building1.SetInfo(plot, type);
+                    plot.building = building1;
+                    break;
+                default:
+                    gO = GameObjectPool.Instance.BattleBuildings.Get();
+                    BattleBuilding building2 = gO.GetComponent<BattleBuilding>();
+                    this.battleBuildings.Add(plot.pos, building2);
+
+                    this.AddAttackAndHotility(type, Building_Type.战斗建筑, 2);
+
+                    building2.SetInfo(plot, type);
+                    plot.building = building2;
+                    break;
             }
-            else if(sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
-            {
-                gO = GameObjectPool.Instance.ProductionBuildings.Get();
-                ProductionBuilding building = gO.GetComponent<ProductionBuilding>();
-                this.productionBuildings.Add(plot.pos, building);
-                building.SetInfo(plot, type);
-                plot.building = building;
-            }
-            else
-            {
-                gO = GameObjectPool.Instance.BattleBuildings.Get();
-                BattleBuilding building = gO.GetComponent<BattleBuilding>();
-                this.battleBuildings.Add(plot.pos, building);
-                building.SetInfo(plot, type);
-                plot.building = building;
-            }
+
+            //if(sort>(int)Building_Type.自动采集建筑&&sort<(int)Building_Type.生产建筑)
+            //{
+            //    gO = GameObjectPool.Instance.GatheringBuildings.Get();
+            //    GatheringBuilding building = gO.GetComponent<GatheringBuilding>();
+            //    this.gatheringBuildings.Add(plot.pos, building);
+
+            //    this.AddAttackAndHotility(type, Building_Type.自动采集建筑,0);
+
+            //    building.SetInfo(plot, type);
+            //    plot.building = building;
+            //}
+            //else if(sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
+            //{
+            //    gO = GameObjectPool.Instance.ProductionBuildings.Get();
+            //    ProductionBuilding building = gO.GetComponent<ProductionBuilding>();
+            //    this.productionBuildings.Add(plot.pos, building);
+
+            //    this.AddAttackAndHotility(type, Building_Type.生产建筑,1);
+
+            //    building.SetInfo(plot, type);
+            //    plot.building = building;
+            //}
+            //else
+            //{
+            //    gO = GameObjectPool.Instance.BattleBuildings.Get();
+            //    BattleBuilding building = gO.GetComponent<BattleBuilding>();
+            //    this.battleBuildings.Add(plot.pos, building);
+
+            //    this.AddAttackAndHotility(type, Building_Type.战斗建筑,2);
+
+            //    building.SetInfo(plot, type);
+            //    plot.building = building;
+            //}
             gO.transform.SetParent(this.transform);
+
+            MessageManager.Instance.AddMessage(Message_Type.机械,string.Format("在({0},{1})建成{2}",plot.pos.x,plot.pos.y,type));
+        }
+
+        /// <summary>
+        /// 增加战力和敌意值
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="buildingType"></param>
+        void AddAttackAndHotility(Building_Type type, Building_Type buildingType,int index)
+        {
+            BuildingType bTL = DataManager.BuildingScriptLists[index][(int)type - (int)buildingType - 1];
+            this.totalAttack += bTL.Attack;
+            EventAreaManager.Instance.AddOrSubtractHotility(0, bTL.HostilityToRobot, true);
+            EventAreaManager.Instance.AddOrSubtractHotility(1, bTL.HostilityToHuman, true);
         }
 
         /// <summary>
@@ -494,6 +498,7 @@ namespace MANAGER
                 else
                 {
                     Debug.Log("该板块已有建筑");
+                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("{0}板块已有建筑", plot.pos));
                 }
             }
             return false;
@@ -568,20 +573,43 @@ namespace MANAGER
         public static BuildingType GetBuildingByType(Building_Type type)
         {
             BuildingType buildingType;
+            int sort = BuildingTypeToIndex(type);
+
+            switch(sort)
+            {
+                case 0:
+                    buildingType = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1];
+                    break;
+                case 1:
+                    buildingType = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1];
+                    break;
+                default:
+                    buildingType = DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1];
+                    break;
+            }
+            return buildingType;
+        }
+
+        /// <summary>
+        /// 类型转为索引
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static int BuildingTypeToIndex(Building_Type type)
+        {
             int sort = (int)type;
             if (sort > (int)Building_Type.自动采集建筑 && sort < (int)Building_Type.生产建筑)
             {
-                buildingType = DataManager.BuildingScriptLists[0][(int)type - (int)Building_Type.自动采集建筑 - 1];
+                return 0;
             }
             else if (sort > (int)Building_Type.生产建筑 && sort < (int)Building_Type.战斗建筑)
             {
-                buildingType = DataManager.BuildingScriptLists[1][(int)type - (int)Building_Type.生产建筑 - 1];
+                return 1;
             }
             else
             {
-                buildingType = DataManager.BuildingScriptLists[2][(int)type - (int)Building_Type.战斗建筑 - 1];
+                return 2;
             }
-            return buildingType;
         }
     }
 }

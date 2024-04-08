@@ -29,14 +29,23 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("当前回合数"), Tooltip("当前回合数的显示")]
     public Text roundNumber;
 
-    [SerializeField, LabelText("回合结束"), Tooltip("点击进入下一个回合")]
+    [SerializeField, LabelText("移动按键"), Tooltip("点击移动流浪者")]
+    public Button moveButton;
+
+    [SerializeField, LabelText("回合结束按键"), Tooltip("点击进入下一个回合")]
     public Button roundOverButton;
 
     [SerializeField, LabelText("设置"), Tooltip("打开设置")]
-    public Button SettingButton;
+    public Button settingButton;
 
     [SerializeField, LabelText("任务"), Tooltip("打开任务界面")]
-    public Button QuestButton;
+    public Button questButton;
+
+    [SerializeField, LabelText("信息按键"), Tooltip("打开信息界面按键")]
+    public Button messageButton;
+
+    [SerializeField, LabelText("信息面板"), Tooltip("信息界面")]
+    public UIMessage uiMessage;
 
 
     private void Start()
@@ -47,14 +56,31 @@ public class UIGamePanel : UIPanel
             UIManager.Instance.Show<UIUpgradeWindow>();
         });
 
+        this.moveButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            PlotManager.Instance.IsMoveWanderer();
+        });
+
         this.roundOverButton.OnClickAsObservable().Subscribe(_ =>
         {
             RoundManager.Instance.RoundOver();
         });
 
-        this.SettingButton.OnClickAsObservable().Subscribe(_ =>
+        this.settingButton.OnClickAsObservable().Subscribe(_ =>
         {
             UIManager.Instance.Show<UISettingWindow>();
+        });
+
+        this.messageButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            if(this.uiMessage.gameObject.activeSelf)
+            {
+                this.uiMessage.gameObject.SetActive(false);
+            }
+            else
+            {
+                this.uiMessage.gameObject.SetActive(true);
+            }
         });
     }
 }

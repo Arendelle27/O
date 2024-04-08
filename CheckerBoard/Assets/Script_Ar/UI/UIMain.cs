@@ -1,4 +1,4 @@
-using Managers;
+using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +11,9 @@ public class UIMain : MonoSingleton<UIMain>
     public List<UIPanel> uiPanels = new List<UIPanel>();
     //1.游戏开始的面板
     //2.游戏中的UI界面
-    //3.选择拓展探索小队的UI界面
-    //4.结束面板
+    //3.移动流浪者的UI界面
+    //4.选择拓展探索小队的UI界面
+    //5.结束面板
 
     [SerializeField, LabelText("自动关闭的游戏窗口界面"), ReadOnly]
     public UISelectedWindow uISelectedWindow;

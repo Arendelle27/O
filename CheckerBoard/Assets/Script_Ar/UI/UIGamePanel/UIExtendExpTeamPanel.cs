@@ -26,8 +26,7 @@ public class UIExtendExpTeamPanel : UIPanel
             {
                 WandererManager.Instance.exploredV2.Clear();
 
-                PlotManager.Instance.EnterSelectExtendExpTeam(false);//进入选择扩展探索小队的模式
-                UIMain.Instance.ChangeToGamePanel(1);//恢复到游戏界面
+                PlotManager.Instance.EnterSelectExtendExpTeam(false);
             }
         });
 

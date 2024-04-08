@@ -44,7 +44,6 @@ public class UIUpgradeWindow : UIWindow
         this.extendExpTeamButton.OnClickAsObservable().Subscribe(_ =>
         {
             //打开扩展探索小队的UI界面
-            UIMain.Instance.ChangeToGamePanel(2);
             PlotManager.Instance.EnterSelectExtendExpTeam(true);//进入选择扩展探索小队的模式
 
             this.OnCloseClick();

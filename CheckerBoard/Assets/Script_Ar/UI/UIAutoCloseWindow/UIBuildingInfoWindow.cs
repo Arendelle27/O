@@ -24,19 +24,7 @@ public class UIBuildingInfoWindow : UISelectWindow
         this.destoryBuilding.OnClickAsObservable().Subscribe(_ =>
         {
             Building_Type type = BuildingManager.Instance.selectedBuilding.type;
-            int sort;
-            if ((int)type > (int)Building_Type.自动采集建筑 && (int)type < (int)Building_Type.生产建筑)
-            {
-                sort = 0;
-            }
-            else if ((int)type > (int)Building_Type.生产建筑 && (int)type < (int)Building_Type.战斗建筑)
-            {
-                sort = 1;
-            }
-            else
-            {
-                sort = 2;
-            }
+            int sort=BuildingManager.BuildingTypeToIndex(type);
 
             BuildingManager.Instance.RemoveBuilding(sort, BuildingManager.Instance.selectedBuilding);
             this.selectedWindow.OnCloseClick();

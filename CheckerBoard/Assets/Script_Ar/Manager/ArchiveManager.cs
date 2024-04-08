@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static ArchiveManager.PlotManagerData;
@@ -112,7 +113,7 @@ public static class ArchiveManager
         #region 流浪者管理器数据
         arc.wandererManagerData.wandererData.pos= WandererManager.Instance.wanderer.plot.pos;
         arc.wandererManagerData.wandererData.level = WandererManager.Instance.wanderer.level;
-        arc.wandererManagerData.exploratoryTeams = WandererManager.Instance.exploratoryTeams;
+        arc.wandererManagerData.exploratoryTeams = WandererManager.Instance.exploratoryTeams.Keys.ToList<Vector2Int>();
         #endregion
 
         foreach (var building in BuildingManager.Instance.gatheringBuildings.Values)

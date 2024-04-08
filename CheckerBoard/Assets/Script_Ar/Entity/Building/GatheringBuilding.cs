@@ -41,19 +41,15 @@ public class GatheringBuilding : Building
     public List<int> Gather()
     {
         List<int> resource = new List<int>() { 0, 0 };
+        if(this.existRound % (gatherResourceRounds) != 0)
+        {
+            return resource;
+        }
+
         if (this.gatherResourceType == PlotManager.Instance.plots[this.pos].plotDefine.ResourceType)
         {
-            if (PlotManager.Instance.plots[this.pos].buildingResources[1] <this.gatherResourceAmount)
-            {
-                Debug.LogFormat("地块资源不足，无法采集");
-                return resource;
-            }
-            if (this.existRound != 0 && this.existRound % (gatherResourceRounds) == 0)
-            {
-                resource[0] = this.gatherResourceType;
-                resource[1] = this.gatherResourceAmount;
-            }
-            PlotManager.Instance.plots[this.pos].buildingResources[1] -= resource[1];
+            resource[0]=this.gatherResourceType;
+            resource[1]= PlotManager.Instance.plots[this.pos].ReduceResource(this.gatherResourceAmount);
         }
         else
         {
