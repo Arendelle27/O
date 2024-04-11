@@ -47,7 +47,7 @@
   },
   "4": {
     "ID": 4,
-    "Name": "玫瑰壤（固定）",
+    "Name": "玫瑰壤",
     "Description": "玫瑰色的土壤覆盖的区域，连清扫犬都会绕道而行",
     "PlotTexture": "Rosesoil",
     "CanBuild": "true",
@@ -65,7 +65,7 @@
   },
   "5": {
     "ID": 5,
-    "Name": "聚居地（固定）",
+    "Name": "聚居地",
     "Description": "为了应对灾难带来的低温和资源短缺，人类搭建了这个简陋的聚居地，在这里也许能做些交易",
     "PlotTexture": "Settlement",
     "CanBuild": "true",
@@ -83,7 +83,7 @@
   },
   "6": {
     "ID": 6,
-    "Name": "黑市（固定）",
+    "Name": "黑市",
     "Description": "传闻中需要特殊手段才能进入……",
     "PlotTexture": "DarkBazaar",
     "CanBuild": "false",
@@ -127,7 +127,7 @@
     "UnlockValue": "2",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 100
+    "Weights": 20
   },
   "9": {
     "ID": 9,
@@ -178,6 +178,6 @@
     "UnlockValue": "2",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 100
+    "Weights": 20
   }
 }

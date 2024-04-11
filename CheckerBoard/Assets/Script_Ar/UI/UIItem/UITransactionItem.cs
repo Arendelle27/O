@@ -14,6 +14,9 @@ public class UITransactionItem : ListView.ListViewItem
     [SerializeField, LabelText("商品名称"), Tooltip("放入商品名称")]
     public Text nameText;
 
+    [SerializeField, LabelText("商品数量"), Tooltip("放入商品数量")]
+    public Text countText;
+
     [SerializeField, LabelText("商品价格"), Tooltip("放入商品价格")]
     public Text priceText;
 
@@ -33,6 +36,6 @@ public class UITransactionItem : ListView.ListViewItem
                 this.nameText.text = string.Format("蓝图{0}", tD.Subtype);
                 break;
         }
-        this.priceText.text = tD.Price.ToString();
+
     }
 }

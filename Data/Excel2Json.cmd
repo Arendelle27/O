@@ -4,4 +4,8 @@ json-excel\json-excel json Tables\ Data\
 @copy Data\PlotDefine.txt ..\CheckerBoard\Data\
 @copy Data\TransactionDefine.txt ..\CheckerBoard\Data\
 @copy Data\ConfrontDefine.txt ..\CheckerBoard\Data\
+@copy Data\TeamUpgradeDefine.txt ..\CheckerBoard\Data\
+@copy Data\TransactionUpgradeDefine.txt ..\CheckerBoard\Data\
+@copy Data\ExecutionUpgradeDefine.txt ..\CheckerBoard\Data\
+@copy Data\UpgradePointCostDefine.txt ..\CheckerBoard\Data\
 pause

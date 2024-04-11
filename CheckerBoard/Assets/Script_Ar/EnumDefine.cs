@@ -97,3 +97,11 @@ public enum Message_Type
     冲突 = 4,
     探索=5
 }
+
+public enum Upgrade_Type
+{
+    无=-1,
+    小队,
+    交易,
+    行动力
+}

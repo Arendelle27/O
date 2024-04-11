@@ -1,0 +1,38 @@
+{
+  "0": {
+    "Level": 0,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 0,
+    "TeamIncreaseAmount": 0
+  },
+  "1": {
+    "Level": 1,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 1,
+    "TeamIncreaseAmount": 1
+  },
+  "2": {
+    "Level": 2,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 2,
+    "TeamIncreaseAmount": 2
+  },
+  "3": {
+    "Level": 3,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 3,
+    "TeamIncreaseAmount": 2
+  },
+  "4": {
+    "Level": 4,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 4,
+    "TeamIncreaseAmount": 3
+  },
+  "5": {
+    "Level": 5,
+    "UpgradeType": "交易",
+    "TeamUpgradeCost": 5,
+    "TeamIncreaseAmount": 3
+  }
+}

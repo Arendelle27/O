@@ -1,0 +1,26 @@
+{
+  "0": {
+    "HaveBuy": 0,
+    "BuyNextCost": 100
+  },
+  "1": {
+    "HaveBuy": 1,
+    "BuyNextCost": 300
+  },
+  "2": {
+    "HaveBuy": 2,
+    "BuyNextCost": 600
+  },
+  "3": {
+    "HaveBuy": 3,
+    "BuyNextCost": 1200
+  },
+  "4": {
+    "HaveBuy": 4,
+    "BuyNextCost": 2000
+  },
+  "5": {
+    "HaveBuy": 5,
+    "BuyNextCost": 4000
+  }
+}

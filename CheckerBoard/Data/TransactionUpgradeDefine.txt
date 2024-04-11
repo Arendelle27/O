@@ -1,0 +1,48 @@
+{
+  "0": {
+    "Level": 0,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 0,
+    "PurchasePriceReduce": 0,
+    "SellPriceIncrease": 0
+  },
+  "1": {
+    "Level": 1,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 1,
+    "PurchasePriceReduce": 10,
+    "SellPriceIncrease": 5,
+    "TransactionSpecialEffectDescription": "每回合有一次免费刷新商店的机会",
+    "TransactionSpecialEffectValue": 1
+  },
+  "2": {
+    "Level": 2,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 1,
+    "PurchasePriceReduce": 15,
+    "SellPriceIncrease": 10
+  },
+  "3": {
+    "Level": 3,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 1,
+    "PurchasePriceReduce": 25,
+    "SellPriceIncrease": 20
+  },
+  "4": {
+    "Level": 4,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 1,
+    "PurchasePriceReduce": 30,
+    "SellPriceIncrease": 30
+  },
+  "5": {
+    "Level": 5,
+    "UpgradeType": "交易",
+    "TransactionUpgradeCost": 2,
+    "PurchasePriceReduce": 30,
+    "SellPriceIncrease": 30,
+    "TransactionSpecialEffectDescription": "每回合有一次免费刷新商店的机会",
+    "TransactionSpecialEffectValue": 1
+  }
+}

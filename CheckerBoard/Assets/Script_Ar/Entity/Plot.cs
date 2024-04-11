@@ -19,6 +19,9 @@ namespace ENTITY
 
         //[SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
         //public List<Sprite> plot_Sps = new List<Sprite>();
+        [SerializeField, LabelText("状态遮罩"), Tooltip("显示板块状态")]
+        public SpriteRenderer statueMask;
+
 
         [SerializeField, LabelText("板块状态"), ReadOnly]
         public Plot_Statue plot_Statue;
@@ -34,8 +37,8 @@ namespace ENTITY
 
         public bool canMovein = false;
 
-        [SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
-        public Text figure;
+        //[SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
+        //public Text figure;
 
         [SerializeField, LabelText("位置"), ReadOnly]
         public Vector2Int pos;
@@ -113,8 +116,7 @@ namespace ENTITY
 
             this.ObserveEveryValueChanged(_ => this.curColor).Subscribe(_ =>
             {
-                this.SR.color = this.curColor;
-                
+                this.ChangeStatueMaskColor(this.curColor);
             });
         }
 
@@ -158,7 +160,12 @@ namespace ENTITY
 
             this.plotDefine= plotDefine;
             this.plotType = plotDefine.Type;
-            this.figure.text = plotDefine.ID.ToString();
+            //this.figure.text = plotDefine.ID.ToString();
+            if(SpriteManager.plotSprites.ContainsKey(plotDefine.Name))
+            {
+                this.SR.sprite = SpriteManager.plotSprites[plotDefine.Name];
+            }
+
 
             switch (this.plotType)
             {
@@ -172,11 +179,15 @@ namespace ENTITY
                         this.buildingResources[0] = 0;
                     }
                     this.buildingResources[1] = plotDefine.ResourceTotal;
-                    this.figure.color = Color.white;
+                    //this.figure.color = Color.white;
                     break;
                 case 1://事件板块
                     this.eventArea=EventAreaManager.Instance.GetEventArea(plotDefine.EventType, this);
-                    this.figure.color = Color.gray;
+                    if(!this.SR.enabled)
+                    {
+                        this.SR.enabled = true;
+                    }
+                    //this.figure.color = Color.gray;
                     break;
             }
 
@@ -201,8 +212,13 @@ namespace ENTITY
         {
             this.plotDefine = DataManager.PlotDefines[7];
             this.plotType = this.plotDefine.Type;
-            this.figure.text = this.plotDefine.ID.ToString();
-            this.figure.color = Color.white;
+            //this.figure.text = this.plotDefine.ID.ToString();
+            //this.figure.color = Color.white;
+
+            if (SpriteManager.plotSprites.ContainsKey(this.plotDefine.Name))
+            {
+                this.SR.sprite = SpriteManager.plotSprites[this.plotDefine.Name];
+            }
 
             this.eventArea= null;
             this.buildingResources[0] = -1;
@@ -225,8 +241,13 @@ namespace ENTITY
                     break;
             }
             this.plotType = this.plotDefine.Type;
-            this.figure.text = this.plotDefine.ID.ToString();
-            this.figure.color = Color.gray;
+            //this.figure.text = this.plotDefine.ID.ToString();
+            //this.figure.color = Color.gray;
+
+            if (SpriteManager.plotSprites.ContainsKey(this.plotDefine.Name))
+            {
+                this.SR.sprite = SpriteManager.plotSprites[this.plotDefine.Name];
+            }
 
             this.eventArea = EventAreaManager.Instance.GetEventArea(this.plotDefine.EventType, this);
             this.canEnter = true;
@@ -249,6 +270,16 @@ namespace ENTITY
         //}
 
         #region 改变格子状态
+
+        /// <summary>
+        /// 改变状态遮罩颜色
+        /// </summary>
+        void ChangeStatueMaskColor(Color curColor)
+        {
+            Color color=new Color(curColor.r,curColor.g,curColor.b,0.3f);
+            this.statueMask.color= color;
+        }
+
         /// <summary>
         /// 随格子类型改变而改变
         /// </summary>
@@ -326,6 +357,10 @@ namespace ENTITY
 
                 if(isFirstExplored)
                 {
+                    if (!this.SR.enabled)
+                    {
+                        this.SR.enabled = true;
+                    }
                     this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
                     if (this.plotDefine.Type == 0)//资源板块
                     {
@@ -406,6 +441,13 @@ namespace ENTITY
                 {
                     this.ChangeType(Plot_Statue.已探索);
                 }
+                if(isFirstExplored)
+                {
+                    if(!this.SR.enabled)
+                    {
+                        this.SR.enabled = true;
+                    }
+                }
             }
         }
 
@@ -418,12 +460,12 @@ namespace ENTITY
             if (canMove)
             {
                 this.canMovein = true;
-                this.SR.color = this.inMoveScopeColor;
+                this.ChangeStatueMaskColor(this.inMoveScopeColor);
             }
             else
             {
                 this.canMovein = false;
-                this.SR.color = this.curColor;
+                this.ChangeStatueMaskColor(this.curColor);
             }
         }
 

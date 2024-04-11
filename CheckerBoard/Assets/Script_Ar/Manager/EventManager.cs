@@ -11,7 +11,7 @@ public class EventManager : Singleton<EventManager>
 {
 
     //事件字典
-    Dictionary<int, GameEvent> gameEventDic = new Dictionary<int, GameEvent>();
+    //Dictionary<int, GameEvent> gameEventDic = new Dictionary<int, GameEvent>();
 
     //当前对抗事件
     public ConfrontDefine curConfrontEvent;
@@ -52,16 +52,16 @@ public class EventManager : Singleton<EventManager>
         }
 
         Debug.Log("购买成功");
-        EventAreaManager.Instance.transactionObjectsStatue[settleSort][commodityId][0]-= amount;//数量减少
-        if (EventAreaManager.Instance.transactionObjectsStatue[settleSort][commodityId][1] == 0)
+        EventAreaManager.Instance.purchaseObjectsStatue[settleSort][commodityId][0]-= amount;//数量减少
+        if (EventAreaManager.Instance.purchaseObjectsStatue[settleSort][commodityId][1] == 0)
         {
             //等待补货
-            EventAreaManager.Instance.transactionObjectsStatue[settleSort][commodityId][1] = DataManager.TransactionDefines[settleSort][commodityId].CoolingRounds;
+            EventAreaManager.Instance.purchaseObjectsStatue[settleSort][commodityId][1] = DataManager.TransactionDefines[settleSort][commodityId].CoolingRounds;
         }
 
         EventAreaManager.Instance.uITransactionWindow.UpdateBuildingList(0);
 
-        int totalMoney = DataManager.TransactionDefines[settleSort][commodityId].Price * amount;
+        int totalMoney = CapabilityManager.Instance.TransactionPrice( DataManager.TransactionDefines[settleSort][commodityId],true) * amount;
         ResourcesManager.Instance.ChangeWealth(-totalMoney);
         EventAreaManager.Instance.AddOrSubtractHotility(0, totalMoney / 200,true);//敌意值增加
 
@@ -98,11 +98,15 @@ public class EventManager : Singleton<EventManager>
             settleSort = 0;
         }
 
+        EventAreaManager.Instance.sellObjectsStatue[settleSort][goodId] -= amount;//数量减少
+
+        EventAreaManager.Instance.uITransactionWindow.UpdateBuildingList(1);
+
         int resType = DataManager.TransactionDefines[settleSort][goodId].Subtype;
         int[] res = new int[3];
         res[resType] = amount;
         ResourcesManager.Instance.ChangeBuildingResources(res, false);
-        int totalMoney= DataManager.TransactionDefines[settleSort][goodId].Price * amount;
+        int totalMoney= CapabilityManager.Instance.TransactionPrice(DataManager.TransactionDefines[settleSort][goodId],false) * amount;
         ResourcesManager.Instance.ChangeWealth(totalMoney);
         EventAreaManager.Instance.AddOrSubtractHotility(0, totalMoney/200, true);//敌意值增加
 

@@ -104,7 +104,7 @@ namespace MANAGER
                             }
                             break;
                         case Map_Mode.拓展探索小队:
-                            if(ResourcesManager.Instance.levelPromptionAmount>0)
+                            if(CapabilityManager.Instance.expendExploratoryAmount > 0)
                             {
                                 WandererManager.Instance.ExtendExpTeam(value);//拓展探索小队
                             }
@@ -261,6 +261,7 @@ namespace MANAGER
 
             Plot plot = gO.GetComponent<Plot>();
             plot.pos = pos;
+            plot.SR.enabled = false;//关闭贴图
 
             this.plots.Add(pos, plot);
 
@@ -664,6 +665,11 @@ namespace MANAGER
                 //选择移动点
             Debug.Log("选择移动点");
 
+            if(ResourcesManager.Instance.execution<=0)
+            {
+                MessageManager.Instance.AddMessage(Message_Type.探索, "行动点不足");
+                return;
+            }
             this.EnterMoveWanderer(true);
             //}
         }
@@ -729,7 +735,8 @@ namespace MANAGER
         /// </summary>
         public void MoveWanderer(bool isMove)
         {
-            if(isMove)
+            this.EnterMoveWanderer(false);
+            if (isMove)
             {
                 if (this.moveAimPlot == null)//目的地为空
                 {
@@ -745,9 +752,9 @@ namespace MANAGER
                 ResourcesManager.Instance.ChangeExecution(-this.moveExecutionCost);//消耗行动点
                 MainThreadDispatcher.StartUpdateMicroCoroutine(WandererManager.Instance.WandererMoveTo(this.moveAimPlot));//将流浪者移动到指定的板块
                 MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("消耗{0}行动力，移动到（{1}，{2}）", this.moveExecutionCost, this.moveAimPlot.pos.x, this.moveAimPlot.pos.y));
+
             }
 
-            this.EnterMoveWanderer(false);
 
             WandererManager.Instance.destinationSign.Hide();
 
@@ -946,12 +953,12 @@ namespace MANAGER
             {
                 this.map_Mode = Map_Mode.拓展探索小队;
                 UIMain.Instance.ChangeToGamePanel(3);
-                MessageManager.Instance.AddMessage(Message_Type.流浪者,string.Format("升到{0}级",WandererManager.Instance.wanderer.level));
             }
             else
             {
                 this.map_Mode = Map_Mode.正常;
                 UIMain.Instance.ChangeToGamePanel(1);//恢复到游戏界面
+                UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
             }
         }
     }

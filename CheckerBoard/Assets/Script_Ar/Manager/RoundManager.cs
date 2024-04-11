@@ -68,7 +68,7 @@ namespace MANAGER
 
             BuildingManager.Instance.RoundOver();//建筑结束回合
 
-            ResourcesManager.Instance.RoundOver();//资源结束回合
+            ResourcesManager.Instance.RoundOver(this.roundNumber);//资源结束回合
             /*结算前*/
             EventManager.Instance.StageDecision();//阶段决策
 
@@ -81,6 +81,8 @@ namespace MANAGER
             EventAreaManager.Instance.RoundOver();//事件地区结束回合
 
             EventManager.Instance.RoundOver();//事件结束回合
+
+            CapabilityManager.Instance.RoundOver();//能力结束回合
 
             if (this.unlockPlotByRound!=null)
             {

@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public class UICommodityItem : UITransactionItem
 {
-    [SerializeField, LabelText("商品数量"), Tooltip("放入商品数量")]
-    public Text countText;
 
     [SerializeField, LabelText("商品状态"), Tooltip("放入商品状态文本")]
     public Text stateText;
@@ -18,14 +16,15 @@ public class UICommodityItem : UITransactionItem
     public override void SetInfo(TransactionDefine tD)
     {
         base.SetInfo(tD);
+        this.priceText.text = CapabilityManager.Instance.TransactionPrice(tD, true).ToString();
 
-        if(!tD.IsBlackMarket)
+        if (!tD.IsBlackMarket)
         {
-            this.countText.text= EventAreaManager.Instance.transactionObjectsStatue[0][tD.ID][0].ToString();
+            this.countText.text= EventAreaManager.Instance.purchaseObjectsStatue[0][tD.ID][0].ToString();
 
             if (tD.TransactionType == Transaction_Type.资源)//资源类
             {
-                int cT = EventAreaManager.Instance.transactionObjectsStatue[0][tD.ID][1];//获取冷却时间
+                int cT = EventAreaManager.Instance.purchaseObjectsStatue[0][tD.ID][1];//获取冷却时间
                 if (cT > 0)
                 {
                     this.stateText.text = string.Format("{0}天后补满", cT);
@@ -38,10 +37,10 @@ public class UICommodityItem : UITransactionItem
         }
         else
         {
-            this.countText.text = EventAreaManager.Instance.transactionObjectsStatue[1][tD.ID][0].ToString();
+            this.countText.text = EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][0].ToString();
             if (tD.TransactionType == Transaction_Type.资源)//资源类
             {
-                int cT = EventAreaManager.Instance.transactionObjectsStatue[1][tD.ID][1];//获取冷却时间
+                int cT = EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][1];//获取冷却时间
                 if (cT > 0)
                 {
                     this.stateText.text = string.Format("{0}天后补满", cT);
@@ -53,7 +52,7 @@ public class UICommodityItem : UITransactionItem
             }
             else
             {
-                if(EventAreaManager.Instance.transactionObjectsStatue[1][tD.ID][0] != 0)
+                if(EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][0] != 0)
                 {
                     this.stateText.text = "可售";
                 }

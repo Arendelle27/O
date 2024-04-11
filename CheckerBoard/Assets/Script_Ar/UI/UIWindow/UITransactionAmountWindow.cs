@@ -21,8 +21,7 @@ public class UITransactionAmountWindow : UIWindow
     public Text priceText;
     [SerializeField, LabelText("数量滑动条"), Tooltip("放入数量滑动条")]
     public Slider amountSlider;
-    [SerializeField, LabelText("结果文本"), Tooltip("放入结果文本")]
-    public Text resultText;
+
     [SerializeField, LabelText("按键"), Tooltip("放入按键")]
     public List<Button> buttons;
     //0为确认，1为取消
@@ -120,26 +119,22 @@ public class UITransactionAmountWindow : UIWindow
         if (DataManager.TransactionDefines[settleSort][transactionObjecId].TransactionType == Transaction_Type.资源)
         {
             this.nameText.text = ((Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjecId].Subtype).ToString();//资源类型
-
-            this.singlePrice = DataManager.TransactionDefines[settleSort][transactionObjecId].Price;
-
         }
         else if (DataManager.TransactionDefines[settleSort][transactionObjecId].TransactionType == Transaction_Type.蓝图)
         {
             this.nameText.text = string.Format("蓝图{0}", DataManager.TransactionDefines[settleSort][transactionObjecId].Subtype);//蓝图
-
-            this.singlePrice = DataManager.TransactionDefines[settleSort][transactionObjecId].Price;
         }
 
         if (isPurchase)
         {
             this.purchaseOrSellText.text = "购买数量：";
             this.spendOrEarnText.text = "花费：";
+            this.singlePrice = CapabilityManager.Instance.TransactionPrice(DataManager.TransactionDefines[settleSort][transactionObjecId], true);
 
             int maxAmount = ResourcesManager.Instance.wealth/ this.singlePrice;
-            if (maxAmount > EventAreaManager.Instance.transactionObjectsStatue[settleSort][transactionObjecId][0])
+            if (maxAmount > EventAreaManager.Instance.purchaseObjectsStatue[settleSort][transactionObjecId][0])
             {
-                maxAmount = EventAreaManager.Instance.transactionObjectsStatue[settleSort][transactionObjecId][0];
+                maxAmount = EventAreaManager.Instance.purchaseObjectsStatue[settleSort][transactionObjecId][0];
             }
             this.amountSlider.maxValue = maxAmount;
         }
@@ -147,8 +142,15 @@ public class UITransactionAmountWindow : UIWindow
         {
             this.purchaseOrSellText.text = "出售数量：";
             this.spendOrEarnText.text = "赚取：";
+            this.singlePrice = CapabilityManager.Instance.TransactionPrice(DataManager.TransactionDefines[settleSort][transactionObjecId], false);
 
-            this.amountSlider.maxValue = ResourcesManager.Instance.buildingResources[DataManager.TransactionDefines[settleSort][transactionObjecId].Subtype];
+            int maxAmount = ResourcesManager.Instance.buildingResources[DataManager.TransactionDefines[settleSort][transactionObjecId].Subtype];
+            if(maxAmount > EventAreaManager.Instance.sellObjectsStatue[settleSort][transactionObjecId])
+            {
+                maxAmount = EventAreaManager.Instance.sellObjectsStatue[settleSort][transactionObjecId];
+            }
+
+            this.amountSlider.maxValue = maxAmount;
         }
 
         this.amount = 0;

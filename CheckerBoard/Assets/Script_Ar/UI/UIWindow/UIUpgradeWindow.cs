@@ -20,11 +20,11 @@ public class UIUpgradeWindow : UIWindow
     [SerializeField, LabelText("确认升级按钮"), Tooltip("升级按钮")]
     public Button upgradeButton;
 
-    [SerializeField, LabelText("扩展探索小队按钮"), Tooltip("点击扩展探索小队按钮")]
-    public Button extendExpTeamButton;
+    //[SerializeField, LabelText("扩展探索小队按钮"), Tooltip("点击扩展探索小队按钮")]
+    //public Button extendExpTeamButton;
 
-    [SerializeField, LabelText("扩展探索小队数量显示"), Tooltip("显示扩展探索小队数量")]
-    public Text expTeamExtendAmountText;
+    //[SerializeField, LabelText("扩展探索小队数量显示"), Tooltip("显示扩展探索小队数量")]
+    //public Text expTeamExtendAmountText;
 
     [SerializeField, LabelText("返回按钮"), Tooltip("返回按钮")]
     public Button closeButton;
@@ -41,13 +41,13 @@ public class UIUpgradeWindow : UIWindow
             this.OnCloseClick();
         });
 
-        this.extendExpTeamButton.OnClickAsObservable().Subscribe(_ =>
-        {
-            //打开扩展探索小队的UI界面
-            PlotManager.Instance.EnterSelectExtendExpTeam(true);//进入选择扩展探索小队的模式
+        //this.extendExpTeamButton.OnClickAsObservable().Subscribe(_ =>
+        //{
+        //    //打开扩展探索小队的UI界面
+        //    PlotManager.Instance.EnterSelectExtendExpTeam(true);//进入选择扩展探索小队的模式
 
-            this.OnCloseClick();
-        });
+        //    this.OnCloseClick();
+        //});
 
     }
 
@@ -66,11 +66,11 @@ public class UIUpgradeWindow : UIWindow
     /// </summary>
     void UpdateUI()
     {
-        if(WandererManager.Instance.wanderer?.level <10)
+        if(DataManager.UpgradePointCostDefines.ContainsKey(CapabilityManager.Instance.upgradePointHaveBuy))
         {
-            this.upgradeText.text = "是否要升级，\r\n本次升级需要消耗金钱:";
+            this.upgradeText.text = "是否购买，\r\n需要消耗金钱:";
 
-            this.upgradeCost.text = (WandererManager.Instance.wanderer!.level * 10).ToString();
+            this.upgradeCost.text = (DataManager.UpgradePointCostDefines[CapabilityManager.Instance.upgradePointHaveBuy]).BuyNextCost.ToString();
 
             if (!this.upgradeCost.gameObject.activeSelf)
             {
@@ -84,7 +84,7 @@ public class UIUpgradeWindow : UIWindow
         }
         else
         {
-            this.upgradeText.text = "已经满级辣";
+            this.upgradeText.text = "已经没有可以购买的点数了";
 
             if (this.upgradeCost.gameObject.activeSelf)
             {
@@ -97,30 +97,30 @@ public class UIUpgradeWindow : UIWindow
             }
         }
 
-        if(ResourcesManager.Instance.levelPromptionAmount>0)
-        {
-            this.expTeamExtendAmountText.text = ResourcesManager.Instance.levelPromptionAmount.ToString();
+        //if(ResourcesManager.Instance.levelPromptionAmount>0)
+        //{
+        //    this.expTeamExtendAmountText.text = ResourcesManager.Instance.levelPromptionAmount.ToString();
 
-            if(this.closeButton.gameObject.activeSelf)
-            {
-                this.closeButton.gameObject.SetActive(false);
-            }
-            if(!this.extendExpTeamButton.gameObject.activeSelf)
-            {
-                this.extendExpTeamButton.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            if (!this.closeButton.gameObject.activeSelf)
-            {
-                this.closeButton.gameObject.SetActive(true);
-            }
-            if (this.extendExpTeamButton.gameObject.activeSelf)
-            {
-                this.extendExpTeamButton.gameObject.SetActive(false);
-            }
-        }
+        //    if(this.closeButton.gameObject.activeSelf)
+        //    {
+        //        this.closeButton.gameObject.SetActive(false);
+        //    }
+        //    if(!this.extendExpTeamButton.gameObject.activeSelf)
+        //    {
+        //        this.extendExpTeamButton.gameObject.SetActive(true);
+        //    }
+        //}
+        //else
+        //{
+        //    if (!this.closeButton.gameObject.activeSelf)
+        //    {
+        //        this.closeButton.gameObject.SetActive(true);
+        //    }
+        //    if (this.extendExpTeamButton.gameObject.activeSelf)
+        //    {
+        //        this.extendExpTeamButton.gameObject.SetActive(false);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class UIUpgradeWindow : UIWindow
     /// </summary>
     public override void OnYesClick()
     {
-        if(ResourcesManager.Instance.CanUpgrade())
+        if(CapabilityManager.Instance.BuyUpgradePoint())
         {
             this.UpdateUI();
 
@@ -159,13 +159,13 @@ public class UIUpgradeWindow : UIWindow
         if (isSuccess)
         {
             this.upgradeResult.color = Color.green;
-            this.upgradeResult.text = "升级成功!";
+            this.upgradeResult.text = "购买成功!";
 
         }
         else
         {
             this.upgradeResult.color = Color.red;
-            this.upgradeResult.text = "升级失败,钱不够www";
+            this.upgradeResult.text = "购买失败,钱不够www";
         }
         this.upgradeResult.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);

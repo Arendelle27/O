@@ -89,6 +89,7 @@ namespace MANAGER
             {
                 GameObject go = GameObjectPool.Instance.Wanderer;
                 go.transform.SetParent(this.transform);
+                go.gameObject.SetActive(true);
                 Wanderer wanderer = go.GetComponent<Wanderer>();
                 this.wanderer = wanderer;
             }
@@ -149,7 +150,7 @@ namespace MANAGER
             this.wanderer.plot = amiPlot;
 
             PlotManager.Instance.WanderEnter(amiPlot);
-            MessageManager.Instance.AddMessage(Message_Type.流浪者, string.Format("流浪者移动到({0},{1})", amiPlot.pos.x, amiPlot.pos.y));
+            //MessageManager.Instance.AddMessage(Message_Type.流浪者, string.Format("流浪者移动到({0},{1})", amiPlot.pos.x, amiPlot.pos.y));
             //消耗行动点
         }
 
@@ -163,15 +164,6 @@ namespace MANAGER
         //    this.destinationSign.transform.position = des.transform.position-new Vector3(0,0,0.1f);
         //    this.destinationSign.gameObject.SetActive(true);
         //}
-        /// <summary>
-        /// 流浪者升级
-        /// </summary>
-        public void Upgrade()
-        {
-            ResourcesManager.Instance.ChangeWealth(-this.wanderer.level * 10);
-            ResourcesManager.Instance.levelPromptionAmount++;
-            this.wanderer.level++;
-        }
 
         /// <summary>
         /// 拓展探索小队
@@ -190,7 +182,7 @@ namespace MANAGER
                     this.GetExplotryTeam(v2);
 
                     this.exploredV2.Push(v2);//储存本次拓展的板块
-                    ResourcesManager.Instance.levelPromptionAmount--;
+                    CapabilityManager.Instance.expendExploratoryAmount--;
 
                     break;
                 }
@@ -206,7 +198,7 @@ namespace MANAGER
             {
                 Vector2Int v2 = this.exploredV2.Pop();
                 this.RemoveExplotryTeam(v2);
-                ResourcesManager.Instance.levelPromptionAmount++;
+                CapabilityManager.Instance.expendExploratoryAmount++;
             }
         }
 

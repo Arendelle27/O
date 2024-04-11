@@ -21,9 +21,6 @@ namespace MANAGER
         [SerializeField, LabelText("行动点"), ReadOnly]
         public int execution=0;
 
-        [SerializeField, LabelText("扩展探索小队数量"),ReadOnly]
-        public int levelPromptionAmount=0;
-
         [SerializeField, LabelText("通过资源解锁建筑"), ReadOnly]
         public List<Subject<int>> unlockByResouces = new List<Subject<int>>() 
         {
@@ -64,11 +61,6 @@ namespace MANAGER
                 Debug.Log("行动点变化");
             });
 
-            this.ObserveEveryValueChanged(_ => this.levelPromptionAmount).Subscribe(_ =>
-            {
-                (UIMain.Instance.uiPanels[3] as UIExtendExpTeamPanel).UpdateUI(this.levelPromptionAmount);
-
-            });
         }
 
         /// <summary>
@@ -82,7 +74,7 @@ namespace MANAGER
         {
             this.Init();
             this.wealth = 5000;
-            this.execution = 5;
+            this.execution = CapabilityManager.Instance.executionAmount;
         }
 
         public void ReadArchive()
@@ -95,7 +87,6 @@ namespace MANAGER
 
         public void GameOver()
         {
-            this.levelPromptionAmount = 0;
             this.allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
             this.wealth = 0;
             this.buildingResources = new List<int> { 0, 0, 0 };
@@ -207,11 +198,11 @@ namespace MANAGER
         /// 判断是否能升级
         /// </summary>
         /// <returns></returns>
-        public bool CanUpgrade()
+        public bool CanBuyUpgradePoint(int cost)
         {
-            if(this.wealth>=WandererManager.Instance.wanderer.level*10)
+            if(this.wealth>=cost)
             {
-                WandererManager.Instance.Upgrade();//升级
+                this.ChangeWealth(-cost);
                 return true;
             }
             else
@@ -223,11 +214,13 @@ namespace MANAGER
         /// <summary>
         /// 回合结束
         /// </summary>
-        public void RoundOver()
+        public void RoundOver(int roundAmount)
         {
             this.execution = 5;
 
-            this.ChangeWealth(-10*WandererManager.Instance.wanderer.level);
+            this.ChangeWealth(-10*roundAmount);
+
+            this.execution = CapabilityManager.Instance.executionAmount;
         }
 
         /// <summary>

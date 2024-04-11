@@ -56,7 +56,6 @@ public static class ArchiveManager
         public class WandererData
         {
             public Vector2Int pos;
-            public int level;
         }
 
         public WandererData wandererData=new WandererData();
@@ -112,7 +111,6 @@ public static class ArchiveManager
 
         #region 流浪者管理器数据
         arc.wandererManagerData.wandererData.pos= WandererManager.Instance.wanderer.plot.pos;
-        arc.wandererManagerData.wandererData.level = WandererManager.Instance.wanderer.level;
         arc.wandererManagerData.exploratoryTeams = WandererManager.Instance.exploratoryTeams.Keys.ToList<Vector2Int>();
         #endregion
 

@@ -17,6 +17,8 @@ public class PathConfig
 
     const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
 
+    const string Plot_Sprite_Paths = "UI/Plot/{0}";
+
     const string Music_Path = "Music/{0}";
     const string Sound_Path = "Voice/{0}";
 
@@ -60,6 +62,12 @@ public class PathConfig
         return string.Format(BuildingItem_Sprite_Paths, name);
     }
     //BuildingItemSprite
+
+    public static string GetPlotSpritePath(string name)
+    {
+        return string.Format(Plot_Sprite_Paths, name);
+    }
+    //PlotSprite
 
     public static string GetMusicPath(string name)
     {

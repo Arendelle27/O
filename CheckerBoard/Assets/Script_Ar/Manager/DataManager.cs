@@ -2,20 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using MANAGER;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class DataManager
+public static class DataManager
 {
 
     //建筑脚本属性列表
     public static List<List<BuildingType>> BuildingScriptLists = new List<List<BuildingType>>();
     //板块属性列表
-    public static Dictionary<int,PlotDefine> PlotDefines = new Dictionary<int, PlotDefine>();
+    public static Dictionary<int, PlotDefine> PlotDefines;
     //交易属性列表
     public static Dictionary<int, Dictionary<int, TransactionDefine>> TransactionDefines;
     //对抗属性列表
-    public static Dictionary<int,Dictionary<int,ConfrontDefine>> ConfrontDefines = new Dictionary<int, Dictionary<int, ConfrontDefine>>();
+    public static Dictionary<int, Dictionary<int, ConfrontDefine>> ConfrontDefines;
+    //小队升级属性列表
+    public static Dictionary<int, TeamUpgradeDefine> TeamUpgradeDefines;
+    //交易升级属性列表
+    public static Dictionary<int, TransactionUpgradeDefine> TransactionUpgradeDefines;
+    //行动点升级属性列表
+    public static Dictionary<int, ExecutionUpgradeDefine> ExecutionUpgradeDefines;
+
+    public static Dictionary<int, UpgradePointCostDefine> UpgradePointCostDefines;
 
     /// <summary>
     /// 读取建筑脚本列表
@@ -77,6 +86,25 @@ public class DataManager
 
         json = File.ReadAllText(PathConfig.GetDataTxtPath("ConfrontDefine.txt"));
         ConfrontDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, ConfrontDefine>>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("TeamUpgradeDefine.txt"));
+        TeamUpgradeDefines = JsonConvert.DeserializeObject<Dictionary<int, TeamUpgradeDefine>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("TransactionUpgradeDefine.txt"));
+        TransactionUpgradeDefines = JsonConvert.DeserializeObject<Dictionary<int, TransactionUpgradeDefine>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("ExecutionUpgradeDefine.txt"));
+        ExecutionUpgradeDefines = JsonConvert.DeserializeObject<Dictionary<int, ExecutionUpgradeDefine>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("UpgradePointCostDefine.txt"));
+        UpgradePointCostDefines = JsonConvert.DeserializeObject<Dictionary<int, UpgradePointCostDefine>>(json);
+        yield return null;
+
+        SpriteManager.Load();//加载精灵
         yield return null;
     }
 }

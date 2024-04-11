@@ -37,6 +37,9 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     //UI物品对象池
     public ObjectPool<GameObject> UIGoodItems { get; set; }
 
+    public ObjectPool<GameObject> UIStrengthenCapabilityItems { get; set; }
+
+
     public void Awake()
     {
         this.Plots = new ObjectPool<GameObject>(GetObject_Plot, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 80, 400);
@@ -56,6 +59,7 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         this.UIBuildingItems = new ObjectPool<GameObject>(GetObject_UIBuildingItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
         this.UICommodityItems = new ObjectPool<GameObject>(GetObject_UICommodityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
         this.UIGoodItems = new ObjectPool<GameObject>(GetObject_UIGoodItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
+        this.UIStrengthenCapabilityItems = new ObjectPool<GameObject>(GetObject_UIStrengthenCapabilityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
     }
 
 
@@ -169,10 +173,21 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     {
         return this.GetUIObject("UICommodityItem");
     }
-
+    /// <summary>
+    /// 获得UI物出售物品预制体
+    /// </summary>
+    /// <returns></returns>
     GameObject GetObject_UIGoodItem()
     {
         return this.GetUIObject("UIGoodItem");
+    }
+    /// <summary>
+    /// 获得UI能力增长预制体
+    /// </summary>
+    /// <returns></returns>
+    GameObject GetObject_UIStrengthenCapabilityItem()
+    {
+        return this.GetUIObject("UIStrengthenCapabilityItem");
     }
 
     #endregion

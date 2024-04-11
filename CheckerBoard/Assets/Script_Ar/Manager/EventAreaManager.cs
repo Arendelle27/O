@@ -20,13 +20,21 @@ namespace MANAGER
             new List < EventArea >()//剧情
         };
 
-        //交易数量和冷却冷却
-        public Dictionary<int,Dictionary<int,List<int>>> transactionObjectsStatue=new Dictionary<int, Dictionary<int, List<int>>>() 
+        //购买数量和冷却
+        public Dictionary<int,Dictionary<int,List<int>>> purchaseObjectsStatue=new Dictionary<int, Dictionary<int, List<int>>>() 
         {
             {0, new Dictionary<int, List<int>>()},//聚集地
             {1, new Dictionary<int, List<int>>()} //黑市
         };
         //最后的值,0为剩余数量，1为冷却时间
+
+        //出售数量和冷却
+        public Dictionary<int, Dictionary<int, int>> sellObjectsStatue = new Dictionary<int, Dictionary<int, int>>()
+        {
+            {0, new Dictionary<int, int>()},//聚集地
+            {1, new Dictionary<int, int>()} //黑市
+        };
+        //最后的值,为剩余数量
 
         //敌意值
         public List<float> hotility=new List<float>(2) {5f,5f};
@@ -54,14 +62,25 @@ namespace MANAGER
                 {
                     if (DataManager.TransactionDefines[i][j].PurchaseOrSell == 0)
                     {
-                        if (this.transactionObjectsStatue[i].ContainsKey(j))
+                        if (this.purchaseObjectsStatue[i].ContainsKey(j))
                         {
-                            this.transactionObjectsStatue[i][j][0] = DataManager.TransactionDefines[i][j].Amount;
-                            this.transactionObjectsStatue[i][j][1] = 0;
+                            this.purchaseObjectsStatue[i][j][0] = DataManager.TransactionDefines[i][j].Amount;
+                            this.purchaseObjectsStatue[i][j][1] = 0;
                         }
                         else
                         {
-                            this.transactionObjectsStatue[i].Add(j, new List<int>(2) { DataManager.TransactionDefines[i][j].Amount, 0 });
+                            this.purchaseObjectsStatue[i].Add(j, new List<int>(2) { DataManager.TransactionDefines[i][j].Amount, 0 });
+                        }
+                    }
+                    else
+                    {
+                        if (this.sellObjectsStatue[i].ContainsKey(j))
+                        {
+                            this.sellObjectsStatue[i][j] = DataManager.TransactionDefines[i][j].Amount;
+                        }
+                        else
+                        {
+                            this.sellObjectsStatue[i].Add(j, DataManager.TransactionDefines[i][j].Amount);
                         }
                     }
                 }
@@ -156,41 +175,43 @@ namespace MANAGER
         /// <returns></returns>
         public bool ReduceCoolingRoundBySpend(int transactionObjectId)
         {
+            Settle eA = this.selectedEventArea as Settle;
+            int settleSort = 0;
+            if (eA.isBlackMarket)
+            {
+                settleSort = 1;
+            }
+            else
+            {
+                settleSort = 0;
+            }
+            if (DataManager.TransactionDefines[settleSort][transactionObjectId].TransactionType == Transaction_Type.蓝图)
+            {
+                Debug.Log("蓝图不会补货");
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("蓝图不会补货"));
+                return false;
+            }
+            if (this.purchaseObjectsStatue[settleSort][transactionObjectId][0] == DataManager.TransactionDefines[settleSort][transactionObjectId].Amount)
+            {
+                Debug.Log("不需要补货");
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("不需要补货"));
+                return false;
+            }
+
+            if (CapabilityManager.Instance.freelyReduceCoolingRound>0)
+            {
+                CapabilityManager.Instance.freelyReduceCoolingRound--;
+
+                this.ReduceCoolingRound(settleSort, transactionObjectId);
+
+                return true;
+            }
+
             if(ResourcesManager.Instance.wealth>=50)
             {
-                Settle eA = this.selectedEventArea as Settle;
-                int settleSort = 0;
-                if (eA.isBlackMarket)
-                {
-                    settleSort = 1;
-                }
-                else
-                {
-                    settleSort = 0;
-                }
-                if (DataManager.TransactionDefines[settleSort][transactionObjectId].TransactionType==Transaction_Type.蓝图)
-                {
-                    Debug.Log("蓝图不会补货");
-                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("蓝图不会补货"));
-                    return false;
-                }
-                if(this.transactionObjectsStatue[settleSort][transactionObjectId][0] == DataManager.TransactionDefines[settleSort][transactionObjectId].Amount)
-                {
-                    Debug.Log("不需要补货");
-                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("不需要补货"));
-                    return false;
-                }
+                ResourcesManager.Instance.ChangeWealth(-50);
 
-
-                ResourcesManager.Instance.ChangeWealth(-10);
-
-                this.transactionObjectsStatue[settleSort][transactionObjectId][1] --;
-                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}加快一天补货", settleSort ==1? "黑市":"聚落",(Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
-                if (this.transactionObjectsStatue[settleSort][transactionObjectId][1] == 0)
-                {
-                    this.transactionObjectsStatue[settleSort][transactionObjectId][0] = DataManager.TransactionDefines[settleSort][transactionObjectId].Amount;//补货
-                    MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}补货", settleSort==1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
-                }
+                this.ReduceCoolingRound(settleSort, transactionObjectId);
 
                 return true;
             }
@@ -199,7 +220,22 @@ namespace MANAGER
                 MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("金钱不足够补货"));
                 return false;
             }
+        }
 
+        /// <summary>
+        /// 补货
+        /// </summary>
+        /// <param name="settleSort"></param>
+        /// <param name="transactionObjectId"></param>
+        void ReduceCoolingRound(int settleSort,int transactionObjectId)
+        {
+            this.purchaseObjectsStatue[settleSort][transactionObjectId][1]--;
+            MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}加快一天补货", settleSort == 1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
+            if (this.purchaseObjectsStatue[settleSort][transactionObjectId][1] == 0)
+            {
+                this.purchaseObjectsStatue[settleSort][transactionObjectId][0] = DataManager.TransactionDefines[settleSort][transactionObjectId].Amount;//补货
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}补货", settleSort == 1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
+            }
         }
 
         /// <summary>
@@ -268,24 +304,34 @@ namespace MANAGER
         /// </summary>
         public void RoundOver()
         {
-            foreach (int i in this.transactionObjectsStatue.Keys)
+            //补货
+            foreach (int i in this.purchaseObjectsStatue.Keys)
             {
-                foreach (int j in this.transactionObjectsStatue[i].Keys)
+                foreach (int j in this.purchaseObjectsStatue[i].Keys)
                 {
                     if (DataManager.TransactionDefines[i][j].TransactionType==Transaction_Type.蓝图)
                     {
                         continue; //蓝图不需要补货
                     }
 
-                    if (this.transactionObjectsStatue[i][j][1] > 0)
+                    if (this.purchaseObjectsStatue[i][j][1] > 0)
                     {
-                        this.transactionObjectsStatue[i][j][1]--;//冷却时间减少
-                        if (this.transactionObjectsStatue[i][j][1]==0)
+                        this.purchaseObjectsStatue[i][j][1]--;//冷却时间减少
+                        if (this.purchaseObjectsStatue[i][j][1]==0)
                         {
-                            this.transactionObjectsStatue[i][j][0] = DataManager.TransactionDefines[i][j].Amount;//补货
+                            this.purchaseObjectsStatue[i][j][0] = DataManager.TransactionDefines[i][j].Amount;//补货
                             MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}补货", i==1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[i][j].Subtype));
                         }
                     }
+                }
+            }
+
+            //出售
+            foreach (int i in DataManager.TransactionDefines.Keys)
+            {
+                foreach (int j in DataManager.TransactionDefines[i].Keys)
+                {
+                    this.sellObjectsStatue[i][j] = DataManager.TransactionDefines[i][j].Amount;
                 }
             }
 

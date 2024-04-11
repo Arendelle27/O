@@ -47,9 +47,10 @@ namespace UILIST
                 this.background.sprite = selected ? selectedBg : normalBg;
             }
 
+            [SerializeField, LabelText("列表"), ReadOnly]
             public ListView owner;
 
-            public void OnPointerClick(PointerEventData eventData)
+            public virtual void OnPointerClick(PointerEventData eventData)
             {
                 if (!this.selected)
                 {

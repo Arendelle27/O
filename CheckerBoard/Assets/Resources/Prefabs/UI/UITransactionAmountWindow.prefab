@@ -408,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 4951278470554433430}
   purchaseOrSellText: {fileID: 5664309801587314737}
-  AmountText: {fileID: 5930544505225847630}
+  amountText: {fileID: 5930544505225847630}
   spendOrEarnText: {fileID: 6679462347532086041}
   priceText: {fileID: 196679468222626232}
   amountSlider: {fileID: 3143454421598995040}

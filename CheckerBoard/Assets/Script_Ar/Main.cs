@@ -13,23 +13,24 @@ public class Main : MonoSingleton<Main>
     public MainCamera mainCamera;
     private void Awake()
     {
-        MainThreadDispatcher.StartUpdateMicroCoroutine(this.OnAwake());
+        //MainThreadDispatcher.StartUpdateMicroCoroutine(this.OnAwake());
 
     }
 
-    IEnumerator OnAwake()
+    IEnumerator Load()
     {
         UnityLogger.Init();
 
+
+        MainThreadDispatcher.StartUpdateMicroCoroutine(DataManager.Load());//读取建筑脚本列表
         yield return null;
         ArchiveManager.LoadData();//加载存档
-        yield return null;
-        MainThreadDispatcher.StartUpdateMicroCoroutine(DataManager.Load());//读取建筑脚本列表
         yield return null;
     }
 
     private void Start()
     {
+        MainThreadDispatcher.StartUpdateMicroCoroutine(this.Load());
         UIMain.Instance.ChangeToGamePanel(0);
     }
 
@@ -49,6 +50,8 @@ public class Main : MonoSingleton<Main>
         this.mainCamera?.Restart();
         yield return null;
         MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
+        yield return null;
+        CapabilityManager.Instance.Restart();
         yield return null;
         RoundManager.Instance.Restart();
         yield return null;

@@ -26,6 +26,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 0,
+      "Amount": 10,
       "Price": 20
     },
     "3": {
@@ -34,6 +35,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 1,
+      "Amount": 5,
       "Price": 60
     }
   },
@@ -63,6 +65,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 2,
+      "Amount": 2,
       "Price": 800
     }
   }

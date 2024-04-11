@@ -3,7 +3,6 @@ using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using UIBUILDING;
 using UILIST;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +10,18 @@ using UniRx;
 
 public class UITransactionWindow : UIWindow
 {
+    [SerializeField, LabelText("交易等级文本"), Tooltip("显示交易等级文本")]
+    public Text transactionLevelText;
+
     [SerializeField, LabelText("交易列表"), Tooltip("购买和出售列表")]
     public TabView tabView;
 
     [SerializeField, LabelText("交易按钮"), Tooltip("交易按钮")]
     List<Button> TransactionButtons;
     //0为购买，1为出售,2为消耗资源刷新刷新，3为关闭
+
+    [SerializeField, LabelText("减少冷却回合消耗文本"), Tooltip("显示减少冷却回合消耗文本")]
+    public Text reduceCoolingRoundBySpendText;
 
     [SerializeField, LabelText("被选中的交易物品ID"), ReadOnly]
     UITransactionItem transactionObjectSelected;//被选中的建筑UI类型
@@ -51,11 +56,12 @@ public class UITransactionWindow : UIWindow
             UITransactionAmountWindow uITransactionAmountWindow = UIManager.Instance.Show<UITransactionAmountWindow>();
             uITransactionAmountWindow.SetInfo(this.transactionObjectSelected.id, false);
         });
-        this.TransactionButtons[2].onClick.AddListener(() =>
+        this.TransactionButtons[2].OnClickAsObservable().Subscribe(_ =>
         {
             if (EventAreaManager.Instance.ReduceCoolingRoundBySpend(this.transactionObjectSelected.id))
             {
                 this.UpdateBuildingList(0);
+                this.UpdateReduceCoolingRoundBySpendText();
             }
         });
         this.TransactionButtons[3].onClick.AddListener(() =>
@@ -67,10 +73,12 @@ public class UITransactionWindow : UIWindow
 
     void OnEnable()
     {
-        for(int i = 0;i<tabView.tabPages.Length;i++)
+        this.transactionLevelText.text = CapabilityManager.Instance.curLevels[1].ToString();
+        for (int i = 0;i<tabView.tabPages.Length;i++)
         {
             this.UpdateBuildingList(i);
         }
+        this.UpdateReduceCoolingRoundBySpendText();
     }
 
     /// <summary>
@@ -117,6 +125,18 @@ public class UITransactionWindow : UIWindow
                 ui.SetInfo(tD);//设置建筑UIItem信息
                 this.tabView.tabPages[sort].AddItem(ui);
             }
+        }
+    }
+
+    void UpdateReduceCoolingRoundBySpendText()
+    {
+        if(CapabilityManager.Instance.freelyReduceCoolingRound>0)
+        {
+            reduceCoolingRoundBySpendText.text = "减少选中的商品一天的补货时间";
+        }
+        else
+        {
+            reduceCoolingRoundBySpendText.text = "花费50空间币减少选中的商品一天的补货时间";
         }
     }
 }
