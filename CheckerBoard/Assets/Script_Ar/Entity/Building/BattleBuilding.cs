@@ -21,11 +21,5 @@ public class BattleBuilding :Building
         this.SR.sprite = DataManager.BuildingScriptLists[2][this.TID].sprite;//ÉèÖÃ½¨ÖşµÄÍ¼Æ¬
     }
 
-    public void Battle()
-    {
-
-    }
-
-
 
 }

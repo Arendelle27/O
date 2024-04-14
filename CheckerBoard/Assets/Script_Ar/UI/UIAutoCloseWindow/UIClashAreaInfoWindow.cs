@@ -21,14 +21,14 @@ public class UIClashAreaInfoWindow : UISelectWindow
 
     [SerializeField, LabelText("事件按键"), Tooltip("所有事件按键")]
     public List<Button> buttons;
-    //0为交易，1为挑衅,触发对抗事件
+    //0触发对抗事件
 
     //[SerializeField, LabelText("拆除建筑按钮"), Tooltip("拆除建筑按钮")]
     //public Button destoryBuilding;
 
     private void Start()
     {
-        //交易按键
+        //对抗
         this.buttons[0].OnClickAsObservable().Subscribe(_ =>
         {
             PlotDefine pD=EventManager.Instance.curClashArea.plot.plotDefine;
@@ -47,7 +47,7 @@ public class UIClashAreaInfoWindow : UISelectWindow
 
     public void SetInfo(ClashArea clashArea)
     {
-        //this.image.sprite = eventArea.SR.sprite;
+        this.image.sprite = SpriteManager.plotSprites[clashArea.plot.plotDefine.Name];
         this.title.text = clashArea.plot.plotDefine.Name;
         this.description.text = clashArea.plot.plotDefine.Description;
         this.hotilityValue.text = EventAreaManager.Instance.hotility[int.Parse(clashArea.plot.plotDefine.EventValue)].ToString();

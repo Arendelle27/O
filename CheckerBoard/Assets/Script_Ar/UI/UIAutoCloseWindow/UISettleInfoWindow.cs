@@ -56,6 +56,7 @@ public class UISettleInfoWindow : UISelectWindow
     public void SetInfo(EventArea eventArea)
     {
         //this.image.sprite = eventArea.SR.sprite;
+        this.image.sprite = SpriteManager.plotSprites[eventArea.plot.plotDefine.Name];
         this.title.text = eventArea.plot.plotDefine.Name;
         this.description.text = eventArea.plot.plotDefine.Description;
         this.hotilityValue.text = EventAreaManager.Instance.hotility[0].ToString();

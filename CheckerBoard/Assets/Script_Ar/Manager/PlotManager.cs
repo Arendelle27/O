@@ -43,14 +43,14 @@ namespace MANAGER
         internal Dictionary<int, PlotDefine> plotTypeDesepical = new Dictionary<int, PlotDefine>();
 
         [SerializeField, LabelText("当前存在的地块种类"), ReadOnly]
-        public List<HashSet<int>> plotType = new List<HashSet<int>>(2) {new HashSet<int>(), new HashSet<int>()};
+        public List<HashSet<int>> plotTypes = new List<HashSet<int>>(2) {new HashSet<int>(), new HashSet<int>()};
         //存储格子类型,0为资源地块，1为事件地块
 
         [SerializeField, LabelText("当前格子权重总和"),ReadOnly]
         int weightTotal = 0;//格子权重总和
 
         [SerializeField, LabelText("解锁格子条件"), ReadOnly]
-        internal List<Dictionary<int,string>> plotCondition = new List<Dictionary<int, string>>(3) {new Dictionary<int, string>(),new Dictionary<int, string>(),new Dictionary<int, string>() };
+        internal List<Dictionary<int,string>> plotConditions = new List<Dictionary<int, string>>(3) {new Dictionary<int, string>(),new Dictionary<int, string>(),new Dictionary<int, string>() };
         //存储格子条件,0为板块,1为回合,2为道具
 
         [SerializeField, LabelText("解锁格子的道具"), ReadOnly]
@@ -220,9 +220,9 @@ namespace MANAGER
 
             this.haveExploredPlots.Clear();
             this.canExploredPlots.Clear();
-            this.plotType = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
+            this.plotTypes = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
             this.weightTotal = 0;
-            this.plotCondition = new List<Dictionary<int, string>>(3) { new Dictionary<int, string>(), new Dictionary<int, string>(), new Dictionary<int, string>() };
+            this.plotConditions = new List<Dictionary<int, string>>(3) { new Dictionary<int, string>(), new Dictionary<int, string>(), new Dictionary<int, string>() };
             this.unloadProp = new Dictionary<string, bool>();
 
             this.RemoveAllPlot();
@@ -316,27 +316,27 @@ namespace MANAGER
                 switch (pD.Condition)
                 {
                     case Plot_Condition_Type.无:
-                        this.plotType[pD.Type].Add(pD.ID);
+                        this.plotTypes[pD.Type].Add(pD.ID);
                         this.UpdateWeightTotalsAndDespeicalType(false);
                         break;
                     case Plot_Condition_Type.板块:
-                        this.plotCondition[0].Add(pD.ID, pD.UnlockValue);
+                        this.plotConditions[0].Add(pD.ID, pD.UnlockValue);
                         break;
                     case Plot_Condition_Type.回合:
-                        this.plotCondition[1].Add(pD.ID, pD.UnlockValue);
+                        this.plotConditions[1].Add(pD.ID, pD.UnlockValue);
                         break;
                     case Plot_Condition_Type.道具:
-                        this.plotCondition[2].Add(pD.ID, pD.UnlockValue);
+                        this.plotConditions[2].Add(pD.ID, pD.UnlockValue);
                         this.unloadProp.Add(pD.UnlockValue, false);
 
-                        this.ObserveEveryValueChanged(_=>this.unloadProp[plotCondition[2][pD.ID]])
+                        this.ObserveEveryValueChanged(_=>this.unloadProp[plotConditions[2][pD.ID]])
                             .First()
                             .Subscribe(_ =>
                         {
-                            if (this.unloadProp[plotCondition[2][pD.ID]])
+                            if (this.unloadProp[plotConditions[2][pD.ID]])
                             {
-                                this.plotType[pD.Type].Add(pD.ID);
-                                this.plotCondition[2].Remove(pD.ID);
+                                this.plotTypes[pD.Type].Add(pD.ID);
+                                this.plotConditions[2].Remove(pD.ID);
                                 Debug.Log("解锁通过道具解锁格子");
                                 if (this.plotTypeSepical.ContainsValue(pD.ID))
                                 {
@@ -365,13 +365,13 @@ namespace MANAGER
             unlockByRound=RoundManager.Instance.unlockPlotByRound
                 .Subscribe(roundNumber =>
                 {
-                    for(int i = 0; i < this.plotCondition[1].Count;)
+                    for(int i = 0; i < this.plotConditions[1].Count;)
                     {
-                        var id = this.plotCondition[1].ElementAt(i).Key;
-                        if (int.Parse(this.plotCondition[1][id]) == roundNumber)
+                        var id = this.plotConditions[1].ElementAt(i).Key;
+                        if (int.Parse(this.plotConditions[1][id]) >= roundNumber)
                         {
-                            this.plotType[DataManager.PlotDefines[id].Type].Add(id);
-                            this.plotCondition[1].Remove(id);
+                            this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
+                            this.plotConditions[1].Remove(id);
                             Debug.Log("解锁通过回合解锁格子");
                             if(this.plotTypeSepical.ContainsValue(id))
                             {
@@ -397,7 +397,7 @@ namespace MANAGER
                             i++;
                         }
                     }
-                    if (this.plotCondition[1].Count==0)
+                    if (this.plotConditions[1].Count==0)
                     {
                         unlockByRound.Dispose();
                     }
@@ -413,9 +413,9 @@ namespace MANAGER
         void UpdateWeightTotalsAndDespeicalType(bool isRegenerateDefine=false)
         {
             Dictionary<int, PlotDefine> dic = new Dictionary<int, PlotDefine>();
-            for (int n = 0; n < this.plotType.Count; n++)
+            for (int n = 0; n < this.plotTypes.Count; n++)
             {
-                foreach (var id in this.plotType[n])
+                foreach (var id in this.plotTypes[n])
                 {
                     if (!this.plotTypeSepical.ContainsValue(id))
                     {
@@ -427,9 +427,9 @@ namespace MANAGER
 
             this.weightTotal = 0;
             //计算格子权重总和
-            for(int i = 0;i<plotType.Count;i++)
+            for(int i = 0;i<plotTypes.Count;i++)
             {
-                foreach (var id in this.plotType[i])
+                foreach (var id in this.plotTypes[i])
                 {
                     this.weightTotal += DataManager.PlotDefines[id].Weights;
                 }
@@ -583,15 +583,15 @@ namespace MANAGER
         /// <param name="plot"></param>
         void UnlockPlotByPlot(Plot plot)
         {
-            if (this.plotCondition[0].ContainsKey(plot.plotDefine.ID))
+            if (this.plotConditions[0].ContainsKey(plot.plotDefine.ID))
             {
                 //订阅解锁格子事件
                 this.plots[plot.pos].unLoadByPlot
                     .First()
                     .Subscribe(id =>
                 {
-                    this.plotType[plot.plotDefine.Type].Add(plot.plotDefine.ID);
-                    this.plotCondition[0].Remove(plot.plotDefine.ID);
+                    this.plotTypes[plot.plotDefine.Type].Add(plot.plotDefine.ID);
+                    this.plotConditions[0].Remove(plot.plotDefine.ID);
                     Debug.Log("解锁通过板块解锁格子");
                     if (this.plotTypeSepical.ContainsValue(id))
                     {

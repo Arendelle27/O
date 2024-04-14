@@ -29,6 +29,9 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("当前回合数"), Tooltip("当前回合数的显示")]
     public Text roundNumber;
 
+    [SerializeField, LabelText("建造按键"), Tooltip("点击建造建筑")]
+    public Button buildButton;
+
     [SerializeField, LabelText("移动按键"), Tooltip("点击移动流浪者")]
     public Button moveButton;
 
@@ -55,6 +58,12 @@ public class UIGamePanel : UIPanel
             //打开升级界面
             //UIManager.Instance.Show<UIUpgradeWindow>();
             UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
+        });
+
+        this.buildButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            UISelectedWindow uISelectedWindow = UIManager.Instance.Show<UISelectedWindow>();
+            uISelectedWindow.OpenWindow(0);//打开建筑选择界面
         });
 
         this.moveButton.OnClickAsObservable().Subscribe(_ =>

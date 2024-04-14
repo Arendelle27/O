@@ -26,7 +26,15 @@ public class UIBuildingInfoWindow : UISelectWindow
             Building_Type type = BuildingManager.Instance.selectedBuilding.type;
             int sort=BuildingManager.BuildingTypeToIndex(type);
 
-            BuildingManager.Instance.RemoveBuilding(sort, BuildingManager.Instance.selectedBuilding);
+            Building building = BuildingManager.Instance.selectedBuilding;
+
+            if (PlotManager.Instance.plots[building.pos].plotDefine.CanBuild)//板块可以建造
+            {
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(true);//显示建造按钮
+            }
+
+            BuildingManager.Instance.RemoveBuilding(sort, building);
+
             this.selectedWindow.OnCloseClick();
         });
 

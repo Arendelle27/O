@@ -12,7 +12,7 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
 {
     [SerializeField, LabelText("不选择则自动关闭"), Tooltip("不选择则自动关闭的UI窗口")]
     public List<UISelectWindow> uISelectedWindows = new List<UISelectWindow>();
-    //0为建筑选择，1为建筑信息，2为可交易地区信息
+    //0为建筑选择，1为建筑信息，2为事件信息,3为冲突区信息
 
     //public Dictionary<string,UISelectWindow> uISelectedWindows=new Dictionary<string, UISelectWindow>()
     //{
@@ -72,7 +72,13 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
     public void OnDeselect(BaseEventData eventData)
     {
         var ed = eventData as PointerEventData;
-        if (ed.hovered.Contains(this.gameObject))
+
+        //if(ed==null)
+        //{
+        //    return;
+        //}
+
+        if (ed == null||ed.hovered.Contains(this.gameObject))
         {
             return;
         }

@@ -29,7 +29,7 @@ namespace MANAGER
         public int totalAttack = 0;
 
         [SerializeField, LabelText("建筑的解锁条件"), ReadOnly]
-        public Dictionary<Building_Condition_Type,Dictionary<Building_Type,int>> buildCondition = new Dictionary<Building_Condition_Type, Dictionary<Building_Type, int>>()
+        public Dictionary<Building_Condition_Type,Dictionary<Building_Type,int>> buildingConditions = new Dictionary<Building_Condition_Type, Dictionary<Building_Type, int>>()
         {
             {Building_Condition_Type.资源1,new Dictionary<Building_Type, int>() },
             {Building_Condition_Type.资源2,new Dictionary<Building_Type, int>() },
@@ -42,9 +42,9 @@ namespace MANAGER
         [SerializeField, LabelText("当前存在的建筑类型"), ReadOnly]
         public List<List<Building_Type>> buildingTypes = new List<List<Building_Type>>()
         {
-            new List<Building_Type>(),
-            new List<Building_Type>(),
-            new List<Building_Type>(),
+            new List<Building_Type>(),//自动采集建筑
+            new List<Building_Type>(),//生产建筑
+            new List<Building_Type>(),//战斗建筑
         };
 
         [SerializeField, LabelText("建筑蓝图"), ReadOnly]
@@ -104,10 +104,10 @@ namespace MANAGER
         public void ReadArchive()
         {
             this.Init();
-            foreach(var buildingData in ArchiveManager.archive.buildingData)
-            {
-                this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
-            }
+            //foreach(var buildingData in ArchiveManager.archive.buildingData)
+            //{
+            //    this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
+            //}
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace MANAGER
                 this.buildingTypes[i].Clear();
             }
 
-            foreach (var conditionType in buildCondition)
+            foreach (var conditionType in buildingConditions)
             {
                 conditionType.Value.Clear();
             }
@@ -195,32 +195,32 @@ namespace MANAGER
                             }
                             break;
                         case Building_Condition_Type.资源1:
-                            this.buildCondition[Building_Condition_Type.资源1].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.资源1].Add(building.Type, building.NumericalValue);
                             if(!this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.资源1))
                                 this.unlockIDisposableAmount.Add(Building_Condition_Type.资源1, null);
                             break;
                         case Building_Condition_Type.资源2:
-                            this.buildCondition[Building_Condition_Type.资源2].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.资源2].Add(building.Type, building.NumericalValue);
                             if (!this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.资源2))
                                 this.unlockIDisposableAmount.Add(Building_Condition_Type.资源2, null);
                             break;
                         case Building_Condition_Type.资源3:
-                            this.buildCondition[Building_Condition_Type.资源3].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.资源3].Add(building.Type, building.NumericalValue);
                             if (!this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.资源3))
                                 this.unlockIDisposableAmount.Add(Building_Condition_Type.资源3, null);
                             break;
                         case Building_Condition_Type.蓝图:
-                            this.buildCondition[Building_Condition_Type.蓝图].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.蓝图].Add(building.Type, building.NumericalValue);
                             this.bluePrints.Add(building.NumericalValue, false);//初始化蓝图
                             this.unlockIDisposableBlueprint.Add(building.NumericalValue, null);
                             break;
                         case Building_Condition_Type.回合数:
-                            this.buildCondition[Building_Condition_Type.回合数].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.回合数].Add(building.Type, building.NumericalValue);
                             if (!this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.回合数))
                                 this.unlockIDisposableAmount.Add(Building_Condition_Type.回合数, null);
                             break;
                         case Building_Condition_Type.厉害的战斗机器:
-                            this.buildCondition[Building_Condition_Type.厉害的战斗机器].Add(building.Type, building.NumericalValue);
+                            this.buildingConditions[Building_Condition_Type.厉害的战斗机器].Add(building.Type, building.NumericalValue);
                                 if (!this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.厉害的战斗机器))
                             this.unlockIDisposableAmount.Add(Building_Condition_Type.厉害的战斗机器, null);
                             break;
@@ -231,14 +231,14 @@ namespace MANAGER
                 this.unlockIDisposableAmount[Building_Condition_Type.资源1] = ResourcesManager.Instance.unlockByResouces[0]
                 .Subscribe(resource1 =>
                 {
-                    for (int i = 0; i < this.buildCondition[Building_Condition_Type.资源1].Count;)
+                    for (int i = 0; i < this.buildingConditions[Building_Condition_Type.资源1].Count;)
                     {
-                        var type = this.buildCondition[Building_Condition_Type.资源1].ElementAt(i).Key;
-                        if (resource1 >= this.buildCondition[Building_Condition_Type.资源1][type])
+                        var type = this.buildingConditions[Building_Condition_Type.资源1].ElementAt(i).Key;
+                        if (resource1 >= this.buildingConditions[Building_Condition_Type.资源1][type])
                         {
                             int sort =BuildingTypeToIndex(type);
                             this.buildingTypes[sort].Add(type);
-                            this.buildCondition[Building_Condition_Type.资源1].Remove(type);
+                            this.buildingConditions[Building_Condition_Type.资源1].Remove(type);
                             MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                             Debug.Log("解锁通过资源1解锁建筑");
                         }
@@ -247,7 +247,7 @@ namespace MANAGER
                             i++;
                         }
                     }
-                    if (this.buildCondition[Building_Condition_Type.资源1].Count == 0)
+                    if (this.buildingConditions[Building_Condition_Type.资源1].Count == 0)
                     {
                         unlockIDisposableAmount[Building_Condition_Type.资源1].Dispose();
                     }
@@ -258,14 +258,14 @@ namespace MANAGER
                 this.unlockIDisposableAmount[Building_Condition_Type.资源2] = ResourcesManager.Instance.unlockByResouces[1]
                     .Subscribe(resource2 =>
                     {
-                        for (int i = 0; i < this.buildCondition[Building_Condition_Type.资源2].Count;)
+                        for (int i = 0; i < this.buildingConditions[Building_Condition_Type.资源2].Count;)
                         {
-                            var type = this.buildCondition[Building_Condition_Type.资源2].ElementAt(i).Key;
-                            if (resource2 >= this.buildCondition[Building_Condition_Type.资源2][type])
+                            var type = this.buildingConditions[Building_Condition_Type.资源2].ElementAt(i).Key;
+                            if (resource2 >= this.buildingConditions[Building_Condition_Type.资源2][type])
                             {
                                 int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
-                                this.buildCondition[Building_Condition_Type.资源2].Remove(type);
+                                this.buildingConditions[Building_Condition_Type.资源2].Remove(type);
                                 MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过资源2解锁建筑");
                             }
@@ -274,7 +274,7 @@ namespace MANAGER
                                 i++;
                             }
                         }
-                        if (this.buildCondition[Building_Condition_Type.资源2].Count == 0)
+                        if (this.buildingConditions[Building_Condition_Type.资源2].Count == 0)
                         {
                             unlockIDisposableAmount[Building_Condition_Type.资源2].Dispose();
                         }
@@ -284,14 +284,14 @@ namespace MANAGER
                 this.unlockIDisposableAmount[Building_Condition_Type.资源3] = ResourcesManager.Instance.unlockByResouces[2]
                     .Subscribe(resource3 =>
                     {
-                        for (int i = 0; i < this.buildCondition[Building_Condition_Type.资源3].Count;)
+                        for (int i = 0; i < this.buildingConditions[Building_Condition_Type.资源3].Count;)
                         {
-                            var type = this.buildCondition[Building_Condition_Type.资源3].ElementAt(i).Key;
-                            if (resource3 >= this.buildCondition[Building_Condition_Type.资源3][type])
+                            var type = this.buildingConditions[Building_Condition_Type.资源3].ElementAt(i).Key;
+                            if (resource3 >= this.buildingConditions[Building_Condition_Type.资源3][type])
                             {
                                 int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
-                                this.buildCondition[Building_Condition_Type.资源3].Remove(type);
+                                this.buildingConditions[Building_Condition_Type.资源3].Remove(type);
                                 MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过资源3解锁建筑");
                             }
@@ -300,7 +300,7 @@ namespace MANAGER
                                 i++;
                             }
                         }
-                        if (this.buildCondition[Building_Condition_Type.资源3].Count == 0)
+                        if (this.buildingConditions[Building_Condition_Type.资源3].Count == 0)
                         {
                             unlockIDisposableAmount[Building_Condition_Type.资源3].Dispose();
                         }
@@ -310,14 +310,14 @@ namespace MANAGER
                 this.unlockIDisposableAmount[Building_Condition_Type.回合数] = RoundManager.Instance.unlockPlotByRound
                     .Subscribe(roundNumber =>
                     {
-                        for (int i = 0; i < this.buildCondition[Building_Condition_Type.回合数].Count;)
+                        for (int i = 0; i < this.buildingConditions[Building_Condition_Type.回合数].Count;)
                         {
-                            var type = this.buildCondition[Building_Condition_Type.回合数].ElementAt(i).Key;
-                            if (roundNumber >= this.buildCondition[Building_Condition_Type.回合数][type])
+                            var type = this.buildingConditions[Building_Condition_Type.回合数].ElementAt(i).Key;
+                            if (roundNumber >= this.buildingConditions[Building_Condition_Type.回合数][type])
                             {
                                 int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
-                                this.buildCondition[Building_Condition_Type.回合数].Remove(type);
+                                this.buildingConditions[Building_Condition_Type.回合数].Remove(type);
                                 MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过回合数解锁建筑");
                             }
@@ -326,7 +326,7 @@ namespace MANAGER
                                 i++;
                             }
                         }
-                        if (this.buildCondition[Building_Condition_Type.回合数].Count == 0)
+                        if (this.buildingConditions[Building_Condition_Type.回合数].Count == 0)
                         {
                             unlockIDisposableAmount[Building_Condition_Type.回合数].Dispose();
                         }
@@ -340,20 +340,20 @@ namespace MANAGER
                     {
                         if (bluePrint)
                         {
-                            foreach (var type in this.buildCondition[Building_Condition_Type.蓝图].Keys)
+                            foreach (var type in this.buildingConditions[Building_Condition_Type.蓝图].Keys)
                             {
-                                if (this.buildCondition[Building_Condition_Type.蓝图][type] == id)
+                                if (this.buildingConditions[Building_Condition_Type.蓝图][type] == id)
                                 {
                                     int sort = BuildingTypeToIndex(type);
                                     this.buildingTypes[sort].Add(type);
-                                    this.buildCondition[Building_Condition_Type.蓝图].Remove(type);
+                                    this.buildingConditions[Building_Condition_Type.蓝图].Remove(type);
                                     MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                     Debug.LogFormat("解锁通过蓝图{0}解锁建筑", id);
                                     break;
                                 }
                             }
                         }
-                        if (this.buildCondition[Building_Condition_Type.蓝图].Count == 0)
+                        if (this.buildingConditions[Building_Condition_Type.蓝图].Count == 0)
                         {
                             unlockIDisposableBlueprint[id].Dispose();
                         }
@@ -364,14 +364,14 @@ namespace MANAGER
                 this.unlockIDisposableAmount[Building_Condition_Type.厉害的战斗机器] = this.ObserveEveryValueChanged(_ => this.battleBuildings.Count)
                     .Subscribe(_ =>
                     {
-                        for (int i = 0; i < this.buildCondition[Building_Condition_Type.厉害的战斗机器].Count;)
+                        for (int i = 0; i < this.buildingConditions[Building_Condition_Type.厉害的战斗机器].Count;)
                         {
-                            var type = this.buildCondition[Building_Condition_Type.厉害的战斗机器].ElementAt(i).Key;
-                            if (this.battleBuildings.Count >= this.buildCondition[Building_Condition_Type.厉害的战斗机器][type])
+                            var type = this.buildingConditions[Building_Condition_Type.厉害的战斗机器].ElementAt(i).Key;
+                            if (this.battleBuildings.Count >= this.buildingConditions[Building_Condition_Type.厉害的战斗机器][type])
                             {
                                 int sort = BuildingTypeToIndex(type);
                                 this.buildingTypes[sort].Add(type);
-                                this.buildCondition[Building_Condition_Type.厉害的战斗机器].Remove(type);
+                                this.buildingConditions[Building_Condition_Type.厉害的战斗机器].Remove(type);
                                 MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
                                 Debug.Log("解锁通过厉害的战斗机器解锁建筑");
                             }
@@ -380,7 +380,7 @@ namespace MANAGER
                                 i++;
                             }
                         }
-                        if (this.buildCondition[Building_Condition_Type.厉害的战斗机器].Count == 0)
+                        if (this.buildingConditions[Building_Condition_Type.厉害的战斗机器].Count == 0)
                         {
                             unlockIDisposableAmount[Building_Condition_Type.厉害的战斗机器].Dispose();
                         }
@@ -493,6 +493,8 @@ namespace MANAGER
                 if(plot.building==null)
                 {
                     this.GetBuilding(type, plot);
+
+                    (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(false);//关闭建造按钮
                     return true;
                 }
                 else

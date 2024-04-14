@@ -10,6 +10,7 @@ public class ClashArea : EventArea
     int clashType;
     //0为人类，1为机器人
 
+    //是否可以扩张
     bool canExpend;
 
     public ClashArea(Plot plot):base(plot)

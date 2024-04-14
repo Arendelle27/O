@@ -15,7 +15,7 @@ public class GatheringBuilding : Building
     public int gatherResourceRounds;
 
     [SerializeField, LabelText("已存在回合数"), ReadOnly]
-    int existRound = 0;
+    public int existRound = 0;
     public override void SetInfo(Plot plot, Building_Type type)
     {
         base.SetInfo(plot, type);
@@ -32,7 +32,16 @@ public class GatheringBuilding : Building
         this.gatherResourceRounds = (DataManager.BuildingScriptLists[0][this.TID] as GatheringBuildingType).GatherResourceRounds;
 
         this.SR.sprite = DataManager.BuildingScriptLists[0][this.TID].sprite;//设置建筑的图片
-        this.existRound = 1;
+        this.SetRound(1);
+    }
+
+    /// <summary>
+    /// 设置已存在回合数
+    /// </summary>
+    /// <param name="existRound"></param>
+    public void SetRound(int existRound)
+    {
+        this.existRound=existRound;
     }
 
     /// <summary>

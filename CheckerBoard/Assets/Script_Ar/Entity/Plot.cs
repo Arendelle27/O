@@ -14,14 +14,11 @@ namespace ENTITY
 {
     public class Plot : Entity
     {
-        [SerializeField, LabelText("格子定义"), ReadOnly]
-        public PlotDefine plotDefine;
-
-        //[SerializeField, LabelText("格子图像"), Tooltip("不同状态的格子的图像")]
-        //public List<Sprite> plot_Sps = new List<Sprite>();
         [SerializeField, LabelText("状态遮罩"), Tooltip("显示板块状态")]
         public SpriteRenderer statueMask;
 
+        [SerializeField, LabelText("格子定义"), ReadOnly]
+        public PlotDefine plotDefine;
 
         [SerializeField, LabelText("板块状态"), ReadOnly]
         public Plot_Statue plot_Statue;
@@ -34,8 +31,6 @@ namespace ENTITY
         public Color curColor;
         //被在可移动范围时的颜色
         public Color inMoveScopeColor = Color.blue;
-
-        public bool canMovein = false;
 
         //[SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
         //public Text figure;
@@ -146,8 +141,6 @@ namespace ENTITY
             this.building = null;
             this.eventArea = null;
             this.HaveExploratoryTeam = false;
-
-            this.canMovein = false;
         }
 
         /// <summary>
@@ -196,7 +189,7 @@ namespace ENTITY
             if(this.plotDefine.IsSpecialGeneration)
             {
                 //特殊生成，根据是否解锁，判断是否可以进入
-                this.canEnter = PlotManager.Instance.plotType[0].Contains(this.plotDefine.ID)|| PlotManager.Instance.plotType[1].Contains(this.plotDefine.ID);
+                this.canEnter = PlotManager.Instance.plotTypes[0].Contains(this.plotDefine.ID)|| PlotManager.Instance.plotTypes[1].Contains(this.plotDefine.ID);
             }
             else
             {
@@ -355,7 +348,18 @@ namespace ENTITY
                     this.ChangeType(Plot_Statue.已探索);
                 }
 
-                if(isFirstExplored)
+                if (this.plotDefine.CanBuild//板块可以建造
+                    && this.building == null//板块上没有建筑
+                    )
+                {
+                    (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(true);//显示建造按钮
+                }
+                else
+                {
+                    (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(false);//关闭建造按钮
+                }
+
+                if (isFirstExplored)
                 {
                     if (!this.SR.enabled)
                     {
@@ -459,12 +463,10 @@ namespace ENTITY
         {
             if (canMove)
             {
-                this.canMovein = true;
                 this.ChangeStatueMaskColor(this.inMoveScopeColor);
             }
             else
             {
-                this.canMovein = false;
                 this.ChangeStatueMaskColor(this.curColor);
             }
         }

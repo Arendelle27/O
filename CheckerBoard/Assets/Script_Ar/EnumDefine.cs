@@ -52,8 +52,8 @@ public enum Building_Condition_Type
     资源1,
     资源2,
     资源3,
-    回合数,
     蓝图,
+    回合数,
     厉害的战斗机器
 }
 
