@@ -22,11 +22,11 @@ namespace MANAGER
 
         //小队拓展数
         public int expendExploratoryAmount = 0;
-
+        //免费减少冷却回合数
         public int freelyReduceCoolingRound = 0;
-
+        //消耗行动力
         public int executionAmount= 0;
-
+        //强化能力窗口
         public UIStrengthenCapabilityWindow uIStrengthenCapabilityWindow;
 
         public CapabilityManager()

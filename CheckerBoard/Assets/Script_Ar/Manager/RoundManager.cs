@@ -51,7 +51,7 @@ namespace MANAGER
         public void ReadArchive()
         {
             this.Init();
-            this.roundNumber = ArchiveManager.archive.roundNumber;
+            //this.roundNumber = ArchiveManager.archive.roundNumber;
         }
 
         public void GameOver()

@@ -15,9 +15,6 @@ namespace MANAGER
         [SerializeField, LabelText("建筑资源"), ReadOnly]
         public List<int> buildingResources = new List<int>() {0,0,0 };
 
-        [SerializeField, LabelText("所有收集的建筑资源"), ReadOnly]
-        public List<int> allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
-
         [SerializeField, LabelText("行动点"), ReadOnly]
         public int execution=0;
 
@@ -79,15 +76,14 @@ namespace MANAGER
 
         public void ReadArchive()
         {
-            this.Init();
-            this.wealth = ArchiveManager.archive.wealth;
-            this.buildingResources = ArchiveManager.archive.buildingRes;
-            this.execution = ArchiveManager.archive.execution;
+            //this.Init();
+            //this.wealth = ArchiveManager.archive.wealth;
+            //this.buildingResources = ArchiveManager.archive.buildingRes;
+            //this.execution = ArchiveManager.archive.execution;
         }
 
         public void GameOver()
         {
-            this.allBuildingResourcesGathered = new List<int>() { 0, 0, 0 };
             this.wealth = 0;
             this.buildingResources = new List<int> { 0, 0, 0 };
             this.execution = 0;
@@ -120,8 +116,6 @@ namespace MANAGER
                 if(isAdd)//增加资源
                 {
                     res = this.buildingResources[i] + variations[i];
-
-                    this.allBuildingResourcesGathered[i] += variations[i];//增加总资源
                 }
                 else
                 {
@@ -221,39 +215,6 @@ namespace MANAGER
             this.ChangeWealth(-10*roundAmount);
 
             this.execution = CapabilityManager.Instance.executionAmount;
-        }
-
-        /// <summary>
-        /// 根据获得资源总数解锁建筑
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        public bool UnlockBuildingTypeByResource(int type,int amount)
-        {
-            switch(type)
-            {
-                case 0:
-                    if (this.allBuildingResourcesGathered[0]>=amount)
-                    {
-                        return true;
-                    }
-                    break;
-                case 1:
-                    if (this.allBuildingResourcesGathered[1] >= amount)
-                    {
-                        return true;
-                    }
-                    break;
-                case 2:
-                    if (this.allBuildingResourcesGathered[2] >= amount)
-
-                    {
-                        return true;
-                    }
-                    break;
-            }
-            return false;
         }
     }
 

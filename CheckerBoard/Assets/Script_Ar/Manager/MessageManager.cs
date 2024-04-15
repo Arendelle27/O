@@ -2,19 +2,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.Rendering;
+
 
 namespace MANAGER
 {
     public class MessageManager : Singleton<MessageManager>
     {
         [SerializeField, LabelText("存储两天"), Tooltip("当前等级显示")]
-        List<List<List<string>>> messages = new List<List<List<string>>>(2)
+        public List<List<List<string>>> messages = new List<List<List<string>>>(2)
         {
             new List<List<string>>(6)//昨天
             {

@@ -41,10 +41,10 @@ public class UIMain : MonoSingleton<UIMain>
                 {
                     uiPanels[i].gameObject.SetActive(true);
                 }
-                else
-                {
-                    uiPanels[i].gameObject.SetActive(false);
-                }
+                //else
+                //{
+                //    uiPanels[i].gameObject.SetActive(false);
+                //}
             }
             else
             {

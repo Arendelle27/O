@@ -41,7 +41,7 @@ namespace ENTITY
         /// <param name="type"></param>
         public virtual void SetInfo(Plot plot,Building_Type type)
         {
-            this.transform.position = new Vector3(plot.pos.x, plot.pos.y,this.transform.position.z);
+            this.transform.position = plot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
             this.pos = plot.pos;
             this.type = type;
 

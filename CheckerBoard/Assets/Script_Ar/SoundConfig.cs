@@ -1,7 +1,7 @@
 using Managers;
 using UnityEngine;
 
-    public class SoundConfig : MonoBehaviour
+    public class SoundConfig
     {
         /// <summary>
         /// ¿ª¹ØÒôÀÖ

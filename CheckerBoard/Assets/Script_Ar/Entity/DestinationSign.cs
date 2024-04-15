@@ -19,10 +19,10 @@ namespace ENTITY
         /// …Ë÷√–≈œ¢
         /// </summary>
         /// <param name="pos"></param>
-        public void SetInfo(Vector2Int pos)
+        public void SetInfo(Plot plot)
         {
-            this.pos=pos;
-            Vector3 v2= new Vector3(pos.x, pos.y,this.transform.position.z);
+            this.pos= plot.pos;
+            Vector3 v2= plot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
             this.transform.position = v2;
 
             this.gameObject.SetActive(true);

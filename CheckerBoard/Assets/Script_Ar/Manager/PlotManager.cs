@@ -200,6 +200,7 @@ namespace MANAGER
         /// </summary>
         public void ReadArchive()
         {
+            this.Init();
             //foreach (var plot in ArchiveManager.archive.plotData)
             //{
             //    this.plots[plot.pos].ReadArchive(plot);
@@ -718,7 +719,7 @@ namespace MANAGER
         public void CaculateMoveExecutionCost(Plot plot)
         {
             this.moveAimPlot=plot;
-            WandererManager.Instance.destinationSign.SetInfo(plot.pos);//设置目的地标志
+            WandererManager.Instance.destinationSign.SetInfo(plot);//设置目的地标志
             float distance= Vector2Int.Distance(WandererManager.Instance.wanderer.plot.pos, plot.pos);
             for (int i = ResourcesManager.Instance.execution; i >0; i--)
             {

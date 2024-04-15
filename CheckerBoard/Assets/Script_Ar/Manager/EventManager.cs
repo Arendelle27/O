@@ -29,10 +29,6 @@ public class EventManager : Singleton<EventManager>
         UIManager.Instance.Show<UIConfrontEventWindow>();
     }
 
-    public void AddGameEvent(int eventId)
-    {
-
-    }
 
     /// <summary>
     /// ¹ºÂòÊÂ¼ş

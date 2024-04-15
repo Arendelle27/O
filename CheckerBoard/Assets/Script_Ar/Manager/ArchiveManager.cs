@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static class ArchiveManager
@@ -17,10 +16,11 @@ public static class ArchiveManager
         public WandererManagerData wandererManagerData;
         public BuildingManagerData buildingManagerData;
         public EventAreaManagerData eventAreaManagerData;
-        public int roundNumber;
-        public int wealth;
-        public List<int> buildingRes;//建筑资源
-        public int execution;
+        public CapabilityManagerData capabilityManagerData;
+        public EventManagerData eventManager;
+        public MessageManagerData messageManagerData;
+        public ResourcesManagerData resourcesManagerData;
+
         public Vector3 CameraPos;
     }
 
@@ -128,7 +128,7 @@ public static class ArchiveManager
         public class PurchaseObjectStatueData
         {
             public int purchaseObjectId;
-            public List<int> PurchaseObjectStatue =new List<int>(2){0,0};
+            public List<int> purchaseObjectStatue =new List<int>(2){0,0};
         }
         [Serializable]
         public class SellObjectStatueData
@@ -140,6 +140,48 @@ public static class ArchiveManager
         public List<PurchaseObjectStatueData> purchaseObjectStatueDatas = new List<PurchaseObjectStatueData>(2) {new PurchaseObjectStatueData(),new PurchaseObjectStatueData()};
         public List<SellObjectStatueData> sellObjectsStatueDatas = new List<SellObjectStatueData>(2) {new SellObjectStatueData(),new SellObjectStatueData()};
         public List<float> hotility=new List<float>(2) { 0f,0f};
+    }
+
+    [Serializable]
+    public class CapabilityManagerData
+    {
+        public int upgradePoint = 0;
+        public int upgradePointHaveBuy = 0;
+        public List<int> curLevels = new List<int>(3)
+        {
+            0,0,0
+        };
+        public int freelyReduceCoolingRound = 0;
+        public int executionAmount = 0;
+    }
+
+    [Serializable]
+    public class EventManagerData
+    {
+        public List<int> curCOnfrontEventIndex = new List<int>(2) { 0, 0 };
+        public Vector2Int curClashAreaPos;
+    }
+
+    [Serializable]
+    public class MessageManagerData
+    {
+        [Serializable]
+        public class MessageData
+        {
+            public List<string> message;
+        }
+
+        public List<MessageData> yesterdayMessages = new List<MessageData>(6) { new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), };
+        public List<MessageData> todayMessages = new List<MessageData>(6) { new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), };
+    }
+
+    [Serializable]
+    public class ResourcesManagerData
+    {
+        public int roundNumber;
+        public int wealth;
+        public List<int> buildingRes;//建筑资源
+        public int execution;
     }
 
     //存档
@@ -275,7 +317,7 @@ public static class ArchiveManager
             foreach (var purchaseObject in EventAreaManager.Instance.purchaseObjectsStatue[i])
             {
                 eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectId = purchaseObject.Key;
-                eventAreaManagerData.purchaseObjectStatueDatas[i].PurchaseObjectStatue = purchaseObject.Value.ToList();
+                eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectStatue = purchaseObject.Value.ToList();
             }
         }
         //出售物品状态
@@ -293,14 +335,64 @@ public static class ArchiveManager
         arc.eventAreaManagerData = eventAreaManagerData;
         #endregion
 
+        #region 能力管理器数据
+        CapabilityManagerData capabilityManagerData = new CapabilityManagerData();
 
-        arc.roundNumber = RoundManager.Instance.roundNumber;
+        capabilityManagerData.upgradePoint = CapabilityManager.Instance.upgradePoint;
+        capabilityManagerData.upgradePointHaveBuy = CapabilityManager.Instance.upgradePointHaveBuy;
+        capabilityManagerData.curLevels = CapabilityManager.Instance.curLevels;
+        capabilityManagerData.freelyReduceCoolingRound = CapabilityManager.Instance.freelyReduceCoolingRound;
+        capabilityManagerData.executionAmount = CapabilityManager.Instance.executionAmount;
 
-        arc.wealth = ResourcesManager.Instance.wealth;
+        arc.capabilityManagerData = capabilityManagerData;
+        #endregion
 
-        arc.buildingRes = ResourcesManager.Instance.buildingResources;
+        #region 事件管理器数据
+        EventManagerData eventManagerData=new EventManagerData();
+        if(EventManager.Instance.curConfrontEvent!=null)
+        {
+            eventManagerData.curCOnfrontEventIndex[0] = EventManager.Instance.curConfrontEvent.SettleType;
+            eventManagerData.curCOnfrontEventIndex[1] = EventManager.Instance.curConfrontEvent.Level-1;
+        }
 
-        arc.execution = ResourcesManager.Instance.execution;
+        if(EventManager.Instance.curClashArea!=null)
+        {
+            eventManagerData.curClashAreaPos = EventManager.Instance.curClashArea.plot.pos;
+        }
+
+        arc.eventManager = eventManagerData;
+        #endregion
+
+        #region 消息管理器数据
+        MessageManagerData messageManagerData=new MessageManagerData();
+
+        for(int i=0; i< MessageManager.Instance.messages[0].Count;i++)
+        {
+            messageManagerData.yesterdayMessages[i].message = MessageManager.Instance.messages[0][i].ToList();
+        }
+
+        for (int i = 0; i < MessageManager.Instance.messages[1].Count; i++)
+        {
+            messageManagerData.todayMessages[i].message = MessageManager.Instance.messages[1][i].ToList();
+        }
+
+        arc.messageManagerData = messageManagerData;
+
+        #endregion
+
+        #region 资源管理器数据
+        ResourcesManagerData resourcesManagerData = new ResourcesManagerData();
+
+        resourcesManagerData.roundNumber = RoundManager.Instance.roundNumber;
+
+        resourcesManagerData.wealth = ResourcesManager.Instance.wealth;
+
+        resourcesManagerData.buildingRes = ResourcesManager.Instance.buildingResources;
+
+        resourcesManagerData.execution = ResourcesManager.Instance.execution;
+
+        arc.resourcesManagerData = resourcesManagerData;
+        #endregion
 
         arc.CameraPos = Camera.main.transform.position;
 

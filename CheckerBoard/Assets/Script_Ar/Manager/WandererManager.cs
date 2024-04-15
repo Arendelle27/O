@@ -146,7 +146,7 @@ namespace MANAGER
 
             yield return null;
 
-            this.wanderer.transform.position = amiPlot.transform.position - new Vector3(0, 0, 0.3f);
+            this.wanderer.transform.position = amiPlot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
             this.wanderer.plot = amiPlot;
 
             PlotManager.Instance.WanderEnter(amiPlot);
