@@ -32,7 +32,12 @@ public class GatheringBuilding : Building
         this.gatherResourceRounds = (DataManager.BuildingScriptLists[0][this.TID] as GatheringBuildingType).GatherResourceRounds;
 
         this.SR.sprite = DataManager.BuildingScriptLists[0][this.TID].sprite;//ÉèÖÃ½¨ÖþµÄÍ¼Æ¬
-        this.SetRound(1);
+    }
+
+    public void SetInfo(Plot plot, Building_Type type,int existRound)
+    {
+        this.SetInfo(plot, type);
+        this.SetRound(existRound);
     }
 
     /// <summary>

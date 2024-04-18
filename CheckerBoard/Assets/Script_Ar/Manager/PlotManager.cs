@@ -198,9 +198,99 @@ namespace MANAGER
         /// <summary>
         /// 读取存档
         /// </summary>
-        public void ReadArchive()
+        public IEnumerator ReadArchive()
         {
             this.Init();
+            ArchiveManager.PlotManagerData plotManagerData = ArchiveManager.archive.plotManagerData;
+            yield return null;
+
+            for(int i=0;i<this.plotTypes.Count;i++)
+            {
+                HashSet<int> hs=new HashSet<int>(plotManagerData.plotTypes[i].plotTypes);
+                //foreach (var id in plotManagerData.plotTypes[i].plotTypes)
+                //{
+                //    hs.Add(id);
+                //}
+                this.plotTypes[i] = hs;
+            }
+
+            for(int i = 0; i < this.plotConditions.Count; i++)
+            {
+                Dictionary<int, string> dic = new Dictionary<int, string>();
+                for(int j = 0; j < plotManagerData.plotConditions[i].ids.Count; j++)
+                {
+                    dic.Add(plotManagerData.plotConditions[i].ids[j], plotManagerData.plotConditions[i].conditions[j]);
+                }
+                this.plotConditions[i] = dic;
+
+
+            }
+
+            foreach(var plotTypeDespicalId in plotManagerData.plotTypeDesepicalIds)
+            {
+                this.plotTypeDesepical.Add(plotTypeDespicalId, DataManager.PlotDefines[plotTypeDespicalId]);
+            }
+
+            foreach (var prop in plotManagerData.unloadPropsData)
+            {
+                this.unloadProp.Add(prop.propName, prop.isUnloaded);
+            }
+
+            foreach (var plot in plotManagerData.plotsData)
+            {
+                Plot p = this.GetGrid(plot.pos);
+                p.SetInfo(DataManager.PlotDefines[plot.plotDefineId]);
+                p.ChangeType(plot.plotStatue);
+                p.canEnter = plot.canEnter;
+                p.buildingResources = plot.buildingResources;
+                p.isFirstExplored = plot.isFirstExplored;
+
+                this.UnlockPlotByPlot(p);//订阅解锁格子
+            }
+
+            yield return null;
+
+            this.CalculateWeight();
+
+            this.haveExploredPlots= new HashSet<Vector2Int>(plotManagerData.haveExploredPlots);
+
+            this.UnlockByRound();
+
+            foreach(var id in this.plotConditions[2].Keys)//道具解锁格子
+            {
+                this.ObserveEveryValueChanged(_ => this.unloadProp[plotConditions[2][id]])
+                    .First()
+                    .Subscribe(_ =>
+                    {
+                        if (this.unloadProp[plotConditions[2][id]])
+                        {
+                            this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
+                            this.plotConditions[2].Remove(id);
+                            Debug.Log("解锁通过道具解锁格子");
+                            if (this.plotTypeSepical.ContainsValue(id))
+                            {
+                                //是特殊生成
+                                MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
+                                foreach (var pos in this.plotTypeSepical.Keys)
+                                {
+                                    if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == id)//板块存在并且是对应类型
+                                    {
+                                        this.plots[pos].canEnter = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
+                                //非特殊生成
+                                this.UpdateWeightTotalsAndDespeicalType(true);
+                            }
+                        }
+                    });
+                break;
+            }
+
+
             //foreach (var plot in ArchiveManager.archive.plotData)
             //{
             //    this.plots[plot.pos].ReadArchive(plot);
@@ -218,7 +308,7 @@ namespace MANAGER
             }
             this.map_Mode = Map_Mode.正常;
 
-
+            this.plotTypeDesepical.Clear();
             this.haveExploredPlots.Clear();
             this.canExploredPlots.Clear();
             this.plotTypes = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
@@ -262,7 +352,7 @@ namespace MANAGER
 
             Plot plot = gO.GetComponent<Plot>();
             plot.pos = pos;
-            plot.SR.enabled = false;//关闭贴图
+            plot.Discover(false);//关闭贴图
 
             this.plots.Add(pos, plot);
 
@@ -363,48 +453,53 @@ namespace MANAGER
                 }
             }
 
-            unlockByRound=RoundManager.Instance.unlockPlotByRound
-                .Subscribe(roundNumber =>
+            this.UnlockByRound();
+        }
+
+        /// <summary>
+        /// 通过回合解锁格子
+        /// </summary>
+        void UnlockByRound()
+        {
+            unlockByRound = RoundManager.Instance.unlockPlotByRound.Subscribe(roundNumber =>
+            {
+                for (int i = 0; i < this.plotConditions[1].Count;)
                 {
-                    for(int i = 0; i < this.plotConditions[1].Count;)
+                    var id = this.plotConditions[1].ElementAt(i).Key;
+                    if (int.Parse(this.plotConditions[1][id]) >= roundNumber)
                     {
-                        var id = this.plotConditions[1].ElementAt(i).Key;
-                        if (int.Parse(this.plotConditions[1][id]) >= roundNumber)
+                        this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
+                        this.plotConditions[1].Remove(id);
+                        Debug.Log("解锁通过回合解锁格子");
+                        if (this.plotTypeSepical.ContainsValue(id))
                         {
-                            this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
-                            this.plotConditions[1].Remove(id);
-                            Debug.Log("解锁通过回合解锁格子");
-                            if(this.plotTypeSepical.ContainsValue(id))
+                            MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
+                            //是特殊生成
+                            foreach (var pos in this.plotTypeSepical.Keys)
                             {
-                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
-                                //是特殊生成
-                                foreach (var pos in this.plotTypeSepical.Keys)
+                                if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == id)//板块存在并且是对应类型
                                 {
-                                    if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID==id)//板块存在并且是对应类型
-                                    {
-                                        this.plots[pos].canEnter = true;
-                                    }
+                                    this.plots[pos].canEnter = true;
                                 }
-                            }
-                            else
-                            {
-                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
-                                //非特殊生成
-                                this.UpdateWeightTotalsAndDespeicalType(true);
                             }
                         }
                         else
                         {
-                            i++;
+                            MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
+                            //非特殊生成
+                            this.UpdateWeightTotalsAndDespeicalType(true);
                         }
                     }
-                    if (this.plotConditions[1].Count==0)
+                    else
                     {
-                        unlockByRound.Dispose();
+                        i++;
                     }
-                });
-
-
+                }
+                if (this.plotConditions[1].Count == 0)
+                {
+                    unlockByRound.Dispose();
+                }
+            });
         }
 
         /// <summary>
@@ -426,19 +521,29 @@ namespace MANAGER
             }
             this.plotTypeDesepical=dic;
 
+            this.CalculateWeight();
+
+            if(isRegenerateDefine)
+            {
+                //重新生成非特殊生成的格子
+                this.RegenerateDespecialPlotDefine();
+            }
+        }
+
+
+        /// <summary>
+        /// 计算格子权重
+        /// </summary>
+        void CalculateWeight()
+        {
             this.weightTotal = 0;
             //计算格子权重总和
-            for(int i = 0;i<plotTypes.Count;i++)
+            for (int i = 0; i < plotTypes.Count; i++)
             {
                 foreach (var id in this.plotTypes[i])
                 {
                     this.weightTotal += DataManager.PlotDefines[id].Weights;
                 }
-            }
-            if(isRegenerateDefine)
-            {
-                //重新生成非特殊生成的格子
-                this.RegenerateDespecialPlotDefine();
             }
         }
 
@@ -587,7 +692,7 @@ namespace MANAGER
             if (this.plotConditions[0].ContainsKey(plot.plotDefine.ID))
             {
                 //订阅解锁格子事件
-                this.plots[plot.pos].unLoadByPlot
+                plot.unLoadByPlot
                     .First()
                     .Subscribe(id =>
                 {
@@ -734,20 +839,20 @@ namespace MANAGER
         /// <summary>
         /// 确认移动流浪者
         /// </summary>
-        public void MoveWanderer(bool isMove)
+        public bool MoveWanderer(bool isMove)
         {
-            this.EnterMoveWanderer(false);
+            //this.EnterMoveWanderer(false);
             if (isMove)
             {
                 if (this.moveAimPlot == null)//目的地为空
                 {
-                    return;
+                    return false;
                 }
                 if (!this.selectedPlot.canEnter)
                 {
                     Debug.Log("目的地暂时进不去");
                     MessageManager.Instance.AddMessage(Message_Type.探索, "不知为何，目的地进不去");
-                    return;
+                    return false;
                 }
 
                 ResourcesManager.Instance.ChangeExecution(-this.moveExecutionCost);//消耗行动点
@@ -755,11 +860,12 @@ namespace MANAGER
                 MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("消耗{0}行动力，移动到（{1}，{2}）", this.moveExecutionCost, this.moveAimPlot.pos.x, this.moveAimPlot.pos.y));
 
             }
-
+            this.EnterMoveWanderer(false);
 
             WandererManager.Instance.destinationSign.Hide();
 
             this.moveAimPlot = null;
+            return true;
             //foreach (var plot in this.canMovePlots)
             //{
             //    plot.CanMoveIn(false);

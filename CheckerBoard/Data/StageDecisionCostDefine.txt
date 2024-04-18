@@ -1,0 +1,18 @@
+{
+  "0": {
+    "Round": 4,
+    "StageDecisionCost": 80
+  },
+  "1": {
+    "Round": 12,
+    "StageDecisionCost": 400
+  },
+  "2": {
+    "Round": 20,
+    "StageDecisionCost": 2500
+  },
+  "3": {
+    "Round": 30,
+    "StageDecisionCost": 8000
+  }
+}

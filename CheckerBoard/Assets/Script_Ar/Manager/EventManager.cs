@@ -18,10 +18,12 @@ public class EventManager : Singleton<EventManager>
     //如果当前对抗事件是在冲突区域中，记录当前冲突区域
     public ClashArea curClashArea;
 
+
     /// <summary>
     /// 设置对抗事件
     /// </summary>
     /// <param name="index"></param>
+    /// 
     public void SetConfrontEvent(int settleSort, float hotility,ClashArea curClashArea=null)
     {
         this.curConfrontEvent = DataManager.ConfrontDefines[settleSort][this.CalculateConfrontLevel(hotility)-1];
@@ -344,17 +346,23 @@ public class EventManager : Singleton<EventManager>
     /// <summary>
     /// 阶段结算
     /// </summary>
-    public void StageDecision()
+    public int StageDecision(int stage,int round)
     {
-        if (RoundManager.Instance.roundNumber % 5 == 0)
+        if (DataManager.StageDecisionCostDefines[stage].Round==round)
         {
             Debug.Log("阶段结算");
-            ResourcesManager.Instance.wealth -= RoundManager.Instance.roundNumber * 10;
+            ResourcesManager.Instance.wealth -= DataManager.StageDecisionCostDefines[stage].StageDecisionCost;
             if (ResourcesManager.Instance.wealth < 0)
             {
                 MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
             }
+            return 1;
         }
+        else
+        {
+            return 0;
+        }
+        
     }
 
     /// <summary>

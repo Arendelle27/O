@@ -212,7 +212,6 @@ namespace MANAGER
         {
             this.execution = 5;
 
-            this.ChangeWealth(-10*roundAmount);
 
             this.execution = CapabilityManager.Instance.executionAmount;
         }

@@ -62,12 +62,20 @@ public class UIGamePanel : UIPanel
 
         this.buildButton.OnClickAsObservable().Subscribe(_ =>
         {
+            if (NoviceGuideManager.Instance.isGuideStage[2])//是否处于新手指引阶段
+            {
+                NoviceGuideManager.Instance.NoviceGuideStage++;
+            }
             UISelectedWindow uISelectedWindow = UIManager.Instance.Show<UISelectedWindow>();
             uISelectedWindow.OpenWindow(0);//打开建筑选择界面
         });
 
         this.moveButton.OnClickAsObservable().Subscribe(_ =>
         {
+            if (NoviceGuideManager.Instance.isGuideStage[0])//是否处于新手指引阶段
+            {
+                NoviceGuideManager.Instance.NoviceGuideStage++;
+            }
             PlotManager.Instance.IsMoveWanderer();
         });
 

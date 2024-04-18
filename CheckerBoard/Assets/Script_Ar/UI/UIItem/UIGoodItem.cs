@@ -4,9 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UILIST;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIGoodItem : UITransactionItem
 {
+    public override void OnPointerClick(PointerEventData eventData)
+    {
+
+    }
+
+
     public override void SetInfo(TransactionDefine tD)
     {
         base.SetInfo(tD);
@@ -20,5 +27,11 @@ public class UIGoodItem : UITransactionItem
         {
             this.countText.text = EventAreaManager.Instance.sellObjectsStatue[1][tD.ID].ToString();
         }
+    }
+
+    protected override void OpenUITransactionAmount()
+    {
+        UITransactionAmountWindow uITransactionAmountWindow = UIManager.Instance.Show<UITransactionAmountWindow>();
+        uITransactionAmountWindow.SetInfo(this.id, false);
     }
 }

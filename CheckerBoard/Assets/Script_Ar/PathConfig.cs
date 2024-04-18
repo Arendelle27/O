@@ -15,6 +15,10 @@ public class PathConfig
     //UI‘§÷∆ÃÂŒª÷√
     const string UI_Prefab_Path = "Prefabs/UI/{0}";
 
+    const string BuildingResource_Sprite_Paths = "UI/BuildingResource/{0}";
+
+    const string Prop_Sprite_Paths = "UI/Prop/{0}";
+
     const string BuildingItem_Sprite_Paths = "UI/Building/{0}";
 
     const string Plot_Sprite_Paths = "UI/Plot/{0}";
@@ -56,6 +60,16 @@ public class PathConfig
         return string.Format(UI_Prefab_Path, name);
     }
     //UIBuildingItem
+
+    public static string GetBuildingResourceSpritePath(string name)
+    {
+        return string.Format(BuildingResource_Sprite_Paths, name);
+    }
+
+    public static string GetPropSpritePath(string name)
+    {
+        return string.Format(Prop_Sprite_Paths, name);
+    }
 
     public static string GetBuildingItemSpritePath(string name)
     {

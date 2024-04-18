@@ -87,7 +87,6 @@ namespace MANAGER
         {
             this.bluePrints.Clear();
 
-            this.InitBuildingType();
         }
 
         /// <summary>
@@ -96,18 +95,61 @@ namespace MANAGER
         public void Restart()
         {
             this.Init();
+            this.InitBuildingType();
         }
 
         /// <summary>
         /// 读档
         /// </summary>
-        public void ReadArchive()
+        public IEnumerator ReadArchive()
         {
             this.Init();
-            //foreach(var buildingData in ArchiveManager.archive.buildingData)
-            //{
-            //    this.GetBuilding(buildingData.buildingType, PlotManager.Instance.plots[buildingData.pos]);
-            //}
+            ArchiveManager.BuildingManagerData buildingManagerData = ArchiveManager.archive.buildingManagerData;
+            yield return null;
+
+            for(int i=0;i< buildingManagerData.buildingTypes.Count;i++)
+            {
+                this.buildingTypes[i] = buildingManagerData.buildingTypes[i].buildingTypes.ToList();
+            }
+
+            foreach(var item in buildingManagerData.bluePrintsData)
+            {
+                this.bluePrints.Add(item.bluePrintId, item.isUnlocked);
+            }
+            
+            for(int i=0;i< buildingManagerData.buildingConditions.Count;i++)
+            {
+                if(i==(int)Building_Condition_Type.蓝图)
+                {
+                    foreach(var type in buildingManagerData.buildingConditions[i].buildingContitions)
+                    {
+                        this.buildingConditions[Building_Condition_Type.蓝图].Add(type.buildingType,type.amount);
+                        this.unlockIDisposableBlueprint.Add(type.amount, null);
+                    }
+                    continue;
+                }
+                foreach(var type in buildingManagerData.buildingConditions[i].buildingContitions)
+                {
+                    this.buildingConditions[(Building_Condition_Type)i].Add(type.buildingType, type.amount);
+                }
+                if (!this.unlockIDisposableAmount.ContainsKey((Building_Condition_Type)i))
+                    this.unlockIDisposableAmount.Add((Building_Condition_Type)i, null);
+            }
+            yield return null;
+
+            foreach (var item in buildingManagerData.buildingsData)
+            {
+                if (item.existRound != 0)
+                {
+                    this.GetBuilding(item.buildingType, PlotManager.Instance.plots[item.pos], item.existRound);
+                }
+                else
+                {
+                    this.GetBuilding(item.buildingType, PlotManager.Instance.plots[item.pos]);
+                }
+            }
+
+            this.UnloadBuildingEvent();
         }
 
         /// <summary>
@@ -227,6 +269,15 @@ namespace MANAGER
                     }
                 }
             }
+
+            this.UnloadBuildingEvent();
+        }
+
+        /// <summary>
+        /// 建筑解锁事件
+        /// </summary>
+        void UnloadBuildingEvent()
+        {
             if (this.unlockIDisposableAmount.ContainsKey(Building_Condition_Type.资源1))
                 this.unlockIDisposableAmount[Building_Condition_Type.资源1] = ResourcesManager.Instance.unlockByResouces[0]
                 .Subscribe(resource1 =>
@@ -236,7 +287,7 @@ namespace MANAGER
                         var type = this.buildingConditions[Building_Condition_Type.资源1].ElementAt(i).Key;
                         if (resource1 >= this.buildingConditions[Building_Condition_Type.资源1][type])
                         {
-                            int sort =BuildingTypeToIndex(type);
+                            int sort = BuildingTypeToIndex(type);
                             this.buildingTypes[sort].Add(type);
                             this.buildingConditions[Building_Condition_Type.资源1].Remove(type);
                             MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("解锁{0}", type));
@@ -392,7 +443,7 @@ namespace MANAGER
         /// </summary>
         /// <param name="type"></param>
         /// <param name="plot"></param>
-        void GetBuilding(Building_Type type, Plot plot)
+        void GetBuilding(Building_Type type, Plot plot,int existRound=0)
         {
             int sort = BuildingTypeToIndex(type);
             GameObject gO;
@@ -405,7 +456,7 @@ namespace MANAGER
 
                     this.AddAttackAndHotility(type, Building_Type.自动采集建筑, 0);
 
-                    building.SetInfo(plot, type);
+                    building.SetInfo(plot, type,existRound);
                     plot.building = building;
                     break;
                 case 1:

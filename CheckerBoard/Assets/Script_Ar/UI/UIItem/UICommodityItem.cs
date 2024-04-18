@@ -22,8 +22,23 @@ public class UICommodityItem : UITransactionItem
         {
             this.countText.text= EventAreaManager.Instance.purchaseObjectsStatue[0][tD.ID][0].ToString();
 
+            int cA = EventAreaManager.Instance.purchaseObjectsStatue[0][tD.ID][0];//获取数量
+            if (cA > 0)
+            {
+                this.stateText.gameObject.SetActive(false);
+                this.transactButton.gameObject.SetActive(true);
+                return;
+            }
+            else
+            {
+                this.stateText.gameObject.SetActive(true);
+                this.transactButton.gameObject.SetActive(false);
+            }
+
             if (tD.TransactionType == Transaction_Type.资源)//资源类
             {
+
+
                 int cT = EventAreaManager.Instance.purchaseObjectsStatue[0][tD.ID][1];//获取冷却时间
                 if (cT > 0)
                 {
@@ -38,6 +53,20 @@ public class UICommodityItem : UITransactionItem
         else
         {
             this.countText.text = EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][0].ToString();
+
+            int cA = EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][0];//获取数量
+            if (cA > 0)
+            {
+                this.stateText.gameObject.SetActive(false);
+                this.transactButton.gameObject.SetActive(true);
+                return;
+            }
+            else
+            {
+                this.stateText.gameObject.SetActive(true);
+                this.transactButton.gameObject.SetActive(false);
+            }
+
             if (tD.TransactionType == Transaction_Type.资源)//资源类
             {
                 int cT = EventAreaManager.Instance.purchaseObjectsStatue[1][tD.ID][1];//获取冷却时间
@@ -65,4 +94,9 @@ public class UICommodityItem : UITransactionItem
         }
     }
 
+    protected override void OpenUITransactionAmount()
+    {
+        UITransactionAmountWindow uITransactionAmountWindow = UIManager.Instance.Show<UITransactionAmountWindow>();
+        uITransactionAmountWindow.SetInfo(this.id, true);
+    }
 }

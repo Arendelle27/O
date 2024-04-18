@@ -38,6 +38,7 @@ namespace MANAGER
 
             this.UIResources.Add(typeof(UIStrengthenCapabilityWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIStrengthenCapabilityWindow"), Cache = true });
 
+            this.UIResources.Add(typeof(UINoviceGuidePanel), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UINoviceGuidePanel"), Cache = true });
             //this.UIResources.Add(typeof(UIBuildingInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UBuildingInfoWindow"), Cache = true });
 
             //this.UIResources.Add(typeof(UIEventAreaInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIEventAreaInfoWindow"), Cache = true });

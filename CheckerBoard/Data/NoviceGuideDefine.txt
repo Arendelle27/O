@@ -1,0 +1,101 @@
+{
+  "0": {
+    "Id": 0,
+    "GuideDescription": "战后生活很艰难，不过还好，我们还能靠*<color=cyan>回收废弃资源</color>*度日。",
+    "PlayCondition": 0,
+    "IsArrow": false,
+    "NoviceGuideWindowPosX": 960.0,
+    "NoviceGuideWindowPosY": 878.0,
+    "NoviceGuideArrowPosX": 1133.0,
+    "NoviceGuideArrowPosY": 947.0,
+    "NoviceGuideArrowRotZ": 64.68363
+  },
+  "1": {
+    "Id": 1,
+    "GuideDescription": "在这里规划你要去的地点，要注意一次*移动*的范围有限。",
+    "PlayCondition": 1,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1301.0,
+    "NoviceGuideWindowPosY": 326.0,
+    "NoviceGuideArrowPosX": 1639.0,
+    "NoviceGuideArrowPosY": 180.0,
+    "NoviceGuideArrowRotZ": 325.238983
+  },
+  "2": {
+    "Id": 2,
+    "GuideDescription": "迷雾中的地区是你尚未*<color=cyan>探索</color>*的，可以通过移动到这个地区上来解锁。",
+    "PlayCondition": 2,
+    "IsArrow": false,
+    "NoviceGuideWindowPosX": 960.0,
+    "NoviceGuideWindowPosY": 878.0,
+    "NoviceGuideArrowPosX": 1133.0,
+    "NoviceGuideArrowPosY": 947.0,
+    "NoviceGuideArrowRotZ": 64.68363
+  },
+  "3": {
+    "Id": 3,
+    "GuideDescription": "这里是你能建造的*<color=cyan>机械</color>*，回收设备能帮我们回收废弃资源来换*<color=cyan>空间币</color>*，也就是钱。",
+    "PlayCondition": 3,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1300.0,
+    "NoviceGuideWindowPosY": 431.0,
+    "NoviceGuideArrowPosX": 1640.0,
+    "NoviceGuideArrowPosY": 268.0,
+    "NoviceGuideArrowRotZ": 322.0341
+  },
+  "4": {
+    "Id": 4,
+    "GuideDescription": "不过要想建造机械，你需要一些*<color=cyan>材料</color>*，这里是你已有的材料。\n这些材料可以通过*<color=cyan>地区探索</color>*和*<color=cyan>停留在有材料的地区上</color>*来收集，将来也可以建造*<color=cyan>自动采集资源的机械</color>*。",
+    "PlayCondition": 0,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1221.0,
+    "NoviceGuideWindowPosY": 851.0,
+    "NoviceGuideArrowPosX": 1394.0,
+    "NoviceGuideArrowPosY": 920.0,
+    "NoviceGuideArrowRotZ": 64.68363
+  },
+  "5": {
+    "Id": 5,
+    "GuideDescription": "这里是你度过的*<color=cyan>天数</color>*。",
+    "PlayCondition": 0,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 970.0,
+    "NoviceGuideWindowPosY": 795.0,
+    "NoviceGuideArrowPosX": 970.0,
+    "NoviceGuideArrowPosY": 864.0,
+    "NoviceGuideArrowRotZ": 90.0
+  },
+  "6": {
+    "Id": 6,
+    "GuideDescription": "切记，每天的行动力是有限的，不要透支体力，我见过很多人这么死在荒野上。",
+    "PlayCondition": 0,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1298.0,
+    "NoviceGuideWindowPosY": 621.0,
+    "NoviceGuideArrowPosX": 1613.0,
+    "NoviceGuideArrowPosY": 661.0,
+    "NoviceGuideArrowRotZ": 25.5284557
+  },
+  "7": {
+    "Id": 7,
+    "GuideDescription": "这里是你所有的钱。",
+    "PlayCondition": 0,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1213.0,
+    "NoviceGuideWindowPosY": 848.0,
+    "NoviceGuideArrowPosX": 1613.0,
+    "NoviceGuideArrowPosY": 800.0,
+    "NoviceGuideArrowRotZ": 0.0
+  },
+  "8": {
+    "Id": 8,
+    "GuideDescription": "第三天结束时，你要给我80个空间币，作为你的生活费。",
+    "PlayCondition": 0,
+    "IsArrow": false,
+    "NoviceGuideWindowPosX": 960.0,
+    "NoviceGuideWindowPosY": 878.0,
+    "NoviceGuideArrowPosX": 1133.0,
+    "NoviceGuideArrowPosY": 947.0,
+    "NoviceGuideArrowRotZ": 64.68363
+  }
+}

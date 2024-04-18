@@ -34,7 +34,7 @@ public class UIStrengthenCapabilityWindow : UIWindow
             UIManager.Instance.Show<UIUpgradeWindow>();
         });
 
-        strengthCapabilityList.onItemSelected += this.StrengthCapability;
+        //strengthCapabilityList.onItemSelected += this.StrengthCapability;
         //MainThreadDispatcher.StartUpdateMicroCoroutine(BeSelected());
 
         for (int i= 0;i< CapabilityManager.Instance.curLevels.Count;i++)
@@ -71,14 +71,14 @@ public class UIStrengthenCapabilityWindow : UIWindow
         }
     }
 
-    /// <summary>
-    /// 提升能力
-    /// </summary>
-    /// <param name="item"></param>
-    public void StrengthCapability(ListView.ListViewItem item)
-    {
-        UIStrengthenCapabilityItem ui = item as UIStrengthenCapabilityItem;
-    }
+    ///// <summary>
+    ///// 提升能力
+    ///// </summary>
+    ///// <param name="item"></param>
+    //public void StrengthCapability(ListView.ListViewItem item)
+    //{
+    //    UIStrengthenCapabilityItem ui = item as UIStrengthenCapabilityItem;
+    //}
 
     /// <summary>
     /// 更新强化能力选项信息

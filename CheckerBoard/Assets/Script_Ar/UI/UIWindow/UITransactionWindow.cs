@@ -16,9 +16,11 @@ public class UITransactionWindow : UIWindow
     [SerializeField, LabelText("交易列表"), Tooltip("购买和出售列表")]
     public TabView tabView;
 
-    [SerializeField, LabelText("交易按钮"), Tooltip("交易按钮")]
-    List<Button> TransactionButtons;
-    //0为购买，1为出售,2为消耗资源刷新刷新，3为关闭
+    [SerializeField, LabelText("减少冷却回合按钮"), Tooltip("放入减少冷却回合按钮")]
+    Button reduceCoolingRoundButton;
+
+    [SerializeField, LabelText("关闭按钮"), Tooltip("放入关闭按钮")]
+    Button closeButton;
 
     [SerializeField, LabelText("减少冷却回合消耗文本"), Tooltip("显示减少冷却回合消耗文本")]
     public Text reduceCoolingRoundBySpendText;
@@ -30,41 +32,24 @@ public class UITransactionWindow : UIWindow
     {
         tabView.OnTabSelect = this.OnTabSelect;
 
-        foreach (var listView in this.tabView.tabPages)
-        {
-            listView.onItemSelected += this.OnTransactionItemSelected;
-        }
 
-        this.TransactionButtons[0].OnClickAsObservable().Subscribe(_ =>
+        this.tabView.tabPages[0].onItemSelected += this.OnTransactionItemSelected;
+
+        this.reduceCoolingRoundButton.OnClickAsObservable().Subscribe(_ =>
         {
-            if(this.transactionObjectSelected ==null)
+            if(this.transactionObjectSelected == null)
             {
                 Debug.Log("未选中任何商品");
                 return;
             }
-            UITransactionAmountWindow uITransactionAmountWindow = UIManager.Instance.Show<UITransactionAmountWindow>();
-            uITransactionAmountWindow.SetInfo(this.transactionObjectSelected.id,true);
-        });
-        this.TransactionButtons[1].OnClickAsObservable().Subscribe(_ =>
-        {
-            if (this.transactionObjectSelected == null)
-            {
-                Debug.Log("未选中任何商品");
-                return;
-            }
-
-            UITransactionAmountWindow uITransactionAmountWindow = UIManager.Instance.Show<UITransactionAmountWindow>();
-            uITransactionAmountWindow.SetInfo(this.transactionObjectSelected.id, false);
-        });
-        this.TransactionButtons[2].OnClickAsObservable().Subscribe(_ =>
-        {
             if (EventAreaManager.Instance.ReduceCoolingRoundBySpend(this.transactionObjectSelected.id))
             {
                 this.UpdateBuildingList(0);
                 this.UpdateReduceCoolingRoundBySpendText();
             }
         });
-        this.TransactionButtons[3].onClick.AddListener(() =>
+
+        this.closeButton.OnClickAsObservable().Subscribe(_ =>
         {
             this.OnCloseClick();
         });

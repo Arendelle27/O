@@ -56,11 +56,13 @@ namespace MANAGER
         /// </summary>
         public void ReadArchive()
         {
-            //this.Init();
-            //this.GetWanderer(PlotManager.Instance.plots[ArchiveManager.archive.wandererData.pos]);
-            //this.wanderer.level = ArchiveManager.archive.wandererData.level;
-
-            //this.exploratoryTeams = ArchiveManager.archive.wandererData.exploratoryTeams;
+            this.Init();
+            ArchiveManager. WandererManagerData wandererManagerData = ArchiveManager.archive.wandererManagerData;
+            foreach (var item in wandererManagerData.exploratoryTeams)
+            {
+                this.GetExplotryTeam(item);
+            }
+            this.GetWanderer(PlotManager.Instance.plots[wandererManagerData.wandererData.pos]);
 
         }
 

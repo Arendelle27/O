@@ -178,7 +178,7 @@ namespace ENTITY
                     this.eventArea=EventAreaManager.Instance.GetEventArea(plotDefine.EventType, this);
                     if(!this.SR.enabled)
                     {
-                        this.SR.enabled = true;
+                        this.Discover(true);
                     }
                     //this.figure.color = Color.gray;
                     break;
@@ -195,6 +195,7 @@ namespace ENTITY
             {
                 this.canEnter = true;
             }
+
 
         }
 
@@ -263,6 +264,21 @@ namespace ENTITY
         //}
 
         #region 改变格子状态
+        /// <summary>
+        /// 发现或者隐藏
+        /// </summary>
+        /// <param name="isDiscover"></param>
+        public void Discover(bool isDiscover)
+        {
+            if(isDiscover)
+            {
+                this.SR.enabled = true;
+            }
+            else
+            {
+                this.SR.enabled = false;
+            }
+        }
 
         /// <summary>
         /// 改变状态遮罩颜色
@@ -322,6 +338,7 @@ namespace ENTITY
         void ChangeToDiscovered()
         {
             this.plot_Statue = Plot_Statue.已探索;
+            this.Discover(true);
             this.curColor = Color.yellow;
         }
 
@@ -361,10 +378,6 @@ namespace ENTITY
 
                 if (isFirstExplored)
                 {
-                    if (!this.SR.enabled)
-                    {
-                        this.SR.enabled = true;
-                    }
                     this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
                     if (this.plotDefine.Type == 0)//资源板块
                     {
@@ -444,13 +457,6 @@ namespace ENTITY
                 if (this.plot_Statue == Plot_Statue.未探明|| this.plot_Statue == Plot_Statue.可探索)
                 {
                     this.ChangeType(Plot_Statue.已探索);
-                }
-                if(isFirstExplored)
-                {
-                    if(!this.SR.enabled)
-                    {
-                        this.SR.enabled = true;
-                    }
                 }
             }
         }

@@ -25,7 +25,13 @@ public class UIMovePanel : UIPanel
         this.insureButton.OnClickAsObservable().Subscribe(_ =>
         {
             //确认移动
-            PlotManager.Instance.MoveWanderer(true);
+            if(PlotManager.Instance.MoveWanderer(true))
+            {
+                if (NoviceGuideManager.Instance.isGuideStage[1])//是否处于新手指引阶段
+                {
+                    NoviceGuideManager.Instance.NoviceGuideStage++;
+                }
+            }
         });
 
         this.cancelButton.OnClickAsObservable().Subscribe(_ =>

@@ -115,7 +115,7 @@ public static class ArchiveManager
         }
 
         public List<BuildingData> buildingsData = new List<BuildingData>();
-        public int totalAttack = 0;
+        //public int totalAttack = 0;
         public List<BuildingContitionsData> buildingConditions = new List<BuildingContitionsData>(6){ new BuildingContitionsData(), new BuildingContitionsData(), new BuildingContitionsData(),new BuildingContitionsData(),new BuildingContitionsData(),new BuildingContitionsData()};
         public List<BuildingTypesData> buildingTypes = new List<BuildingTypesData>(3) { new BuildingTypesData(), new BuildingTypesData(), new BuildingTypesData() };
         public List<BluePrintsData> bluePrintsData = new List<BluePrintsData>();
@@ -278,7 +278,7 @@ public static class ArchiveManager
             });
         }
 
-        buildingManagerData.totalAttack = BuildingManager.Instance.totalAttack;
+        //buildingManagerData.totalAttack = BuildingManager.Instance.totalAttack;
 
         for (int i = 0; i < buildingManagerData.buildingConditions.Count; i++)
         {

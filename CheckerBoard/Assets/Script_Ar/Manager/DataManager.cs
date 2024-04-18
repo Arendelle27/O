@@ -26,6 +26,10 @@ public static class DataManager
 
     public static Dictionary<int, UpgradePointCostDefine> UpgradePointCostDefines;
 
+    public static Dictionary<int, StageDecisionCostDefine> StageDecisionCostDefines;
+
+    public static Dictionary<int, NoviceGuideDefine> NoviceGuideDefines;
+
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
@@ -104,7 +108,29 @@ public static class DataManager
         UpgradePointCostDefines = JsonConvert.DeserializeObject<Dictionary<int, UpgradePointCostDefine>>(json);
         yield return null;
 
+        json= File.ReadAllText(PathConfig.GetDataTxtPath("StageDecisionCostDefine.txt"));
+        StageDecisionCostDefines = JsonConvert.DeserializeObject<Dictionary<int, StageDecisionCostDefine>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("NoviceGuideDefine.txt"));
+        NoviceGuideDefines = JsonConvert.DeserializeObject<Dictionary<int, NoviceGuideDefine>>(json);
+        yield return null;
+
         SpriteManager.Load();//加载精灵
         yield return null;
     }
+
+    public static void LoadNoviceGuideDefine()
+    {
+        string json = File.ReadAllText(PathConfig.GetDataTxtPath("NoviceGuideDefine.txt"));
+        NoviceGuideDefines = JsonConvert.DeserializeObject<Dictionary<int, NoviceGuideDefine>>(json);
+    }
+
+#if UNITY_EDITOR
+    public static void SaveTNoviceGuidePos()
+    {
+        string json = JsonConvert.SerializeObject(NoviceGuideDefines, Formatting.Indented);
+        File.WriteAllText(PathConfig.GetDataTxtPath("NoviceGuideDefine.txt"), json);
+    }
+#endif
 }

@@ -12,6 +12,8 @@ namespace MANAGER
         //当前回合数
         public int roundNumber = 1;
 
+        int stage;
+
         [SerializeField, LabelText("通过回合解锁板块"), ReadOnly]
         public Subject<int> unlockPlotByRound = new Subject<int>();
 
@@ -33,7 +35,6 @@ namespace MANAGER
         /// </summary>
         void Init()
         {
-
         }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace MANAGER
         {
             this.Init();
             this.roundNumber = 1;
+            this.stage = 0;
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace MANAGER
 
             ResourcesManager.Instance.RoundOver(this.roundNumber);//资源结束回合
             /*结算前*/
-            EventManager.Instance.StageDecision();//阶段决策
+           this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
 
             /*回合结束*/
             this.roundNumber++;//回合数加1

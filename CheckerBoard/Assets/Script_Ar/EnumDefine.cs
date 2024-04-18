@@ -78,7 +78,9 @@ public enum Resource_Type
 {
     断裂电缆,
     废弃金属,
-    影像芯片
+    影像芯片,
+
+    建筑资源
 }
 
 public enum Transaction_Type
@@ -86,6 +88,14 @@ public enum Transaction_Type
     无=-1,
     资源,
     蓝图
+}
+
+public enum Prop_Type
+{
+    蓝图,
+    地下室钥匙,
+
+    道具
 }
 
 public enum Message_Type
@@ -104,4 +114,12 @@ public enum Upgrade_Type
     小队,
     交易,
     行动力
+}
+
+public enum PlayCondition_Type
+{
+    任意位置,
+    移动,
+    移动地点,
+    建造
 }

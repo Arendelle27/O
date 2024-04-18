@@ -66,6 +66,9 @@ public class Main : MonoSingleton<Main>
         MessageManager.Instance.ReStart();
         yield return null;
         this.Init();
+        NoviceGuideManager.Instance.OnStart();
+
+
     }
 
     public IEnumerator ReadArchive()
@@ -76,11 +79,11 @@ public class Main : MonoSingleton<Main>
         yield return null;
         ResourcesManager.Instance.ReadArchive();
         yield return null;
-        PlotManager.Instance.ReadArchive();
+        MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.ReadArchive());
         yield return null;
         EventAreaManager.Instance.ReadArchive();
         yield return null;
-        BuildingManager.Instance.ReadArchive();
+        MainThreadDispatcher.StartUpdateMicroCoroutine(BuildingManager.Instance.ReadArchive());
         yield return null;
         WandererManager.Instance.ReadArchive();
         yield return null;
