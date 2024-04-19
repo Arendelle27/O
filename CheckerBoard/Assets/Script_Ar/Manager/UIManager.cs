@@ -20,8 +20,6 @@ namespace MANAGER
         {
             this.UIResources.Add(typeof(UISelectedWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UISelectedWindow"), Cache = true });
 
-            //this.UIResources.Add(typeof(UIBuildingWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIBuildingWindow"), Cache = true });
-
             this.UIResources.Add(typeof(UIScoreWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIScoreWindow"), Cache = true });
 
             this.UIResources.Add(typeof(UIUpgradeWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIUpgradeWindow"), Cache = true });
@@ -39,9 +37,8 @@ namespace MANAGER
             this.UIResources.Add(typeof(UIStrengthenCapabilityWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIStrengthenCapabilityWindow"), Cache = true });
 
             this.UIResources.Add(typeof(UINoviceGuidePanel), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UINoviceGuidePanel"), Cache = true });
-            //this.UIResources.Add(typeof(UIBuildingInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UBuildingInfoWindow"), Cache = true });
 
-            //this.UIResources.Add(typeof(UIEventAreaInfoWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIEventAreaInfoWindow"), Cache = true });
+            this.UIResources.Add(typeof(UIChatWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIChatWindow"), Cache = true });
         }
 
         ~UIManager()

@@ -15,6 +15,7 @@ public class PathConfig
     //UI预制体位置
     const string UI_Prefab_Path = "Prefabs/UI/{0}";
 
+    //图像位置
     const string BuildingResource_Sprite_Paths = "UI/BuildingResource/{0}";
 
     const string Prop_Sprite_Paths = "UI/Prop/{0}";
@@ -23,12 +24,16 @@ public class PathConfig
 
     const string Plot_Sprite_Paths = "UI/Plot/{0}";
 
+    const string HeadPortrait_Sprite_Paths = "UI/HeadPortrait/{0}";
+
+    //音乐音效位置
     const string Music_Path = "Music/{0}";
     const string Sound_Path = "Voice/{0}";
 
-
+    //ScriptableObject位置
     const string Scriptable_List_Path = "ScriptableObject/List/{0}";
 
+    //存档数据位置
     const string Data_Txt_Path = "Data/{0}";
 
     //建筑数据名称
@@ -69,6 +74,11 @@ public class PathConfig
     public static string GetPropSpritePath(string name)
     {
         return string.Format(Prop_Sprite_Paths, name);
+    }
+
+    public static string GetHeadPortraitSpritePath(string name)
+    {
+        return string.Format(HeadPortrait_Sprite_Paths, name);
     }
 
     public static string GetBuildingItemSpritePath(string name)

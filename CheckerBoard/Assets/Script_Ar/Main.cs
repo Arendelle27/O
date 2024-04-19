@@ -66,7 +66,7 @@ public class Main : MonoSingleton<Main>
         MessageManager.Instance.ReStart();
         yield return null;
         this.Init();
-        NoviceGuideManager.Instance.OnStart();
+        ChatManager.Instance.CurChatId = 0;
 
 
     }

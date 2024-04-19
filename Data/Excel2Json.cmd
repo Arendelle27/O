@@ -9,5 +9,7 @@ json-excel\json-excel json Tables\ Data\
 @copy Data\ExecutionUpgradeDefine.txt ..\CheckerBoard\Data\
 @copy Data\UpgradePointCostDefine.txt ..\CheckerBoard\Data\
 @copy Data\StageDecisionCostDefine.txt ..\CheckerBoard\Data\
-@copy Data\NoviceGuideDefine.txt ..\CheckerBoard\Data\
+
+@copy Data\ChatDefine.txt ..\CheckerBoard\Data\
+@copy Data\QuestDefine.txt ..\CheckerBoard\Data\
 pause

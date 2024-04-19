@@ -13,6 +13,8 @@ namespace MANAGER
 
         public static Dictionary<string, Sprite> plotSprites=new Dictionary<string, Sprite>(); 
 
+        public static Dictionary<HeadPortrait_Type,Sprite> headPortraitSprites =new Dictionary<HeadPortrait_Type, Sprite>();
+
         public static void Load()
         {
             for(int i=0;i<(int)Resource_Type.建筑资源;i++)
@@ -39,6 +41,15 @@ namespace MANAGER
                 if(sprite != null&&!plotSprites.ContainsKey(plotDefine.Name))
                 {
                     plotSprites.Add(plotDefine.Name, sprite);
+                }
+            }
+
+            for (int i = 0; i < (int)HeadPortrait_Type.头像; i++)
+            {
+                Sprite sprite = Resources.Load<Sprite>(PathConfig.GetHeadPortraitSpritePath(((HeadPortrait_Type)i).ToString()));
+                if (sprite != null && !headPortraitSprites.ContainsKey((HeadPortrait_Type)i))
+                {
+                    headPortraitSprites.Add((HeadPortrait_Type)i, sprite);
                 }
             }
         }

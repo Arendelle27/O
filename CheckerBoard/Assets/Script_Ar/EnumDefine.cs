@@ -123,3 +123,11 @@ public enum PlayCondition_Type
     移动地点,
     建造
 }
+
+public enum HeadPortrait_Type
+{
+    老爹,
+    O,
+
+    头像
+}

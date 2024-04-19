@@ -18,8 +18,8 @@ public class UIMain : MonoSingleton<UIMain>
     [SerializeField, LabelText("自动关闭的游戏窗口界面"), ReadOnly]
     public UISelectedWindow uISelectedWindow;
 
-    [SerializeField, LabelText("新手指引面板"), ReadOnly]
-    public UINoviceGuidePanel uINoviceGuidePanel;
+    //[SerializeField, LabelText("新手指引面板"), ReadOnly]
+    //public UINoviceGuidePanel uINoviceGuidePanel;
 
     [SerializeField, LabelText("当前面板索引"),ReadOnly]
     public int curPanelIndex = -1;
@@ -27,7 +27,6 @@ public class UIMain : MonoSingleton<UIMain>
     private void Awake()
     {
         this.uISelectedWindow = UIManager.Instance.Show<UISelectedWindow>();
-        this.uINoviceGuidePanel = UIManager.Instance.Show<UINoviceGuidePanel>();
     }
 
     /// <summary>

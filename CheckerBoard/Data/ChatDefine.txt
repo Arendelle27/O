@@ -1,0 +1,65 @@
+{
+  "0": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "老爹",
+      "Name": "陌生人",
+      "ChatContent": "……"
+    },
+    "1": {
+      "Id": 1,
+      "HeadPortrait": "老爹",
+      "Name": "陌生人",
+      "ChatContent": "…………"
+    },
+    "2": {
+      "Id": 2,
+      "HeadPortrait": "老爹",
+      "Name": "陌生人",
+      "ChatContent": "（起身，准备离开）",
+      "Option1": "等一下。"
+    },
+    "3": {
+      "Id": 3,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "ChatContent": "请问发生了什么？这里是哪里？你……是谁？"
+    },
+    "4": {
+      "Id": 4,
+      "HeadPortrait": "老爹",
+      "Name": "陌生人",
+      "ChatContent": "（迟疑，惊讶，费解的神情交替出现在他的脸上）*改造*让你都忘了？"
+    },
+    "5": {
+      "Id": 5,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "ChatContent": "（没等你反应，他继续说道）这里是*垃圾场*，你是我捡来的，孩子们都叫我*老爹*，你也这么叫就行了。"
+    },
+    "6": {
+      "Id": 6,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "ChatContent": "怎么，有什么问题？",
+      "Option1": "垃圾场？",
+      "Answer1": "大家的俗称，因为这地方总是处理一些*见不得光的东西*，你以后会知道的。",
+      "Option2": "老爹？",
+      "Answer2": "这年头孤儿很多，我带回来过一些，你也是其中之一。那些孩子会叫我“老爹”。",
+      "Option3": "改造？",
+      "Answer3": "（老爹看起来并不想回答这个问题）"
+    },
+    "7": {
+      "Id": 7,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "ChatContent": "时间差不多了，如果还能动的话，去干活吧。这里也不欢迎白吃白住的人。"
+    },
+    "8": {
+      "Id": 8,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "ChatContent": "还傻站着？也是，你应该不记得怎么干活了。"
+    }
+  }
+}

@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UINoviceGuidePanel : UIWindow
 {
@@ -13,10 +14,8 @@ public class UINoviceGuidePanel : UIWindow
     //(1):0为设置，1为建筑，2为移动，3为回合结束，4为升级
     //(2):0为确认移动
 
-    private void Start()
-    {
-        this.gameObject.SetActive(false);
-    }
+    [SerializeField, LabelText("需要自适应的UI"), Tooltip("放入需要自适应的UI")]
+    public List<RectTransform> rectTransforms = new List<RectTransform>();
 
     public void SetInfo(NoviceGuideDefine noviceGuideDefine)
     {
@@ -51,6 +50,11 @@ public class UINoviceGuidePanel : UIWindow
                 this.masks[0].gameObject.SetActive(true);
                 this.masks[0].uIMasks[1].gameObject.SetActive(false);
                 break;
+        }
+
+        foreach (var rectTransform in rectTransforms)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
     }
 
