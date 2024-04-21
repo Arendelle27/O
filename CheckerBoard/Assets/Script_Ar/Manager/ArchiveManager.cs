@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class ArchiveManager
@@ -17,10 +18,11 @@ public static class ArchiveManager
         public BuildingManagerData buildingManagerData;
         public EventAreaManagerData eventAreaManagerData;
         public CapabilityManagerData capabilityManagerData;
-        public EventManagerData eventManager;
+        public EventManagerData eventManagerData;
         public MessageManagerData messageManagerData;
         public ResourcesManagerData resourcesManagerData;
-
+        public RoundManagerData roundManagerData;
+        public QuestManagerData questManagerData;
         public Vector3 CameraPos;
     }
 
@@ -115,7 +117,6 @@ public static class ArchiveManager
         }
 
         public List<BuildingData> buildingsData = new List<BuildingData>();
-        //public int totalAttack = 0;
         public List<BuildingContitionsData> buildingConditions = new List<BuildingContitionsData>(6){ new BuildingContitionsData(), new BuildingContitionsData(), new BuildingContitionsData(),new BuildingContitionsData(),new BuildingContitionsData(),new BuildingContitionsData()};
         public List<BuildingTypesData> buildingTypes = new List<BuildingTypesData>(3) { new BuildingTypesData(), new BuildingTypesData(), new BuildingTypesData() };
         public List<BluePrintsData> bluePrintsData = new List<BluePrintsData>();
@@ -130,6 +131,13 @@ public static class ArchiveManager
             public int purchaseObjectId;
             public List<int> purchaseObjectStatue =new List<int>(2){0,0};
         }
+
+        [Serializable]
+        public class PurchaseObjectsStatueData
+        {
+            public List<PurchaseObjectStatueData> purchaseObjectStatueDatas = new List<PurchaseObjectStatueData>();
+        }
+
         [Serializable]
         public class SellObjectStatueData
         {
@@ -137,8 +145,14 @@ public static class ArchiveManager
             public int sellObjectStatue;
         }
 
-        public List<PurchaseObjectStatueData> purchaseObjectStatueDatas = new List<PurchaseObjectStatueData>(2) {new PurchaseObjectStatueData(),new PurchaseObjectStatueData()};
-        public List<SellObjectStatueData> sellObjectsStatueDatas = new List<SellObjectStatueData>(2) {new SellObjectStatueData(),new SellObjectStatueData()};
+        [Serializable]
+        public class SellObjectsStatueData
+        {
+            public List<SellObjectStatueData> sellObjectStatueDatas = new List<SellObjectStatueData>();
+        }
+
+        public List<PurchaseObjectsStatueData> purchaseObjectStatueDatas = new List<PurchaseObjectsStatueData>(2) {new PurchaseObjectsStatueData(),new PurchaseObjectsStatueData()};
+        public List<SellObjectsStatueData> sellObjectsStatueDatas = new List<SellObjectsStatueData>(2) {new SellObjectsStatueData(),new SellObjectsStatueData()};
         public List<float> hotility=new List<float>(2) { 0f,0f};
     }
 
@@ -158,7 +172,7 @@ public static class ArchiveManager
     [Serializable]
     public class EventManagerData
     {
-        public List<int> curCOnfrontEventIndex = new List<int>(2) { 0, 0 };
+        public List<int> curConfrontEventIndex = new List<int>(2) { -1, 0 };
         public Vector2Int curClashAreaPos;
     }
 
@@ -168,11 +182,12 @@ public static class ArchiveManager
         [Serializable]
         public class MessageData
         {
-            public List<string> message;
+            public Message_Type type;
+            public string message;
         }
 
-        public List<MessageData> yesterdayMessages = new List<MessageData>(6) { new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), };
-        public List<MessageData> todayMessages = new List<MessageData>(6) { new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), new MessageData(), };
+        public List<MessageData> yesterdayMessages = new List<MessageData>();
+        public List<MessageData> todayMessages = new List<MessageData>();
     }
 
     [Serializable]
@@ -180,8 +195,20 @@ public static class ArchiveManager
     {
         public int roundNumber;
         public int wealth;
-        public List<int> buildingRes;//建筑资源
+        public List<int> buildingResources;//建筑资源
         public int execution;
+    }
+    [Serializable]
+    public class RoundManagerData
+    {
+        public int roundNumber;
+    }
+
+    [Serializable]
+    public class QuestManagerData
+    {
+        public List<int> questIds = new List<int>();//存在主线时,0为主线任务,后续为支线任务
+        public List<int> questsRound = new List<int>();//存在主线时,0为主线任务,后续为支线任务
     }
 
     //存档
@@ -278,8 +305,6 @@ public static class ArchiveManager
             });
         }
 
-        //buildingManagerData.totalAttack = BuildingManager.Instance.totalAttack;
-
         for (int i = 0; i < buildingManagerData.buildingConditions.Count; i++)
         {
             foreach (var building in BuildingManager.Instance.buildingConditions[(Building_Condition_Type)i])
@@ -314,10 +339,14 @@ public static class ArchiveManager
         //购买物品状态
         for (int i = 0; i < eventAreaManagerData.purchaseObjectStatueDatas.Count; i++)
         {
+
             foreach (var purchaseObject in EventAreaManager.Instance.purchaseObjectsStatue[i])
             {
-                eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectId = purchaseObject.Key;
-                eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectStatue = purchaseObject.Value.ToList();
+                EventAreaManagerData.PurchaseObjectStatueData purchaseObjectStatueData = new EventAreaManagerData.PurchaseObjectStatueData();
+                purchaseObjectStatueData.purchaseObjectId = purchaseObject.Key;
+                purchaseObjectStatueData.purchaseObjectStatue = purchaseObject.Value;
+                
+                eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectStatueDatas.Add(purchaseObjectStatueData);
             }
         }
         //出售物品状态
@@ -325,8 +354,10 @@ public static class ArchiveManager
         {
             foreach (var sellObject in EventAreaManager.Instance.sellObjectsStatue[i])
             {
-                eventAreaManagerData.sellObjectsStatueDatas[i].sellObjectId = sellObject.Key;
-                eventAreaManagerData.sellObjectsStatueDatas[i].sellObjectStatue = sellObject.Value;
+                EventAreaManagerData.SellObjectStatueData sellObjectStatueData = new EventAreaManagerData.SellObjectStatueData();
+                sellObjectStatueData.sellObjectId = sellObject.Key;
+                sellObjectStatueData.sellObjectStatue = sellObject.Value;
+                eventAreaManagerData.sellObjectsStatueDatas[i].sellObjectStatueDatas.Add(sellObjectStatueData);
             }
         }
         //敌对度
@@ -348,53 +379,86 @@ public static class ArchiveManager
         #endregion
 
         #region 事件管理器数据
-        EventManagerData eventManagerData=new EventManagerData();
-        if(EventManager.Instance.curConfrontEvent!=null)
+        EventManagerData eventManagerData = new EventManagerData();
+        if (EventManager.Instance.curConfrontEvent != null)
         {
-            eventManagerData.curCOnfrontEventIndex[0] = EventManager.Instance.curConfrontEvent.SettleType;
-            eventManagerData.curCOnfrontEventIndex[1] = EventManager.Instance.curConfrontEvent.Level-1;
+            eventManagerData.curConfrontEventIndex[0] = EventManager.Instance.curConfrontEvent.SettleType;
+            eventManagerData.curConfrontEventIndex[1] = EventManager.Instance.curConfrontEvent.Level - 1;//索引
         }
 
-        if(EventManager.Instance.curClashArea!=null)
+        if (EventManager.Instance.curClashArea != null)
         {
             eventManagerData.curClashAreaPos = EventManager.Instance.curClashArea.plot.pos;
         }
 
-        arc.eventManager = eventManagerData;
+        arc.eventManagerData = eventManagerData;
         #endregion
 
         #region 消息管理器数据
-        MessageManagerData messageManagerData=new MessageManagerData();
+        MessageManagerData messageManagerData =new MessageManagerData();
 
-        for(int i=0; i< MessageManager.Instance.messages[0].Count;i++)
+        foreach (var message in MessageManager.Instance.messages[0])
         {
-            messageManagerData.yesterdayMessages[i].message = MessageManager.Instance.messages[0][i].ToList();
+            messageManagerData.yesterdayMessages.Add(new MessageManagerData.MessageData
+            {
+                type = message.type,
+                message = message.message
+            });
         }
 
-        for (int i = 0; i < MessageManager.Instance.messages[1].Count; i++)
+        foreach (var message in MessageManager.Instance.messages[1])
         {
-            messageManagerData.todayMessages[i].message = MessageManager.Instance.messages[1][i].ToList();
+            messageManagerData.todayMessages.Add(new MessageManagerData.MessageData
+            {
+                type = message.type,
+                message = message.message
+            });
         }
 
         arc.messageManagerData = messageManagerData;
 
         #endregion
 
+        #region 任务管理器数据
+        QuestManagerData questManagerData= new QuestManagerData();
+        if(QuestManager.Instance.curMainQUestId!=-1)
+        {
+            questManagerData.questIds.Add(QuestManager.Instance.curMainQUestId);
+            questManagerData.questsRound.Add(QuestManager.Instance.curMainQuestRound);
+        }
+
+        foreach (var questId in QuestManager.Instance.curSecondQuestIds)
+        {
+            questManagerData.questIds.Add(questId);
+            questManagerData.questsRound.Add(QuestManager.Instance.curSecondQuestsRound[questId]);
+        }
+
+        arc.questManagerData = questManagerData;
+        #endregion
+
+        #region 回合管理器数据
+        RoundManagerData roundManagerData = new RoundManagerData();
+
+        roundManagerData.roundNumber = RoundManager.Instance.roundNumber;
+
+        arc.roundManagerData = roundManagerData;
+        #endregion
+
         #region 资源管理器数据
         ResourcesManagerData resourcesManagerData = new ResourcesManagerData();
 
-        resourcesManagerData.roundNumber = RoundManager.Instance.roundNumber;
-
         resourcesManagerData.wealth = ResourcesManager.Instance.wealth;
 
-        resourcesManagerData.buildingRes = ResourcesManager.Instance.buildingResources;
+        resourcesManagerData.buildingResources = ResourcesManager.Instance.buildingResources;
 
         resourcesManagerData.execution = ResourcesManager.Instance.execution;
 
         arc.resourcesManagerData = resourcesManagerData;
         #endregion
 
+        #region 相机位置
         arc.CameraPos = Camera.main.transform.position;
+        #endregion
 
         string json = JsonUtility.ToJson(arc);
         ArchiveTool.SaveByJson("Archive.json", json);

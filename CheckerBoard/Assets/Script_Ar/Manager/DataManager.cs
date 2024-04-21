@@ -32,6 +32,8 @@ public static class DataManager
 
     public static Dictionary<int,Dictionary<int, ChatDefine>> ChatDefines;
 
+    public static Dictionary<int,QuestDefine> QuestDefines;
+
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
@@ -120,6 +122,10 @@ public static class DataManager
 
         json = File.ReadAllText(PathConfig.GetDataTxtPath("ChatDefine.txt"));
         ChatDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, ChatDefine>>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("QuestDefine.txt"));
+        QuestDefines = JsonConvert.DeserializeObject<Dictionary<int, QuestDefine>>(json);
         yield return null;
 
         SpriteManager.Load();//加载精灵

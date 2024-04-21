@@ -50,7 +50,6 @@ public class UISettleInfoWindow : UISelectWindow
     {
         if (EventAreaManager.Instance.selectedEventArea != null)
             this.SetInfo(EventAreaManager.Instance.selectedEventArea);
-        //StartCoroutine(BeSelected());//0.1秒后被选中
     }
 
     public void SetInfo(EventArea eventArea)

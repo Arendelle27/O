@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -55,7 +54,6 @@ public class MainCamera : MonoBehaviour
     /// </summary>
     public void StartControl()
     {
-        this.transform.position = this.initPos;
 
         CameraControl = Observable
         .EveryUpdate()

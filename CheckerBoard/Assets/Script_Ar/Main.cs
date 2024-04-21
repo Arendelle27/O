@@ -42,11 +42,11 @@ public class Main : MonoSingleton<Main>
     {
         UIMain.Instance.ChangeToGamePanel(1);
 
-        MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
     }
 
     public IEnumerator Restart()
     {
+        this.Init();
         this.mainCamera?.Restart();
         yield return null;
         MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
@@ -65,17 +65,29 @@ public class Main : MonoSingleton<Main>
         yield return null;
         MessageManager.Instance.ReStart();
         yield return null;
-        this.Init();
-        ChatManager.Instance.CurChatId = 0;
 
+        MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
+
+        if ((UIMain.Instance.uiPanels[0] as UIStartPanel).isNovicGuideToggle.isOn)//判断是否进行新手教程
+        {
+            ChatManager.Instance.CurChatId = 0;
+        }
+        else
+        {
+            QuestManager.Instance.GetQuest(-1);//接受第一个任务
+        }
 
     }
 
     public IEnumerator ReadArchive()
     {
+        this.Init();
+
         this.mainCamera?.ReadArchive();
         yield return null;
         RoundManager.Instance.ReadArchive();
+        yield return null;
+        CapabilityManager.Instance.ReadArchive();
         yield return null;
         ResourcesManager.Instance.ReadArchive();
         yield return null;
@@ -85,12 +97,15 @@ public class Main : MonoSingleton<Main>
         yield return null;
         MainThreadDispatcher.StartUpdateMicroCoroutine(BuildingManager.Instance.ReadArchive());
         yield return null;
-        WandererManager.Instance.ReadArchive();
-        yield return null;
         MessageManager.Instance.ReadArchive();
         yield return null;
+        EventManager.Instance.ReadArchive();
+        yield return null;
+        WandererManager.Instance.ReadArchive();
+        yield return null;
+        QuestManager.Instance.ReadArchive();
+        yield return null;
 
-        this.Init();
     }
 
 
@@ -116,6 +131,8 @@ public class Main : MonoSingleton<Main>
         PlotManager.Instance.GameOver();
         yield return null;
         MessageManager.Instance.GameOver();
+        yield return null;
+        QuestManager.Instance.GameOver();
 
     }
 }

@@ -53,6 +53,9 @@ namespace MANAGER
 
         }
 
+        /// <summary>
+        /// ÖØ¿ª
+        /// </summary>
         public void Restart()
         {
             this.Init();
@@ -85,13 +88,48 @@ namespace MANAGER
                     }
                 }
             }
-            //MainThreadDispatcher.StartUpdateMicroCoroutine(GetSettlements());
+
         }
 
+        /// <summary>
+        /// ¶Áµµ
+        /// </summary>
         public void ReadArchive()
         {
-            //this.Init();
-            //MainThreadDispatcher.StartUpdateMicroCoroutine(ReadSettlements());
+            this.Init();
+            ArchiveManager.EventAreaManagerData eventAreaManagerData = ArchiveManager.archive.eventAreaManagerData;
+
+            for(int i=0;i<eventAreaManagerData.purchaseObjectStatueDatas.Count;i++)
+            {
+                foreach(var purchaseObjectStatueData in eventAreaManagerData.purchaseObjectStatueDatas[i].purchaseObjectStatueDatas)
+                {
+                    if (this.purchaseObjectsStatue[i].ContainsKey(purchaseObjectStatueData.purchaseObjectId))
+                    {
+                        this.purchaseObjectsStatue[i][purchaseObjectStatueData.purchaseObjectId] = purchaseObjectStatueData.purchaseObjectStatue;
+                    }
+                    else
+                    {
+                        this.purchaseObjectsStatue[i].Add(purchaseObjectStatueData.purchaseObjectId, purchaseObjectStatueData.purchaseObjectStatue);
+                    }
+                }
+            }
+
+            for (int i = 0; i < eventAreaManagerData.sellObjectsStatueDatas.Count; i++)
+            {
+                foreach (var sellObjectStatueData in eventAreaManagerData.sellObjectsStatueDatas[i].sellObjectStatueDatas)
+                {
+                    if (this.sellObjectsStatue[i].ContainsKey(sellObjectStatueData.sellObjectId))
+                    {
+                        this.sellObjectsStatue[i][sellObjectStatueData.sellObjectId] = sellObjectStatueData.sellObjectStatue;
+                    }
+                    else
+                    {
+                        this.sellObjectsStatue[i].Add(sellObjectStatueData.sellObjectId, sellObjectStatueData.sellObjectStatue);
+                    }
+                }
+            }
+
+            this.hotility = eventAreaManagerData.hotility;
         }
 
         public void GameOver()

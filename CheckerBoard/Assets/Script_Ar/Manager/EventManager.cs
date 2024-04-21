@@ -18,6 +18,19 @@ public class EventManager : Singleton<EventManager>
     //如果当前对抗事件是在冲突区域中，记录当前冲突区域
     public ClashArea curClashArea;
 
+    public void ReadArchive()
+    {
+        ArchiveManager.EventManagerData eventManagerData = ArchiveManager.archive.eventManagerData;
+
+        if (eventManagerData.curConfrontEventIndex[0] != -1)
+        {
+            this.curConfrontEvent = DataManager.ConfrontDefines[eventManagerData.curConfrontEventIndex[0]][eventManagerData.curConfrontEventIndex[1]];
+        }
+        if (eventManagerData.curClashAreaPos != null)
+        {
+            this.curClashArea = PlotManager.Instance.plots[eventManagerData.curClashAreaPos].eventArea as ClashArea;
+        }
+    }
 
     /// <summary>
     /// 设置对抗事件
@@ -180,7 +193,7 @@ public class EventManager : Singleton<EventManager>
             }
             ResourcesManager.Instance.ChangeBuildingResources(gainResources, true);
 
-            string resolveClash = this.removeCurClashArea();
+            string resolveClash = this.RemoveCurClashArea();
                 
             MessageManager.Instance.AddMessage(Message_Type.冲突, string.Format("取得了战斗的胜利，{4}获得了{0}枚空间币{1}{2}{3}",gainCurrency,gainresource1,gainresource2,gainresource3,resolveClash));
         }
@@ -279,7 +292,7 @@ public class EventManager : Singleton<EventManager>
             }
             ResourcesManager.Instance.ChangeBuildingResources(gainResources, true);
 
-            string resolveClash= this.removeCurClashArea();
+            string resolveClash= this.RemoveCurClashArea();
 
             MessageManager.Instance.AddMessage(Message_Type.冲突, string.Format("{4}成功说服了对方{3}，{0}的态度有所改善{1}{2}", cD.SettleType==0?"人们":"机器人们", gainresource1, gainresource2, resolveClash,costCurrencyStr));
             return true;
@@ -302,7 +315,7 @@ public class EventManager : Singleton<EventManager>
     /// 消除冲突区域
     /// </summary>
     /// <returns></returns>
-    string removeCurClashArea()
+    string RemoveCurClashArea()
     {
         string resolveClash = "";
         if (curClashArea != null)
@@ -364,6 +377,8 @@ public class EventManager : Singleton<EventManager>
         }
         
     }
+
+
 
     /// <summary>
     /// 计算对抗等级

@@ -49,6 +49,8 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("信息面板"), Tooltip("信息界面")]
     public UIMessage uiMessage;
 
+    [SerializeField, LabelText("任务面板"), Tooltip("放入任务面板")]
+    public UIQuestPanel uIQuestPanel;
 
     private void Start()
     {

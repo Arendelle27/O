@@ -66,7 +66,7 @@ namespace ENTITY
         [SerializeField, LabelText("资源数量"), ReadOnly]
         public List<int> buildingResources = new List<int>() { 0, 0 };
         //0为资源类型，1为资源数量
-        //资源类型  1，2，3，0为无资源
+        //资源类型  0，1，2，-1为无资源
 
         [SerializeField, LabelText("是否可以进入"), ReadOnly]
         public bool canEnter;
@@ -163,15 +163,20 @@ namespace ENTITY
             switch (this.plotType)
             {
                 case 0://资源板块
-                    if (plotDefine.ResourceType!=-1)
-                    {
-                        this.buildingResources[0] = plotDefine.ResourceType;
-                    }
-                    else
-                    {
-                        this.buildingResources[0] = 0;
-                    }
+                    //if (plotDefine.ResourceType!=-1)
+                    //{
+                    //    this.buildingResources[0] = plotDefine.ResourceType;
+                    //}
+                    //else
+                    //{
+                    //    this.buildingResources[0] = 0;
+                    //}
+                    this.buildingResources[0]= plotDefine.ResourceType;
                     this.buildingResources[1] = plotDefine.ResourceTotal;
+                    if (this.SR.enabled)
+                    {
+                        this.Discover(false);
+                    }
                     //this.figure.color = Color.white;
                     break;
                 case 1://事件板块
@@ -270,14 +275,7 @@ namespace ENTITY
         /// <param name="isDiscover"></param>
         public void Discover(bool isDiscover)
         {
-            if(isDiscover)
-            {
-                this.SR.enabled = true;
-            }
-            else
-            {
-                this.SR.enabled = false;
-            }
+            this.SR.enabled = isDiscover;
         }
 
         /// <summary>
@@ -285,7 +283,7 @@ namespace ENTITY
         /// </summary>
         void ChangeStatueMaskColor(Color curColor)
         {
-            Color color=new Color(curColor.r,curColor.g,curColor.b,0.3f);
+            Color color=new Color(curColor.r,curColor.g,curColor.b,ParameterConfig.diaphaneity);
             this.statueMask.color= color;
         }
 
@@ -392,6 +390,8 @@ namespace ENTITY
                     }
                     this.isFirstExplored = false;
                 }
+
+                //EventManager.Instance.curClashArea = null;//清空记录的冲突区域
 
                 //触发角色进入事件
                 this.eventArea?.WandererEnter();

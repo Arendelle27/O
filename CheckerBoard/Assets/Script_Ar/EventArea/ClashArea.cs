@@ -37,6 +37,10 @@ public class ClashArea : EventArea
 
     public override void WandererEnter()
     {
+        if (EventManager.Instance.curClashArea.plot.pos == this.plot.pos)//已经在冲突区域
+        {
+            return;
+        }
         Debug.LogFormat("进入冲突区域{0}",this.plot.pos);
         MessageManager.Instance.AddMessage(Message_Type.冲突, string.Format("被卷入了{0}的冲突中", clashType == 0 ? "人们" : "机器人们"));
         EventManager.Instance.SetConfrontEvent(this.clashType, EventAreaManager.Instance.hotility[this.clashType]+500f,this);//设置冲突事件

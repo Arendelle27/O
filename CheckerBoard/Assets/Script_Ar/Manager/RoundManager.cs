@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -53,8 +54,10 @@ namespace MANAGER
         public void ReadArchive()
         {
             this.Init();
-            //this.roundNumber = ArchiveManager.archive.roundNumber;
+            ArchiveManager.RoundManagerData roundManagerData = ArchiveManager.archive.roundManagerData;
+            this.roundNumber = roundManagerData.roundNumber;
         }
+
 
         public void GameOver()
         {
@@ -72,10 +75,13 @@ namespace MANAGER
 
             ResourcesManager.Instance.RoundOver(this.roundNumber);//资源结束回合
             /*结算前*/
-           this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
+            //this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
+
 
             /*回合结束*/
             this.roundNumber++;//回合数加1
+
+            QuestManager.Instance.QuestEndByRound(this.roundNumber);//阶段决策
 
             /*回合开始*/
             MessageManager.Instance.RoundOver();//刷新信息

@@ -91,6 +91,7 @@ namespace MANAGER
             else
             {
                 UIManager.Instance.Close<UINoviceGuidePanel>();
+                QuestManager.Instance.GetQuest(-1);//接受第一个任务
             }
         }
     }

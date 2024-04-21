@@ -53,9 +53,14 @@ namespace MANAGER
             {
                 this.uIStrengthenCapabilityWindow = UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
             }
+            this.expendExploratoryAmount = 0;
+        }
+
+        public void Restart()
+        {
+            this.Init();
             this.upgradePoint = 0;
             this.upgradePointHaveBuy = 0;
-            this.expendExploratoryAmount = 0;
             this.freelyReduceCoolingRound = 0;
             for (int i = 0; i < this.curLevels.Count; i++)
             {
@@ -64,9 +69,16 @@ namespace MANAGER
             this.executionAmount = DataManager.ExecutionUpgradeDefines[this.curLevels[2]].ExecutionIncreaseAmount;
         }
 
-        public void Restart()
+        public void ReadArchive()
         {
             this.Init();
+            ArchiveManager.CapabilityManagerData eventManagerData = ArchiveManager.archive.capabilityManagerData;
+
+            this.upgradePoint = eventManagerData.upgradePoint;
+            this.upgradePointHaveBuy = eventManagerData.upgradePointHaveBuy;
+            this.freelyReduceCoolingRound = eventManagerData.freelyReduceCoolingRound;
+            this.curLevels = eventManagerData.curLevels;
+            this.executionAmount = eventManagerData.executionAmount;
         }
 
         /// <summary>

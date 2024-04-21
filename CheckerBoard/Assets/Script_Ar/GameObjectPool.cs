@@ -39,6 +39,8 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
 
     public ObjectPool<GameObject> UIStrengthenCapabilityItems { get; set; }
 
+    public ObjectPool<GameObject> UIQuestItems { get; set; }
+
 
     public void Awake()
     {
@@ -60,6 +62,7 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         this.UICommodityItems = new ObjectPool<GameObject>(GetObject_UICommodityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
         this.UIGoodItems = new ObjectPool<GameObject>(GetObject_UIGoodItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
         this.UIStrengthenCapabilityItems = new ObjectPool<GameObject>(GetObject_UIStrengthenCapabilityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
+        this.UIQuestItems = new ObjectPool<GameObject>(GetObject_UIQuestItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
     }
 
 
@@ -188,6 +191,11 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     GameObject GetObject_UIStrengthenCapabilityItem()
     {
         return this.GetUIObject("UIStrengthenCapabilityItem");
+    }
+
+    GameObject GetObject_UIQuestItem()
+    {
+        return this.GetUIObject("UIQuest");
     }
 
     #endregion

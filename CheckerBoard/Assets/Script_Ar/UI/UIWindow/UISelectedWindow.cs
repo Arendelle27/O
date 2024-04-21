@@ -12,15 +12,7 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
 {
     [SerializeField, LabelText("不选择则自动关闭"), Tooltip("不选择则自动关闭的UI窗口")]
     public List<UISelectWindow> uISelectedWindows = new List<UISelectWindow>();
-    //0为建筑选择，1为建筑信息，2为事件信息,3为冲突区信息
-
-    //public Dictionary<string,UISelectWindow> uISelectedWindows=new Dictionary<string, UISelectWindow>()
-    //{
-    //    {"UIBuildingWindow",null },
-    //    {"UIBuildingInfoWindow",null },
-    //    {"UIEventAreaInfoWindow",null }
-    //};
-    //0为建筑选择，1为建筑信息，2为事件信息,3为冲突区信息
+    //0为建筑选择，1为建筑信息，2为事件信息,3为冲突区信息,4为资源区信息
 
     void Start()
     {

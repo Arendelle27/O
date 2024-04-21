@@ -357,41 +357,45 @@ namespace MANAGER
             this.plots.Add(pos, plot);
 
             //订阅点击格子事件
-            plot.clickSelectedSubject.Subscribe(p =>
+            plot.clickSelectedSubject.Subscribe(plot =>
             {
-                if(this.map_Mode == Map_Mode.正常)//地图模式为正常
+                this.SelectedPlot = plot;
+                if (this.map_Mode == Map_Mode.正常)//地图模式为正常
                 {
-                    if(p.wanderer == null)//格子上没有流浪者
+                    if(plot.wanderer == null)//格子上没有流浪者
                         return;
 
-                    if (p.plotDefine.CanBuild//板块可以建造
-                        && p.building == null//板块上没有建筑
+                    if (plot.plotDefine.CanBuild//板块可以建造
+                        && plot.building == null//板块上没有建筑
                         )
                     {
                         UISelectedWindow uSW= UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(0);
 
                     }
-                    if (p.building != null)//板块上有建筑
+                    if (plot.building != null)//板块上有建筑
                     {
-                        BuildingManager.Instance.selectedBuilding = p.building;
+                        BuildingManager.Instance.selectedBuilding = plot.building;
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(1);
                     }
-                    if(p.plotDefine.EventType==Event_Area_Type.交易)//板块上有事件地区
+                    if(plot.plotDefine.EventType==Event_Area_Type.交易)//板块上有事件地区
                     {
-                        EventAreaManager.Instance.selectedEventArea = p.eventArea;
+                        EventAreaManager.Instance.selectedEventArea = plot.eventArea;
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(2);
                     }
-                    if(EventManager.Instance.curClashArea!=null&& p.eventArea== EventManager.Instance.curClashArea)//板块上有冲突地区
+                    if(EventManager.Instance.curClashArea!=null&& plot.eventArea== EventManager.Instance.curClashArea)//板块上有冲突地区
                     {
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(3);
                     }
+                    if(plot.plotType==0)
+                    {
+                        UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
+                        uSW.OpenWindow(4);
+                    }
                 }
-
-                this.SelectedPlot = p;
             });
 
             return plot;
@@ -466,7 +470,7 @@ namespace MANAGER
                 for (int i = 0; i < this.plotConditions[1].Count;)
                 {
                     var id = this.plotConditions[1].ElementAt(i).Key;
-                    if (int.Parse(this.plotConditions[1][id]) >= roundNumber)
+                    if (int.Parse(this.plotConditions[1][id]) <= roundNumber)
                     {
                         this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
                         this.plotConditions[1].Remove(id);

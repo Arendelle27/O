@@ -76,10 +76,12 @@ namespace MANAGER
 
         public void ReadArchive()
         {
-            //this.Init();
-            //this.wealth = ArchiveManager.archive.wealth;
-            //this.buildingResources = ArchiveManager.archive.buildingRes;
-            //this.execution = ArchiveManager.archive.execution;
+            this.Init();
+            ArchiveManager.ResourcesManagerData resourcesManagerData = ArchiveManager.archive.resourcesManagerData;
+            this.wealth = resourcesManagerData.wealth;
+            this.buildingResources = resourcesManagerData.buildingResources;
+            this.execution = resourcesManagerData.execution;
+
         }
 
         public void GameOver()

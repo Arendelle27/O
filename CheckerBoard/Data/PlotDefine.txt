@@ -117,7 +117,7 @@
     "ResourceByRound": 0,
     "ResourceTotal": 0,
     "IsSpecialGeneration": "false",
-    "Weights": 50
+    "Weights": 20
   },
   "8": {
     "ID": 8,
@@ -129,10 +129,10 @@
     "EventType": "对抗",
     "EventValue": "1",
     "Condition": "回合",
-    "UnlockValue": "2",
+    "UnlockValue": "6",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 20
+    "Weights": 5
   },
   "9": {
     "ID": 9,
@@ -180,9 +180,9 @@
     "EventType": "对抗",
     "EventValue": "0",
     "Condition": "回合",
-    "UnlockValue": "2",
+    "UnlockValue": "6",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 20
+    "Weights": 5
   }
 }

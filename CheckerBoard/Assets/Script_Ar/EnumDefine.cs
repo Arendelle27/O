@@ -105,7 +105,8 @@ public enum Message_Type
     机械 = 2,
     交易 = 3,
     冲突 = 4,
-    探索=5
+    探索=5,
+    任务=6
 }
 
 public enum Upgrade_Type
@@ -130,4 +131,10 @@ public enum HeadPortrait_Type
     O,
 
     头像
+}
+
+public enum NpcCondition_Type
+{
+    无,
+    老爹
 }

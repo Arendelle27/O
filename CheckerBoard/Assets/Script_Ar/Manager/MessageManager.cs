@@ -11,28 +11,43 @@ namespace MANAGER
 {
     public class MessageManager : Singleton<MessageManager>
     {
-        [SerializeField, LabelText("存储两天"), Tooltip("当前等级显示")]
-        public List<List<List<string>>> messages = new List<List<List<string>>>(2)
+        //消息
+        public class Message
         {
-            new List<List<string>>(6)//昨天
-            {
-                new List<string>(), //指引
-                new List<string>(), //移动
-                new List<string>(), //机械
-                new List<string>(), //交易
-                new List<string>(), //对抗
-                new List<string>()  //小队
-            },
-            new List<List<string>>(6)//今天
-            {
-                new List<string>(), //指引
-                new List<string>(), //移动
-                new List<string>(), //机械
-                new List<string>(), //交易
-                new List<string>(), //对抗
-                new List<string>()  //小队
-            },
+            public Message_Type type;
+            public string message;
+        }
+
+        [SerializeField, LabelText("存储两天"), Tooltip("当前等级显示")]
+        public List<List<Message>> messages = new List<List<Message>>(2)
+        {
+            new List<Message>(),//昨天
+            new List<Message>() //今天
         };
+
+        //public List<List<List<string>>> messages = new List<List<List<string>>>(2)
+        //{
+        //    new List<List<string>>(7)//昨天
+        //    {
+        //        new List<string>(), //指引
+        //        new List<string>(), //移动
+        //        new List<string>(), //机械
+        //        new List<string>(), //交易
+        //        new List<string>(), //对抗
+        //        new List<string>(), //小队
+        //        new List<string>()  //任务
+        //    },
+        //    new List<List<string>>(7)//今天
+        //    {
+        //        new List<string>(), //指引
+        //        new List<string>(), //移动
+        //        new List<string>(), //机械
+        //        new List<string>(), //交易
+        //        new List<string>(), //对抗
+        //        new List<string>(), //小队
+        //        new List<string>()  //任务
+        //    },
+        //};
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -53,16 +68,25 @@ namespace MANAGER
         {
             for (int d = 0; d < this.messages.Count; d++)
             {
-                for (int i = 0; i < this.messages[d].Count; i++)
-                {
-                    this.messages[d][i].Clear();
-                }
+                this.messages[d].Clear();
             }
         }
 
         public void ReadArchive()
         {
+            ArchiveManager.MessageManagerData messageManagerData = ArchiveManager.archive.messageManagerData;
 
+            foreach (var message in messageManagerData.yesterdayMessages)
+            {
+                this.messages[0].Add(new Message() { type = message.type, message = message.message });
+            }
+
+            foreach (var message in messageManagerData.todayMessages)
+            {
+                this.messages[1].Add(new Message() { type = message.type, message = message.message });
+            }
+
+            this.ReFreshMessages();
         }
 
         /// <summary>
@@ -72,7 +96,13 @@ namespace MANAGER
         /// <param name="message"></param>
         public void AddMessage(Message_Type type, string message)
         {
-            this.messages[1][(int)type].Add(message);
+            Message m = new Message() 
+            {
+                type = type,
+                message = message
+            };
+
+            this.messages[1].Add(m);
 
             StringBuilder sb = this.stringBuilder;
             sb.AppendLine(FormatMessage(1, type, message));
@@ -87,12 +117,9 @@ namespace MANAGER
             StringBuilder sb = new StringBuilder();
             for(int day=0;day<this.messages.Count;day++)
             {
-                for (int i = 0; i < this.messages[day].Count; i++)
+                foreach (var message in this.messages[day])
                 {
-                    foreach (var message in this.messages[day][i])
-                    {
-                        sb.AppendLine(FormatMessage(day, (Message_Type)i, message));
-                    }
+                    sb.AppendLine(FormatMessage(day, message.type, message.message));
                 }
                 if(day==0)
                 {
@@ -155,15 +182,7 @@ namespace MANAGER
         public void RoundOver()
         {
             this.messages[0]= this.messages[1];
-            this.messages[1] = new List<List<string>>(6)
-            {
-                new List<string>(), //指引
-                new List<string>(), //移动
-                new List<string>(), //机械
-                new List<string>(), //交易
-                new List<string>(), //对抗
-                new List<string>()  //小队
-            };
+            this.messages[1] = new List<Message>();
 
             this.ReFreshMessages();
         }
@@ -177,7 +196,7 @@ namespace MANAGER
             {
                 for (int i = 0; i < this.messages[d].Count; i++)
                 {
-                    this.messages[d][i].Clear();
+                    this.messages[d].Clear();
                 }
             }
             this.stringBuilder.Clear();

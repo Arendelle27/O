@@ -21,6 +21,8 @@ public class UIStartPanel : UIPanel
     [SerializeField, LabelText("退出游戏"), Tooltip("退出游戏")]
     public Button exitGame;
 
+    [SerializeField, LabelText("是否进行新手教程"), Tooltip("放入是否进行新手教程开关")]
+    public Toggle isNovicGuideToggle;
 
     void Start()
     {
@@ -36,6 +38,10 @@ public class UIStartPanel : UIPanel
             if(ArchiveManager.archive!=null)
             {
                 MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.ReadArchive());
+            }
+            else
+            {
+                Debug.Log("没有存档");
             }
 
         });

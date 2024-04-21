@@ -1,6 +1,10 @@
+using ENTITY;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using UniRx;
 using UnityEngine;
 
 namespace MANAGER
@@ -8,32 +12,188 @@ namespace MANAGER
     public class QuestManager :Singleton<QuestManager>
     {
         //当前主线任务ID 
-        public int curMainQuestId;
+        public int curMainQUestId;
+        //当前主线任务完成回合
+        public int curMainQuestRound;
 
         //当前支线任务ID
-        public HashSet<int> curSecondQuestIds;
+        public HashSet<int> curSecondQuestIds=new HashSet<int>();
+        //当前支线任务完成回合
+        public Dictionary<int, int> curSecondQuestsRound=new Dictionary<int, int>();
 
-        public void AddQuest(bool isMain, int questId)
+        public void ReadArchive()
         {
-            if (isMain)
+            ArchiveManager.QuestManagerData questManagerData = ArchiveManager.archive.questManagerData;
+
+            for(int i=1;i<questManagerData.questIds.Count;i++)
             {
-                curMainQuestId = questId;
+                if (DataManager.QuestDefines[questManagerData.questIds[i]].Type)//如果为主线
+                {
+                    this.curMainQUestId = questManagerData.questIds[i];
+                    this.curMainQuestRound = questManagerData.questsRound[i];
+                }
+                else
+                {
+                    this.curSecondQuestIds.Add(questManagerData.questIds[i]);
+                    this.curSecondQuestsRound.Add(questManagerData.questIds[i], questManagerData.questsRound[i]);
+                }
             }
-            else
-            {
-                curSecondQuestIds.Add(questId);
-            }
+
+            (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
         }
 
-        public void RemoveQuest(bool isMain, int questId)
+        /// <summary>
+        /// 承接任务
+        /// </summary>
+        /// <param name="preQuestId"></param>
+        public void GetQuest(int preQuestId)
         {
-            if (isMain)
+            foreach (var item in DataManager.QuestDefines)
             {
-                curMainQuestId = -1;
+                if (item.Value.PreQuestId == preQuestId)
+                {
+                    this. SetQuest(item.Value.Id);
+                    MessageManager.Instance.AddMessage(Message_Type.任务, string.Format("开启{0}要任务:{1}",item.Value.Type?"主":"次",item.Value.QuestName));
+                }
+            }
+            (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
+        }
+
+        /// <summary>
+        /// 到达一定回合结束任务
+        /// </summary>
+        /// <param name="round"></param>
+        public void QuestEndByRound(int round)
+        {
+            if (this.curMainQuestRound == round)
+            {
+                QuestDefine questDefine = DataManager.QuestDefines[this.curMainQUestId];
+                ResourcesManager.Instance.wealth -= questDefine.CurrencyCondition;
+                if (ResourcesManager.Instance.wealth < 0)
+                {
+                    this.EndQuest(true, questDefine.Id, false);
+                }
+                else
+                {
+                    this.EndQuest(true, questDefine.Id, true);
+                }
+            }
+            else if (this.curSecondQuestsRound.Values.Contains(round))
+            {
+                foreach (var id in this.curSecondQuestsRound)
+                {
+                    if (id.Value == round)
+                    {
+                        QuestDefine questDefine = DataManager.QuestDefines[id.Key];
+                        ResourcesManager.Instance.wealth -= questDefine.CurrencyCondition;
+                        if (ResourcesManager.Instance.wealth < 0)
+                        {
+                            this.EndQuest(false, questDefine.Id, false);
+                        }
+                        else
+                        {
+                            this.EndQuest(false, questDefine.Id, true);
+                        }
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 添加任务
+        /// </summary>
+        /// <param name="isMain"></param>
+        /// <param name="questId"></param>
+        public void SetQuest( int questId)
+        {
+            QuestDefine questDefine = DataManager.QuestDefines[questId];
+            if (questDefine.Type)//主线任务
+            {
+                this.curMainQUestId = questId;
+                this.curMainQuestRound = RoundManager.Instance.roundNumber+questDefine.RoundCondition;
+            }
+            else//支线任务
+            {
+                this.curSecondQuestIds.Add(questId);
+                this.curSecondQuestsRound.Add(questId, RoundManager.Instance.roundNumber + questDefine.RoundCondition);
+            }
+            //(UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
+        }
+
+        /// <summary>
+        /// 结束任务
+        /// </summary>
+        /// <param name="isMain"></param>
+        /// <param name="questId"></param>
+        /// <param name="isSuccess"></param>
+        public void EndQuest(bool isMain, int questId,bool isSuccess)
+        {
+            QuestDefine questDefine = DataManager.QuestDefines[questId];
+            if(isSuccess)
+            {
+                if (questDefine.GainCurrency > 0)
+                {
+                    ResourcesManager.Instance.ChangeWealth(questDefine.GainCurrency);
+                }
+                if (questDefine.GainUpgradePoint > 0)
+                {
+                    CapabilityManager.Instance.upgradePoint += questDefine.GainUpgradePoint;
+                }
+                int[] resources = new int[3] { questDefine.GainResource1, questDefine.GainResource2, questDefine.GainResource3 };
+                ResourcesManager.Instance.ChangeBuildingResources(resources, true);
             }
             else
             {
-                curSecondQuestIds.Remove(questId);
+                if(questDefine.QuestFallResult==0)//失败惩罚为游戏结束
+                {
+                    MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
+                    return;
+                }
+                else 
+                {
+
+                }
+            }
+
+            this.RemoveQuest(isMain, questId);//移除任务
+
+            this.GetQuest(questId);//继续下一个任务
+        }
+
+
+        /// <summary>
+        /// 移除任务
+        /// </summary>
+        /// <param name="isMain"></param>
+        /// <param name="questId"></param>
+        void RemoveQuest(bool isMain, int questId)
+        {
+            if (isMain)
+            {
+                this.curMainQUestId = -1;
+                this.curMainQuestRound = -1;
+            }
+            else
+            {
+                this.curSecondQuestIds.Remove(questId);
+                this.curSecondQuestsRound.Remove(questId);
+            }
+            (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
+        }
+
+        /// <summary>
+        /// 游戏结束
+        /// </summary>
+        public void GameOver()
+        {
+            //清除所有任务
+            this.RemoveQuest(true, this.curMainQUestId);//清除主线任务
+
+            for(int i=0;i<this.curSecondQuestIds.Count;)
+            {
+                this.RemoveQuest(false, this.curSecondQuestIds.ElementAt(i));
             }
         }
     }

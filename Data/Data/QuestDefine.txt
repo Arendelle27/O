@@ -1,0 +1,34 @@
+{
+  "0": {
+    "Id": 0,
+    "Type": "True",
+    "QuestName": "主线任务1",
+    "QuestDescription": "赚到80空间币以支付生活费（剩余3天）",
+    "RoundCondition": 3,
+    "CurrencyCondition": 80,
+    "NpcCondition": "无",
+    "GainUpgradePoint": 1,
+    "GainCurrency": 0,
+    "GainResource1": 0,
+    "GainResource2": 0,
+    "GainResource3": 0,
+    "PreQuestId": -1,
+    "QuestFallResult": 0
+  },
+  "1": {
+    "Id": 1,
+    "Type": "True",
+    "QuestName": "主线任务2",
+    "QuestDescription": "赚到80空间币以支付生活费（剩余3天）",
+    "RoundCondition": 3,
+    "CurrencyCondition": 80,
+    "NpcCondition": "无",
+    "GainUpgradePoint": 1,
+    "GainCurrency": 0,
+    "GainResource1": 0,
+    "GainResource2": 0,
+    "GainResource3": 0,
+    "PreQuestId": 0,
+    "QuestFallResult": 0
+  }
+}
