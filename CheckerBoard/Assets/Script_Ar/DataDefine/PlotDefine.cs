@@ -7,7 +7,6 @@ public class PlotDefine
     public int ID { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public string PlotTexture { get; set; }
     public bool CanBuild { get; set; }
     public int Type { get; set; }
     public Event_Area_Type EventType { get; set; }

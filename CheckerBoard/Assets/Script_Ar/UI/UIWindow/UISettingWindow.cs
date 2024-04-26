@@ -23,7 +23,7 @@ public class UISettingWindow: UIWindow
     [SerializeField, LabelText("返回游戏"), Tooltip("返回游戏")]
     public Button BackToGameButton;
 
-    [SerializeField, LabelText("返回主界面"), Tooltip("返回主界面")]
+    [SerializeField, LabelText("结束游戏按键"), Tooltip("放入结束游戏按键")]
     public Button BackButton;
 
     [SerializeField, LabelText("退出按钮"), Tooltip("退出游戏")]
@@ -43,7 +43,6 @@ public class UISettingWindow: UIWindow
 
         this.BackButton.OnClickAsObservable().Subscribe(_ =>
         {
-            UIMain.Instance.ChangeToGamePanel(0);
             MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
             this.OnCloseClick();
         });
@@ -87,28 +86,28 @@ public class UISettingWindow: UIWindow
         });
     }
 
-    private void OnEnable()
-    {
-        if(UIMain.Instance.curPanelIndex == 0)
-        {
-            this.SaveButton.gameObject.SetActive(false);
-            this.BackButton.gameObject.SetActive(false);
-            this.QuitButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            if(!this.SaveButton.gameObject.activeSelf)
-            {
-                this.SaveButton.gameObject.SetActive(true);
-            }
-            if(!this.BackButton.gameObject.activeSelf)
-            {
-                this.BackButton.gameObject.SetActive(true) ;
-            }
-            if (!this.QuitButton.gameObject.activeSelf)
-            {
-                this.QuitButton.gameObject.SetActive(true);
-            }
-        }
-    }
+    //private void OnEnable()
+    //{
+    //    if(UIMain.Instance.curPanelIndex == 0)
+    //    {
+    //        this.SaveButton.gameObject.SetActive(false);
+    //        this.BackButton.gameObject.SetActive(false);
+    //        this.QuitButton.gameObject.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        if(!this.SaveButton.gameObject.activeSelf)
+    //        {
+    //            this.SaveButton.gameObject.SetActive(true);
+    //        }
+    //        if(!this.BackButton.gameObject.activeSelf)
+    //        {
+    //            this.BackButton.gameObject.SetActive(true) ;
+    //        }
+    //        if (!this.QuitButton.gameObject.activeSelf)
+    //        {
+    //            this.QuitButton.gameObject.SetActive(true);
+    //        }
+    //    }
+    //}
 }

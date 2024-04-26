@@ -8,7 +8,7 @@ public enum Plot_Statue
     未探明,
     可探索,
     已探索,
-    已开发,
+    //已开发,
 }
 
 public enum Building_Type

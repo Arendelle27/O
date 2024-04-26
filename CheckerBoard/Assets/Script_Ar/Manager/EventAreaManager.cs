@@ -277,6 +277,59 @@ namespace MANAGER
         }
 
         /// <summary>
+        /// 花费财富重置出售商品冷却时间
+        /// </summary>
+        /// <param name="transactionObjectId"></param>
+        /// <returns></returns>
+        public bool ResetCoolingRoundBySpend(int transactionObjectId)
+        {
+            Settle eA = this.selectedEventArea as Settle;
+            int settleSort = 0;
+            if (eA.isBlackMarket)
+            {
+                settleSort = 1;
+            }
+            else
+            {
+                settleSort = 0;
+            }
+
+            if (this.sellObjectsStatue[settleSort][transactionObjectId] == DataManager.TransactionDefines[settleSort][transactionObjectId].Amount)
+            {
+                Debug.Log("不需要补货");
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("需求还未满足"));
+                return false;
+            }
+
+            if (ResourcesManager.Instance.wealth >= 50)
+            {
+                ResourcesManager.Instance.ChangeWealth(-50);
+
+                this.ResetCoolingRound(settleSort, transactionObjectId);
+
+                return true;
+            }
+            else
+            {
+                MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("金钱不足够恢复需求"));
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 重置出售数量
+        /// </summary>
+        /// <param name="settleSort"></param>
+        /// <param name="transactionObjectId"></param>
+        void ResetCoolingRound(int settleSort, int transactionObjectId)
+        {
+
+            this.sellObjectsStatue[settleSort][transactionObjectId] = DataManager.TransactionDefines[settleSort][transactionObjectId].Amount;//补货
+            MessageManager.Instance.AddMessage(Message_Type.交易, string.Format("{0}商品{1}需求恢复了", settleSort == 1 ? "黑市" : "聚落", (Resource_Type)DataManager.TransactionDefines[settleSort][transactionObjectId].Subtype));
+
+        }
+
+        /// <summary>
         /// 增减敌意值
         /// </summary>
         /// <param name="settleSort"></param>

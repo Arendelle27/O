@@ -37,7 +37,7 @@ public class ClashArea : EventArea
 
     public override void WandererEnter()
     {
-        if (EventManager.Instance.curClashArea.plot.pos == this.plot.pos)//已经在冲突区域
+        if (EventManager.Instance.curClashArea?.plot.pos == this.plot.pos)//已经在冲突区域
         {
             return;
         }

@@ -54,7 +54,7 @@ namespace MANAGER
             this.ObserveEveryValueChanged(_ => this.execution).Subscribe(_ =>
             {
                 //变化时更新行动点UI
-                (UIMain.Instance.uiPanels[1] as UIGamePanel).executionAmount.text = this.execution.ToString();
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).uIExecutionPanel.UpdatUIExuection(this.execution);
                 Debug.Log("行动点变化");
             });
 

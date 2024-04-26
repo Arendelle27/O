@@ -7,24 +7,24 @@ using UnityEngine.UI;
 public class TabButton : MonoBehaviour
 {
     public Sprite activeImage;
-    private Sprite normalImage;
+    public Sprite normalImage;
 
     public TabView tabView;
 
     public int tabIndex;
     public bool selected = false;
 
-    private Image tabImage;
+    protected Image tabImage;
 
     void Awake()
     {
         tabImage = this.GetComponent<Image>();
-        normalImage = tabImage.sprite;
+        //normalImage = tabImage.sprite;
 
         this.GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
-    public void Select(bool select)
+    public virtual void Select(bool select)
     {
         if (!this.gameObject.activeSelf)
             return;

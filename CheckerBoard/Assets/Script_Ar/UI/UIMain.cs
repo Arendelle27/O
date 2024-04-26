@@ -9,11 +9,11 @@ public class UIMain : MonoSingleton<UIMain>
 {
     [SerializeField, LabelText("游戏UI界面"), Tooltip("游戏的UI界面")]
     public List<UIPanel> uiPanels = new List<UIPanel>();
-    //1.游戏开始的面板
-    //2.游戏中的UI界面
-    //3.移动流浪者的UI界面
-    //4.选择拓展探索小队的UI界面
-    //5.结束面板
+    //0.游戏开始的面板
+    //1.游戏中的UI界面
+    //2.移动流浪者的UI界面
+    //3.选择拓展探索小队的UI界面
+    //4.结束面板
 
     [SerializeField, LabelText("自动关闭的游戏窗口界面"), ReadOnly]
     public UISelectedWindow uISelectedWindow;
@@ -44,10 +44,6 @@ public class UIMain : MonoSingleton<UIMain>
                 {
                     uiPanels[i].gameObject.SetActive(true);
                 }
-                //else
-                //{
-                //    uiPanels[i].gameObject.SetActive(false);
-                //}
             }
             else
             {

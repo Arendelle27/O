@@ -11,9 +11,7 @@
     "UpgradeType": "交易",
     "TransactionUpgradeCost": 1,
     "PurchasePriceReduce": 10,
-    "SellPriceIncrease": 5,
-    "TransactionSpecialEffectDescription": "每回合有一次免费刷新商店的机会",
-    "TransactionSpecialEffectValue": 1
+    "SellPriceIncrease": 5
   },
   "2": {
     "Level": 2,

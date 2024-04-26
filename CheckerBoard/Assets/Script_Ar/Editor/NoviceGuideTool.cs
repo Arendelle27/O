@@ -13,14 +13,12 @@ public class NoviceGuideTool : Editor
         DataManager.LoadNoviceGuideDefine();
 
         Scene current = EditorSceneManager.GetActiveScene();
-        string currentScnee = current.name;
         if (current.isDirty)
         {
             EditorUtility.DisplayDialog("提示", "请先保存当前场景", "确定");
             return;
         }
 
-        List<UINoviceGuideWindow> allUINoviceGuideWindow = new List<UINoviceGuideWindow>();
 
         foreach (var noviceGuideDefine in DataManager.NoviceGuideDefines)
         {
@@ -51,7 +49,7 @@ public class NoviceGuideTool : Editor
                 def.NoviceGuideArrowRotZ = uINoviceGuideWindow.UINoviceGuideArrowTransform.rotation.eulerAngles.z;
             }
         }
-        DataManager.SaveTNoviceGuidePos();
+        DataManager.SaveNoviceGuidePos();
         EditorUtility.DisplayDialog("提示", "新手指引窗口导出完成", "确定");
     }
 }

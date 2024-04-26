@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,8 +23,8 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("各种资源的数量"), Tooltip("各种资源的数量的显示")]
     public List<Text> resourcesAmounts = new List<Text>();
 
-    [SerializeField, LabelText("当前剩余行动点"), Tooltip("当前剩余行动点的显示")]
-    public Text executionAmount;
+    //[SerializeField, LabelText("当前剩余行动点"), Tooltip("当前剩余行动点的显示")]
+    //public Text executionAmount;
 
     [SerializeField, LabelText("当前回合数"), Tooltip("当前回合数的显示")]
     public Text roundNumber;
@@ -40,17 +41,17 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("设置"), Tooltip("打开设置")]
     public Button settingButton;
 
-    [SerializeField, LabelText("任务"), Tooltip("打开任务界面")]
-    public Button questButton;
-
-    [SerializeField, LabelText("信息按键"), Tooltip("打开信息界面按键")]
-    public Button messageButton;
+    [SerializeField, LabelText("信息开关"), Tooltip("打开信息界面开关")]
+    public Toggle messageToggle;
 
     [SerializeField, LabelText("信息面板"), Tooltip("信息界面")]
     public UIMessage uiMessage;
 
     [SerializeField, LabelText("任务面板"), Tooltip("放入任务面板")]
     public UIQuestPanel uIQuestPanel;
+
+    [SerializeField, LabelText("行动点面板"), Tooltip("放入行动点面板")]
+    public UIExecutionPanel uIExecutionPanel;
 
     private void Start()
     {
@@ -90,16 +91,9 @@ public class UIGamePanel : UIPanel
             UIManager.Instance.Show<UISettingWindow>();
         });
 
-        this.messageButton.OnClickAsObservable().Subscribe(_ =>
+        this.messageToggle.OnPointerClickAsObservable().Subscribe(_ =>
         {
-            if(this.uiMessage.gameObject.activeSelf)
-            {
-                this.uiMessage.gameObject.SetActive(false);
-            }
-            else
-            {
-                this.uiMessage.gameObject.SetActive(true);
-            }
+            this.uiMessage.gameObject.SetActive(messageToggle.isOn);
         });
     }
 }

@@ -34,6 +34,8 @@ public static class DataManager
 
     public static Dictionary<int,QuestDefine> QuestDefines;
 
+    public static Dictionary<int, CameraDefine> CameraDefines;
+
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
@@ -128,6 +130,10 @@ public static class DataManager
         QuestDefines = JsonConvert.DeserializeObject<Dictionary<int, QuestDefine>>(json);
         yield return null;
 
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("CameraDefine.txt"));
+        CameraDefines = JsonConvert.DeserializeObject<Dictionary<int, CameraDefine>>(json);
+        yield return null;
+
         SpriteManager.Load();//加载精灵
         yield return null;
     }
@@ -135,14 +141,26 @@ public static class DataManager
 #if UNITY_EDITOR
     public static void LoadNoviceGuideDefine()
     {
-        string json = File.ReadAllText(PathConfig.GetDataTxtPath("ChatDefine.txt"));
+        string json = File.ReadAllText(PathConfig.GetDataTxtPath("NoviceGuideDefine.txt"));
         NoviceGuideDefines = JsonConvert.DeserializeObject<Dictionary<int, NoviceGuideDefine>>(json);
     }
 
-    public static void SaveTNoviceGuidePos()
+    public static void LoadCameraDefine()
+    {
+        string json = File.ReadAllText(PathConfig.GetDataTxtPath("CameraDefine.txt"));
+        CameraDefines = JsonConvert.DeserializeObject<Dictionary<int, CameraDefine>>(json);
+    }
+    //********************************************************************************************************************
+    public static void SaveNoviceGuidePos()
     {
         string json = JsonConvert.SerializeObject(NoviceGuideDefines, Formatting.Indented);
         File.WriteAllText(PathConfig.GetDataTxtPath("NoviceGuideDefine.txt"), json);
+    }
+
+    public static void SaveCameraDefine()
+    {
+        string json = JsonConvert.SerializeObject(CameraDefines, Formatting.Indented);
+        File.WriteAllText(PathConfig.GetDataTxtPath("CameraDefine.txt"), json);
     }
 #endif
 }

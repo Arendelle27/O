@@ -16,10 +16,6 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     public GameObject DestinationSign { get; set; }
     //探索小队对象
     public ObjectPool<GameObject> ExploratoryTeams { get; set; }
-    ////人类聚落对象池
-    //public ObjectPool<GameObject> HumanSettlements { get; set; }
-    ////机械聚落对象池
-    //public ObjectPool<GameObject> RobotSettlements { get; set; }
 
     //采集建筑对象池
     public ObjectPool<GameObject> GatheringBuildings { get; set; }
@@ -40,6 +36,7 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     public ObjectPool<GameObject> UIStrengthenCapabilityItems { get; set; }
 
     public ObjectPool<GameObject> UIQuestItems { get; set; }
+    public ObjectPool<GameObject> UIExecutionItems { get; set; }
 
 
     public void Awake()
@@ -63,6 +60,7 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         this.UIGoodItems = new ObjectPool<GameObject>(GetObject_UIGoodItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
         this.UIStrengthenCapabilityItems = new ObjectPool<GameObject>(GetObject_UIStrengthenCapabilityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
         this.UIQuestItems = new ObjectPool<GameObject>(GetObject_UIQuestItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
+        this.UIExecutionItems = new ObjectPool<GameObject>(GetObject_UIExecutionItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3,5);
     }
 
 
@@ -84,13 +82,6 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         prefab.SetActive(false);
         return prefab;
     }
-
-    //GameObject GetSettlementObject(string name)
-    //{
-    //    GameObject prefab = Instantiate(Resources.Load<GameObject>(PathConfig.GetSettlementPrefabPath(name)), this.transform);
-    //    prefab.SetActive(false);
-    //    return prefab;
-    //}
 
     /// <summary>
     /// 获得UI对象
@@ -196,6 +187,11 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     GameObject GetObject_UIQuestItem()
     {
         return this.GetUIObject("UIQuest");
+    }
+
+    GameObject GetObject_UIExecutionItem()
+    {
+        return this.GetUIObject("UIExecution");
     }
 
     #endregion

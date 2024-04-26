@@ -35,6 +35,14 @@ public class UITransactionItem : ListView.ListViewItem
         });
     }
 
+    public override void onSelected(bool selected)
+    {
+        float dis = selected ? 0.5f: 0f;
+        Color color=this.background.color;
+        this.background.color = new Color(color.r, color.g, color.b, dis);
+        //this.background.sprite = selected ? selectedBg : normalBg;
+    }
+
     /// <summary>
     /// …Ë÷√–≈œ¢
     /// </summary>

@@ -44,6 +44,12 @@ namespace MANAGER
 
             });
 
+            this.ObserveEveryValueChanged(_ => this.executionAmount).Subscribe(_ =>
+            {
+                (UIMain.Instance.uiPanels[1] as UIGamePanel).uIExecutionPanel.UpdatUIExuectionUpperLimit(this.executionAmount);//更新行动点上限
+
+            });
+
             //this.uIStrengthenCapabilityWindow = UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
         }
 
@@ -65,6 +71,7 @@ namespace MANAGER
             for (int i = 0; i < this.curLevels.Count; i++)
             {
                 curLevels[i] = 0;
+                this.uIStrengthenCapabilityWindow.UpdateStrengthenCapabilityItemInfo((int)i); //更新强化能力项目信息
             }
             this.executionAmount = DataManager.ExecutionUpgradeDefines[this.curLevels[2]].ExecutionIncreaseAmount;
         }
@@ -78,6 +85,10 @@ namespace MANAGER
             this.upgradePointHaveBuy = eventManagerData.upgradePointHaveBuy;
             this.freelyReduceCoolingRound = eventManagerData.freelyReduceCoolingRound;
             this.curLevels = eventManagerData.curLevels;
+            for (int i = 0; i < this.curLevels.Count; i++)
+            {
+                this.uIStrengthenCapabilityWindow.UpdateStrengthenCapabilityItemInfo((int)i); //更新强化能力项目信息
+            }
             this.executionAmount = eventManagerData.executionAmount;
         }
 
@@ -146,9 +157,10 @@ namespace MANAGER
                         this.upgradePoint -= executionUpgradeDefine.ExecutionUpgradeCost;
 
                         int executionAmountIncrease = executionUpgradeDefine.ExecutionIncreaseAmount - this.executionAmount;
-                        ResourcesManager.Instance.execution += executionAmountIncrease;
-
                         this.executionAmount = executionUpgradeDefine.ExecutionIncreaseAmount;
+
+                        ResourcesManager.Instance.ChangeExecution( executionAmountIncrease);
+
                         this.curLevels[2]++;
 
                         this.uIStrengthenCapabilityWindow.UpdateUpgradePointHaveBuy();

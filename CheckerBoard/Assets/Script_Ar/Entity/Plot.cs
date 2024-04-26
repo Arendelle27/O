@@ -27,13 +27,11 @@ namespace ENTITY
         public int plotType;
         //0为资源类，1为事件类
 
-        //临时 当前颜色
-        public Color curColor;
-        //被在可移动范围时的颜色
-        public Color inMoveScopeColor = Color.blue;
-
-        //[SerializeField, LabelText("板块类型"), Tooltip("显示数字")]
-        //public Text figure;
+        [SerializeField, LabelText("遮罩图像列表"), Tooltip("遮罩图像列表")]
+        public List<Sprite> maskSprite;
+        //0可探索状态遮罩，1可移动状态遮罩
+        [SerializeField, LabelText("遮罩类型"), ReadOnly]
+        int statueSort = -1;//-1为关闭遮罩，0为可探索，1为可移动
 
         [SerializeField, LabelText("位置"), ReadOnly]
         public Vector2Int pos;
@@ -75,8 +73,8 @@ namespace ENTITY
         [SerializeField, LabelText("鼠标点击板块"), ReadOnly]
         public Subject<Plot> clickSelectedSubject = new Subject<Plot>();
 
-        [SerializeField, LabelText("鼠标进入板块"), ReadOnly]
-        public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
+        //[SerializeField, LabelText("鼠标进入板块"), ReadOnly]
+        //public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
 
         [SerializeField, LabelText("通过板块解锁板块"), ReadOnly]
         public Subject<int> unLoadByPlot=new Subject<int>();
@@ -84,17 +82,6 @@ namespace ENTITY
 
         private void Start()
         {
-            this.ObserveEveryValueChanged(_ => this.building).Subscribe(_ =>
-            {
-                if (this.building != null)
-                {
-                    this.BuildConstruction(true);
-                }
-                else
-                {
-                    this.BuildConstruction(false);
-                }
-            });
 
             this.ObserveEveryValueChanged(_ => this.wanderer).Subscribe(_ =>
             {
@@ -109,16 +96,16 @@ namespace ENTITY
             });
 
 
-            this.ObserveEveryValueChanged(_ => this.curColor).Subscribe(_ =>
+            this.ObserveEveryValueChanged(_ => this.statueSort).Subscribe(_ =>
             {
-                this.ChangeStatueMaskColor(this.curColor);
+                this.ChangeStatueMask(this.statueSort);
             });
         }
 
         private void OnEnable()
         {
             this.clickSelectedSubject = new Subject<Plot>();
-            this.enterSelectedSubject = new Subject<Vector2Int>();
+            //this.enterSelectedSubject = new Subject<Vector2Int>();
             this.unLoadByPlot = new Subject<int>();
         }
 
@@ -126,7 +113,7 @@ namespace ENTITY
         {
             this.clickSelectedSubject.OnCompleted();
 
-            this.enterSelectedSubject.OnCompleted();
+            //this.enterSelectedSubject.OnCompleted();
 
             this.unLoadByPlot.OnCompleted();
 
@@ -163,29 +150,13 @@ namespace ENTITY
             switch (this.plotType)
             {
                 case 0://资源板块
-                    //if (plotDefine.ResourceType!=-1)
-                    //{
-                    //    this.buildingResources[0] = plotDefine.ResourceType;
-                    //}
-                    //else
-                    //{
-                    //    this.buildingResources[0] = 0;
-                    //}
+
                     this.buildingResources[0]= plotDefine.ResourceType;
-                    this.buildingResources[1] = plotDefine.ResourceTotal;
-                    if (this.SR.enabled)
-                    {
-                        this.Discover(false);
-                    }
-                    //this.figure.color = Color.white;
+
                     break;
                 case 1://事件板块
                     this.eventArea=EventAreaManager.Instance.GetEventArea(plotDefine.EventType, this);
-                    if(!this.SR.enabled)
-                    {
-                        this.Discover(true);
-                    }
-                    //this.figure.color = Color.gray;
+
                     break;
             }
 
@@ -211,8 +182,7 @@ namespace ENTITY
         {
             this.plotDefine = DataManager.PlotDefines[7];
             this.plotType = this.plotDefine.Type;
-            //this.figure.text = this.plotDefine.ID.ToString();
-            //this.figure.color = Color.white;
+
 
             if (SpriteManager.plotSprites.ContainsKey(this.plotDefine.Name))
             {
@@ -222,6 +192,8 @@ namespace ENTITY
             this.eventArea= null;
             this.buildingResources[0] = -1;
             this.canEnter = true;
+
+            this.ChangeType(this.plot_Statue);
         }
 
         /// <summary>
@@ -233,10 +205,10 @@ namespace ENTITY
             switch (clashType)
             {
                 case 0:
-                    this.plotDefine = DataManager.PlotDefines[11];
+                    this.plotDefine = DataManager.PlotDefines[12];//人类冲突区
                     break;
                 default:
-                    this.plotDefine = DataManager.PlotDefines[8];
+                    this.plotDefine = DataManager.PlotDefines[8];//机器人冲突区
                     break;
             }
             this.plotType = this.plotDefine.Type;
@@ -256,6 +228,8 @@ namespace ENTITY
                 BuildingManager.Instance.RemoveBuilding(BuildingManager.BuildingTypeToIndex(this.building.type), this.building);
                 this.building = null;
             }
+
+            this.ChangeType(this.plot_Statue);
         }
 
         ///// <summary>
@@ -281,10 +255,19 @@ namespace ENTITY
         /// <summary>
         /// 改变状态遮罩颜色
         /// </summary>
-        void ChangeStatueMaskColor(Color curColor)
+        void ChangeStatueMask(int maskSort)//-1为关闭遮罩，0为可探索，1为可移动
         {
-            Color color=new Color(curColor.r,curColor.g,curColor.b,ParameterConfig.diaphaneity);
-            this.statueMask.color= color;
+            //Color color=new Color(curColor.r,curColor.g,curColor.b,ParameterConfig.diaphaneity);
+            //this.statueMask.color= color;
+            if(maskSort==-1)
+            {
+                this.statueMask.gameObject.SetActive(false);
+            }
+            else
+            {
+                this.statueMask.gameObject.SetActive(true);
+                this.statueMask.sprite = this.maskSprite[maskSort];
+            }
         }
 
         /// <summary>
@@ -304,9 +287,9 @@ namespace ENTITY
                 case Plot_Statue.已探索:
                     ChangeToDiscovered();
                     break;
-                case Plot_Statue.已开发:
-                    ChangeToDeveloped();
-                    break;
+                //case Plot_Statue.已开发:
+                //    ChangeToDeveloped();
+                //    break;
                 default:
                     break;
             }
@@ -318,7 +301,16 @@ namespace ENTITY
         void ChangeToUndiscoverd()
         {
             this.plot_Statue = Plot_Statue.未探明;
-            this.curColor = Color.black;
+            //this.curColor = Color.black;
+            this.statueSort = -1;
+            if(this.plotType==0)
+            {
+                this.Discover(false);
+            }
+            else
+            {
+                this.Discover(true);
+            }
         }
 
         /// <summary>
@@ -327,7 +319,16 @@ namespace ENTITY
         void ChangeToCanDisCover()
         {
             this.plot_Statue = Plot_Statue.可探索;
-            this.curColor = Color.red;
+            //this.curColor = Color.red;
+            this.statueSort = 0;
+            if (this.plotType == 0)
+            {
+                this.Discover(false);
+            }
+            else
+            {
+                this.Discover(true);
+            }
         }
 
         /// <summary>
@@ -337,17 +338,19 @@ namespace ENTITY
         {
             this.plot_Statue = Plot_Statue.已探索;
             this.Discover(true);
-            this.curColor = Color.yellow;
+            //this.curColor = Color.yellow;
+            this.statueSort = -1;
         }
 
-        /// <summary>
-        /// 改变为已开发状态
-        /// </summary>
-        void ChangeToDeveloped()
-        {
-            this.plot_Statue = Plot_Statue.已开发;
-            this.curColor = Color.green;
-        }
+        ///// <summary>
+        ///// 改变为已开发状态
+        ///// </summary>
+        //void ChangeToDeveloped()
+        //{
+        //    this.plot_Statue = Plot_Statue.已开发;
+        //    //this.curColor = Color.green;
+        //    this.statueSort = -1;
+        //}
         #endregion
 
         /// <summary>
@@ -427,24 +430,24 @@ namespace ENTITY
             return amountResult;
         }
 
-        /// <summary>
-        /// 建成或者拆除建筑
-        /// </summary>
-        /// <param name="isbuild"></param>
-        void BuildConstruction(bool isbuild)
-        {
-            if(isbuild)
-            {
-                this.ChangeType(Plot_Statue.已开发);
-            }
-            else
-            {
-                if(this.plot_Statue==Plot_Statue.已开发)
-                {
-                    this.ChangeType(Plot_Statue.已探索);
-                }
-            }
-        }
+        ///// <summary>
+        ///// 建成或者拆除建筑
+        ///// </summary>
+        ///// <param name="isbuild"></param>
+        //void BuildConstruction(bool isbuild)
+        //{
+        //    if(isbuild)
+        //    {
+        //        this.ChangeType(Plot_Statue.已开发);
+        //    }
+        //    else
+        //    {
+        //        if(this.plot_Statue==Plot_Statue.已开发)
+        //        {
+        //            this.ChangeType(Plot_Statue.已探索);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// 探索小队进入或离开
@@ -469,11 +472,11 @@ namespace ENTITY
         {
             if (canMove)
             {
-                this.ChangeStatueMaskColor(this.inMoveScopeColor);
+                this.ChangeStatueMask(1);//可移动状态
             }
             else
             {
-                this.ChangeStatueMaskColor(this.curColor);
+                this.ChangeStatueMask(this.statueSort);
             }
         }
 

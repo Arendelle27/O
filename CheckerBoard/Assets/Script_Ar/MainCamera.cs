@@ -8,20 +8,34 @@ using UnityEngine.EventSystems;
 
 public class MainCamera : MonoBehaviour
 {
-    [SerializeField, LabelText("初始位置"), ReadOnly]
-    public Vector3 initPos;
+    [SerializeField, LabelText("主相机"), ReadOnly]
+    Camera mainCamera;
+
+    [SerializeField, LabelText("相机Id"), Tooltip("标记相机Id")]
+    public int id;
+
+    //[SerializeField, LabelText("初始位置"), ReadOnly]
+    //public Vector3 initPos;
+    [SerializeField, LabelText("相位置和范围"), ReadOnly]
+    public CameraDefine cameraDefine;
 
     [SerializeField, LabelText("相机最大高度"), Tooltip("音乐开关")]
-    public float highMax = 7f;
+    public float fieldOfViewMax = 60f;
+    //public float highMax = 7f;
     [SerializeField, LabelText("相机最小高度"), Tooltip("音乐开关")]
-    public float highMin = 1.5f;
+    public float fieldOfViewMin = 10f;
+    //public float highMin = 1.5f;
     public void Awake()
     {
-        this.initPos = this.transform.position;
+        this.mainCamera = this.GetComponent<Camera>();
     }
 
     void Init()
     {
+        if(cameraDefine==null)
+        {
+            cameraDefine = DataManager.CameraDefines[0];
+        }
         this.StartControl();
     }
 
@@ -30,8 +44,8 @@ public class MainCamera : MonoBehaviour
     /// </summary>
     public  void Restart()
     {
-        this.transform.position = this.initPos;
         this.Init();
+        this.transform.position = new Vector3(cameraDefine.InitPosX, cameraDefine.InitPosY, cameraDefine.InitPosZ);
     }
 
     /// <summary>
@@ -39,14 +53,16 @@ public class MainCamera : MonoBehaviour
     /// </summary>
     public void ReadArchive()
     {
-        this.transform.position =ArchiveManager.archive.CameraPos;
         this.Init();
+        this.transform.position =ArchiveManager.archive.CameraPos;
     }
 
     /// <summary>
     /// 相机控制事件
     /// </summary>
-    IDisposable CameraControl;
+    IDisposable CameraMoveControl;
+    IDisposable CameraZoomControl;
+
     //上一帧位置
     Vector3 posLastSecond = Vector3.zero;
     /// <summary>
@@ -54,12 +70,17 @@ public class MainCamera : MonoBehaviour
     /// </summary>
     public void StartControl()
     {
-
-        CameraControl = Observable
-        .EveryUpdate()
+        CameraMoveControl = Observable
+        .EveryFixedUpdate()
         .Subscribe(_ =>
         {
             this.CameraMove();
+        });
+
+        CameraZoomControl = Observable
+        .EveryUpdate()
+        .Subscribe(_ =>
+        {
             this.CameraZoom();
         });
     }
@@ -69,9 +90,13 @@ public class MainCamera : MonoBehaviour
     /// </summary>
     public void StopControl()
     {
-        if (CameraControl != null)
+        if (CameraMoveControl != null)
         {
-            CameraControl.Dispose();
+            CameraMoveControl.Dispose();
+        }
+        if (CameraZoomControl != null)
+        {
+            CameraZoomControl.Dispose();
         }
     }
 
@@ -88,7 +113,16 @@ public class MainCamera : MonoBehaviour
             Vector3 speed = mousePos - posLastSecond;
             if (speed.magnitude < 90f)
             {
-                this.transform.position -= new Vector3(speed.x, speed.y, 0) * Time.deltaTime;
+                Vector3 pos= this.transform.position - new Vector3(speed.x, speed.y, 0) * Time.fixedDeltaTime;
+                if (pos.x < cameraDefine.ScopeLeft || pos.x > cameraDefine.ScopeRight)
+                {
+                    pos.x = this.transform.position.x;
+                }
+                if(pos.y < cameraDefine.ScopeDown || pos.y > cameraDefine.ScopeUp)
+                {
+                    pos.y = this.transform.position.y;
+                }
+                this.transform.position = pos;
             }
 
             posLastSecond = mousePos;
@@ -105,21 +139,23 @@ public class MainCamera : MonoBehaviour
         {
             return;
         }
-        float f = Mathf.Lerp(50, 200, zoom);
-        Vector3 v3=Vector3.zero;
+        float f = Mathf.Lerp(400, 600, zoom);
+        float fOP = 0f;
         if (zoom>0f)
         {
-            v3 = this.transform.position + transform.forward * -f * Time.deltaTime;
+            //v3 = this.transform.position + transform.forward * -f * Time.deltaTime;
+            fOP=this.mainCamera.fieldOfView+(-f)*Time.deltaTime;
         }
         else if(zoom<0f)
         {
-            v3 = this.transform.position + transform.forward * f * Time.deltaTime;
+            //v3 = this.transform.position + transform.forward * f * Time.deltaTime;
+            fOP = this.mainCamera.fieldOfView + f * Time.deltaTime;
         }
 
-        if (v3.z <= -highMax|| v3.z >= -highMin)
+        if (fOP >= fieldOfViewMax|| fOP <= fieldOfViewMin)
         {
-            v3 = this.transform.position;
+            fOP = this.mainCamera.fieldOfView;
         }
-        this.transform.position = v3;
+        this.mainCamera.fieldOfView = fOP;
     }
 }

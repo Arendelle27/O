@@ -10,14 +10,17 @@ using UniRx;
 
 public class UITransactionWindow : UIWindow
 {
-    [SerializeField, LabelText("交易等级文本"), Tooltip("显示交易等级文本")]
-    public Text transactionLevelText;
+    //[SerializeField, LabelText("交易等级文本"), Tooltip("显示交易等级文本")]
+    //public Text transactionLevelText;
 
     [SerializeField, LabelText("交易列表"), Tooltip("购买和出售列表")]
     public TabView tabView;
 
     [SerializeField, LabelText("减少冷却回合按钮"), Tooltip("放入减少冷却回合按钮")]
     Button reduceCoolingRoundButton;
+
+    [SerializeField, LabelText("重置冷却回合按钮"), Tooltip("放入重置冷却回合按钮")]
+    Button resetRoundButton;
 
     [SerializeField, LabelText("关闭按钮"), Tooltip("放入关闭按钮")]
     Button closeButton;
@@ -32,8 +35,11 @@ public class UITransactionWindow : UIWindow
     {
         tabView.OnTabSelect = this.OnTabSelect;
 
-
-        this.tabView.tabPages[0].onItemSelected += this.OnTransactionItemSelected;
+        for(int i=0;i<tabView.tabPages.Length;i++)
+        {
+            tabView.tabPages[i].onItemSelected += this.OnTransactionItemSelected;
+        }
+        //this.tabView.tabPages[0].onItemSelected += this.OnTransactionItemSelected;
 
         this.reduceCoolingRoundButton.OnClickAsObservable().Subscribe(_ =>
         {
@@ -42,9 +48,37 @@ public class UITransactionWindow : UIWindow
                 Debug.Log("未选中任何商品");
                 return;
             }
-            if (EventAreaManager.Instance.ReduceCoolingRoundBySpend(this.transactionObjectSelected.id))
+
+            UICommodityItem uIcommodityItem = this.transactionObjectSelected as UICommodityItem;
+            if(uIcommodityItem==null)
+            {
+                return;
+            }
+
+            if (EventAreaManager.Instance.ReduceCoolingRoundBySpend(uIcommodityItem.id))
             {
                 this.UpdateBuildingList(0);
+                this.UpdateReduceCoolingRoundBySpendText();
+            }
+        });
+
+        this.resetRoundButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            if (this.transactionObjectSelected == null)
+            {
+                Debug.Log("未选中任何商品");
+                return;
+            }
+
+            UIGoodItem uIGoodItem = this.transactionObjectSelected as UIGoodItem;
+            if (uIGoodItem == null)
+            {
+                return;
+            }
+
+            if (EventAreaManager.Instance.ResetCoolingRoundBySpend(uIGoodItem.id))
+            {
+                this.UpdateBuildingList(1);
                 this.UpdateReduceCoolingRoundBySpendText();
             }
         });
@@ -58,12 +92,11 @@ public class UITransactionWindow : UIWindow
 
     void OnEnable()
     {
-        this.transactionLevelText.text = CapabilityManager.Instance.curLevels[1].ToString();
+        //this.transactionLevelText.text = CapabilityManager.Instance.curLevels[1].ToString();
         for (int i = 0;i<tabView.tabPages.Length;i++)
         {
             this.UpdateBuildingList(i);
         }
-        this.UpdateReduceCoolingRoundBySpendText();
     }
 
     /// <summary>
@@ -117,11 +150,11 @@ public class UITransactionWindow : UIWindow
     {
         if(CapabilityManager.Instance.freelyReduceCoolingRound>0)
         {
-            reduceCoolingRoundBySpendText.text = "减少选中的商品一天的补货时间";
+            reduceCoolingRoundBySpendText.text = "免费";
         }
         else
         {
-            reduceCoolingRoundBySpendText.text = "花费50空间币减少选中的商品一天的补货时间";
+            reduceCoolingRoundBySpendText.text = "50空间币";
         }
     }
 }

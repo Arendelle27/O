@@ -8,10 +8,10 @@ using UnityEngine.EventSystems;
 
 public class UIGoodItem : UITransactionItem
 {
-    public override void OnPointerClick(PointerEventData eventData)
-    {
+    //public override void OnPointerClick(PointerEventData eventData)
+    //{
 
-    }
+    //}
 
 
     public override void SetInfo(TransactionDefine tD)

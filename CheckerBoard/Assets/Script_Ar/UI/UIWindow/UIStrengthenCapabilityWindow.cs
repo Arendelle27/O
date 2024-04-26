@@ -2,6 +2,7 @@ using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UILIST;
 using UniRx;
 using UnityEngine;
@@ -86,7 +87,10 @@ public class UIStrengthenCapabilityWindow : UIWindow
     /// <param name="sort"></param>
     public void UpdateStrengthenCapabilityItemInfo(int sort)
     {
-        (this.strengthCapabilityList.items[sort] as UIStrengthenCapabilityItem).SetInfo();
+        if(this.strengthCapabilityList.items.Count>sort)
+        {
+            (this.strengthCapabilityList.items[sort] as UIStrengthenCapabilityItem).SetInfo();
+        }
     }
 
 }

@@ -25,6 +25,9 @@ public class UITransactionAmountWindow : UIWindow
     [SerializeField, LabelText("按键"), Tooltip("放入按键")]
     public List<Button> buttons;
     //0为确认，1为取消
+    [SerializeField, LabelText("确认按键文本"), Tooltip("放入确认按键文本")]
+    public Text insureButtonText;
+
     [SerializeField, LabelText("单价"), ReadOnly]
     int singlePrice;
 
@@ -127,8 +130,8 @@ public class UITransactionAmountWindow : UIWindow
 
         if (isPurchase)
         {
-            this.purchaseOrSellText.text = "购买数量：";
-            this.spendOrEarnText.text = "花费：";
+            this.purchaseOrSellText.text = "购买数量";
+            this.spendOrEarnText.text = "花费";
             this.singlePrice = CapabilityManager.Instance.TransactionPrice(DataManager.TransactionDefines[settleSort][transactionObjecId], true);
 
             int maxAmount = ResourcesManager.Instance.wealth/ this.singlePrice;
@@ -137,11 +140,13 @@ public class UITransactionAmountWindow : UIWindow
                 maxAmount = EventAreaManager.Instance.purchaseObjectsStatue[settleSort][transactionObjecId][0];
             }
             this.amountSlider.maxValue = maxAmount;
+
+            this.insureButtonText.text = "确认购买";
         }
         else
         {
-            this.purchaseOrSellText.text = "出售数量：";
-            this.spendOrEarnText.text = "赚取：";
+            this.purchaseOrSellText.text = "出售数量";
+            this.spendOrEarnText.text = "赚取";
             this.singlePrice = CapabilityManager.Instance.TransactionPrice(DataManager.TransactionDefines[settleSort][transactionObjecId], false);
 
             int maxAmount = ResourcesManager.Instance.buildingResources[DataManager.TransactionDefines[settleSort][transactionObjecId].Subtype];
@@ -149,8 +154,9 @@ public class UITransactionAmountWindow : UIWindow
             {
                 maxAmount = EventAreaManager.Instance.sellObjectsStatue[settleSort][transactionObjecId];
             }
-
             this.amountSlider.maxValue = maxAmount;
+
+            this.insureButtonText.text = "确认出售";
         }
 
         this.amount = 0;

@@ -5,6 +5,7 @@ using UnityEngine;
 using UniRx;
 using Sirenix.OdinInspector;
 using System.Linq;
+using DG.Tweening;
 
 namespace MANAGER
 {
@@ -76,7 +77,6 @@ namespace MANAGER
 
             if (this.wanderer != null)
             {
-                this.GetWanderer(PlotManager.Instance.plots[new Vector2Int(0, 0)]);
                 this.wanderer.gameObject.SetActive(false);
             }
         }
@@ -99,7 +99,7 @@ namespace MANAGER
             {
                 this.wanderer.gameObject.SetActive(true);
             }
-
+            //this.wanderer.transform.position = plot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
             MainThreadDispatcher.StartUpdateMicroCoroutine( this.WandererMoveTo(plot));
         }
 
@@ -131,7 +131,8 @@ namespace MANAGER
             GameObjectPool.Instance.ExploratoryTeams.Release(this.exploratoryTeams[pos].gameObject);
             this.exploratoryTeams.Remove(pos);
 
-            PlotManager.Instance.AddOrRemoveExpTeamPlot(pos,false);
+            Vector2Int v2=pos+this.wanderer.plot.pos;
+            PlotManager.Instance.AddOrRemoveExpTeamPlot(v2, false);
         }
 
         /// <summary>
@@ -147,25 +148,18 @@ namespace MANAGER
             }
 
             yield return null;
+            Tweener tw = this.wanderer.transform.DOMove(amiPlot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh), 0.5f);
+            tw.OnComplete(() =>
+            {
+                this.wanderer.plot = amiPlot;
 
-            this.wanderer.transform.position = amiPlot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
-            this.wanderer.plot = amiPlot;
+                PlotManager.Instance.WanderEnter(amiPlot);
+                PlotManager.Instance.EnterMoveWanderer(false);
+            });
 
-            PlotManager.Instance.WanderEnter(amiPlot);
-            //MessageManager.Instance.AddMessage(Message_Type.流浪者, string.Format("流浪者移动到({0},{1})", amiPlot.pos.x, amiPlot.pos.y));
-            //消耗行动点
+
         }
 
-        ///// <summary>
-        ///// 目的提示牌移动到指定的板块
-        ///// </summary>
-        ///// <param name="des"></param>
-        //public void DestinationSignMoveTo( Plot des)
-        //{
-        //    this.destinationSign.plot = des;
-        //    this.destinationSign.transform.position = des.transform.position-new Vector3(0,0,0.1f);
-        //    this.destinationSign.gameObject.SetActive(true);
-        //}
 
         /// <summary>
         /// 拓展探索小队
@@ -209,8 +203,11 @@ namespace MANAGER
         {
             foreach (var expTeam in this.exploratoryTeams.Keys)
             {
-                Plot aimPlot = PlotManager.Instance.plots[this.wanderer.plot.pos + expTeam];
-                aimPlot.TeamExp();
+                Vector2Int pos = this.wanderer.plot.pos + expTeam;
+                if (PlotManager.Instance.plots.ContainsKey(pos))
+                {
+                    PlotManager.Instance.plots[pos].TeamExp();
+                }
             }
         }
     }

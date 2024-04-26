@@ -13,9 +13,9 @@ public class UIScoreWindow : UIWindow
     [SerializeField, LabelText("存活天数"), Tooltip("重新开始游戏")]
     public Text roundnumber;
 
-
+    [SerializeField, LabelText("重新开始游戏"), Tooltip("重新开始游戏按键")]
     public Button RestartButton;
-
+    [SerializeField, LabelText("退出游戏"), Tooltip("退出游戏按键")]
     public Button ExitButton;
 
     private void Start()

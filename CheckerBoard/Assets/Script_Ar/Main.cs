@@ -115,7 +115,6 @@ public class Main : MonoSingleton<Main>
     public IEnumerator GameOver()
     {
         this.mainCamera?.StopControl();
-        UIMain.Instance.ChangeToGamePanel(4);
         UIManager.Instance.Show<UIScoreWindow>();
 
         BuildingManager.Instance.GameOver();
@@ -134,5 +133,6 @@ public class Main : MonoSingleton<Main>
         yield return null;
         QuestManager.Instance.GameOver();
 
+        UIMain.Instance.ChangeToGamePanel(4);
     }
 }

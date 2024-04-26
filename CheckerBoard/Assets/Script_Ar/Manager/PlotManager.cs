@@ -12,7 +12,8 @@ using UnityEngine.EventSystems;
 using Managers;
 using UIBUILDING;
 using System.Linq;
-
+using static UnityEditor.PlayerSettings;
+using DG.Tweening;
 
 namespace MANAGER
 {
@@ -352,7 +353,7 @@ namespace MANAGER
 
             Plot plot = gO.GetComponent<Plot>();
             plot.pos = pos;
-            plot.Discover(false);//关闭贴图
+            //plot.Discover(false);//关闭贴图
 
             this.plots.Add(pos, plot);
 
@@ -442,6 +443,10 @@ namespace MANAGER
                                         if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == pD.ID)//板块存在并且是对应类型
                                         {
                                             this.plots[pos].canEnter = true;
+                                            if (plots[pos].plotDefine.Name== "地下室（未解锁)")//如果是地下室
+                                            {
+                                                plots[pos].SR.sprite = SpriteManager.plotSprites["地下室（解锁)"];
+                                            }
                                         }
                                     }
                                 }
@@ -739,34 +744,6 @@ namespace MANAGER
         }
 
         #region 是否移动板块中的流浪者相关方法
-        ///// <summary>
-        ///// 是否移动格子中的流浪者
-        ///// </summary>
-        ///// <param name="p"></param>
-        //void IsMoveWanaderer(Plot ini)
-        //{
-        //    Debug.Log("有流浪者");
-        //    this.select = Observable
-        //        .EveryUpdate()
-        //        .Where(_ => Input.GetMouseButtonDown(1))
-        //        .First()
-        //        .Subscribe(_ =>
-        //        {
-        //            if(this.map_Mode==Map_Mode.正常)
-        //            {
-        //                Debug.Log("选择移动点");
-
-        //                this.map_Mode = Map_Mode.选择目的地位置;
-        //                //this.ini = ini;
-
-        //                this.CancelMoveWanderer();
-
-        //                UIMain.Instance.ChangeToGamePanel(1);//选择落点时关闭UI界面
-        //            }
-
-        //            this.select.Dispose();
-        //        });
-        //}
 
         public void IsMoveWanderer()
         {
@@ -864,59 +841,18 @@ namespace MANAGER
                 MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("消耗{0}行动力，移动到（{1}，{2}）", this.moveExecutionCost, this.moveAimPlot.pos.x, this.moveAimPlot.pos.y));
 
             }
-            this.EnterMoveWanderer(false);
+            else
+            {
+                this.EnterMoveWanderer(false);
+            }
 
             WandererManager.Instance.destinationSign.Hide();
 
             this.moveAimPlot = null;
             return true;
-            //foreach (var plot in this.canMovePlots)
-            //{
-            //    plot.CanMoveIn(false);
-            //}
-
-            //this.canMovePlots.Clear();
-
-
-            //if (this.cancel != null)
-            //{
-            //    this.cancel.Dispose();
-            //}
-
-            //if (!ResourcesManager.Instance.CanMove(1))//判断是否有行动点
-            //{
-            //    Debug.Log("行动点不足");
-            //    return;
-            //}
-
-            //if (!des.canEnter)//判断是否有行动点
-            //{
-            //    Debug.Log("目的地暂时进不去");
-            //    return;
-            //}
-
-            //MainThreadDispatcher.StartUpdateMicroCoroutine(WandererManager.Instance.WandererMoveTo(des));//将流浪者移动到指定的板块
         }
 
 
-        ///// <summary>
-        ///// 是否取消移动流浪者
-        ///// </summary>
-        //void CancelMoveWanderer()
-        //{
-        //    cancel = Observable
-        //        .EveryUpdate()
-        //        .Where(_ => Input.GetMouseButtonDown(1))
-        //        .First()
-        //        .Subscribe(_ =>
-        //        {
-        //            this.map_Mode = Map_Mode.正常;
-
-        //            UIMain.Instance.ChangeToGamePanel(1);//取消选择落点后打开UI界面
-
-        //            cancel.Dispose();
-        //        });
-        //}
         #endregion
 
         /// <summary>
@@ -975,7 +911,7 @@ namespace MANAGER
         /// </summary>
         /// <param name="v2"></param>
         /// <param name="isEnter"></param>
-        public void AddOrRemoveExpTeamPlot(Vector2Int v2,bool isEnter = true)
+        public void AddOrRemoveExpTeamPlot(Vector2Int v2,bool isEnter)
         {
 
                 this.plots[v2].HaveExploratoryTeam = isEnter;
@@ -1030,7 +966,7 @@ namespace MANAGER
         /// 进入和退出移动流浪者模式
         /// </summary>
         /// <param name="isEnter"></param>
-        void EnterMoveWanderer(bool isEnter)
+        public void EnterMoveWanderer(bool isEnter)
         {
             if(isEnter)
             {
