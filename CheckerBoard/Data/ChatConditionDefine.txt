@@ -1,0 +1,59 @@
+{
+  "1011": {
+    "Id": 1011,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 1
+  },
+  "11": {
+    "Id": 11,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 2
+  },
+  "2011": {
+    "Id": 2011,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 3
+  },
+  "2012": {
+    "Id": 2012,
+    "Type": 2,
+    "ChatCondition": 3,
+    "ChatConditionValue": 201,
+    "NPC": "零"
+  },
+  "1012": {
+    "Id": 1012,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 101
+  },
+  "12": {
+    "Id": 12,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 6
+  },
+  "13": {
+    "Id": 13,
+    "Type": 1,
+    "ChatCondition": 2,
+    "ChatConditionValue": 5
+  },
+  "4011": {
+    "Id": 4011,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 13,
+    "NPC": "Q"
+  },
+  "4022": {
+    "Id": 4022,
+    "Type": 2,
+    "ChatCondition": 3,
+    "ChatConditionValue": 402,
+    "NPC": "Q"
+  }
+}

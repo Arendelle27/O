@@ -42,6 +42,8 @@ namespace ENTITY
         public Building building;
         [SerializeField, LabelText("事件地区"), ReadOnly]
         public EventArea eventArea;
+        [SerializeField, LabelText("板块上的npc"), ReadOnly]
+        public List<Npc> npcs=new List<Npc>();
 
         [SerializeField, LabelText("是否有探索小队"), ReadOnly]
         private bool haveExploratoryTeam;//是否有探索小队
@@ -391,6 +393,9 @@ namespace ENTITY
                         ResourcesManager.Instance.ChangeBuildingResources(res, true);
 
                     }
+
+                    NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
+                    ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
                     this.isFirstExplored = false;
                 }
 
@@ -399,13 +404,6 @@ namespace ENTITY
                 //触发角色进入事件
                 this.eventArea?.WandererEnter();
             }
-            //else
-            //{
-            //    if(this.plot_Type==Plot_Type.已探索)
-            //    {
-            //        this.ChangeType(Plot_Type.未探明);
-            //    }
-            //}
         }
 
         /// <summary>

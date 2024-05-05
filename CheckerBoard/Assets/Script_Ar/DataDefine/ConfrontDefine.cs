@@ -33,4 +33,5 @@
     public int EscapeRate { get; set; }
     public int EscapeAddHostility { get; set; }
     public string EscapeAddHostilityDescription { get; set; }
+    public string Description { get; set; }
 }

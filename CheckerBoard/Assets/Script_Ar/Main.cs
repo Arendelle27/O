@@ -61,21 +61,28 @@ public class Main : MonoSingleton<Main>
         yield return null;
         BuildingManager.Instance.Restart();
         yield return null;
+        ChatManager.Instance.Restart();
+        yield return null;
+        NpcManager.Instance.Restart();
+        yield return null;
         WandererManager.Instance.Restart();
+        yield return null;
+        QuestManager.Instance.Restart();
         yield return null;
         MessageManager.Instance.ReStart();
         yield return null;
 
-        MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
+        //MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
 
-        if ((UIMain.Instance.uiPanels[0] as UIStartPanel).isNovicGuideToggle.isOn)//判断是否进行新手教程
-        {
-            ChatManager.Instance.CurChatId = 0;
-        }
-        else
-        {
-            QuestManager.Instance.GetQuest(-1);//接受第一个任务
-        }
+
+        //if ((UIMain.Instance.uiPanels[0] as UIStartPanel).isNovicGuideToggle.isOn)//判断是否进行新手教程
+        //{
+        //    ChatManager.Instance.CurChatId = 0;
+        //}
+        //else
+        //{
+        //    QuestManager.Instance.GetQuest(-1);//接受第一个任务
+        //}
 
     }
 
@@ -101,7 +108,11 @@ public class Main : MonoSingleton<Main>
         yield return null;
         EventManager.Instance.ReadArchive();
         yield return null;
+        NpcManager.Instance.ReadArchive();
+        yield return null;
         WandererManager.Instance.ReadArchive();
+        yield return null;
+        ChatManager.Instance.ReadArchive();
         yield return null;
         QuestManager.Instance.ReadArchive();
         yield return null;
@@ -132,7 +143,10 @@ public class Main : MonoSingleton<Main>
         MessageManager.Instance.GameOver();
         yield return null;
         QuestManager.Instance.GameOver();
-
+        yield return null;
+        NpcManager.Instance.GameOver();
+        yield return null;
+        ChatManager.Instance.GameOver();
         UIMain.Instance.ChangeToGamePanel(4);
     }
 }

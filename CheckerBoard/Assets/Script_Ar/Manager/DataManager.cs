@@ -30,7 +30,11 @@ public static class DataManager
 
     public static Dictionary<int, NoviceGuideDefine> NoviceGuideDefines;
 
+    public static Dictionary<int, NPCDefine> NPCDefines;
+
     public static Dictionary<int,Dictionary<int, ChatDefine>> ChatDefines;
+
+    public static Dictionary<int, ChatConditionDefine> ChatConditionDefines;
 
     public static Dictionary<int,QuestDefine> QuestDefines;
 
@@ -122,13 +126,23 @@ public static class DataManager
         NoviceGuideDefines = JsonConvert.DeserializeObject<Dictionary<int, NoviceGuideDefine>>(json);
         yield return null;
 
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("NPCDefine.txt"));
+        NPCDefines = JsonConvert.DeserializeObject<Dictionary<int, NPCDefine>>(json);
+        yield return null;
+
         json = File.ReadAllText(PathConfig.GetDataTxtPath("ChatDefine.txt"));
         ChatDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, ChatDefine>>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("ChatConditionDefine.txt"));
+        ChatConditionDefines = JsonConvert.DeserializeObject<Dictionary<int, ChatConditionDefine>>(json);
         yield return null;
 
         json = File.ReadAllText(PathConfig.GetDataTxtPath("QuestDefine.txt"));
         QuestDefines = JsonConvert.DeserializeObject<Dictionary<int, QuestDefine>>(json);
         yield return null;
+
+
 
         json = File.ReadAllText(PathConfig.GetDataTxtPath("CameraDefine.txt"));
         CameraDefines = JsonConvert.DeserializeObject<Dictionary<int, CameraDefine>>(json);

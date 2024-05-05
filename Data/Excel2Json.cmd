@@ -12,4 +12,6 @@ json-excel\json-excel json Tables\ Data\
 
 @copy Data\ChatDefine.txt ..\CheckerBoard\Data\
 @copy Data\QuestDefine.txt ..\CheckerBoard\Data\
+@copy Data\ChatConditionDefine.txt ..\CheckerBoard\Data\
+@copy Data\NPCDefine.txt ..\CheckerBoard\Data\
 pause

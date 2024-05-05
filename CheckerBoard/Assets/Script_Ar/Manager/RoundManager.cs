@@ -74,17 +74,22 @@ namespace MANAGER
             BuildingManager.Instance.RoundOver();//建筑结束回合
 
             ResourcesManager.Instance.RoundOver(this.roundNumber);//资源结束回合
+
+            NpcManager.Instance.RoundOver(this.roundNumber);//npc结束回合
             /*结算前*/
             //this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
 
+            QuestManager.Instance.QuestEndByRound(this.roundNumber);//阶段决策
 
             /*回合结束*/
             this.roundNumber++;//回合数加1
 
-            QuestManager.Instance.QuestEndByRound(this.roundNumber);//阶段决策
+            ChatManager.Instance.RoundStart(this.roundNumber);//聊天开始回合
 
             /*回合开始*/
             MessageManager.Instance.RoundOver();//刷新信息
+
+            NpcManager.Instance.RoundStart(this.roundNumber);//npc开始回合
 
             EventAreaManager.Instance.RoundOver();//事件地区结束回合
 

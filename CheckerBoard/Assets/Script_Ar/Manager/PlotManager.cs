@@ -2,18 +2,11 @@ using ENTITY;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.Tilemaps;
 using UniRx;
 using System;
-using UnityEngine.EventSystems;
-using Managers;
-using UIBUILDING;
 using System.Linq;
-using static UnityEditor.PlayerSettings;
-using DG.Tweening;
 
 namespace MANAGER
 {
@@ -121,15 +114,6 @@ namespace MANAGER
 
         void Start()
         {
-            //this.ObserveEveryValueChanged(_ => this.plotType[0].Count).Subscribe(_ =>
-            //{
-            //    this.UpdateWeightTotalsAndDespeicalType();
-            //});
-
-            //this.ObserveEveryValueChanged(_ => this.plotType[1].Count).Subscribe(_ =>
-            //{
-            //    this.UpdateWeightTotalsAndDespeicalType();
-            //});
 
             this.ObserveEveryValueChanged(_ => this.haveExploredPlots.Count).Subscribe(_ =>
             {
@@ -329,7 +313,7 @@ namespace MANAGER
             Plot plot = this.GetGrid(pos);
             if(pos==new Vector2Int(0,0))
             {
-                plot.SetInfo(DataManager.PlotDefines[5]);
+                plot.SetInfo(DataManager.PlotDefines[6]);
             }
             else
             {
@@ -586,6 +570,25 @@ namespace MANAGER
             return null;
         }
 
+        /// <summary>
+        /// Npc进入或离开板块
+        /// </summary>
+        /// <param name="isAppear"></param>
+        /// <param name="pos"></param>
+        /// <param name="npc"></param>
+        public Plot NPCAppear(Vector2Int pos)
+        {
+            Plot plot = null;
+            if(this.plots.ContainsKey(pos))
+            {
+                plot = this.plots[pos];
+            }
+            else
+            {
+                plot=this.GetPlotAndDefine(pos);
+            }
+            return plot;
+        }
 
         /// <summary>
         /// 重新生成非未探索板块定义

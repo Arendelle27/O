@@ -9,8 +9,8 @@ public class UIQuestPanel : MonoBehaviour
 {
     [SerializeField, LabelText("主线UI"), ReadOnly]
     public UIQuest uIQuestMain;
-    [SerializeField, LabelText("支线UI"), ReadOnly]
-    public Dictionary<int,UIQuest> uiQuestSecond=new Dictionary<int, UIQuest>();
+    //[SerializeField, LabelText("支线UI"), ReadOnly]
+    //public Dictionary<int,UIQuest> uiQuestSecond=new Dictionary<int, UIQuest>();
 
     /// <summary>
     /// 更新任务UI
@@ -18,15 +18,15 @@ public class UIQuestPanel : MonoBehaviour
     public void UpdateAllUIQuest()
     {
         this.RemoveAllUIQuest();
-        if(DataManager.QuestDefines.ContainsKey(QuestManager.Instance.curMainQUestId))
+        if (DataManager.QuestDefines.ContainsKey(QuestManager.Instance.curMainQuestId))
         {
-            this.SetQuestMain(DataManager.QuestDefines[QuestManager.Instance.curMainQUestId]);//主线任务
+            this.SetQuestMain(DataManager.QuestDefines[QuestManager.Instance.curMainQuestId]);//主线任务
         }
 
-        foreach (var item in QuestManager.Instance.curSecondQuestIds)
-        {
-            SetQuestSecond(DataManager.QuestDefines[item]);
-        }
+        //foreach (var item in QuestManager.Instance.curSecondQuestIds)
+        //{
+        //    SetQuestSecond(DataManager.QuestDefines[item]);
+        //}
     }
 
     public void SetQuestMain(QuestDefine questDefine)
@@ -39,19 +39,19 @@ public class UIQuestPanel : MonoBehaviour
         this.uIQuestMain = uiQuest;
     }
 
-    public void SetQuestSecond(QuestDefine questDefine)
-    {
-        if(this.uiQuestSecond.ContainsKey(questDefine.Id))
-        {
-            this.uiQuestSecond[questDefine.Id].SetInfo(questDefine);
-            return;
-        }
-        //GameObject go = GameObjectPool.Instance.UIQuestItems.Get();
-        //go.transform.SetParent(UIMain.Instance.uIQuestPanel.transform);
-        //UIQuest uiQuest = go.GetComponent<UIQuest>();
-        //uiQuest.SetInfo(questDefine);
-        //uiQuestSecond.Add(uiQuest);
-    }
+    //public void SetQuestSecond(QuestDefine questDefine)
+    //{
+    //    if(this.uiQuestSecond.ContainsKey(questDefine.Id))
+    //    {
+    //        this.uiQuestSecond[questDefine.Id].SetInfo(questDefine);
+    //        return;
+    //    }
+    //    //GameObject go = GameObjectPool.Instance.UIQuestItems.Get();
+    //    //go.transform.SetParent(UIMain.Instance.uIQuestPanel.transform);
+    //    //UIQuest uiQuest = go.GetComponent<UIQuest>();
+    //    //uiQuest.SetInfo(questDefine);
+    //    //uiQuestSecond.Add(uiQuest);
+    //}
 
     /// <summary>
     /// 移除所有任务UI
@@ -63,10 +63,10 @@ public class UIQuestPanel : MonoBehaviour
             GameObjectPool.Instance.UIQuestItems.Release(uIQuestMain.gameObject);
             this.uIQuestMain = null;
         }
-        foreach (var item in this.uiQuestSecond)
-        {
-            GameObjectPool.Instance.UIQuestItems.Release(item.Value.gameObject);
-        }
-        this.uiQuestSecond.Clear();
+        //foreach (var item in this.uiQuestSecond)
+        //{
+        //    GameObjectPool.Instance.UIQuestItems.Release(item.Value.gameObject);
+        //}
+        //this.uiQuestSecond.Clear();
     }
 }

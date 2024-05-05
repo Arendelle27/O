@@ -17,6 +17,8 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
     //探索小队对象
     public ObjectPool<GameObject> ExploratoryTeams { get; set; }
 
+    public ObjectPool<GameObject> NPCs { get; set; }
+
     //采集建筑对象池
     public ObjectPool<GameObject> GatheringBuildings { get; set; }
 
@@ -51,9 +53,8 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
 
         this.DestinationSign = Instantiate(Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign")));
         this.DestinationSign.SetActive(false);
-        //this.DestinationSigns = Resources.Load<GameObject>(PathConfig.GetEntityPrefabPath("DestinationSign"));
-        this.ExploratoryTeams = new ObjectPool<GameObject>(GetExploratoryTeam, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
-        //this.RobotSettlements = new ObjectPool<GameObject>(GetObject_RobotSettlement, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
+        this.ExploratoryTeams = new ObjectPool<GameObject>(GetObject_ExploratoryTeam, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 5, 10);
+        this.NPCs = new ObjectPool<GameObject>(GetOBject_NPC, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 6, 10);
 
         this.UIBuildingItems = new ObjectPool<GameObject>(GetObject_UIBuildingItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 10, 20);
         this.UICommodityItems = new ObjectPool<GameObject>(GetObject_UICommodityItem, ActionOnGet, ActionOnReturn, ActionOnDestory, true, 3, 5);
@@ -105,9 +106,14 @@ public class GameObjectPool :MonoSingleton<GameObjectPool>
         return this.GetEntityObject("Plot");
     }
 
-    GameObject GetExploratoryTeam()
+    GameObject GetObject_ExploratoryTeam()
     {
         return this.GetEntityObject("ExploratoryTeam");
+    }
+
+    GameObject GetOBject_NPC()
+    {
+        return this.GetEntityObject("NPC");
     }
 
     /// <summary>

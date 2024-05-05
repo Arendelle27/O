@@ -41,7 +41,7 @@ public class UIQuest : MonoBehaviour
     /// </summary>
     public void SetInfo(QuestDefine questDefine)
     {
-        if(questDefine.Type)
+        if(questDefine.IsMain)
         {
             this.questType.text = "主";
         }
@@ -60,10 +60,10 @@ public class UIQuest : MonoBehaviour
         {
             questContents[1] = string.Format("赚钱{0}空间币", questDefine.CurrencyCondition);
         }
-        if(questDefine.NpcCondition!=NpcCondition_Type.无)
-        {
-            questContents[2] = string.Format("交给{0}", questDefine.NpcCondition);
-        }
+        //if(questDefine.AimNpc != Npc_Name.无)
+        //{
+        //    questContents[2] = string.Format("交给{0}", questDefine.NpcCondition);
+        //}
 
         this.questContent.text = string.Format("{0}{1}{2}", questContents[0], questContents[1], questContents[2]);
 

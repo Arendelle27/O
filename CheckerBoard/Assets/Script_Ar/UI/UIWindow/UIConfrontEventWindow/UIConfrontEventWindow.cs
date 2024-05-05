@@ -49,6 +49,7 @@ public class UIConfrontEventWindow : UIWindow
     public void SetInfo()
     {
         this.confrontLevelText.text = EventManager.Instance.curConfrontEvent.Level.ToString();
+        this.confrontDescribeText.text = EventManager.Instance.curConfrontEvent.Description;
     }
 
     /// <summary>

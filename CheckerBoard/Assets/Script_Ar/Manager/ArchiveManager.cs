@@ -23,6 +23,8 @@ public static class ArchiveManager
         public ResourcesManagerData resourcesManagerData;
         public RoundManagerData roundManagerData;
         public QuestManagerData questManagerData;
+        public NpcManagerData npcManagerData;
+        public ChatManagerData chatManagerData;
         public Vector3 CameraPos;
     }
 
@@ -209,6 +211,67 @@ public static class ArchiveManager
     {
         public List<int> questIds = new List<int>();//存在主线时,0为主线任务,后续为支线任务
         public List<int> questsRound = new List<int>();//存在主线时,0为主线任务,后续为支线任务
+
+        public List<int> questConditions = new List<int>();
+    }
+
+    [Serializable]
+    public class NpcManagerData
+    {
+        [Serializable]
+        public class NpcData
+        {
+            public Npc_Name npcName;
+            public int npcDefineId;
+            public Vector2Int pos;
+        }
+
+        [Serializable]
+        public class NpcConditionData
+        {
+            public int npcDefineId;
+            public List<bool> conditions=new List<bool>();
+        }
+
+        [Serializable]
+        public class NpcConditionsData
+        {
+            public bool isAppear;
+            public int sort;
+            public List<NpcConditionData> npcConditionData=new List<NpcConditionData>();
+        }
+
+        public List<NpcData> npcsData =new List<NpcData>();
+        public List<NpcConditionsData> npcConditionsData = new List<NpcConditionsData>();
+    }
+
+    [Serializable]
+    public class ChatManagerData
+    {
+        [Serializable]
+        public class ChatConditionsData
+        {
+            public int sort;
+            public List<int> chatConditionData = new List<int>();
+        }
+
+
+        [Serializable]
+        public class ChatConditionNpcData
+        {
+            public int chatDefineId;
+            public bool condition;
+        }
+
+        [Serializable]
+        public class ChatConditionsNpcData
+        {
+            public int sort;
+            public List<ChatConditionNpcData> chatConditionData = new List<ChatConditionNpcData>();
+        }
+
+        public List<ChatConditionsData> chatConditionsData = new List<ChatConditionsData>();
+        public List<ChatConditionsNpcData> chatConditionNpcsData = new List<ChatConditionsNpcData>();
     }
 
     //存档
@@ -419,19 +482,96 @@ public static class ArchiveManager
 
         #endregion
 
-        #region 任务管理器数据
-        QuestManagerData questManagerData= new QuestManagerData();
-        if(QuestManager.Instance.curMainQUestId!=-1)
+        #region Npc管理器数据
+        NpcManagerData npcManagerData = new NpcManagerData();
+        foreach (var npc in NpcManager.Instance.npcs)
         {
-            questManagerData.questIds.Add(QuestManager.Instance.curMainQUestId);
-            questManagerData.questsRound.Add(QuestManager.Instance.curMainQuestRound);
+            npcManagerData.npcsData.Add(new NpcManagerData.NpcData
+            {
+                npcName = npc.Key,
+                npcDefineId = npc.Value.npcDefine.Id,
+                pos = npc.Value.pos
+            });
         }
 
-        foreach (var questId in QuestManager.Instance.curSecondQuestIds)
+        foreach (var npcCondition in NpcManager.Instance.npcAppearConditions)
         {
-            questManagerData.questIds.Add(questId);
-            questManagerData.questsRound.Add(QuestManager.Instance.curSecondQuestsRound[questId]);
+            NpcManagerData.NpcConditionsData npcConditionsData = new NpcManagerData.NpcConditionsData();
+            npcConditionsData.isAppear = true;
+            npcConditionsData.sort = npcCondition.Key;
+            foreach (var condition in npcCondition.Value)
+            {
+                NpcManagerData.NpcConditionData npcConditionData = new NpcManagerData.NpcConditionData();
+                npcConditionData.npcDefineId = condition.Key;
+                npcConditionData.conditions = condition.Value.ToList();
+                npcConditionsData.npcConditionData.Add(npcConditionData);
+            }
+
+            npcManagerData.npcConditionsData.Add(npcConditionsData);
         }
+        foreach (var npcCondition in NpcManager.Instance.npcLeaveConditions)
+        {
+            NpcManagerData.NpcConditionsData npcConditionsData = new NpcManagerData.NpcConditionsData();
+            npcConditionsData.isAppear = false;
+            npcConditionsData.sort = npcCondition.Key;
+            foreach (var condition in npcCondition.Value)
+            {
+                NpcManagerData.NpcConditionData npcConditionData = new NpcManagerData.NpcConditionData();
+                npcConditionData.npcDefineId = condition.Key;
+                npcConditionData.conditions = condition.Value.ToList();
+                npcConditionsData.npcConditionData.Add(npcConditionData);
+            }
+
+            npcManagerData.npcConditionsData.Add(npcConditionsData);
+        }
+        arc.npcManagerData = npcManagerData;
+        #endregion
+
+        #region 聊天管理器数据
+        ChatManagerData chatManagerData = new ChatManagerData();
+        foreach (var chatCondition in ChatManager.Instance.chatConditions)
+        {
+            ChatManagerData.ChatConditionsData chatConditionsData = new ChatManagerData.ChatConditionsData();
+            chatConditionsData.sort = chatCondition.Key;
+            foreach (var condition in chatCondition.Value)
+            {
+                chatConditionsData.chatConditionData.Add(condition);
+            }
+
+            chatManagerData.chatConditionsData.Add(chatConditionsData);
+        }
+
+        foreach (var chatConditionNpc in ChatManager.Instance.chaConditionsNpc)
+        {
+            ChatManagerData.ChatConditionsNpcData chatConditionsData = new ChatManagerData.ChatConditionsNpcData();
+            chatConditionsData.sort = chatConditionNpc.Key;
+            foreach (var condition in chatConditionNpc.Value)
+            {
+                ChatManagerData.ChatConditionNpcData chatConditionData = new ChatManagerData.ChatConditionNpcData();
+                chatConditionData.chatDefineId = condition.Key;
+                chatConditionData.condition = condition.Value;
+                chatConditionsData.chatConditionData.Add(chatConditionData);
+            }
+
+            chatManagerData.chatConditionNpcsData.Add(chatConditionsData);
+        }
+        arc.chatManagerData = chatManagerData;
+        #endregion
+
+        #region 任务管理器数据
+        QuestManagerData questManagerData = new QuestManagerData();
+        if(QuestManager.Instance.curMainQuestId!=-1)
+        {
+            questManagerData.questIds.Add(QuestManager.Instance.curMainQuestId);
+            questManagerData.questsRound.Add(QuestManager.Instance.curMainQuestRound);
+        }
+        questManagerData.questConditions = QuestManager.Instance.questConditions.ToList();
+
+        //foreach (var questId in QuestManager.Instance.curSecondQuestIds)
+        //{
+        //    questManagerData.questIds.Add(questId);
+        //    questManagerData.questsRound.Add(QuestManager.Instance.curSecondQuestsRound[questId]);
+        //}
 
         arc.questManagerData = questManagerData;
         #endregion

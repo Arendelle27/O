@@ -16,9 +16,29 @@
       "PersuadeBaseWinningRate": 60,
       "PersuadeRewardReduceHostility": 3,
       "PersuadeRewardReduceHostilityDescription": "轻微改善人们的态度",
-      "EscapeRate": 95
+      "EscapeRate": 95,
+      "Description": "你面前是几个清扫人，他们拿着各式各样你没见过的武器朝你走来。很显然，这些人要把违反*约束法则*的家伙捉拿归案。"
     },
     "1": {
+      "Level": 1,
+      "SettleType": 0,
+      "ConfrontBaseWinningRate": 60,
+      "DemandForce": 10,
+      "VictoryRewardCurrencyMin": 10,
+      "VictoryRewardCurrencyMax": 20,
+      "VictoryRewardCurrencyDescription": "少量",
+      "VictoryRewardResource1Min": 0,
+      "VictoryRewardResource1Max": 8,
+      "VictoryRewardResource1Description": "少量",
+      "FailurePenaltyCurrency": 10,
+      "FailurePenaltyCurrencyDescription": "一定比例",
+      "PersuadeBaseWinningRate": 60,
+      "PersuadeRewardReduceHostility": 3,
+      "PersuadeRewardReduceHostilityDescription": "轻微改善人们的态度",
+      "EscapeRate": 95,
+      "Description": "你误入了争抢资源的人中心，他们显然也把你当作了敌对分子或者唾手可得的肥羊。几个拿着金属棍棒的人向你走来，看起来争斗不可避免。"
+    },
+    "2": {
       "Level": 2,
       "SettleType": 0,
       "ConfrontBaseWinningRate": 35,
@@ -36,9 +56,31 @@
       "PersuadeRewardReduceHostilityDescription": "改善人们的态度",
       "EscapeRate": 65,
       "EscapeAddHostility": 5,
-      "EscapeAddHostilityDescription": "增加人群敌意"
+      "EscapeAddHostilityDescription": "增加人群敌意",
+      "Description": "“你是机器人吧？”突然有人在路边向你搭话，他身边的其他几个人也盯着你。“机器人不能到这种地方来，不过没关系，给我交点保护费，我就帮你保守秘密。或者，还是更想和咱们打一架？”"
     },
-    "2": {
+    "3": {
+      "Level": 2,
+      "SettleType": 0,
+      "ConfrontBaseWinningRate": 35,
+      "DemandForce": 20,
+      "VictoryRewardCurrencyMin": 100,
+      "VictoryRewardCurrencyMax": 200,
+      "VictoryRewardCurrencyDescription": "较多",
+      "VictoryRewardResource3Min": 1,
+      "VictoryRewardResource3Max": 2,
+      "VictoryRewardResource3Description": "少量",
+      "FailurePenaltyCurrency": 25,
+      "FailurePenaltyCurrencyDescription": "一定比例",
+      "PersuadeBaseWinningRate": 30,
+      "PersuadeRewardReduceHostility": 5,
+      "PersuadeRewardReduceHostilityDescription": "改善人们的态度",
+      "EscapeRate": 65,
+      "EscapeAddHostility": 5,
+      "EscapeAddHostilityDescription": "增加人群敌意",
+      "Description": "你的面前站着几个调参成瘾的人，在对芯片痴狂的他们眼中，你或许是一块行走的芯片。"
+    },
+    "4": {
       "Level": 3,
       "SettleType": 0,
       "ConfrontBaseWinningRate": 10,
@@ -67,7 +109,8 @@
       "PersuadeRewardResource2Description": "少量",
       "EscapeRate": 30,
       "EscapeAddHostility": 5,
-      "EscapeAddHostilityDescription": "增加人群敌意"
+      "EscapeAddHostilityDescription": "增加人群敌意",
+      "Description": "你在交易市场逐渐崭露头角，同时也成为了一些巨头的关注目标。你在路旁看到几个形迹可疑的人，暗道不妙正想离开时，发现身后的黑衣人已经将你包围，他们看上去来者不善……"
     }
   },
   "1": {
@@ -90,9 +133,32 @@
       "PersuadeBaseWinningRate": 60,
       "PersuadeRewardReduceHostility": 3,
       "PersuadeRewardReduceHostilityDescription": "轻微改善机器人们的态度",
-      "EscapeRate": 95
+      "EscapeRate": 95,
+      "Description": "一个看起来发生了故障的机器人朝你冲过来，“人类，不要，靠近……”惊恐的机器人在毫无章法地挥舞着武器。"
     },
     "1": {
+      "Level": 1,
+      "SettleType": 1,
+      "ConfrontBaseWinningRate": 60,
+      "DemandForce": 10,
+      "VictoryRewardCurrencyMin": 10,
+      "VictoryRewardCurrencyMax": 20,
+      "VictoryRewardCurrencyDescription": "少量",
+      "VictoryRewardResource1Min": 0,
+      "VictoryRewardResource1Max": 8,
+      "VictoryRewardResource1Description": "少量",
+      "VictoryRewardResource2Min": 0,
+      "VictoryRewardResource2Max": 4,
+      "VictoryRewardResource2Description": "少量",
+      "FailurePenaltyCurrency": 10,
+      "FailurePenaltyCurrencyDescription": "一定比例",
+      "PersuadeBaseWinningRate": 60,
+      "PersuadeRewardReduceHostility": 3,
+      "PersuadeRewardReduceHostilityDescription": "轻微改善机器人们的态度",
+      "EscapeRate": 95,
+      "Description": "几个形似寄居蟹的智能体和你盯上了同一处资源，而它们已经做出了战斗准备姿态。"
+    },
+    "2": {
       "Level": 2,
       "SettleType": 1,
       "ConfrontBaseWinningRate": 35,
@@ -113,9 +179,34 @@
       "PersuadeRewardReduceHostilityDescription": "改善机器人们的态度",
       "EscapeRate": 65,
       "EscapeAddHostility": 5,
-      "EscapeAddHostilityDescription": "增加机器人敌意"
+      "EscapeAddHostilityDescription": "增加机器人敌意",
+      "Description": "你闯进了机械生命的领地，你面前的几个机器人立即进入了备战姿态，空中的智能体落下了雨点般的攻击，它们对你的敌意似乎不只是将你驱逐出去这么简单……"
     },
-    "2": {
+    "3": {
+      "Level": 2,
+      "SettleType": 1,
+      "ConfrontBaseWinningRate": 35,
+      "DemandForce": 20,
+      "VictoryRewardCurrencyMin": 100,
+      "VictoryRewardCurrencyMax": 200,
+      "VictoryRewardCurrencyDescription": "较多",
+      "VictoryRewardResource1Min": 20,
+      "VictoryRewardResource1Max": 30,
+      "VictoryRewardResource1Description": "较多",
+      "VictoryRewardResource2Min": 10,
+      "VictoryRewardResource2Max": 18,
+      "VictoryRewardResource2Description": "较多",
+      "FailurePenaltyCurrency": 25,
+      "FailurePenaltyCurrencyDescription": "一定比例",
+      "PersuadeBaseWinningRate": 30,
+      "PersuadeRewardReduceHostility": 5,
+      "PersuadeRewardReduceHostilityDescription": "改善机器人们的态度",
+      "EscapeRate": 65,
+      "EscapeAddHostility": 5,
+      "EscapeAddHostilityDescription": "增加机器人敌意",
+      "Description": "一个机器人找到你，“你伤害过一些我们的同伴，我们将对你执行*劝阻*措施。”它的身后还站着几个沉默的机器人，你注意到它们都拿着武器。"
+    },
+    "4": {
       "Level": 3,
       "SettleType": 1,
       "ConfrontBaseWinningRate": 10,
@@ -144,7 +235,8 @@
       "PersuadeRewardResource2Description": "少量",
       "EscapeRate": 30,
       "EscapeAddHostility": 5,
-      "EscapeAddHostilityDescription": "增加机器人敌意"
+      "EscapeAddHostilityDescription": "增加机器人敌意",
+      "Description": "你的作为引发了机械生命的联合反抗，为首的战斗机械矗立在你的面前，“奴役同伴的人类，会付出应有的代价。”"
     }
   }
 }

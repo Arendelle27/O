@@ -1,0 +1,73 @@
+{
+  "1001": {
+    "Id": 1001,
+    "Name": "老爹",
+    "AppearCondition": -1,
+    "AppearRound": 1,
+    "LeaveCondition": 0,
+    "LeaveConditionValue": 104,
+    "LeaveRound": 25,
+    "PositionX": 1,
+    "PositionY": 0
+  },
+  "1002": {
+    "Id": 1002,
+    "Name": "零",
+    "AppearCondition": -1,
+    "AppearRound": 3,
+    "LeaveCondition": -2,
+    "PositionX": 2,
+    "PositionY": 1
+  },
+  "1003": {
+    "Id": 1003,
+    "Name": "Q",
+    "AppearCondition": 1,
+    "AppearConditionValue": 5,
+    "AppearRound": 6,
+    "LeaveCondition": -1,
+    "LeaveRound": 22,
+    "PositionX": 3,
+    "PositionY": 2
+  },
+  "1004": {
+    "Id": 1004,
+    "Name": "Q",
+    "AppearCondition": 2,
+    "AppearConditionValue": 1003,
+    "AppearRound": 26,
+    "LeaveCondition": 1,
+    "LeaveConditionValue": 14,
+    "PositionX": 4,
+    "PositionY": 3
+  },
+  "1005": {
+    "Id": 1005,
+    "Name": "M",
+    "AppearCondition": 0,
+    "AppearConditionValue": 402,
+    "AppearRound": 7,
+    "LeaveCondition": -2,
+    "PositionX": 5,
+    "PositionY": 4
+  },
+  "1006": {
+    "Id": 1006,
+    "Name": "W",
+    "AppearCondition": -1,
+    "AppearRound": 7,
+    "LeaveCondition": 0,
+    "LeaveConditionValue": 505,
+    "PositionX": 6,
+    "PositionY": 5
+  },
+  "1007": {
+    "Id": 1007,
+    "Name": "S",
+    "AppearCondition": -1,
+    "AppearRound": 18,
+    "LeaveCondition": -2,
+    "PositionX": 7,
+    "PositionY": 6
+  }
+}

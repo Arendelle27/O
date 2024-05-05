@@ -129,12 +129,20 @@ public enum HeadPortrait_Type
 {
     老爹,
     O,
+    零,
+    M_黑影,
+    Q,
 
     头像
 }
 
-public enum NpcCondition_Type
+public enum Npc_Name
 {
     无,
-    老爹
+    老爹,
+    零,
+    Q,
+    M,
+    W,
+    S
 }
