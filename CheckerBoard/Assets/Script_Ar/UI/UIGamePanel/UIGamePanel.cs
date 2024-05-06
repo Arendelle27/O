@@ -46,6 +46,8 @@ public class UIGamePanel : UIPanel
 
     [SerializeField, LabelText("信息面板"), Tooltip("信息界面")]
     public UIMessage uiMessage;
+    [SerializeField, LabelText("信息面板标题"), Tooltip("信息标题")]
+    public Transform uiMessageTitle;
 
     [SerializeField, LabelText("任务面板"), Tooltip("放入任务面板")]
     public UIQuestPanel uIQuestPanel;
@@ -94,6 +96,7 @@ public class UIGamePanel : UIPanel
         this.messageToggle.OnPointerClickAsObservable().Subscribe(_ =>
         {
             this.uiMessage.gameObject.SetActive(messageToggle.isOn);
+            this.uiMessageTitle.gameObject.SetActive(messageToggle.isOn);
         });
     }
 }

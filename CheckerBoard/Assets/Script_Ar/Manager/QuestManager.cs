@@ -140,6 +140,11 @@ namespace MANAGER
         public void QuestEndByRound(int round)
         {
             QuestDefine questDefine = DataManager.QuestDefines[this.curMainQuestId];
+            if(questDefine.RoundCondition!=round)
+            {
+                return;
+            }
+
             ResourcesManager.Instance.wealth -= questDefine.CurrencyCondition;
             if (ResourcesManager.Instance.wealth < 0)
             {

@@ -127,6 +127,7 @@ public enum PlayCondition_Type
 
 public enum HeadPortrait_Type
 {
+    ÎÞ,
     ÀÏµù,
     O,
     Áã,
@@ -144,5 +145,7 @@ public enum Npc_Name
     Q,
     M,
     W,
-    S
+    S,
+
+    Npc
 }

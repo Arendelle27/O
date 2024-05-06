@@ -148,7 +148,7 @@ namespace MANAGER
             }
 
             yield return null;
-            Tweener tw = this.wanderer.transform.DOMove(amiPlot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh), 0.5f);
+            Tweener tw = this.wanderer.transform.DOMove(amiPlot.transform.position + new Vector3(0, ParameterConfig.entityForward, ParameterConfig.entityHigh), 0.5f);
             tw.OnComplete(() =>
             {
                 this.wanderer.plot = amiPlot;

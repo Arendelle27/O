@@ -15,6 +15,8 @@ namespace MANAGER
 
         public static Dictionary<HeadPortrait_Type,Sprite> headPortraitSprites =new Dictionary<HeadPortrait_Type, Sprite>();
 
+        public static Dictionary<Npc_Name, Sprite> npcSprites = new Dictionary<Npc_Name, Sprite>();
+
         public static void Load()
         {
             for(int i=0;i<(int)Resource_Type.½¨Öþ×ÊÔ´;i++)
@@ -50,6 +52,15 @@ namespace MANAGER
                 if (sprite != null && !headPortraitSprites.ContainsKey((HeadPortrait_Type)i))
                 {
                     headPortraitSprites.Add((HeadPortrait_Type)i, sprite);
+                }
+            }
+
+            for (int i = 0; i < (int)Npc_Name.Npc; i++)
+            {
+                Sprite sprite = Resources.Load<Sprite>(PathConfig.GetNpcSpritePath(((Npc_Name)i).ToString()));
+                if (sprite != null && !npcSprites.ContainsKey((Npc_Name)i))
+                {
+                    npcSprites.Add((Npc_Name)i, sprite);
                 }
             }
         }

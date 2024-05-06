@@ -8,10 +8,12 @@ using UnityEngine.UI;
 
 public class UIChatWindow : UIWindow
 {
-    [SerializeField, LabelText("头像图片"), Tooltip("放入头像图片")]
+    [SerializeField, LabelText("立绘显示"), Tooltip("放入立绘显示")]
     public Image HeadPortraitImage;
     [SerializeField, LabelText("名称文本"), Tooltip("放入名称文本")]
     public Text NameText;
+    [SerializeField, LabelText("名称文本物体"), Tooltip("放入名称文本物体")]
+    public Transform nameTransform;
     [SerializeField, LabelText("聊天内容文本"), Tooltip("放入聊天内容文本")]
     public Text ChatContentText;
     [SerializeField, LabelText("选项按键列表"), Tooltip("放入选项按键列表")]
@@ -20,8 +22,25 @@ public class UIChatWindow : UIWindow
 
     public void SetInfo(ChatDefine chatDefine)
     {
-        HeadPortraitImage.sprite = SpriteManager.headPortraitSprites[chatDefine.HeadPortrait];
-        NameText.text = chatDefine.Name;
+        if(chatDefine.HeadPortrait == HeadPortrait_Type.无)
+        {
+            HeadPortraitImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            HeadPortraitImage.sprite = SpriteManager.headPortraitSprites[chatDefine.HeadPortrait];
+            HeadPortraitImage.gameObject.SetActive(true);
+        }
+
+        if(chatDefine.Name == null)
+        {
+            nameTransform.gameObject.SetActive(false);
+        }
+        else
+        {
+            NameText.text = chatDefine.Name;
+            nameTransform.gameObject.SetActive(true);
+        }
 
         ChatContentText.text = chatDefine.ChatContent;
 

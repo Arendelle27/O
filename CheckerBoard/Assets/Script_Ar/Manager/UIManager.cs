@@ -39,6 +39,8 @@ namespace MANAGER
             this.UIResources.Add(typeof(UINoviceGuidePanel), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UINoviceGuidePanel"), Cache = true });
 
             this.UIResources.Add(typeof(UIChatWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UIChatWindow"), Cache = true });
+
+            this.UIResources.Add(typeof(UICGWindow), new UIElement() { Resources = PathConfig.GetUIPrefabPath("UICGWindow"), Cache = true });
         }
 
         ~UIManager()

@@ -22,7 +22,7 @@ namespace ENTITY
         public void SetInfo(Plot plot)
         {
             this.pos= plot.pos;
-            Vector3 v2= plot.transform.position + new Vector3(0, 0, ParameterConfig.entityHigh);
+            Vector3 v2= plot.transform.position + new Vector3(0, ParameterConfig.entityForward, ParameterConfig.entityHigh);
             this.transform.position = v2;
 
             this.gameObject.SetActive(true);

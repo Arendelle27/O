@@ -76,7 +76,7 @@ namespace MANAGER
                     this.chaConditionsNpc[item.ChatCondition].Add(item.Id,false);
                 }
             }
-            this.RoundStart(1);
+            //this.RoundStart(1);
         }
 
         public void ReadArchive()

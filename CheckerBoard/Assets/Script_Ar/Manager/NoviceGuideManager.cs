@@ -38,7 +38,11 @@ namespace MANAGER
 
         public void OnStart()
         {
-            if(this.uINoviceGuidePanel == null)
+            if (!(UIMain.Instance.uiPanels[0] as UIStartPanel).isNovicGuideToggle.isOn)//判断是否进行新手教程
+            {
+                return;
+            }
+            if (this.uINoviceGuidePanel == null)
             {
                 this.uINoviceGuidePanel = UIManager.Instance.Show<UINoviceGuidePanel>();
             }
