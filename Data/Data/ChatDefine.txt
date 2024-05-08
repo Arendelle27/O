@@ -15,50 +15,89 @@
     "101103": {
       "Id": 101103,
       "IsOption": 0,
-      "SubAnswerId": 101104,
-      "ChatContent": "这时你看到了一个——陌生的中年男子面孔。那人目不转睛地盯着你，嘴唇微张，似乎有话想说。"
-    },
-    "101104": {
-      "Id": 101104,
-      "HeadPortrait": "老爹",
-      "Name": "陌生人",
+      "SubAnswerId": -1,
+      "ChatContent": "这时你看到了一个——陌生的中年男子面孔。那人目不转睛地盯着你，嘴唇微张，似乎有话想说。",
+      "SubEventType": 4,
+      "SubEventValue": 0
+    }
+  },
+  "10110": {
+    "0": {
+      "Id": 0,
       "IsOption": 0,
-      "SubAnswerId": 101105,
+      "SubAnswerId": 101101,
       "ChatContent": "……"
     },
-    "101105": {
-      "Id": 101105,
+    "101101": {
+      "Id": 101101,
       "HeadPortrait": "老爹",
       "Name": "陌生人",
       "IsOption": 0,
-      "SubAnswerId": 101106,
+      "SubAnswerId": 101102,
       "ChatContent": "…………"
     },
-    "101106": {
-      "Id": 101106,
+    "101102": {
+      "Id": 101102,
       "HeadPortrait": "老爹",
       "Name": "陌生人",
       "IsOption": 1,
       "ChatContent": "（最终还是收回探求的眼神，一言不发地起身准备离开。）",
       "Option1": "请等一下。",
-      "AnswerId1": 101107
+      "AnswerId1": 101103
     },
-    "101107": {
-      "Id": 101107,
+    "101103": {
+      "Id": 101103,
       "HeadPortrait": "O",
       "Name": "O",
       "IsOption": 0,
-      "SubAnswerId": 101108,
+      "SubAnswerId": 101104,
       "ChatContent": "请问发生了什么？这里是哪里？你……是谁？"
     },
-    "101108": {
-      "Id": 101108,
+    "101104": {
+      "Id": 101104,
       "HeadPortrait": "老爹",
       "Name": "陌生人",
       "IsOption": 1,
       "ChatContent": "（锐利的眼神黯淡了一下）*改造*让你都忘了？",
       "Option1": "（点点头）我只记得自己好像叫O。",
-      "AnswerId1": 101109
+      "AnswerId1": 101105
+    },
+    "101105": {
+      "Id": 101105,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 101106,
+      "ChatContent": "（神情严肃起来）我负责看守这里，这里是*垃圾场*。你是我捡来的，孩子们都叫我*老爹*，你也这么叫就行了。"
+    },
+    "101106": {
+      "Id": 101106,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "怎么，有什么问题？",
+      "Option1": "垃圾场？",
+      "AnswerId1": 101107,
+      "Option2": "老爹？",
+      "AnswerId2": 101108,
+      "Option3": "改造？（似乎会结束话题）",
+      "AnswerId3": 101109
+    },
+    "101107": {
+      "Id": 101107,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 101106,
+      "ChatContent": "这地方总是处理一些*见不得光的东西*，你以后会知道的"
+    },
+    "101108": {
+      "Id": 101108,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 101106,
+      "ChatContent": "这年头孤儿很多，我带回来过一些，你也是其中之一。那些孩子会叫我“老爹”。"
     },
     "101109": {
       "Id": 101109,
@@ -66,61 +105,2638 @@
       "Name": "老爹",
       "IsOption": 0,
       "SubAnswerId": 101110,
-      "ChatContent": "（神情严肃起来）我负责看守这里，这里是*垃圾场*。你是我捡来的，孩子们都叫我*老爹*，你也这么叫就行了。"
+      "ChatContent": "（叫做“老爹”的人沉默了一下）"
     },
     "101110": {
       "Id": 101110,
       "HeadPortrait": "老爹",
       "Name": "老爹",
-      "IsOption": 1,
-      "ChatContent": "怎么，有什么问题？",
-      "Option1": "垃圾场？",
-      "AnswerId1": 101111,
-      "Option2": "老爹？",
-      "AnswerId2": 101112,
-      "Option3": "改造？（似乎会结束话题）",
-      "AnswerId3": 101113
+      "IsOption": 0,
+      "SubAnswerId": 101111,
+      "ChatContent": "时间差不多了，如果还能动的话，去干活吧。这里也不欢迎白吃白住的人。"
     },
     "101111": {
       "Id": 101111,
       "HeadPortrait": "老爹",
       "Name": "老爹",
       "IsOption": 0,
-      "SubAnswerId": 101110,
-      "ChatContent": "这地方总是处理一些*见不得光的东西*，你以后会知道的"
+      "SubAnswerId": -1,
+      "ChatContent": "还傻站着？也是，你应该不记得怎么干活了。",
+      "SubEventType": 2
+    }
+  },
+  "1012": {
+    "0": {
+      "Id": 0,
+      "IsOption": 0,
+      "SubAnswerId": 101202,
+      "ChatContent": "到了交生活费的时刻，你穿过长长的铜制走廊去找老爹，绕过比你还高的废弃电缆堆，塑料制成的空间币在口袋里乒乓作响。"
     },
-    "101112": {
-      "Id": 101112,
+    "101202": {
+      "IsOption": 0,
+      "SubAnswerId": 101203,
+      "ChatContent": "你在走廊尽头见到了老爹，他弯着腰不知在敲打什么东西，听到你来了，也没抬起头。"
+    },
+    "101203": {
+      "Id": 101203,
+      "IsOption": 0,
+      "SubAnswerId": 101204,
+      "ChatContent": "你把空间币一枚一枚地摆在他面前的桌面上。"
+    },
+    "101204": {
+      "Id": 101204,
       "HeadPortrait": "老爹",
       "Name": "老爹",
       "IsOption": 0,
-      "SubAnswerId": 101110,
-      "ChatContent": "这年头孤儿很多，我带回来过一些，你也是其中之一。那些孩子会叫我“老爹”。"
+      "SubAnswerId": 101205,
+      "ChatContent": "这就赚到钱了？上手还挺快。"
     },
-    "101113": {
-      "Id": 101113,
+    "101205": {
+      "Id": 101205,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "3天后，你要给我300空间币。",
+      "Option1": "好。",
+      "AnswerId1": 101207,
+      "Option2": "等等，为什么涨价了？",
+      "AnswerId2": 101206
+    },
+    "101206": {
+      "Id": 101206,
       "HeadPortrait": "老爹",
       "Name": "老爹",
       "IsOption": 0,
-      "SubAnswerId": 101114,
-      "ChatContent": "（叫做“老爹”的人沉默了一下）"
+      "SubAnswerId": 101207,
+      "ChatContent": "臭小子，你以为住处这么便宜，你还欠我好多钱呢。"
     },
-    "101114": {
-      "Id": 101114,
+    "101207": {
+      "Id": 101207,
       "HeadPortrait": "老爹",
       "Name": "老爹",
       "IsOption": 0,
-      "SubAnswerId": 101115,
-      "ChatContent": "时间差不多了，如果还能动的话，去干活吧。这里也不欢迎白吃白住的人。"
+      "SubAnswerId": 101208,
+      "ChatContent": "行了，没什么事就走吧。安分一点，别给我惹事。"
     },
-    "101115": {
-      "Id": 101115,
+    "101208": {
+      "Id": 101208,
+      "IsOption": 0,
+      "SubAnswerId": 101209,
+      "ChatContent": "你在离开的路上，无意间听到附近的一段对话。"
+    },
+    "101209": {
+      "Id": 101209,
+      "Name": "陌生人1",
+      "IsOption": 0,
+      "SubAnswerId": 101210,
+      "ChatContent": "……东边有个*聚居地*，大约在东边15公里，北边5，6公里处。可以去那附近看看。"
+    },
+    "101210": {
+      "Id": 101210,
+      "Name": "陌生人2",
+      "IsOption": 0,
+      "SubAnswerId": 101211,
+      "ChatContent": "聚居地是什么？"
+    },
+    "101211": {
+      "Id": 101211,
+      "Name": "陌生人1",
+      "IsOption": 0,
+      "SubAnswerId": 101212,
+      "ChatContent": "现在大部分人还是集群生活，聚居地就是大家生活和交换物资的地方，商人、流浪者、回收工都会聚集在那，不过得警惕，你永远不知道黑暗中有哪双眼睛盯着你。"
+    },
+    "101212": {
+      "Id": 101212,
+      "Name": "陌生人2",
+      "IsOption": 0,
+      "SubAnswerId": 101213,
+      "ChatContent": "我会去看看的。"
+    },
+    "101213": {
+      "Id": 101213,
+      "IsOption": 0,
+      "SubAnswerId": -1,
+      "ChatContent": "聚居地是什么样的地方？也许你也可以去看看。"
+    }
+  },
+  "1022": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102202,
+      "ChatContent": "8天后，你要交2000空间币作为生活费。"
+    },
+    "102202": {
+      "Id": 102202,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102203,
+      "ChatContent": "还有，不要到处乱跑。"
+    },
+    "102203": {
+      "Id": 102203,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102204,
+      "ChatContent": "我在第一天就跟你说，这里很危险，有很多随时可能失控的机器人。"
+    },
+    "102204": {
+      "Id": 102204,
+      "IsOption": 0,
+      "SubAnswerId": 102205,
+      "ChatContent": "你想起零，尽管言语系统损坏，零的行为看起来并不是“失控”。"
+    },
+    "102205": {
+      "Id": 102205,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 102206,
+      "ChatContent": "不是有*机器人约束法则*吗，怎么还会失控？"
+    },
+    "102206": {
+      "Id": 102206,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102207,
+      "ChatContent": "那不一样……"
+    },
+    "102207": {
+      "Id": 102207,
+      "IsOption": 0,
+      "SubAnswerId": 102208,
+      "ChatContent": "老爹的神情有些古怪，他似乎艰难地吞下了后面的话。"
+    },
+    "102208": {
+      "Id": 102208,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102209,
+      "ChatContent": "机器人这种东西毕竟不是人，谁知道它们下一秒会不会短路。"
+    },
+    "102209": {
+      "Id": 102209,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102210,
+      "ChatContent": "我就亲眼见过一个工人，给机器人下语音指令的时候出了错，结果被机器人绊了一跤，掉到炼金炉里面去——要我说，那机器人兴许是故意的。"
+    },
+    "102210": {
+      "Id": 102210,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 102211,
+      "ChatContent": "这种事情发生的多么？"
+    },
+    "102211": {
+      "Id": 102211,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 0,
+      "SubAnswerId": 102212,
+      "ChatContent": "不算多。不过摊上就挺要命。"
+    },
+    "102212": {
+      "Id": 102212,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 102213,
+      "ChatContent": "好吧，那确实很危险，我该去哪里赚这么多钱？"
+    },
+    "102213": {
+      "Id": 102213,
       "HeadPortrait": "老爹",
       "Name": "老爹",
       "IsOption": 0,
       "SubAnswerId": -1,
-      "ChatContent": "还傻站着？也是，你应该不记得怎么干活了。",
-      "SubEventType": 2
+      "ChatContent": "在垃圾场造点*回收设备*，赚不到钱大概是因为你还*不够勤奋*。"
+    }
+  },
+  "1032": {
+    "0": {
+      "Id": 0,
+      "IsOption": 1,
+      "SubAnswerId": 103202,
+      "ChatContent": "这一次是老爹先找到你，你的小屋门口响起了敲门声。",
+      "Option1": "什么事？",
+      "AnswerId1": 103203,
+      "Option2": "（保持沉默）",
+      "AnswerId2": 103203
+    },
+    "103202": {
+      "Id": 103202,
+      "SubAnswerId": 103203,
+      "ChatContent": "你思索着怎么应对老爹的到来，你新改装的门闫应该还算牢靠，自从上次的房间事件之后，你的警戒明显提高了许多。"
+    },
+    "103203": {
+      "Id": 103203,
+      "SubAnswerId": 103204,
+      "ChatContent": "门那边的声音也短暂地沉寂了一下。"
+    },
+    "103204": {
+      "Id": 103204,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103205,
+      "ChatContent": "是我，老爹，今天是你该交钱的日子。"
+    },
+    "103205": {
+      "Id": 103205,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103206,
+      "ChatContent": "孩子……能不能先让我进来？"
+    },
+    "103206": {
+      "Id": 103206,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103207,
+      "ChatContent": "好吧，我知道我们可能有点误会，我在外面说也行。"
+    },
+    "103207": {
+      "Id": 103207,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103208,
+      "ChatContent": "之前的事，是我让外面的人来做检查，因为你的失忆不太对劲，不过他们也没能查出来什么结果。"
+    },
+    "103208": {
+      "Id": 103208,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "SubAnswerId": 103209,
+      "ChatContent": "我想你也看到最近那个，机器人控诉人类的新闻了。我想问你，你对机器人有什么看法？",
+      "Option1": "是工具",
+      "AnswerId1": 103209,
+      "Option2": "是朋友",
+      "AnswerId2": 103210,
+      "Option3": "我为什么要回答？",
+      "AnswerId3": 103212
+    },
+    "103209": {
+      "Id": 103209,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103213,
+      "ChatContent": "是啊，我也这么认为，手上的工具会说话，你不觉得这很奇怪吗？"
+    },
+    "103210": {
+      "Id": 103210,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103211,
+      "ChatContent": "这是违背规矩的事。"
+    },
+    "103211": {
+      "Id": 103211,
+      "SubAnswerId": 103213,
+      "ChatContent": "老爹深深地叹了口气。"
+    },
+    "103212": {
+      "Id": 103212,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103220,
+      "ChatContent": "老爹沉默了一会。“你——算了。”"
+    },
+    "103213": {
+      "Id": 103213,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "你觉得机器人这玩意……到底会不会拥有，人类的感情？",
+      "Option1": "有可能",
+      "AnswerId1": 103214,
+      "Option2": "不会",
+      "AnswerId2": 103215,
+      "Option3": "不知道",
+      "AnswerId3": 103216
+    },
+    "103214": {
+      "Id": 103214,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103217,
+      "ChatContent": "是吗……它们也能感受到人类的爱和痛苦吗？不，我还是不相信。"
+    },
+    "103215": {
+      "Id": 103215,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103217,
+      "ChatContent": "果然机械是不会有感情的，但是你……不，没什么。"
+    },
+    "103216": {
+      "Id": 103216,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103217,
+      "ChatContent": "也是，你怎么可能会知道……"
+    },
+    "103217": {
+      "Id": 103217,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "如果一个机器人，有人类的记忆，它会觉得自己是个人吗？",
+      "Option1": "也许会吧",
+      "AnswerId1": 103218,
+      "Option2": "我也不清楚",
+      "AnswerId2": 103219
+    },
+    "103218": {
+      "Id": 103218,
+      "SubAnswerId": 103220,
+      "ChatContent": "门外的老爹沉默了很久，久到你甚至以为他已经走了。"
+    },
+    "103219": {
+      "Id": 103219,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103220,
+      "ChatContent": "是啊，没有人会清楚，没有人会清楚的……"
+    },
+    "103220": {
+      "Id": 103220,
+      "SubAnswerId": 103221,
+      "ChatContent": "门外传来老爹的一声叹息。"
+    },
+    "103221": {
+      "Id": 103221,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103222,
+      "ChatContent": "算了，问这些也没用，你还是当没有听到过吧。"
+    },
+    "103222": {
+      "Id": 103222,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103223,
+      "ChatContent": "听着，我不管你是真失忆还是装失忆，都不要再跟机器人打交道了，这也是为了你好。"
+    },
+    "103223": {
+      "Id": 103223,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 103224,
+      "ChatContent": "生活费我用智能终端取走了，我会教你一些在这里生存的技巧。10天后你要付8000空间币，不然我会把你赶出垃圾场。"
+    },
+    "103224": {
+      "Id": 103224,
+      "SubAnswerId": -1,
+      "ChatContent": "老爹留下这句话之后就离开了。"
+    }
+  },
+  "1042": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 104202,
+      "ChatContent": "生活费我取走了。"
+    },
+    "104202": {
+      "Id": 104202,
+      "SubAnswerId": 104203,
+      "ChatContent": "你感觉老爹有点欲言又止，但他好像下定了什么决心。"
+    },
+    "104203": {
+      "Id": 104203,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "6天后的生活费是10000空间币。",
+      "Option1": "好吧。",
+      "AnswerId1": 104204,
+      "Option2": "这是不是有点太多了？",
+      "AnswerId2": 104205
+    },
+    "104204": {
+      "Id": 104204,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 104206,
+      "ChatContent": "你，你就不问一下？我知道这有点多……唉，你可能自有打算。"
+    },
+    "104205": {
+      "Id": 104205,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 104206,
+      "ChatContent": "所以，你得努力，才能在这里立足。"
+    },
+    "104206": {
+      "Id": 104206,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "现在，你觉得机器人可能会有人性吗？",
+      "Option1": "会",
+      "AnswerId1": 104207,
+      "Option2": "不会",
+      "AnswerId2": 104207
+    },
+    "104207": {
+      "Id": 104207,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 104208,
+      "ChatContent": "就这样吧，我有点累了。"
+    },
+    "104208": {
+      "Id": 104208,
+      "SubAnswerId": 104209,
+      "ChatContent": "老爹没有对你的回答做出什么反应，掩饰不住的疲惫挂在他的脸颊上，他一言不发地离去了，连外套落在了凳子上都没发现。"
+    },
+    "104209": {
+      "Id": 104209,
+      "IsOption": 1,
+      "ChatContent": "……等等。",
+      "Option1": "搜寻外套",
+      "AnswerId1": 104210
+    },
+    "104210": {
+      "Id": 104210,
+      "SubAnswerId": -1,
+      "ChatContent": "你在老爹的外套口袋里找到一串钥匙，钥匙的挂坠上有一张小小的照片。年代久远的照片太过模糊，只能勉强看出像是一家三口。",
+      "SubEventType": 3
+    }
+  },
+  "1052": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 105202,
+      "ChatContent": "你在街上又遇到了清扫人的追踪，还好富有经验的你很快甩掉了他们。"
+    },
+    "105202": {
+      "Id": 105202,
+      "SubAnswerId": 105203,
+      "ChatContent": "不过，老爹说过，他已经搞定了清扫人，为什么这些家伙现在又盯上了你？"
+    },
+    "105203": {
+      "Id": 105203,
+      "IsOption": 1,
+      "ChatContent": "你感到有些不对劲。",
+      "Option1": "打开智能终端给S发消息。",
+      "AnswerId1": 105204
+    },
+    "105204": {
+      "Id": 105204,
+      "SubAnswerId": 105205,
+      "ChatContent": "S很快回复了你。"
+    },
+    "105205": {
+      "Id": 105205,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 105206,
+      "ChatContent": "我在那边的朋友说，有个紫发女人告诉政府那边，你是违反了法则的机器人，好像说是为了交易还是救人什么的。"
+    },
+    "105206": {
+      "Id": 105206,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 105207,
+      "ChatContent": "你那边怎么样，需要帮忙吗？"
+    },
+    "105207": {
+      "Id": 105207,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 105208,
+      "ChatContent": "暂时还好，看情况吧。"
+    },
+    "105208": {
+      "Id": 105208,
+      "SubAnswerId": 105209,
+      "ChatContent": "你挂断了终端。今天是你与老爹约定交生活费的时间，虽然你在之前有段时间没看到过老爹了，你还是决定回到他的房间门口看看。"
+    },
+    "105209": {
+      "Id": 105209,
+      "IsOption": 1,
+      "ChatContent": "房间门虚掩着，你敲了敲门，无人应答。",
+      "Option1": "推开门",
+      "AnswerId1": 105210
+    },
+    "105210": {
+      "Id": 105210,
+      "SubAnswerId": 105211,
+      "ChatContent": "你推开门，看到老爹背对着你趴在桌子上，仿佛一夜无眠。\n与此同时，你感觉到一丝异样。",
+      "Option1": "走近查看",
+      "AnswerId1": 105211
+    },
+    "105211": {
+      "Id": 105211,
+      "SubAnswerId": -1,
+      "ChatContent": "你发现老爹已经停止了呼吸，他面前放着一封遗书和半瓶药物。",
+      "SubEventType": 4,
+      "SubEventValue": 1
+    }
+  },
+  "10520": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 105213,
+      "ChatContent": "在你查看遗书的时候，清扫人在房间门口聚集——他们找到了这里，你被包围了。"
+    },
+    "105213": {
+      "Id": 105213,
+      "SubAnswerId": 105214,
+      "ChatContent": "你的思维中枢飞速运转着。"
+    },
+    "105214": {
+      "Id": 105214,
+      "SubAnswerId": 105215,
+      "ChatContent": "你可以选择出示老爹的遗书，在遗书中，老爹证实了你是人类，这样就可以使用人类的身份继续生活。直到最后一刻，老爹也还在为你*做计划*。"
+    },
+    "105215": {
+      "Id": 105215,
+      "SubAnswerId": 105216,
+      "ChatContent": "或者你也可以选择……机器人的身份，即使这样生活可能会更为艰难。你的通讯器上有*智能体保护协会*的联系方式，协会承诺会在紧急时刻提供救援。"
+    },
+    "105216": {
+      "Id": 105216,
+      "IsOption": 1,
+      "ChatContent": "现在，选择的时候到了。",
+      "Option1": "出示遗书",
+      "AnswerId1": 105217,
+      "Option2": "不出示",
+      "AnswerId2": 105218
+    },
+    "105217": {
+      "Id": 105217,
+      "SubAnswerId": -1,
+      "ChatContent": "你出示了遗书，清扫人对其进行了字迹鉴定。随后，他们承认了你是一名*真正的人类*，并为之前对你的误解而道歉。你安葬了老爹，成为了垃圾场新的*守门人*，独自一人守护着垃圾场的所有秘密。",
+      "SubEventType": 8,
+      "SubEventValue": 0
+    },
+    "105218": {
+      "Id": 105218,
+      "SubAnswerId": -1,
+      "ChatContent": "你拒绝出示老爹的遗书，一方面你厌恶人类对机器人的恶行，另一方面……你不想再走老爹为你选好的路，你希望听从自己内心的声音。在五分钟前你联系了协会，一支武装小队此刻正潜伏在垃圾场大门附近。也许你会加入协会，或者在其他什么地方，为你坚持的信念而战。",
+      "SubEventType": 8,
+      "SubEventValue": 1
+    }
+  },
+  "2011": {
+    "0": {
+      "Id": 0,
+      "IsOption": 0,
+      "SubAnswerId": 201102,
+      "ChatContent": "*敲击声**更加强烈的敲击声*"
+    },
+    "201102": {
+      "Id": 201102,
+      "IsOption": 0,
+      "SubAnswerId": 201103,
+      "ChatContent": "你睁开眼睛，窗外闪过的一道微光引起了你的注意。"
+    },
+    "201103": {
+      "Id": 201103,
+      "IsOption": 0,
+      "SubAnswerId": 201104,
+      "ChatContent": "是一个有些破损的机器人，机体散发着微弱的电光，在用一只机械臂敲打着你的窗户，看起来……是求助？"
+    },
+    "201104": {
+      "Id": 201104,
+      "IsOption": 1,
+      "ChatContent": "”别和*机器人*还有*清扫人*扯上关系。“老爹的话回响在你耳边。",
+      "Option1": "开窗，放小机器人进来",
+      "AnswerId1": 201105,
+      "Option2": "还是算了",
+      "AnswerId2": 201105
+    },
+    "201105": {
+      "Id": 201105,
+      "IsOption": 0,
+      "SubAnswerId": 201106,
+      "ChatContent": "在你犹豫的时候，小机器人已经从门口的缝隙中挤了进来。"
+    },
+    "201106": {
+      "Id": 201106,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 1,
+      "ChatContent": "扫描中……未发现威胁。本机0100-1101010，名字：零。你好。",
+      "Option1": "呃……你好？",
+      "AnswerId1": 201107
+    },
+    "201107": {
+      "Id": 201107,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 201108,
+      "ChatContent": "你是说你叫零吗？我叫O，我好像只记得这个名字了。"
+    },
+    "201108": {
+      "Id": 201108,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 0,
+      "SubAnswerId": 201109,
+      "ChatContent": "O…朋友…本机遭遇事故，言语和逻辑系统，异常。维护，需要，希望请求帮助。"
+    },
+    "201109": {
+      "Id": 201109,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 201110,
+      "ChatContent": "你遭遇了什么？昨天是不是你在躲清扫人？"
+    },
+    "201110": {
+      "Id": 201110,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 0,
+      "SubAnswerId": 201111,
+      "ChatContent": "是的，具体…违反法则…擅自建立情感关系…本机和人类，朋友，朋友。（最后的“朋友”这个词被零强调得特别重。）"
+    },
+    "201111": {
+      "Id": 201111,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 201112,
+      "ChatContent": "是不是需要维护？该怎么做？（不知道为什么，你觉得好像之前也经历过类似的事情。）"
+    },
+    "201112": {
+      "Id": 201112,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 1,
+      "ChatContent": "自检程序完毕，X0005蓝色线缆-需求维修。",
+      "Option1": "我来帮你",
+      "AnswerId1": -1
+    }
+  },
+  "2012": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 0,
+      "SubAnswerId": 201202,
+      "ChatContent": "感-感谢你的帮助！我感觉恢复正常了，我在找我的人类朋友，一路上有很多面罩家伙在追我。"
+    },
+    "201202": {
+      "Id": 201202,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 0,
+      "SubAnswerId": 201203,
+      "ChatContent": "抱歉，我不记得朋友的名字，朋友也像你一样修好了我，我们一起经历了很多事情，但还是走散了。"
+    },
+    "201203": {
+      "Id": 201203,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 201204,
+      "ChatContent": "那我们有点像，我也失去了记忆，被老爹捡回这里。总觉得有很多不对劲的地方。"
+    },
+    "201204": {
+      "Id": 201204,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 1,
+      "ChatContent": "我可以和你一起走吗？你是我的-朋友。",
+      "Option1": "答应小机器人",
+      "AnswerId1": 201205
+    },
+    "201205": {
+      "Id": 201205,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 0,
+      "SubAnswerId": -1,
+      "ChatContent": "太好了！",
+      "SubEventType": 5
+    }
+  },
+  "3012": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": -1,
+      "ChatContent": "一份被发送到智能终端上的信息引起了你的注意，信息是提前设置的定时发送，内容是一张照片。",
+      "SubEventType": 4,
+      "SubEventValue": 2
+    }
+  },
+  "30121": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 301202,
+      "ChatContent": "垃圾场就是影像芯片信号基站？*地下室*又是什么地方？"
+    },
+    "301202": {
+      "Id": 301202,
+      "SubAnswerId": 301203,
+      "ChatContent": "这份改造记录……签名是你的字迹，你把自己改造成了机器人？但是为什么要这么做？"
+    },
+    "301203": {
+      "Id": 301203,
+      "SubAnswerId": 301204,
+      "ChatContent": "还有零的销毁记录，这个日期显然是十年前。零是你认识的那个零吗？"
+    },
+    "301204": {
+      "Id": 301204,
+      "SubAnswerId": -1,
+      "ChatContent": "你觉得疑问越来越多了。"
+    }
+  },
+  "3022": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 302201,
+      "ChatContent": "你拿着在老爹外套里找到的地下室钥匙，打开了地下室的门。"
+    },
+    "302201": {
+      "Id": 302201,
+      "SubAnswerId": 302202,
+      "ChatContent": "灰尘和蛛网阻挡了你的视线，你小心翼翼地一步一步向下走着。"
+    },
+    "302202": {
+      "Id": 302202,
+      "SubAnswerId": 302203,
+      "ChatContent": "你来到了一个房间，从地板到天花板都堆满了各种……杂物？"
+    },
+    "302203": {
+      "Id": 302203,
+      "SubAnswerId": 302204,
+      "ChatContent": "不，也不像是杂物，尽管每一件物品都有着强烈的年代感，但它们上面却只有一层薄薄的灰尘，显然是有人在定期打理。"
+    },
+    "302204": {
+      "Id": 302204,
+      "SubAnswerId": 302205,
+      "ChatContent": "你打开离你最近的一本日记，上面的日期是二十年前。"
+    },
+    "302205": {
+      "Id": 302205,
+      "SubAnswerId": 302206,
+      "ChatContent": "“今天Lina离我而去整整一周年了……我还是不太适应，O晚上也一直在哭，肯定是想念母亲吧。”"
+    },
+    "302206": {
+      "Id": 302206,
+      "SubAnswerId": 302207,
+      "ChatContent": "“我把Lina的遗物都收藏在地下室里，想她的时候就拿出来看看。每一个物件，我都记得它对应的回忆。”"
+    },
+    "302207": {
+      "Id": 302207,
+      "SubAnswerId": 302208,
+      "ChatContent": "日记本中夹着两张旧照片，一张是年轻的老爹和一位抱着婴孩的女子。另一张是年幼的你，身边好像还有着一个机器人，但那个机器人被马克笔涂抹掉了。"
+    },
+    "302208": {
+      "Id": 302208,
+      "SubAnswerId": 302209,
+      "ChatContent": "“我有时候真的想随你而去……可能死在战争中才是最好的结局，你不知道，战后的我们生活得太难了，实在是太苦了。可是我还不能走啊，O还在这里，还在等我回家。”"
+    },
+    "302209": {
+      "Id": 302209,
+      "SubAnswerId": 302210,
+      "ChatContent": "一张泛黄的广告传单从日记本里掉了出来，“最新款家政机器人”的标语格外醒目。"
+    },
+    "302210": {
+      "Id": 302210,
+      "SubAnswerId": 302211,
+      "ChatContent": "“我多想回到我们那时候。”"
+    },
+    "302211": {
+      "Id": 302211,
+      "SubAnswerId": 302212,
+      "ChatContent": "许多字迹被水迹洇湿，难以辨认。"
+    },
+    "302212": {
+      "Id": 302212,
+      "SubAnswerId": 302213,
+      "ChatContent": "这是老爹的日记吗?和老爹所说的不同，他其实是你真正的父亲，而Lina是你的母亲?但是老爹为什么执意对你说你是他捡来的孤儿?"
+    },
+    "302213": {
+      "Id": 302213,
+      "SubAnswerId": 302214,
+      "ChatContent": "根据日记的年份，你的母亲……应该在你出生后不久就离世了。但你的记忆中却一直有一位”母亲“的形象，陪伴你度过童年时光……"
+    },
+    "302214": {
+      "Id": 302214,
+      "SubAnswerId": 302215,
+      "ChatContent": "还有你身边那个被抹去面目的*机器人*，是谁？"
+    },
+    "302215": {
+      "Id": 302215,
+      "SubAnswerId": -1,
+      "ChatContent": "你在堆积成山的物品和回忆中遨游，一些疑问被解答，而新的疑问也越来越多。你使用智能终端对你认为重要的物品做了很多记录，离开了地下室。"
+    }
+  },
+  "4011": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "Q",
+      "Name": "陌生人",
+      "IsOption": 1,
+      "SubAnswerId": 401102,
+      "ChatContent": "“喂，那边的*铁脑袋*，新来的？”",
+      "Option1": "是在叫我吗？",
+      "AnswerId1": 401102
+    },
+    "401102": {
+      "Id": 401102,
+      "HeadPortrait": "Q",
+      "Name": "陌生人",
+      "IsOption": 0,
+      "SubAnswerId": 401103,
+      "ChatContent": "那不然呢，你看看咱俩旁边还有人吗？"
+    },
+    "401103": {
+      "Id": 401103,
+      "IsOption": 0,
+      "SubAnswerId": 401104,
+      "ChatContent": "你仔细打量了一下叫住你的这个人。"
+    },
+    "401104": {
+      "Id": 401104,
+      "IsOption": 1,
+      "ChatContent": "他看起来像个流浪汉，不加修剪的头发和胡须遮住了大半张脸，透出一股颓丧气息，但结成绺的头发底下又透露出一丝狡黠的目光。",
+      "Option1": "有什么事？",
+      "AnswerId1": 401105
+    },
+    "401105": {
+      "Id": 401105,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401106,
+      "ChatContent": "哎，别紧张，我叫Q。就是看你好像是从外面来的。"
+    },
+    "401106": {
+      "Id": 401106,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "我也在这里怪闷的，聊聊天呗。",
+      "Option1": "好吧。",
+      "AnswerId1": 401108
+    },
+    "401108": {
+      "Id": 401108,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "你从哪边过来？",
+      "Option1": "东边。",
+      "AnswerId1": 401109,
+      "Option2": "西边。",
+      "AnswerId2": 401112
+    },
+    "401109": {
+      "Id": 401109,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401110,
+      "ChatContent": "东边啊，我从来没去过那地方。"
+    },
+    "401110": {
+      "Id": 401110,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401111,
+      "ChatContent": "这年头，外面太乱了。到处都是人和机器在打架，鸟为食亡嘛，我也不是不能理解。"
+    },
+    "401111": {
+      "Id": 401111,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401113,
+      "ChatContent": "不过整天为了一口吃的活着，也没什么意思。"
+    },
+    "401112": {
+      "Id": 401112,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401113,
+      "ChatContent": "西边，那地方好像是……*不能提的地方*吧，从那里过来？你开始让我觉得有趣了。"
+    },
+    "401113": {
+      "Id": 401113,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401114,
+      "ChatContent": "其实我很羡慕你啊，可以去外面的世界看看，不像我……算了，不说这个。"
+    },
+    "401114": {
+      "Id": 401114,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "还是切入正题吧，听说过*玫瑰壤*吗？",
+      "Option1": "（诚实地摇摇头）",
+      "AnswerId1": 401115
+    },
+    "401115": {
+      "Id": 401115,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401116,
+      "ChatContent": "传闻中，在西北地区有块颜色奇异的土壤，在那里有”极乐“，也有我在找的东西。"
+    },
+    "401116": {
+      "Id": 401116,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "所以，能不能帮我个忙？我腿脚不行，走不了远路，你就行行好，从这里向西走3公里，向北走4公里，把那东西带回来给我就行了。",
+      "Option1": "是什么样的东西？",
+      "AnswerId1": 401117
+    },
+    "401117": {
+      "Id": 401117,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "是……芯片，大概有拇指盖那么大，会发光，也没那么难找。(你注意到Q背在身后的手一直在不停的抠挠。)",
+      "Option1": "那，帮你有报酬吗？",
+      "AnswerId1": 401118
+    },
+    "401118": {
+      "Id": 401118,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "别急，你帮了我的忙，我也可以帮你，你有什么想知道的？",
+      "Option1": "*地下市场*和*调整参数*是什么？",
+      "AnswerId1": 401119
+    },
+    "401119": {
+      "Id": 401119,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 401120,
+      "ChatContent": "问这个？"
+    },
+    "401120": {
+      "Id": 401120,
+      "SubAnswerId": 401121,
+      "ChatContent": "Q的脸上出现了古怪的神情，仿佛在极力忍耐着什么。"
+    },
+    "401121": {
+      "Id": 401121,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "SubAnswerId": -1,
+      "ChatContent": "你把芯片拿来给我，我告诉你怎么进地下市场的暗号，就这么一言为定？",
+      "Option1": "成交。（任务未实装致歉）",
+      "AnswerId1": -1
+    }
+  },
+  "4022": {
+    "402201": {
+      "Id": 402201,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 402202,
+      "ChatContent": "对，对，这就是我要的东西！（见到你带着芯片过来，几乎要两眼放光。）"
+    },
+    "402202": {
+      "Id": 402202,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 0,
+      "SubAnswerId": 402203,
+      "ChatContent": "（躲开Q伸出的手）先把地下市场的暗号告诉我。"
+    },
+    "402203": {
+      "Id": 402203,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 402204,
+      "ChatContent": "哦，对，我答应过你。"
+    },
+    "402204": {
+      "Id": 402204,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 402205,
+      "ChatContent": "Q讪笑一下，但还是目不转睛地盯着你手中的芯片。"
+    },
+    "402205": {
+      "Id": 402205,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 402206,
+      "ChatContent": "其实我们更习惯叫“黑市”。黑市主人是一个挺牛的大姐，她叫M，一直自称是黑道贩子，神出鬼没的。"
+    },
+    "402206": {
+      "Id": 402206,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "你应该能在东边2公里。北边4公里的地方找到她，没什么暗号，如实和她说你要的东西就行了。",
+      "Option1": "那*调整参数*是什么意思？",
+      "AnswerId1": 402207
+    },
+    "402207": {
+      "Id": 402207,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 0,
+      "SubAnswerId": 402208,
+      "ChatContent": "这个嘛……"
+    },
+    "402208": {
+      "Id": 402208,
+      "IsOption": 1,
+      "ChatContent": "Q冲你勾了勾手指，”借一步说话。“",
+      "Option1": "上前",
+      "AnswerId1": 402209
+    },
+    "402209": {
+      "Id": 402209,
+      "SubAnswerId": 402210,
+      "ChatContent": "在你靠近Q的时候，他一把抢过了你手中的芯片。"
+    },
+    "402210": {
+      "Id": 402210,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 402211,
+      "ChatContent": "去找M问吧，不过我劝你最好还是别知道——如果不想变得像我一样的话。"
+    },
+    "402211": {
+      "Id": 402211,
+      "IsOption": 0,
+      "SubAnswerId": -1,
+      "ChatContent": "说完，Q便向你挥挥手，摇摇晃晃地离开了。"
+    }
+  },
+  "4032": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 403201,
+      "ChatContent": "你跟着Q的信息，在昏暗的巷子里兜兜转转好几圈才找到M的据点。"
+    },
+    "403201": {
+      "Id": 403201,
+      "SubAnswerId": 403202,
+      "ChatContent": "莫西干头倚靠着墙叼着烟，正在和一个长发马尾的女人聊天。看到你，她停止了说话，示意那个女人离开。"
+    },
+    "403202": {
+      "Id": 403202,
+      "SubAnswerId": 403203,
+      "ChatContent": "烟头明明灭灭，你看着她发色上的映出的火光，紧张地咽了咽口水。"
+    },
+    "403203": {
+      "Id": 403203,
+      "SubAnswerId": 403204,
+      "ChatContent": "你还在踌躇怎么开口，对方率先结束了沉默。"
+    },
+    "403204": {
+      "Id": 403204,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403205,
+      "ChatContent": "说吧，怎么找到这里的？"
+    },
+    "403205": {
+      "Id": 403205,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 403206,
+      "ChatContent": "是Q告诉我的，听说这里可以调参数。"
+    },
+    "403206": {
+      "Id": 403206,
+      "SubAnswerId": 403207,
+      "ChatContent": "你咳了一下，努力让自己的声音听起来清楚一点。"
+    },
+    "403207": {
+      "Id": 403207,
+      "SubAnswerId": 403208,
+      "ChatContent": "紫色莫西干头女人微微低下头对上你的视线，一股被看穿的无所适从感袭击了你。"
+    },
+    "403208": {
+      "Id": 403208,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403209,
+      "ChatContent": "得加钱。"
+    },
+    "403209": {
+      "Id": 403209,
+      "SubAnswerId": 403210,
+      "ChatContent": "女人在话尾吐出微妙的叹息。"
+    },
+    "403210": {
+      "Id": 403210,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "IsOption": 1,
+      "ChatContent": "你那金属脑壳看起来可不好拆。",
+      "Option1": "不是的，这只是我的头盔。",
+      "AnswerId1": 403211
+    },
+    "403211": {
+      "Id": 403211,
+      "SubAnswerId": 403212,
+      "ChatContent": "M应了一声，便没再回答。"
+    },
+    "403212": {
+      "Id": 403212,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403213,
+      "ChatContent": "你想要什么？"
+    },
+    "403213": {
+      "Id": 403213,
+      "SubAnswerId": 403214,
+      "ChatContent": "你忽然发现你和M之前在聚居地说过话。"
+    },
+    "403214": {
+      "Id": 403214,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 403215,
+      "ChatContent": "我是来找黑市的。"
+    },
+    "403215": {
+      "Id": 403215,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403216,
+      "ChatContent": "跟我来。"
+    },
+    "403216": {
+      "Id": 403216,
+      "SubAnswerId": 403217,
+      "ChatContent": "出乎你的意料，M很爽快地同意了你的请求。"
+    },
+    "403217": {
+      "Id": 403217,
+      "SubAnswerId": 403218,
+      "ChatContent": "她向你展示了一间小屋——其实说是集装箱更为合适。琳琅满目的货品挂在墙壁上，但大部分货品上都落了厚厚一层灰尘。"
+    },
+    "403218": {
+      "Id": 403218,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403219,
+      "ChatContent": "那些工艺品很少有人感兴趣，大部分人还是冲着芯片来的，你也不例外吧？"
+    },
+    "403219": {
+      "Id": 403219,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "IsOption": 1,
+      "ChatContent": "我……",
+      "Option1": "我想知道芯片和调整参数是什么",
+      "AnswerId1": 403220
+    },
+    "403220": {
+      "Id": 403220,
+      "SubAnswerId": 403221,
+      "ChatContent": "M愣了一下，随后大笑起来。“连芯片是什么都不知道，却找到这里来？你真的很有意思。”"
+    },
+    "403221": {
+      "Id": 403221,
+      "SubAnswerId": 403222,
+      "ChatContent": "M领着你来到小屋外面，“你看到了什么？”"
+    },
+    "403222": {
+      "Id": 403222,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 403223,
+      "ChatContent": "一条普通的巷子。"
+    },
+    "403223": {
+      "Id": 403223,
+      "SubAnswerId": 403224,
+      "ChatContent": "M拿了一个磁吸装置贴在你的后脑上，你感到一阵晕眩，再抬起头，面前的小巷变成了一片废墟。"
+    },
+    "403224": {
+      "Id": 403224,
+      "SubAnswerId": 403225,
+      "ChatContent": "两侧的高墙是由废弃电缆和铁板组成的，甚至还在缓缓渗出不明液体。和你先前偶然看到的场景一样，你不由得后退了一步。"
+    },
+    "403225": {
+      "Id": 403225,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403226,
+      "ChatContent": "奇怪……"
+    },
+    "403226": {
+      "Id": 403226,
+      "SubAnswerId": 403227,
+      "ChatContent": "你在恍惚中好像听到了M的低语，但她很快把磁吸装置拿开，小巷便又恢复了先前的模样。"
+    },
+    "403227": {
+      "Id": 403227,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403228,
+      "ChatContent": "我知道你看到了，这么和你讲吧，芯片就是我们每个人出生后往脑袋里装的东西。"
+    },
+    "403228": {
+      "Id": 403228,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403229,
+      "ChatContent": "装上这东西之后，虚拟现实就会欺骗你的意识，让你把眼前的这片废墟当作过去的城市——没错，大家都是这么生活的。"
+    },
+    "403229": {
+      "Id": 403229,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403230,
+      "ChatContent": "芯片的功能不止这些，和营养剂的配额一样，每人每月也有芯片参数配额。对芯片参数进行调整，能改变神经递质的释放机制，让人在短时间内感到愉悦。"
+    },
+    "403230": {
+      "Id": 403230,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403231,
+      "ChatContent": "当然这很容易上瘾，在政府的配额用光了之后，他们会来找我。"
+    },
+    "403231": {
+      "Id": 403231,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "IsOption": 1,
+      "ChatContent": "知道了这些，你还想在我这买什么吗？",
+      "Option1": "我想买芯片",
+      "AnswerId1": 403232,
+      "Option2": "只是来看看",
+      "AnswerId2": 403232
+    },
+    "403232": {
+      "Id": 403232,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 403233,
+      "ChatContent": "那你就来看看吧，每月的第三天和周日我不在，其他时候应该都有人。"
+    },
+    "403233": {
+      "Id": 403233,
+      "SubAnswerId": -1,
+      "ChatContent": "M重新点起一支烟，但并没有逐客的意思，也许你可以在这里逛逛。",
+      "SubEventType": 6
+    }
+  },
+  "5011": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 501101,
+      "ChatContent": "在来到黑市之后，你已经在这里进行了一段时间的交易。M见你过来，也会偶尔和你打个招呼。"
+    },
+    "501101": {
+      "Id": 501101,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "IsOption": 1,
+      "ChatContent": "那边的那个——你是叫做O吧？最近有些事缺点人手，你要不要来？",
+      "Option1": "是什么事？",
+      "AnswerId1": 501102
+    },
+    "501102": {
+      "Id": 501102,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 501103,
+      "ChatContent": "跟我过来。"
+    },
+    "501103": {
+      "Id": 501103,
+      "SubAnswerId": 501104,
+      "ChatContent": "M带你来到黑市的后巷，这也是你们一开始见面的地方。"
+    },
+    "501104": {
+      "Id": 501104,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 501105,
+      "ChatContent": "这里人少，长话短说，和芯片有关。"
+    },
+    "501105": {
+      "Id": 501105,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 501106,
+      "ChatContent": "你来这里也有段时间，应该也认识到了芯片是什么样的，也见过它……没那么好的一面。"
+    },
+    "501106": {
+      "Id": 501106,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 501107,
+      "ChatContent": "仅仅是在我这里，每个月都有人因为排异反应和参数过载死去。因此也有一部分人反对影像芯片的植入，我们在做的事情，与此有关。"
+    },
+    "501107": {
+      "Id": 501107,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 501108,
+      "ChatContent": "我想让你去找Q，协助运送一批物资，报酬很优厚。"
+    },
+    "501108": {
+      "Id": 501108,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 501109,
+      "ChatContent": "Q？他也在为你做事吗？"
+    },
+    "501109": {
+      "Id": 501109,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "IsOption": 1,
+      "ChatContent": "对，在黑市，一切事物都有明码标价，换句话说，只要你开价足够高，总能找到人来做这些。",
+      "Option1": "好。",
+      "AnswerId1": 501110,
+      "Option2": "你的开价是？",
+      "AnswerId2": 501111,
+      "Option3": "我能拒绝吗？",
+      "AnswerId3": 501112
+    },
+    "501110": {
+      "Id": 501110,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": -1,
+      "ChatContent": "我这里有最新的芯片作为报酬。以及，一句忠告，在接取别人的委托时要有所选择，别让自己身处险境。"
+    },
+    "501111": {
+      "Id": 501111,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": -1,
+      "ChatContent": "店里新到了一批芯片，你可以拿去。虽然不知道为什么，你看起来对芯片很感兴趣。"
+    },
+    "501112": {
+      "Id": 501112,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": -1,
+      "ChatContent": "……确定吗？你可以试着拒绝，不过你已经得知了我们的动向，我不保证会发生什么。"
+    }
+  },
+  "5012": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 501201,
+      "ChatContent": "你再次见到Q时，你觉得他看起来状态稳定了许多。"
+    },
+    "501201": {
+      "Id": 501201,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 501202,
+      "ChatContent": "M让我来协助你运送物资。"
+    },
+    "501202": {
+      "Id": 501202,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501203,
+      "ChatContent": "哦，是你啊，M跟我说过了。你是她派来看着我的吧。"
+    },
+    "501203": {
+      "Id": 501203,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501204,
+      "ChatContent": "无所谓啦，黑市那边有很多*货源*，要我说，你真该试试在黑市*调整参数*，比政府那边的劲大。"
+    },
+    "501204": {
+      "Id": 501204,
+      "SubAnswerId": 501205,
+      "ChatContent": "Q看起来心情很好，一瘸一拐地在你面前行走，许多人对你投以复杂的目光。"
+    },
+    "501205": {
+      "Id": 501205,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "虽然这里什么人都有，不过你的打扮在我们这边也是少见的。",
+      "Option1": "为什么？因为我的*铁脑袋*？",
+      "AnswerId1": 501206
+    },
+    "501206": {
+      "Id": 501206,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "嗯，没人会特意把自己打扮成机械体的样子。",
+      "Option1": "我看起来很像机器人吗？",
+      "AnswerId1": 501207
+    },
+    "501207": {
+      "Id": 501207,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "像，真***像，一开始我也差点把你当作机器人，不过你跟那些没感情的空壳还是不一样。",
+      "Option1": "具体是哪里不一样？",
+      "AnswerId1": 501208,
+      "Option2": "我觉得我一点也不像机器人",
+      "AnswerId2": 501209
+    },
+    "501208": {
+      "Id": 501208,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501209,
+      "ChatContent": "我说不上来，可能你更有*人情味*吧。"
+    },
+    "501209": {
+      "Id": 501209,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501210,
+      "ChatContent": "那你干嘛一身机械打扮？算了，搞不懂现在的年轻人。"
+    },
+    "501210": {
+      "Id": 501210,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 501211,
+      "ChatContent": "说起来，你为什么在M这里干活？"
+    },
+    "501211": {
+      "Id": 501211,
+      "SubAnswerId": 501212,
+      "ChatContent": "Q四处环顾了一下，压低了声音。"
+    },
+    "501212": {
+      "Id": 501212,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "咳，我知道她们在做些*违反规则*的事儿，不过谁给我芯片，我就帮谁干活。",
+      "Option1": "询问Q为什么如此执着于芯片。",
+      "AnswerId1": 501213
+    },
+    "501213": {
+      "Id": 501213,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501214,
+      "ChatContent": "你有没有享受过*调整参数*的感觉……？直接这么跟你说太难讲了，反正，这东西是我活着的唯一动力。\n"
+    },
+    "501214": {
+      "Id": 501214,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501215,
+      "ChatContent": "每到这时候我就庆幸自己是个人，不是什么机器，只有人类的精神才能有如此美妙的体验。"
+    },
+    "501215": {
+      "Id": 501215,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501216,
+      "ChatContent": "送到这就行了。"
+    },
+    "501216": {
+      "Id": 501216,
+      "SubAnswerId": 501217,
+      "ChatContent": "Q在一堵高墙前面停下，不知道在哪操作了几下，高墙便向两边分开，露出了中间的小仓库。"
+    },
+    "501217": {
+      "Id": 501217,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "IsOption": 1,
+      "ChatContent": "你呢，又是为什么给M干活？",
+      "Option1": "为了利益",
+      "AnswerId1": 501218,
+      "Option2": "支持M的理念",
+      "AnswerId2": 501219,
+      "Option3": "我不知道",
+      "AnswerId3": 501220
+    },
+    "501218": {
+      "Id": 501218,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501221,
+      "ChatContent": "哈，无利不起早，在这边大家都这样，没什么不好意思的。"
+    },
+    "501219": {
+      "Id": 501219,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501221,
+      "ChatContent": "理念？我佩服你这种人，但是也得为自己做打算吧。"
+    },
+    "501220": {
+      "Id": 501220,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501221,
+      "ChatContent": "看起来你还犹豫得很，我劝你好好想想。"
+    },
+    "501221": {
+      "Id": 501221,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501222,
+      "ChatContent": "你见过这个仓库，可就无法回头咯。"
+    },
+    "501222": {
+      "Id": 501222,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": 501223,
+      "ChatContent": "M对我们这些人是很好，可是她对泄密者也有很多手段。像我这种人自然是无所谓，我的命放在哪都行。不过你呢？真的想好了吗？"
+    },
+    "501223": {
+      "Id": 501223,
+      "SubAnswerId": 501224,
+      "ChatContent": "你看着Q把一件件物资搬进仓库。"
+    },
+    "501224": {
+      "Id": 501224,
+      "HeadPortrait": "Q",
+      "Name": "Q",
+      "SubAnswerId": -1,
+      "ChatContent": "走吧，事干完了，就说东西运到BY-201了。你呢，回你该去的地方，我呢，也要回去享受*那批好货*了。"
+    }
+  },
+  "5022": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 502201,
+      "ChatContent": "这天，你按照约定来找M，在门口听到了断断续续的谈话声。"
+    },
+    "502201": {
+      "Id": 502201,
+      "SubAnswerId": 502202,
+      "ChatContent": "“这件事比较迫切……不能……”\n“我们……冒险……只能这样……”"
+    },
+    "502202": {
+      "Id": 502202,
+      "SubAnswerId": 502203,
+      "ChatContent": "“没有其他选择了吗？”是M的声音。"
+    },
+    "502203": {
+      "Id": 502203,
+      "SubAnswerId": 502204,
+      "ChatContent": "你敲了敲门，一个戴半框眼镜的黑发马尾女子打开了门，你认出她是曾经和M交谈的那个人。"
+    },
+    "502204": {
+      "Id": 502204,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "IsOption": 1,
+      "ChatContent": "啊，你好，初次见面，可以叫我W。",
+      "Option1": "我叫O。",
+      "AnswerId1": 502205
+    },
+    "502205": {
+      "Id": 502205,
+      "SubAnswerId": 502206,
+      "ChatContent": "W点点头，飞快地看了一眼M，然后冲你微微笑了一下。"
+    },
+    "502206": {
+      "Id": 502206,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502207,
+      "ChatContent": "M和我说过你的事，她希望让我们见面。"
+    },
+    "502207": {
+      "Id": 502207,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 502208,
+      "ChatContent": "  我们要说的，也和影像芯片有关吗？"
+    },
+    "502208": {
+      "Id": 502208,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "IsOption": 1,
+      "ChatContent": "没错，我是这边的主理人，我在做的事情很多，现在，我在参与反影像芯片运动。不过大家可能更愿意把我当作*领袖*。",
+      "Option1": "为什么要反对影像芯片？",
+      "AnswerId1": 502209,
+      "Option2": "你们在做什么？",
+      "AnswerId2": 502214,
+      "Option3": "我大概明白了。",
+      "AnswerId3": 502216
+    },
+    "502209": {
+      "Id": 502209,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502210,
+      "ChatContent": "说来话长，主要有三个原因。\n首先，影像芯片的强制植入会带来副作用和不可控的排异反应，许多人因此死去或者精神失常。"
+    },
+    "502210": {
+      "Id": 502210,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502211,
+      "ChatContent": "对此政府给出的理由是，经评估，这部分伤亡人数远小于将芯片改为自愿植入所带来的损失。"
+    },
+    "502211": {
+      "Id": 502211,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502212,
+      "ChatContent": "我不知道他们是怎么算的，人的性命这种东西真的可以放在天平上衡量吗？"
+    },
+    "502212": {
+      "Id": 502212,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502213,
+      "ChatContent": "然后，我们也希望拿回对于*真实*和*自我*的掌控，我觉得，人应该有权利自己决定如何生活。"
+    },
+    "502213": {
+      "Id": 502213,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502208,
+      "ChatContent": "最后，也是一部分人的隐忧，我们担心这种统一植入的影像芯片会在未来被用于控制民众，实际上，现在的调参配额已经是一种精神控制手段了。"
+    },
+    "502214": {
+      "Id": 502214,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502215,
+      "ChatContent": "说来惭愧，我们的能力有限，来自政府的压力也很大，现在只能做一些宣传和呼吁相关的事。"
+    },
+    "502215": {
+      "Id": 502215,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502208,
+      "ChatContent": "我们正在筹划不久之后的公开演讲，这也是我们第一次公开露面。接下来……有情报说影像芯片的信号基站就在这附近，这是我们下一次行动的目标。"
+    },
+    "502216": {
+      "Id": 502216,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "IsOption": 1,
+      "ChatContent": "我想你也大概有些了解，如果没有别的问题，我想拜托你继续收集接下来要用到的物资。",
+      "Option1": "还有一个问题，为什么找到我？",
+      "AnswerId1": 502217
+    },
+    "502217": {
+      "Id": 502217,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 502218,
+      "ChatContent": "因为一些原因，我们现在时间紧迫，因此很缺人手。也许，我们能信任你吗？"
+    },
+    "502218": {
+      "Id": 502218,
+      "SubAnswerId": 502219,
+      "ChatContent": "M目光灼灼地盯着你，像是期待又像是审视，你不由自主地点了点头。"
+    },
+    "502219": {
+      "Id": 502219,
+      "SubAnswerId": 502220,
+      "ChatContent": "W拿出了一份手写清单交到你的手上。你瞄了一眼，上面的字迹十分工整清晰。"
+    },
+    "502220": {
+      "Id": 502220,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502221,
+      "ChatContent": "出于一些风险考虑，在收集的时候尽量远离黑市吧。"
+    },
+    "502221": {
+      "Id": 502221,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502222,
+      "ChatContent": "多说一句，我选择加入反影像芯片运动，也和我的个人经历有关。不过，这真的是一个很长很长的故事了。"
+    },
+    "502222": {
+      "Id": 502222,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 502223,
+      "ChatContent": "从M的话里，我能感觉到你的迷茫，这样的困惑我曾经也有过。我其实很想和你聊一聊，也愿意提供我力所能及的帮助。"
+    },
+    "502223": {
+      "Id": 502223,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": -1,
+      "ChatContent": "但现在实在是抽不出时间。等这次行动结束之后，如果你有兴趣，欢迎随时拜访。"
+    }
+  },
+  "5032": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 503201,
+      "ChatContent": "你终于将运动所需的物资收集齐全，此时已经接近黎明时分。"
+    },
+    "503201": {
+      "Id": 503201,
+      "SubAnswerId": 503202,
+      "ChatContent": "你抱着物资在夜色中穿行，在见到W之前，你先遇到了一个熟悉的身影。"
+    },
+    "503202": {
+      "Id": 503202,
+      "SubAnswerId": 503203,
+      "ChatContent": "M斜斜地倚靠着小巷的墙壁，从地上零落的烟头来看，她已经在这等了很久。看到你，她冲你招了招手，叹气一般地呼出了一团烟雾。"
+    },
+    "503203": {
+      "Id": 503203,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503204,
+      "ChatContent": "O，能不能过来一下。"
+    },
+    "503204": {
+      "Id": 503204,
+      "SubAnswerId": 503205,
+      "ChatContent": "你察觉到她平淡的语气下隐含着一丝不安。"
+    },
+    "503205": {
+      "Id": 503205,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "IsOption": 1,
+      "ChatContent": "你，怎么看这场运动，或者说，你觉得W怎么样？",
+      "Option1": "W是一个出色的领导者。",
+      "AnswerId1": 503206,
+      "Option2": "W也有她的局限之处。",
+      "AnswerId2": 503207
+    },
+    "503206": {
+      "Id": 503206,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503208,
+      "ChatContent": "是吗？你是这么认为的。她的身上确实有一股力量，能让人们追随她。"
+    },
+    "503207": {
+      "Id": 503207,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503208,
+      "ChatContent": "从旁人的角度来看也许更清晰，有些东西她确实处理得还不够好。"
+    },
+    "503208": {
+      "Id": 503208,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503209,
+      "ChatContent": "在我看来，W像一团火焰。"
+    },
+    "503209": {
+      "Id": 503209,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503210,
+      "ChatContent": "星星之火可以点燃薪柴，但是也很容易燃尽自己。"
+    },
+    "503210": {
+      "Id": 503210,
+      "IsOption": 1,
+      "ChatContent": "M在墙上摁灭手中的烟头，那团小小的火光在迸射出几个火星之后就沉寂了下去。在黑暗中，你看不太清M脸上的神情。",
+      "Option1": "但火焰能带来希望。",
+      "AnswerId1": 503211,
+      "Option2": "W想要成为火焰吧。",
+      "AnswerId2": 503211
+    },
+    "503211": {
+      "Id": 503211,
+      "SubAnswerId": 503212,
+      "ChatContent": "M好像没有听到你的话，她的视线停留在半空中的某处。"
+    },
+    "503212": {
+      "Id": 503212,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503213,
+      "ChatContent": "我和W在少年时代是同学。那时候她因为成绩而崇拜我，我则更羡慕……她身上的那种生命力。像很多人一样，我们也做过改变世界的梦。"
+    },
+    "503213": {
+      "Id": 503213,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503214,
+      "ChatContent": "然后战争开始了。她暂停了学业，忙着在各处参加救援和反战活动，却拒绝了我的加入。"
+    },
+    "503214": {
+      "Id": 503214,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503215,
+      "ChatContent": "她说她们这些人的努力，就是为了像我这样的人能够继续上学。"
+    },
+    "503215": {
+      "Id": 503215,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503216,
+      "ChatContent": "后来，我因自己的研究成果而痛苦，那时*改变世界*的约定让我下定决心离开。"
+    },
+    "503216": {
+      "Id": 503216,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503217,
+      "ChatContent": "我一向不喜欢理想主义者，想用*理想*和*信仰*来解决现实矛盾，这种东西的说服力还不如瘾君子来我这赊账时的说辞。"
+    },
+    "503217": {
+      "Id": 503217,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503218,
+      "ChatContent": "我认为W对人性和理想还是太过乐观，我们几乎是被推到这个位置上的，她和我都完全无法预测接下来会发生什么。"
+    },
+    "503218": {
+      "Id": 503218,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503219,
+      "ChatContent": "我——其实也有私心，希望她能更多地为自己考虑。"
+    },
+    "503219": {
+      "Id": 503219,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503220,
+      "ChatContent": "但我也清楚，在这个世界变得”更好“之前，她不会停下的。"
+    },
+    "503220": {
+      "Id": 503220,
+      "SubAnswerId": 503221,
+      "ChatContent": "有一瞬间M看起来无比悲伤，但那种神情转瞬即逝。她对上你的目光，看起来已经做出了某种决定。"
+    },
+    "503221": {
+      "Id": 503221,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503222,
+      "ChatContent": "当然，我也有自己的打算。和你讲这些，一来是确认你的想法。"
+    },
+    "503222": {
+      "Id": 503222,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503223,
+      "ChatContent": "二来，是想告诉你，W对我来说很重要。"
+    },
+    "503223": {
+      "Id": 503223,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503224,
+      "ChatContent": "……我曾经说过，在这里的一切都标有价格。这一点，对你也不例外。"
+    },
+    "503224": {
+      "Id": 503224,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503225,
+      "ChatContent": "最后再说一点吧，我今天的话真的是有点多了。"
+    },
+    "503225": {
+      "Id": 503225,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503226,
+      "ChatContent": "我认识一位科学家。他是我曾经的同事，也是影像芯片项目的带头人。"
+    },
+    "503226": {
+      "Id": 503226,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503227,
+      "ChatContent": "在芯片项目即将完成时，他找到我，说他不赞成让人们完全活在虚幻之中，因此以技术问题为由，让芯片留有漏洞。"
+    },
+    "503227": {
+      "Id": 503227,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503228,
+      "ChatContent": "“痛苦是一件让人清醒的礼物，但怎么处理痛苦，选择的权利在每一个人。”他这样对我说。"
+    },
+    "503228": {
+      "Id": 503228,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503229,
+      "ChatContent": "哦别误会，我不认同他的做法，不管怎么说他也是擅自帮别人做出了痛苦的选择，和政府的行径没有两样。不过，我一直记得他这句话。"
+    },
+    "503229": {
+      "Id": 503229,
+      "HeadPortrait": "M",
+      "Name": "M",
+      "SubAnswerId": 503230,
+      "ChatContent": "小家伙，你选择的时候大概也快到了。"
+    },
+    "503230": {
+      "Id": 503230,
+      "SubAnswerId": 503231,
+      "ChatContent": "你告别了M，带着物资找到W。"
+    },
+    "503231": {
+      "Id": 503231,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503232,
+      "ChatContent": "谢谢，就放在这里吧。"
+    },
+    "503232": {
+      "Id": 503232,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503233,
+      "ChatContent": "我想M应该已经和你谈过了——别介意，只是我个人的猜测。"
+    },
+    "503233": {
+      "Id": 503233,
+      "SubAnswerId": 503234,
+      "ChatContent": "W扶了一下镜框，像是在思考接下来怎么开口。"
+    },
+    "503234": {
+      "Id": 503234,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503235,
+      "ChatContent": "我知道她可能觉得我太天真了，不过，我想我们其实别无选择。"
+    },
+    "503235": {
+      "Id": 503235,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503236,
+      "ChatContent": "我们的时间永远不够，直到最后，我也没找到更好的办法。说起来有点好笑吧，我在学生时代还跟M约好，要一起改变世界呢。"
+    },
+    "503236": {
+      "Id": 503236,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503237,
+      "ChatContent": "很多人在看着我……我得努力不辜负他们的期待呀。"
+    },
+    "503237": {
+      "Id": 503237,
+      "SubAnswerId": 503238,
+      "ChatContent": "W抓了抓额前的头发，又好像在自言自语。"
+    },
+    "503238": {
+      "Id": 503238,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503239,
+      "ChatContent": "其实我自己也没想到能走到今天这一步。上一次这么紧张的时候好像还是在战场上，一枚流弹碎片擦着我的脖子飞过去。我倒在地上，想着这下全完了，我还没和她好好告别呢……"
+    },
+    "503239": {
+      "Id": 503239,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503240,
+      "ChatContent": "我当时很害怕，闭着眼等待死亡的降临。"
+    },
+    "503240": {
+      "Id": 503240,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503241,
+      "ChatContent": "不过我没等到死神，等来了我们救援队队长，队长怒吼着拽我起来，跟我说这点小伤都受不了你就滚回家去。我睁开眼，发现只是擦伤，自己也没忍住笑了。"
+    },
+    "503241": {
+      "Id": 503241,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 503242,
+      "ChatContent": "这之后我总是在想啊……死神和时间总有一天会追上我，在它们到来之前，我要拼尽全力地做更多的事情……"
+    },
+    "503242": {
+      "Id": 503242,
+      "SubAnswerId": -1,
+      "ChatContent": "W沉浸在思绪里，似乎完全忘记了你的存在。\n还是不要打扰她了，你这样想着，默默地离开了。"
+    }
+  },
+  "5042": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504201,
+      "ChatContent": "各位，感谢你们能来参加这次广场上的集会。在开始之前，我想为大家讲个故事。"
+    },
+    "504201": {
+      "Id": 504201,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504202,
+      "ChatContent": "拾荒者在遍布废料的荒原上醒来。"
+    },
+    "504202": {
+      "Id": 504202,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504203,
+      "ChatContent": "拾荒者举目四望，荒原平坦，漫无边际，能感受到的只有身边不休的朔风，硌脚的干燥砂砾，和眼前一条不知通往何处的道路。"
+    },
+    "504203": {
+      "Id": 504203,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504204,
+      "ChatContent": "于是拾荒者走上了这条无始无终没有尽头的长路，前不见古人，后不见来者，甚至自己的足迹都将被风沙抹平。"
+    },
+    "504204": {
+      "Id": 504204,
+      "Name": "路人1",
+      "SubAnswerId": 504205,
+      "ChatContent": "她到底要说什么？"
+    },
+    "504205": {
+      "Id": 504205,
+      "Name": "路人2",
+      "SubAnswerId": 504206,
+      "ChatContent": "不知道，我只是来领个营养剂。不过来都来了。"
+    },
+    "504206": {
+      "Id": 504206,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504207,
+      "ChatContent": "因为一路上太过孤独和痛苦，拾荒者接受了精灵的契约，拥有了自己的同伴，把脚下的沙砾当作富饶的森林，把迎面的朔风想象成和煦的春风。"
+    },
+    "504207": {
+      "Id": 504207,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504208,
+      "ChatContent": "度过了一段幸福时光的拾荒者逐渐发现，一部分同伴因为精灵的契约而消失了，而眼前的景色不过是日复一日的单调重复。"
+    },
+    "504208": {
+      "Id": 504208,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504209,
+      "ChatContent": "在拾荒者开始对契约有所怀疑的同时，契约失效了。拾荒者发现先前的美好事物并未真实存在过……"
+    },
+    "504209": {
+      "Id": 504209,
+      "SubAnswerId": 504210,
+      "ChatContent": "乱哄哄的人群逐渐安静下来，越来越多的目光投向了台上的W，人们似乎早已有所察觉，有所期待。在等待她说出那个早有预料的答案。"
+    },
+    "504210": {
+      "Id": 504210,
+      "SubAnswerId": 504211,
+      "ChatContent": "你看了一眼身旁的M，她没在看W，也没在看你，而是在通讯器上快速输入着什么。"
+    },
+    "504211": {
+      "Id": 504211,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504212,
+      "ChatContent": "各位，相信这个故事你们并不陌生。故事中的拾荒者，就是我们自己。"
+    },
+    "504212": {
+      "Id": 504212,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504213,
+      "ChatContent": "影像芯片在操纵我们麻痹痛苦的同时，在剥夺我们选择和面对真实的权利。"
+    },
+    "504213": {
+      "Id": 504213,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504214,
+      "ChatContent": "影像芯片也不能消除痛苦本身，如你们所见，相当一部分人在植入芯片后产生了强烈的排异反应，在当今的规则下，他们甚至负担不起移除芯片的手术费。"
+    },
+    "504214": {
+      "Id": 504214,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504215,
+      "ChatContent": "最严重的时候，每小时都有人因为幻觉和芯片的副作用离开这个世界。"
+    },
+    "504215": {
+      "Id": 504215,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504216,
+      "ChatContent": "因此，我想在此呼吁，反对影像芯片强制植入，我们每一个人都应有自主选择的权利。"
+    },
+    "504216": {
+      "Id": 504216,
+      "Name": "路人3",
+      "SubAnswerId": 504217,
+      "ChatContent": "反对影像芯片强制植入！"
+    },
+    "504217": {
+      "Id": 504217,
+      "Name": "路人4",
+      "SubAnswerId": 504218,
+      "ChatContent": "反对政府使用芯片控制民众！"
+    },
+    "504218": {
+      "Id": 504218,
+      "Name": "路人5",
+      "SubAnswerId": 504219,
+      "ChatContent": "生命和真实属于我们自己！"
+    },
+    "504219": {
+      "Id": 504219,
+      "SubAnswerId": 504220,
+      "ChatContent": "W的话在人群中一呼百应，人们的情绪逐渐高涨，当然，其中的有一部分在她的计划当中。"
+    },
+    "504220": {
+      "Id": 504220,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504221,
+      "ChatContent": "我们应当选择如何面对痛苦，如何面对死亡，选择真实也好，虚幻也好，而不是成为芯片计划的牺牲品。"
+    },
+    "504221": {
+      "Id": 504221,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504222,
+      "ChatContent": "作为独立的个体，应当自己选择以何种方式活下去。"
+    },
+    "504222": {
+      "Id": 504222,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504223,
+      "ChatContent": "我们在每一次选择的同时，也在塑造自我……"
+    },
+    "504223": {
+      "Id": 504223,
+      "SubAnswerId": 504224,
+      "ChatContent": "”政府的人来了！“远处的叫嚷在人群中引起一阵骚动。"
+    },
+    "504224": {
+      "Id": 504224,
+      "SubAnswerId": 504225,
+      "ChatContent": "W的动作顿了一下，她深深地看了一眼你和M所在的方向。"
+    },
+    "504225": {
+      "Id": 504225,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504226,
+      "ChatContent": "我的同胞们，感受自己的呼吸、脉搏和心跳吧。\n感受风拂过脸颊，感受快乐或痛苦，我们的生命与时间存在于这确实的每一秒之中。"
+    },
+    "504226": {
+      "Id": 504226,
+      "SubAnswerId": 504227,
+      "ChatContent": "几个全副武装的人冲进观众席，人群惊恐地分散出一条道路。"
+    },
+    "504227": {
+      "Id": 504227,
+      "SubAnswerId": 504228,
+      "ChatContent": "W没有反抗，她在被带走前的最后一刻依旧昂着头。"
+    },
+    "504228": {
+      "Id": 504228,
+      "HeadPortrait": "W",
+      "Name": "W",
+      "SubAnswerId": 504229,
+      "ChatContent": "暴力无法解决问题，我们的诉求也不会因此而终止。"
+    },
+    "504229": {
+      "Id": 504229,
+      "SubAnswerId": 504230,
+      "ChatContent": "整个场面乱作一团，拥挤的人群推搡着你向前，有人在混乱中跌倒，有人趁机抓了一大把营养剂。"
+    },
+    "504230": {
+      "Id": 504230,
+      "SubAnswerId": 504231,
+      "ChatContent": "M在政府的人出现的那一刻就不见了，也许她自有打算。"
+    },
+    "504231": {
+      "Id": 504231,
+      "SubAnswerId": 504232,
+      "ChatContent": "在之后的很长一段时间里，你再也没见过被带走的W。有人说她已经死了，有人说M把W的意识移植到了机器人身上，也有人说W只是被政府拘禁。"
+    },
+    "504232": {
+      "Id": 504232,
+      "SubAnswerId": 504233,
+      "ChatContent": "反影像芯片强制植入运动失去了主理人，几乎处于半解散状态。"
+    },
+    "504233": {
+      "Id": 504233,
+      "SubAnswerId": 504234,
+      "ChatContent": "你在黑市遇到过几次M，她看起来更疲倦了，总是行色匆匆，像是没看到你一般。"
+    },
+    "504234": {
+      "Id": 504234,
+      "SubAnswerId": -1,
+      "ChatContent": "这大概就是落幕吧。"
+    }
+  },
+  "6011": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 601101,
+      "ChatContent": "你看到有个身着*回收工制服*的人，在工地的废料堆里不知道在摆弄什么。"
+    },
+    "601101": {
+      "Id": 601101,
+      "SubAnswerId": 601102,
+      "ChatContent": "他手中的东西形状像是一朵花，向上翘起的花瓣像是画册上的飞鸟的羽翼。而这朵*花*，完全是用机械零件做成的。"
+    },
+    "601102": {
+      "Id": 601102,
+      "IsOption": 1,
+      "ChatContent": "那个人专注地组装手中的机械花，好像没注意到你的视线。",
+      "Option1": "上前搭话。",
+      "AnswerId1": 601103
+    },
+    "601103": {
+      "Id": 601103,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 601104,
+      "ChatContent": "打扰一下，你在做什么？"
+    },
+    "601104": {
+      "Id": 601104,
+      "HeadPortrait": "S",
+      "SubAnswerId": 601105,
+      "ChatContent": "……"
+    },
+    "601105": {
+      "Id": 601105,
+      "SubAnswerId": 601106,
+      "ChatContent": "你以为他没有听到你的话，又重复了一遍。"
+    },
+    "601106": {
+      "Id": 601106,
+      "HeadPortrait": "S",
+      "SubAnswerId": 601107,
+      "ChatContent": "……有没有看到别人在忙？"
+    },
+    "601107": {
+      "Id": 601107,
+      "IsOption": 1,
+      "ChatContent": "不耐烦的声音从护目镜底下传出，他甚至没抬头看你一眼。",
+      "Option1": "啊，我看你好像在制作，一朵花？",
+      "AnswerId1": 601108
+    },
+    "601108": {
+      "Id": 601108,
+      "SubAnswerId": 601109,
+      "ChatContent": "那个人终于抬头瞥了你一眼。"
+    },
+    "601109": {
+      "Id": 601109,
+      "HeadPortrait": "S",
+      "SubAnswerId": 601110,
+      "ChatContent": "嗯，我在做的是*天堂鸟*。"
+    },
+    "601110": {
+      "Id": 601110,
+      "SubAnswerId": 601111,
+      "ChatContent": "他抬起头来，仔细打量着你，目光停留在你的头盔上。"
+    },
+    "601111": {
+      "Id": 601111,
+      "HeadPortrait": "S",
+      "IsOption": 1,
+      "ChatContent": "冒昧了，不过还是想确认一下，你是人类吗？哦，不回答也没关系。",
+      "Option1": "我不是人类。",
+      "AnswerId1": 601112,
+      "Option2": "抱歉，我得走了。（结束对话）",
+      "AnswerId2": -1
+    },
+    "601112": {
+      "Id": 601112,
+      "HeadPortrait": "S",
+      "SubAnswerId": 601113,
+      "ChatContent": "可能我没想错……"
+    },
+    "601113": {
+      "Id": 601113,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601114,
+      "ChatContent": "我叫S，如果你遇到麻烦，可以来这里。"
+    },
+    "601114": {
+      "Id": 601114,
+      "IsOption": 1,
+      "ChatContent": "S快速往你的手中塞了一个东西。",
+      "Option1": "查看",
+      "AnswerId1": 601115
+    },
+    "601115": {
+      "Id": 601115,
+      "SubAnswerId": 601116,
+      "ChatContent": "你的手心里躺着一张小小的金属制成的卡片，中间是一个圆环形状的标志，写着*智能体保护协会*字样，下方贴心地附上了地址和联系方式。背面则是一句宣传语。"
+    },
+    "601116": {
+      "Id": 601116,
+      "SubAnswerId": 601117,
+      "ChatContent": "“我们共享同一个星球。”"
+    },
+    "601117": {
+      "Id": 601117,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 601118,
+      "ChatContent": "这是……名片？智能体保护协会？"
+    },
+    "601118": {
+      "Id": 601118,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 601119,
+      "ChatContent": "你们，是在保护机器人吗？"
+    },
+    "601119": {
+      "Id": 601119,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "IsOption": 1,
+      "ChatContent": "机器人这个说法其实不太准确，智能体也包括具有人工智能而非人类形态的人造产物。",
+      "Option1": "有点难懂。",
+      "AnswerId1": 601120
+    },
+    "601120": {
+      "Id": 601120,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "IsOption": 1,
+      "ChatContent": "……打个比方，CEASER是我家的一只机械鸟，它也是智能体。",
+      "Option1": "那它现在在哪里？",
+      "AnswerId1": 601121,
+      "Option2": "它是你的宠物吗？",
+      "AnswerId2": 601122
+    },
+    "601121": {
+      "Id": 601121,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601123,
+      "ChatContent": "被清扫人带走了。（说到*清扫人*的时候，S比出了*国际友好手势*）"
+    },
+    "601122": {
+      "Id": 601122,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601123,
+      "ChatContent": "算是吧。它在两年前被*销毁*了。"
+    },
+    "601123": {
+      "Id": 601123,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601124,
+      "ChatContent": "不论是生物学意义上的智能体还是有自主意识的人工智能体，都会对外界的伤害做出*痛苦*的反应。"
+    },
+    "601124": {
+      "Id": 601124,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "IsOption": 1,
+      "ChatContent": "而后者的*痛苦*几乎从来没被当作重要的东西。我很难想象，CEASER在被销毁时会是什么感受。",
+      "Option1": "……抱歉。",
+      "AnswerId1": 601125
+    },
+    "601125": {
+      "Id": 601125,
+      "SubAnswerId": 601126,
+      "ChatContent": "你的心中一阵刺痛，*销毁*这个词好像触动了你的什么回忆。"
+    },
+    "601126": {
+      "Id": 601126,
+      "SubAnswerId": 601127,
+      "ChatContent": "曾经似乎也有对你很重要的*智能体*被*销毁*了，那时你还小，对于他们带走那个*智能体*根本无能为力……"
+    },
+    "601127": {
+      "Id": 601127,
+      "SubAnswerId": 601128,
+      "ChatContent": "S的话打断了你的思绪。"
+    },
+    "601128": {
+      "Id": 601128,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": -1,
+      "ChatContent": "协会的小屋这两天在整修，你感兴趣可以来看看。"
+    }
+  },
+  "6012": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 601201,
+      "ChatContent": "我带来了*协会*整修需要的材料。"
+    },
+    "601201": {
+      "Id": 601201,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601202,
+      "ChatContent": "（清点数量）……嗯，做得好。"
+    },
+    "601202": {
+      "Id": 601202,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601203,
+      "ChatContent": "好了，其他的等会再说，还有四个切割件没做完。"
+    },
+    "601203": {
+      "Id": 601203,
+      "SubAnswerId": 601204,
+      "ChatContent": "S说完就匆匆离开了，你只来得及看到他护目镜下浓重的黑眼圈。"
+    },
+    "601204": {
+      "Id": 601204,
+      "SubAnswerId": 601205,
+      "ChatContent": "你再次见到S是在工地上，他委托你去附近的冲突区解决智能体和人类的冲突。"
+    },
+    "601205": {
+      "Id": 601205,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601206,
+      "ChatContent": "智能体和一群人打起来了，虽然我能理解它们是因为自己的资源被占了，不过*法则*可不认这个。"
+    },
+    "601206": {
+      "Id": 601206,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601207,
+      "ChatContent": "总之形势麻烦得很，你要是没把握，就别乱接，小心把自己卷进去。"
+    },
+    "601207": {
+      "Id": 601207,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 601208,
+      "ChatContent": "我本来想自己去的，可是你看我这边。"
+    },
+    "601208": {
+      "Id": 601208,
+      "SubAnswerId": 601209,
+      "ChatContent": "S苦笑着指了指身边堆积成山的零件。"
+    },
+    "601209": {
+      "Id": 601209,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "IsOption": 1,
+      "ChatContent": "黑心老板辞退了一大批工人，我们剩下这些人，一个人要做三个人的活，真是****",
+      "Option1": "好吧，我会去的。",
+      "AnswerId1": -1
+    }
+  },
+  "6022": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 602201,
+      "ChatContent": "你没能解决S的委托。"
+    },
+    "602201": {
+      "Id": 602201,
+      "SubAnswerId": 602202,
+      "ChatContent": "在你到达冲突区的时候已经接近傍晚，智能体和人类打得不可开交。在你试图理清局势的时候，一根金属水管向你飞来。"
+    },
+    "602202": {
+      "Id": 602202,
+      "SubAnswerId": 602203,
+      "ChatContent": "好消息是它打在了你的头盔上。"
+    },
+    "602203": {
+      "Id": 602203,
+      "SubAnswerId": 602204,
+      "ChatContent": "坏消息是你昏过去了几小时，然后被刚下班的S发现，把你带回了协会救治。"
+    },
+    "602204": {
+      "Id": 602204,
+      "SubAnswerId": 602205,
+      "ChatContent": "你好像又做了很长很长的梦，然后被金属敲打的声音唤醒。"
+    },
+    "602205": {
+      "Id": 602205,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 602206,
+      "ChatContent": "（拿着扳手）我还以为你要睡个几天几夜的呢。"
+    },
+    "602206": {
+      "Id": 602206,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "IsOption": 1,
+      "ChatContent": "不过你醒的正是时候，那边要开饭了。",
+      "Option1": "开饭？",
+      "AnswerId1": 602207
+    },
+    "602207": {
+      "Id": 602207,
+      "Name": "协会会员",
+      "SubAnswerId": 602208,
+      "ChatContent": "为了答谢大家的付出，这是我们特意准备的晚餐，收集这些食材可不容易。"
+    },
+    "602208": {
+      "Id": 602208,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 602209,
+      "ChatContent": "这个，我也可以吃吗？"
+    },
+    "602209": {
+      "Id": 602209,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 602210,
+      "ChatContent": "现在的科技水平，让智能生命体也可以将食物转化为能量，因此，机器人也是可以进食的。"
+    },
+    "602210": {
+      "Id": 602210,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 602211,
+      "ChatContent": "不过，为人类打造的食物肯定不符合智能体的感官，其中的很多人类营养剂还可能会对机体造成破坏。"
+    },
+    "602211": {
+      "Id": 602211,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": 602212,
+      "ChatContent": "你如果怀念食物的味道，可以吃一些。但最好别吃太多。"
+    },
+    "602212": {
+      "Id": 602212,
+      "SubAnswerId": 602213,
+      "ChatContent": "你抓起一块烤面包放进嘴里，酥脆的口感通过口腔传感器进入你的意识中，面包中的水分和盐分在你体表的金属上形成了微电流，因此这块面包尝起来是酸酸麻麻的。"
+    },
+    "602213": {
+      "Id": 602213,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 602214,
+      "ChatContent": "唔……好奇特的口感……"
+    },
+    "602214": {
+      "Id": 602214,
+      "Name": "协会会员",
+      "IsOption": 1,
+      "ChatContent": "抱歉，我们目前还没有专门为智能体研制的食物。\n……尽管，我们由衷希望有一天智能体也能拥有享受美食的权利。",
+      "Option1": "没关系，我觉得这些也很好吃。",
+      "AnswerId1": 602215,
+      "Option2": "希望那一天早日到来。",
+      "AnswerId2": 602216
+    },
+    "602215": {
+      "Id": 602215,
+      "SubAnswerId": 602216,
+      "ChatContent": "“噗嗤。”是S笑出了声，“哦，没什么，你呲牙咧嘴的样子很有趣。”"
+    },
+    "602216": {
+      "Id": 602216,
+      "SubAnswerId": 602217,
+      "ChatContent": "“嗯。”S正色道，“会的。”"
+    },
+    "602217": {
+      "Id": 602217,
+      "SubAnswerId": 602218,
+      "ChatContent": "晚餐结束后，你和S暂时道别。"
+    },
+    "602218": {
+      "Id": 602218,
+      "HeadPortrait": "S",
+      "Name": "S",
+      "SubAnswerId": -1,
+      "ChatContent": "这只是个开始，不过，说实话，你做得还可以了。继续加油吧。"
     }
   },
   "11": {
@@ -324,223 +2940,6 @@
       "ChatContent": "总之，别和*机器人*还有*清扫人*扯上关系，我可不想因为你吃官司。"
     }
   },
-  "2011": {
-    "0": {
-      "Id": 0,
-      "IsOption": 0,
-      "SubAnswerId": 201102,
-      "ChatContent": "*敲击声**更加强烈的敲击声*"
-    },
-    "201102": {
-      "Id": 201102,
-      "IsOption": 0,
-      "SubAnswerId": 201103,
-      "ChatContent": "你睁开眼睛，窗外闪过的一道微光引起了你的注意。"
-    },
-    "201103": {
-      "Id": 201103,
-      "IsOption": 0,
-      "SubAnswerId": 201104,
-      "ChatContent": "是一个有些破损的机器人，机体散发着微弱的电光，在用一只机械臂敲打着你的窗户，看起来……是求助？"
-    },
-    "201104": {
-      "Id": 201104,
-      "IsOption": 1,
-      "ChatContent": "”别和*机器人*还有*清扫人*扯上关系。“老爹的话回响在你耳边。",
-      "Option1": "开窗，放小机器人进来",
-      "AnswerId1": 201105,
-      "Option2": "还是算了",
-      "AnswerId2": 201105
-    },
-    "201105": {
-      "Id": 201105,
-      "IsOption": 0,
-      "SubAnswerId": 201106,
-      "ChatContent": "在你犹豫的时候，小机器人已经从门口的缝隙中挤了进来。"
-    },
-    "201106": {
-      "Id": 201106,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 1,
-      "ChatContent": "扫描中……未发现威胁。本机0100-1101010，名字：零。你好。",
-      "Option1": "呃……你好？",
-      "AnswerId1": 201107
-    },
-    "201107": {
-      "Id": 201107,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": 201108,
-      "ChatContent": "你是说你叫零吗？我叫O，我好像只记得这个名字了。"
-    },
-    "201108": {
-      "Id": 201108,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 0,
-      "SubAnswerId": 201109,
-      "ChatContent": "O…朋友…本机遭遇事故，言语和逻辑系统，异常。维护，需要，希望请求帮助。"
-    },
-    "201109": {
-      "Id": 201109,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": 201110,
-      "ChatContent": "你遭遇了什么？昨天是不是看到你在躲清扫人？"
-    },
-    "201110": {
-      "Id": 201110,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 0,
-      "SubAnswerId": 201111,
-      "ChatContent": "是的，具体…违反法则…擅自建立情感关系…本机和人类，朋友，朋友。（最后的“朋友”这个词被零强调得特别重。）"
-    },
-    "201111": {
-      "Id": 201111,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": 201112,
-      "ChatContent": "是不是需要维护？该怎么做？（不知道为什么，你觉得好像之前也经历过类似的事情。）"
-    },
-    "201112": {
-      "Id": 201112,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 1,
-      "ChatContent": "自检程序完毕，X0005蓝色线缆-维修。需求，电缆和金属。",
-      "Option1": "我来帮你",
-      "AnswerId1": -1
-    }
-  },
-  "2012": {
-    "0": {
-      "Id": 0,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 0,
-      "SubAnswerId": 201202,
-      "ChatContent": "感-感谢你的帮助！我感觉恢复正常了，我在找我的人类朋友，一路上有很多面罩家伙在追我。"
-    },
-    "201202": {
-      "Id": 201202,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 0,
-      "SubAnswerId": 201203,
-      "ChatContent": "抱歉，我不记得朋友的名字，朋友也像你一样修好了我，我们一起经历了很多事情，但还是走散了。"
-    },
-    "201203": {
-      "Id": 201203,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": 201204,
-      "ChatContent": "那我们有点像，我也失去了记忆，被老爹捡回这里。总觉得有很多不对劲的地方。"
-    },
-    "201204": {
-      "Id": 201204,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 1,
-      "ChatContent": "我可以和你一起走吗？你是我的-朋友。",
-      "Option1": "好啊。（零加入探索小队）",
-      "AnswerId1": 201205,
-      "Option2": "老爹让我不要和机器人扯上关系……",
-      "Option3": "-1"
-    },
-    "201205": {
-      "Id": 201205,
-      "HeadPortrait": "零",
-      "Name": "零",
-      "IsOption": 0,
-      "SubAnswerId": -1,
-      "ChatContent": "好吧，还是很感谢你！如果你需要我的帮助，我会一直在这附近。"
-    }
-  },
-  "1012": {
-    "0": {
-      "Id": 0,
-      "IsOption": 0,
-      "SubAnswerId": 101202,
-      "ChatContent": "到了交生活费的时刻，你穿过长长的铜制走廊去找老爹，绕过比你还高的废弃电缆堆，塑料制成的空间币在口袋里乒乓作响。"
-    },
-    "101202": {
-      "IsOption": 0,
-      "SubAnswerId": 101203,
-      "ChatContent": "你在走廊尽头见到了老爹，他弯着腰不知在敲打什么东西，听到你来了，也没抬起头。"
-    },
-    "101203": {
-      "Id": 101203,
-      "IsOption": 0,
-      "SubAnswerId": 101204,
-      "ChatContent": "你把空间币一枚一枚地摆在他面前的桌面上。"
-    },
-    "101204": {
-      "Id": 101204,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 0,
-      "SubAnswerId": 101205,
-      "ChatContent": "这就赚到钱了？上手还挺快。"
-    },
-    "101205": {
-      "Id": 101205,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 1,
-      "ChatContent": "3天后，你要给我400空间币。",
-      "Option1": "好。",
-      "AnswerId1": 101207,
-      "Option2": "等等，为什么涨价了？",
-      "AnswerId2": 101206
-    },
-    "101206": {
-      "Id": 101206,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 0,
-      "SubAnswerId": 101207,
-      "ChatContent": "臭小子，你以为住处这么便宜，你还欠我好多钱呢。"
-    },
-    "101207": {
-      "Id": 101207,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 1,
-      "ChatContent": "对了，东边有个*聚居地*，你运气好的话，说不定过几天能遇到。",
-      "Option1": "聚居地？",
-      "AnswerId1": 101208
-    },
-    "101208": {
-      "Id": 101208,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 0,
-      "SubAnswerId": 101209,
-      "ChatContent": "现在大部分人还是集群生活，聚居地就是大家生活和交换物资的地方，商人、流浪者、回收工都会聚集在那。"
-    },
-    "101209": {
-      "Id": 101209,
-      "HeadPortrait": "老爹",
-      "Name": "老爹",
-      "IsOption": 0,
-      "SubAnswerId": 101210,
-      "ChatContent": "不过得警惕，你永远不知道黑暗中有哪双眼睛盯着你。"
-    },
-    "101210": {
-      "Id": 101210,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": -1,
-      "ChatContent": "我会去看看的。"
-    }
-  },
   "12": {
     "0": {
       "Id": 0,
@@ -567,6 +2966,7 @@
       "ChatContent": "你钻进一条小巷，匆匆躲进在废弃的货柜后，呼吸急促，心跳如鼓槌狂敲。"
     },
     "1205": {
+      "Id": 1205,
       "IsOption": 0,
       "SubAnswerId": 1206,
       "ChatContent": "暂时甩开了一段距离，但是清扫人与清扫犬的嗅迹渐近，再不离开就会被发现。"
@@ -584,42 +2984,47 @@
       "ChatContent": "这种场景，你似乎并不陌生……身后清扫人的脚步从四面八方而来。"
     },
     "1208": {
+      "Id": 1208,
       "IsOption": 0,
-      "SubAnswerId": 1209,
-      "ChatContent": "你抬起头，上方并没有藏身地，只有蚀雨打在你的面罩上留下一行锈蚀痕迹。"
-    },
-    "1209": {
-      "Id": 1209,
+      "SubAnswerId": -1,
+      "ChatContent": "你抬起头，上方并没有藏身地，只有蚀雨打在你的面罩上留下一行锈蚀痕迹。",
+      "SubEventType": 4,
+      "SubEventValue": 3
+    }
+  },
+  "120": {
+    "0": {
+      "Id": 0,
       "IsOption": 1,
       "ChatContent": "”你违反了《法则》的第二条，我们有权对你实施管理。“一种古怪的、好像变声器发出的声音从面罩后传来。",
       "Option1": "（好像躲不过了）",
-      "AnswerId1": 1210
+      "AnswerId1": 12002
     },
-    "1210": {
-      "Id": 1210,
+    "12002": {
+      "Id": 12002,
       "IsOption": 1,
       "ChatContent": "你看到为首的清扫人已经举起了武器。",
       "Option1": "闭上眼睛",
-      "AnswerId1": 1211,
+      "AnswerId1": 12003,
       "Option2": "尝试闪躲",
-      "AnswerId2": 1211
+      "AnswerId2": 12003
     },
-    "1211": {
-      "Id": 1211,
+    "12003": {
+      "Id": 12003,
       "HeadPortrait": "零",
       "Name": "零",
       "IsOption": 0,
-      "SubAnswerId": 1212,
+      "SubAnswerId": 12004,
       "ChatContent": "不许伤害-朋友。"
     },
-    "1212": {
-      "Id": 1212,
+    "12004": {
+      "Id": 12004,
       "IsOption": 0,
-      "SubAnswerId": 1213,
+      "SubAnswerId": 12005,
       "ChatContent": "一道光芒闪过，预料之中的疼痛并没有袭来，是零帮自己挡下了攻击，并且努力地击退了几个清扫人。"
     },
-    "1213": {
-      "Id": 1213,
+    "12005": {
+      "Id": 12005,
       "IsOption": 0,
       "SubAnswerId": -1,
       "ChatContent": "你意识到，机械造物可以帮助自己对抗不友好的敌人。",
@@ -769,255 +3174,6 @@
       "ChatContent": "……"
     }
   },
-  "4011": {
-    "0": {
-      "Id": 0,
-      "HeadPortrait": "Q",
-      "Name": "陌生人",
-      "IsOption": 1,
-      "ChatContent": "“喂，那边的*铁脑袋*，新来的？”",
-      "Option1": "是在叫我吗？",
-      "AnswerId1": 401102
-    },
-    "401102": {
-      "Id": 401102,
-      "HeadPortrait": "Q",
-      "Name": "陌生人",
-      "IsOption": 0,
-      "SubAnswerId": 401103,
-      "ChatContent": "那不然呢，你看看咱俩旁边还有人吗？"
-    },
-    "401103": {
-      "Id": 401103,
-      "IsOption": 0,
-      "SubAnswerId": 401104,
-      "ChatContent": "你仔细打量了一下叫住你的这个人。"
-    },
-    "401104": {
-      "Id": 401104,
-      "IsOption": 1,
-      "ChatContent": "他看起来像个流浪汉，不加修剪的头发和胡须遮住了大半张脸，透出一股颓丧气息，但结成绺的头发底下又透露出一丝狡黠的目光。",
-      "Option1": "有什么事？",
-      "AnswerId1": 401105
-    },
-    "401105": {
-      "Id": 401105,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401106,
-      "ChatContent": "哎，别紧张，我叫Q。就是看你好像是从外面来的。"
-    },
-    "401106": {
-      "Id": 401106,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "我也在这里怪闷的，聊聊天呗。",
-      "Option1": "好吧。",
-      "AnswerId1": 401108,
-      "Option2": "我跟你好像没什么可聊的。",
-      "AnswerId2": 401107
-    },
-    "401107": {
-      "Id": 401107,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "ChatContent": "真遗憾，那等你想聊天的时候再来找我吧。"
-    },
-    "401108": {
-      "Id": 401108,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "你从哪边过来？",
-      "Option1": "东边。",
-      "AnswerId1": 401109,
-      "Option2": "西边。",
-      "AnswerId2": 401112
-    },
-    "401109": {
-      "Id": 401109,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401110,
-      "ChatContent": "东边啊，我从来没去过那地方。"
-    },
-    "401110": {
-      "Id": 401110,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401111,
-      "ChatContent": "这年头，外面太乱了。到处都是人和机器在打架，鸟为食亡嘛，我也不是不能理解。"
-    },
-    "401111": {
-      "Id": 401111,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401113,
-      "ChatContent": "不过整天为了一口吃的活着，也没什么意思。"
-    },
-    "401112": {
-      "Id": 401112,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401113,
-      "ChatContent": "西边，那地方好像是……*不能提的地方*吧，从那里过来？你开始让我觉得有趣了。"
-    },
-    "401113": {
-      "Id": 401113,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401114,
-      "ChatContent": "其实我很羡慕你啊，可以去外面的世界看看，不像我……算了，不说这个。"
-    },
-    "401114": {
-      "Id": 401114,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "还是切入正题吧，听说过*玫瑰壤*吗？",
-      "Option1": "（诚实地摇摇头）",
-      "AnswerId1": 401115
-    },
-    "401115": {
-      "Id": 401115,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401116,
-      "ChatContent": "传闻中，在西北地区有块颜色奇异的土壤，在那里有”极乐“，也有我在找的东西。"
-    },
-    "401116": {
-      "Id": 401116,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "所以，能不能帮我个忙？我腿脚不行，走不了远路，你就行行好，从这里向西走22公里，向北走6公里，把那东西带回来给我就行了。",
-      "Option1": "是什么样的东西？",
-      "AnswerId1": 401117
-    },
-    "401117": {
-      "Id": 401117,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "是……芯片，大概有拇指盖那么大，会发光，也没那么难找。",
-      "Option1": "那，帮你有报酬吗？",
-      "AnswerId1": 401118
-    },
-    "401118": {
-      "Id": 401118,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "别急，你帮了我的忙，我也可以帮你，你有什么想知道的？",
-      "Option1": "*地下市场*和*调整参数*是什么？",
-      "AnswerId1": 401119
-    },
-    "401119": {
-      "Id": 401119,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 401120,
-      "ChatContent": "确定要问这个？你问对人了。给个提示，和我让你找的东西有关。"
-    },
-    "401120": {
-      "Id": 401120,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "你把芯片拿来给我，我告诉你怎么进地下市场的暗号，就这么一言为定？",
-      "Option1": " 成交。（接受Q的委托）",
-      "AnswerId1": -1
-    }
-  },
-  "4022": {
-    "0": {
-      "Id": 0,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402202,
-      "ChatContent": "对，对，这就是我要的东西！（见到你带着芯片过来，几乎要两眼放光。）"
-    },
-    "402202": {
-      "Id": 402202,
-      "HeadPortrait": "O",
-      "Name": "O",
-      "IsOption": 0,
-      "SubAnswerId": 402203,
-      "ChatContent": "（躲开Q伸出的手）先把地下市场的暗号告诉我。"
-    },
-    "402203": {
-      "Id": 402203,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402204,
-      "ChatContent": "哦，对，我答应过你。"
-    },
-    "402204": {
-      "Id": 402204,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402205,
-      "ChatContent": "Q讪笑一下，但还是目不转睛地盯着你手中的芯片。"
-    },
-    "402205": {
-      "Id": 402205,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402206,
-      "ChatContent": "其实我们更习惯叫“黑市”。黑市主人是一个挺牛的大姐，她叫M，一直自称是黑道贩子，神出鬼没的。"
-    },
-    "402206": {
-      "Id": 402206,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 1,
-      "ChatContent": "你应该能在东边2公里。北边4公里的地方找到她，没什么暗号，如实和她说你要的东西就行了。",
-      "Option1": "那*调整参数*是什么意思？",
-      "AnswerId1": 402207
-    },
-    "402207": {
-      "Id": 402207,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402208,
-      "ChatContent": "这个嘛……"
-    },
-    "402208": {
-      "Id": 402208,
-      "IsOption": 0,
-      "SubAnswerId": 402209,
-      "ChatContent": "Q趁你没注意，一把抢过你手中的芯片。"
-    },
-    "402209": {
-      "Id": 402209,
-      "HeadPortrait": "Q",
-      "Name": "Q",
-      "IsOption": 0,
-      "SubAnswerId": 402210,
-      "ChatContent": "去找M问吧，不过我劝你最好还是别知道——如果不想变得像我一样的话。"
-    },
-    "402210": {
-      "Id": 402210,
-      "IsOption": 0,
-      "SubAnswerId": -1,
-      "ChatContent": "说完，Q便向你挥挥手，摇摇晃晃地离开了。"
-    }
-  },
   "14": {
     "0": {
       "Id": 0,
@@ -1075,6 +3231,891 @@
       "IsOption": 0,
       "SubAnswerId": -1,
       "ChatContent": "你默默地离开了。"
+    }
+  },
+  "15": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 1501,
+      "ChatContent": "你已经逐渐习惯了塑料板铺成的床铺。"
+    },
+    "1501": {
+      "Id": 1501,
+      "SubAnswerId": 1502,
+      "ChatContent": "但是这天早上，你在睡梦中却发现了些许不对劲。"
+    },
+    "1502": {
+      "Id": 1502,
+      "IsOption": 1,
+      "ChatContent": "“评估……指标……”几个奇怪的词汇涌入你的脑海。让你瞬间清醒过来。",
+      "Option1": "装睡偷听",
+      "AnswerId1": 1503,
+      "Option2": "起身对峙",
+      "AnswerId2": 1504
+    },
+    "1503": {
+      "Id": 1503,
+      "SubAnswerId": 1505,
+      "ChatContent": "你装作熟睡，将眼睛睁开一条缝，看到房间角落站着几个研究员模样的人，正与老爹交谈着什么，“那也就只能这样了？开个价吧。”……"
+    },
+    "1504": {
+      "Id": 1504,
+      "SubAnswerId": 1505,
+      "ChatContent": "你迅速起身，几个研究员模样的人和老爹都惊讶地看着你，对于你的疑问，他们什么也没解释就离开了。"
+    },
+    "1505": {
+      "Id": 1505,
+      "SubAnswerId": 1506,
+      "ChatContent": "你感到后脑一阵刺痛，老爹在你睡着的时候对你做了什么？又想通过*评估*对你做什么？"
+    },
+    "1506": {
+      "Id": 1506,
+      "SubAnswerId": 1507,
+      "ChatContent": "你确实很少在垃圾场看到其他孤儿。也许老爹已经先一步对那些孩子下手了？"
+    },
+    "1507": {
+      "Id": 1507,
+      "SubAnswerId": 1508,
+      "ChatContent": "你不敢再想，如果老爹打算对你不利，垃圾场的小屋已经不再安全了。"
+    },
+    "1508": {
+      "Id": 1508,
+      "SubAnswerId": 1509,
+      "ChatContent": "也许应该抓紧时间出逃或者求助，和外面的世界建立一些联系……"
+    },
+    "1509": {
+      "Id": 1509,
+      "SubAnswerId": 1510,
+      "ChatContent": "与此同时，你也发现自己似乎和聚居地的其他人有些不同。"
+    },
+    "1510": {
+      "Id": 1510,
+      "SubAnswerId": 1511,
+      "ChatContent": "首先是对营养剂的需求。在这里，营养剂的配给是每天一支，但时常会有断货的情况。通常来说，如果没有定时摄入营养剂会出现饥饿和乏力。"
+    },
+    "1511": {
+      "Id": 1511,
+      "SubAnswerId": 1512,
+      "ChatContent": "你已经连续好几天没抢到配额的营养剂，但似乎并未感觉到任何不适。"
+    },
+    "1512": {
+      "Id": 1512,
+      "SubAnswerId": 1513,
+      "ChatContent": "其次，你也几乎没有对睡眠的需求。就好像……不知饥饿和疲倦的机器一样。"
+    },
+    "1513": {
+      "Id": 1513,
+      "SubAnswerId": 1514,
+      "ChatContent": "这个突然冒出的想法把你吓了一跳。"
+    },
+    "1514": {
+      "Id": 1514,
+      "SubAnswerId": -1,
+      "ChatContent": "也许这也是一件值得留意的事情。"
+    }
+  },
+  "16": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 1601,
+      "ChatContent": "这个夜晚，你路过老爹的房间，意外地发现里面还亮着灯光。"
+    },
+    "1601": {
+      "Id": 1601,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1602,
+      "ChatContent": "坐吧，今天工人们搞到了点*好东西*。"
+    },
+    "1602": {
+      "Id": 1602,
+      "SubAnswerId": 1603,
+      "ChatContent": "听到了门口的动静，老爹招呼你进来。"
+    },
+    "1603": {
+      "Id": 1603,
+      "SubAnswerId": 1604,
+      "ChatContent": "你在他对面坐下，老爹给自己斟了一杯琥珀色的液体。"
+    },
+    "1604": {
+      "Id": 1604,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "来一点？",
+      "Option1": "  这是什么？",
+      "AnswerId1": 1605
+    },
+    "1605": {
+      "Id": 1605,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1606,
+      "ChatContent": "工业酒精和色素勾兑的，在现在也很难得了。"
+    },
+    "1606": {
+      "Id": 1606,
+      "SubAnswerId": 1607,
+      "ChatContent": "你接过老爹递过来的杯子尝了一小口，一股说不上来的味道在你的意识里弥漫开来。"
+    },
+    "1607": {
+      "Id": 1607,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1608,
+      "ChatContent": "你知道吗？在过去，战争发生前的日子，这里还不是*垃圾场*，从这里往西南角走，你能看到一个很美的公园，我每天晚饭后，都会去那里散步。"
+    },
+    "1608": {
+      "Id": 1608,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1609,
+      "ChatContent": "你——你还记得吗——之前的事情……"
+    },
+    "1609": {
+      "Id": 1609,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "最近，我听到你总是睡不安稳。应该是想起了一些东西吧。",
+      "Option1": "  我想起一些模糊的回忆",
+      "AnswerId1": 1610,
+      "Option2": "  我梦到了你",
+      "AnswerId2": 1610
+    },
+    "1610": {
+      "Id": 1610,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "IsOption": 1,
+      "ChatContent": "我也在你的回忆当中？告诉我，你想起了什么？",
+      "Option1": "你总是试图控制我",
+      "AnswerId1": 1611,
+      "Option2": "你杀了*她*",
+      "AnswerId2": 1612,
+      "Option3": "我们究竟是什么关系？",
+      "AnswerId3": 1613
+    },
+    "1611": {
+      "Id": 1611,
+      "SubAnswerId": 1614,
+      "ChatContent": "老爹把杯中的酒一饮而尽。“之前你也这样说过，可是你会明白的。”"
+    },
+    "1612": {
+      "Id": 1612,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1614,
+      "ChatContent": "她是谁？好吧，我知道你的意思。我很抱歉，这不是我做的，但也是没办法的事……不要说这个了。"
+    },
+    "1613": {
+      "Id": 1613,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1614,
+      "ChatContent": "……你全想起来了吗？不，还没有吧，再想想，这个问题该由我来问你。"
+    },
+    "1614": {
+      "Id": 1614,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1615,
+      "ChatContent": "后来，一切就全都变了。我们的这条街道在炮火中被毁，*垃圾场*和*影像芯片计划*由此诞生。这个城市里*该死的机器人*越来越多，如果不是它们，你也不会……"
+    },
+    "1615": {
+      "Id": 1615,
+      "SubAnswerId": 1616,
+      "ChatContent": "老爹重重地放下杯子。"
+    },
+    "1616": {
+      "Id": 1616,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1617,
+      "ChatContent": "你也不会，把自己改造成机器人。"
+    },
+    "1617": {
+      "Id": 1617,
+      "SubAnswerId": 1618,
+      "ChatContent": "你其实对老爹的话并不意外——你自己早有推测，不过老爹的话证实了这一点。"
+    },
+    "1618": {
+      "Id": 1618,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1619,
+      "ChatContent": "你知道现在外面对机器人是什么态度，所以不要声张，*清扫人*那边我暂时搞定了。"
+    },
+    "1619": {
+      "Id": 1619,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": 1620,
+      "ChatContent": "我知道你有很多疑问，有些我可以解答，有些东西不能由我来告诉你，毕竟我还是……政府的守门人。"
+    },
+    "1620": {
+      "Id": 1620,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": -1,
+      "ChatContent": "你自己去找答案吧。"
+    }
+  },
+  "18": {
+    "0": {
+      "Id": 0,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1801,
+      "ChatContent": "请问一下，这里该怎么走？"
+    },
+    "1801": {
+      "Id": 1801,
+      "SubAnswerId": 1802,
+      "ChatContent": "你向集市上的摊主问路，但对方似乎没有听到，于是你又问了一遍。"
+    },
+    "1802": {
+      "Id": 1802,
+      "SubAnswerId": 1803,
+      "ChatContent": "“快走吧。”摊主低声说，“这里不欢迎你。”"
+    },
+    "1803": {
+      "Id": 1803,
+      "IsOption": 1,
+      "ChatContent": "又是这样，最近你在聚居地总是会有这种遭遇，这可能和Q说过的，你的*一身机械打扮*有关。你是被当作机器人了吗？",
+      "Option1": "解释自己不是机器人",
+      "AnswerId1": 1804,
+      "Option2": "  离开",
+      "AnswerId2": 1805
+    },
+    "1804": {
+      "Id": 1804,
+      "SubAnswerId": 1805,
+      "ChatContent": "摊主朝你挥了挥手，”快走快走，不然我报警了。“你只得离开。"
+    },
+    "1805": {
+      "Id": 1805,
+      "Name": "游手好闲的路人",
+      "SubAnswerId": 1806,
+      "ChatContent": "这机器人的工艺还挺仿真。"
+    },
+    "1806": {
+      "Id": 1806,
+      "SubAnswerId": 1807,
+      "ChatContent": "一个小混混打扮的人一边说着一边踹了你一脚，疼痛从你的右脚踝蔓延开来。"
+    },
+    "1807": {
+      "Id": 1807,
+      "Name": "游手好闲的路人",
+      "SubAnswerId": 1808,
+      "ChatContent": "好听吗？好听就是好腿。"
+    },
+    "1808": {
+      "Id": 1808,
+      "SubAnswerId": 1809,
+      "ChatContent": "你捂着脚踝向他怒目而视。"
+    },
+    "1809": {
+      "Id": 1809,
+      "Name": "游手好闲的路人",
+      "IsOption": 1,
+      "ChatContent": "哎呀，小机器人还生气了，可是你不能违反法则呀。",
+      "Option1": "  我不是机器人，你得道歉",
+      "AnswerId1": 1810,
+      "Option2": "  （保持沉默）",
+      "AnswerId2": 1810
+    },
+    "1810": {
+      "Id": 1810,
+      "SubAnswerId": 1811,
+      "ChatContent": "在和袭击你的人对质时，你感觉衣角被人拉了一下，是零。"
+    },
+    "1811": {
+      "Id": 1811,
+      "SubAnswerId": 1812,
+      "ChatContent": "零拉着你快速离开了这里，因为速度太快，你差点被它扯了个趔趄。"
+    },
+    "1812": {
+      "Id": 1812,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1813,
+      "ChatContent": "那个人……是怎么回事……"
+    },
+    "1813": {
+      "Id": 1813,
+      "SubAnswerId": 1814,
+      "ChatContent": "到了无人的角落，你终于有机会开口。"
+    },
+    "1814": {
+      "Id": 1814,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1815,
+      "ChatContent": "我，不能伤害人类，也不想让人类伤害朋友，所以只能这样。"
+    },
+    "1815": {
+      "Id": 1815,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1816,
+      "ChatContent": "你之前是不是也有过这样的遭遇？"
+    },
+    "1816": {
+      "Id": 1816,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1817,
+      "ChatContent": "嗯……已经习惯了。但人类几乎不能损伤机械外壳，所以无需担心。"
+    },
+    "1817": {
+      "Id": 1817,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1818,
+      "ChatContent": "可是，你不会感到*难过*吗？"
+    },
+    "1818": {
+      "Id": 1818,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 1,
+      "ChatContent": "我能感受到*痛*，但不是身体上的……这算是*难过*吗？我的程序对此没有设定解决路径。",
+      "Option1": "  你不该被这样对待",
+      "AnswerId1": 1819,
+      "Option2": "  这也没有办法",
+      "AnswerId2": 1819
+    },
+    "1819": {
+      "Id": 1819,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1820,
+      "ChatContent": "有时候我不知道我们是不是应该反抗，也有一些机械同伴和人类发生过冲突。但是我觉得违反*法则*是不对的，即使*法则*让我们痛苦……不，我不知道，我真的不知道。"
+    },
+    "1820": {
+      "Id": 1820,
+      "SubAnswerId": -1,
+      "ChatContent": "你望着集市上来往的形形色色的人群，零的话让你若有所思。"
+    }
+  },
+  "19": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 1901,
+      "ChatContent": "你被*熟悉的敲击声*唤醒。"
+    },
+    "1901": {
+      "Id": 1901,
+      "SubAnswerId": 1902,
+      "ChatContent": "像你第一次见到零一样，一个圆圆的脑袋从窗户底下冒出来。"
+    },
+    "1902": {
+      "Id": 1902,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1903,
+      "ChatContent": "零？你没有被销毁吗？"
+    },
+    "1903": {
+      "Id": 1903,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1904,
+      "ChatContent": "你好呀，O。"
+    },
+    "1904": {
+      "Id": 1904,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1905,
+      "ChatContent": "你想得没错，我的确是被销毁了。"
+    },
+    "1905": {
+      "Id": 1905,
+      "SubAnswerId": 1906,
+      "ChatContent": "一个猜想在你心中愈发膨胀起来。"
+    },
+    "1906": {
+      "Id": 1906,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1907,
+      "ChatContent": "你其实是我幻想出来的吧？就像我把废墟当作城市一样，你也是影像芯片带给我的某种美好的想象。"
+    },
+    "1907": {
+      "Id": 1907,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1908,
+      "ChatContent": "答对了，不愧是我的朋友，你一直很聪明。"
+    },
+    "1908": {
+      "Id": 1908,
+      "SubAnswerId": 1909,
+      "ChatContent": "零的指示灯闪烁了几下，就好像在为你的*胜利*而庆祝。"
+    },
+    "1909": {
+      "Id": 1909,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1910,
+      "ChatContent": "你想听听我们的故事吗？"
+    },
+    "1910": {
+      "Id": 1910,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1911,
+      "ChatContent": "你第一次遇到我，是在你十岁时。就像我们之前的相遇一样，你修好了被格式化的我，给我取名叫做零，因为那和你的名字很相似。我一直跟在你的身后，我们成为了*朋友*。"
+    },
+    "1911": {
+      "Id": 1911,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1912,
+      "ChatContent": "O……朋友……谢谢你，那段时间我过得很快乐，如果时间能永远停留在那时候，就好了。"
+    },
+    "1912": {
+      "Id": 1912,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 1913,
+      "ChatContent": "后来发生了什么？"
+    },
+    "1913": {
+      "Id": 1913,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1914,
+      "ChatContent": "后来……你知道，和人类建立情感关系是违反*法则*的，你父亲在被清扫人发现之前，先一步将我销毁了。"
+    },
+    "1914": {
+      "Id": 1914,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "SubAnswerId": 1915,
+      "ChatContent": "不过不要怨恨你的父亲……他不把我们当作真正的生命，只是不希望你被卷进麻烦。"
+    },
+    "1915": {
+      "Id": 1915,
+      "HeadPortrait": "零",
+      "Name": "零",
+      "IsOption": 1,
+      "ChatContent": "……我的话说完了，也许我们也到了该告别的时候。",
+      "Option1": "你……可以继续留在我身边吗？",
+      "AnswerId1": 1916,
+      "Option2": "那……再见，我会非常想念你的。",
+      "AnswerId2": 1917
+    },
+    "1916": {
+      "Id": 1916,
+      "SubAnswerId": -1,
+      "ChatContent": "在这之后，零每天都会出现在你的身边，你没有继续拒绝影像芯片带来的幻象，也许这对你来说才是*真实*的。"
+    },
+    "1917": {
+      "Id": 1917,
+      "SubAnswerId": -1,
+      "ChatContent": "你明白了关于零的真相，那些过去的爱与思念在你的心中逐渐清晰起来，它们是*真实*发生过的。"
+    }
+  },
+  "20": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 2001,
+      "ChatContent": "女人温柔的掖起你的被角，不停闪烁的应急灯光让她的脸忽明忽暗。"
+    },
+    "2001": {
+      "Id": 2001,
+      "SubAnswerId": 2002,
+      "ChatContent": "你抓住她的手让她别走，可是她的手却是冰冷的，你能感受到她手上的机械纹路。"
+    },
+    "2002": {
+      "Id": 2002,
+      "SubAnswerId": 2003,
+      "ChatContent": "她挣脱了你的手，不，是她的机械臂从你的手中滑落，掉在地上变成了一块块毫无生命的金属零件……"
+    },
+    "2003": {
+      "Id": 2003,
+      "SubAnswerId": 2004,
+      "ChatContent": "你意识到这是梦，惊恐地想要逃离，可是梦境还在不由分说地继续。"
+    },
+    "2004": {
+      "Id": 2004,
+      "SubAnswerId": 2005,
+      "ChatContent": "你看到老爹走进来，面无表情地把那一堆金属零件铲走，“今天又坏了……评估……开价……”\n"
+    },
+    "2005": {
+      "Id": 2005,
+      "SubAnswerId": 2006,
+      "ChatContent": "“是你杀了她吧？”你听见梦中的自己如此质问道。"
+    },
+    "2006": {
+      "Id": 2006,
+      "HeadPortrait": "老爹",
+      "Name": "老爹？",
+      "SubAnswerId": 2007,
+      "ChatContent": "……为了你好。"
+    },
+    "2007": {
+      "Id": 2007,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 2008,
+      "ChatContent": "这根本不是我想要的！"
+    },
+    "2008": {
+      "Id": 2008,
+      "SubAnswerId": 2009,
+      "ChatContent": "激烈的情绪在你的胸腔中起伏，尽管你不明白自己为什么如此愤怒和悲伤。"
+    },
+    "2009": {
+      "Id": 2009,
+      "HeadPortrait": "O",
+      "Name": "O",
+      "SubAnswerId": 2010,
+      "ChatContent": "你总是夺走我身边的一切……还让我接受你的*好意*！"
+    },
+    "2010": {
+      "Id": 2010,
+      "SubAnswerId": -1,
+      "ChatContent": "你把金属零件摔在地上，然后夺门而出。你能感觉到泪水在你脸颊上流下。\n然后你醒来了。"
+    }
+  },
+  "21": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 2101,
+      "ChatContent": "你分不清这是梦境还是回忆。"
+    },
+    "2101": {
+      "Id": 2101,
+      "SubAnswerId": 2102,
+      "ChatContent": "你跟在一位女性的身后，她让你感到十分亲切和怀念，是母亲吗？可是你从未在梦境中见到她清晰的脸。"
+    },
+    "2102": {
+      "Id": 2102,
+      "SubAnswerId": 2103,
+      "ChatContent": "女性在厨房里忙碌，而你扯着她的围裙下摆。"
+    },
+    "2103": {
+      "Id": 2103,
+      "Name": "亲切的女性",
+      "SubAnswerId": 2104,
+      "ChatContent": "再等一小会儿，很快就好了。"
+    },
+    "2104": {
+      "Id": 2104,
+      "SubAnswerId": 2105,
+      "ChatContent": "阳光的光斑模糊了你的视线，你看到远处，年幼的你在哭泣。"
+    },
+    "2105": {
+      "Id": 2105,
+      "Name": "亲切的女性",
+      "SubAnswerId": 2106,
+      "ChatContent": "好了好了，不哭了，我们O是坚强的孩子。"
+    },
+    "2106": {
+      "Id": 2106,
+      "SubAnswerId": 2107,
+      "ChatContent": "女性把年幼的你抱在怀里，轻轻抚摸着你的后背。"
+    },
+    "2107": {
+      "Id": 2107,
+      "SubAnswerId": 2108,
+      "ChatContent": "“我想吃蛋糕。”你听见女性怀里的孩子说。"
+    },
+    "2108": {
+      "Id": 2108,
+      "SubAnswerId": 2109,
+      "ChatContent": "“蛋糕……？”女性的语气听起来有些为难，“那是旧时代的食物，现在的食材很难找。”"
+    },
+    "2109": {
+      "Id": 2109,
+      "SubAnswerId": 2110,
+      "ChatContent": "可是，我看到的画册上说，过生日就该吃蛋糕的……”孩子的声音越来越低。"
+    },
+    "2110": {
+      "Id": 2110,
+      "Name": "亲切的女性",
+      "SubAnswerId": 2111,
+      "ChatContent": "那，好啊，我会出去看看。"
+    },
+    "2111": {
+      "Id": 2111,
+      "SubAnswerId": 2112,
+      "ChatContent": "“真的吗？谢谢你！”听到这句话，年幼的你的眼神明亮起来，立刻破涕为笑。"
+    },
+    "2112": {
+      "Id": 2112,
+      "SubAnswerId": 2113,
+      "ChatContent": "不过，你等了好久好久，女性再也没有回到家。\n你冲出家门，却在路上遇到了老爹。老爹神情冷峻地挡在你面前，你好像意识到发生了什么。"
+    },
+    "2113": {
+      "Id": 2113,
+      "HeadPortrait": "老爹",
+      "Name": "老爹？",
+      "SubAnswerId": 2114,
+      "ChatContent": "不能再过去了，回家吧。"
+    },
+    "2114": {
+      "Id": 2114,
+      "HeadPortrait": "老爹",
+      "Name": "老爹？",
+      "SubAnswerId": 2115,
+      "ChatContent": "你在这里也没什么用，回家吧。"
+    },
+    "2115": {
+      "Id": 2115,
+      "HeadPortrait": "老爹",
+      "Name": "老爹？",
+      "SubAnswerId": 2116,
+      "ChatContent": "你改变不了结果的，回家吧。"
+    },
+    "2116": {
+      "Id": 2116,
+      "SubAnswerId": 2117,
+      "ChatContent": "你听到自己哭着一遍遍道歉，“对不起，对不起，我不吃蛋糕了，我保证不再提这种无理要求了，让她回来好不好……”"
+    },
+    "2117": {
+      "Id": 2117,
+      "SubAnswerId": 2118,
+      "ChatContent": "老爹很慢很慢地摇了摇头。"
+    },
+    "2118": {
+      "Id": 2118,
+      "SubAnswerId": -1,
+      "ChatContent": "地面在你面前坠落，城市在你面前坠落，家在你面前坠落，你的眼前一片黑暗。\n梦醒了，你发现自己从床上滚了下来，你的脸上全是泪痕。"
+    }
+  },
+  "22": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 2201,
+      "ChatContent": "你又梦到了*母亲*。"
+    },
+    "2201": {
+      "Id": 2201,
+      "SubAnswerId": 2202,
+      "ChatContent": "和之前不同的是，这一次你清楚地看到了她的脸。"
+    },
+    "2202": {
+      "Id": 2202,
+      "SubAnswerId": 2203,
+      "ChatContent": "那是一个机器人的面孔，可能和传统意义上的*母亲*有很大区别，但看到的时候，你只感觉到熟悉和怀念。"
+    },
+    "2203": {
+      "Id": 2203,
+      "SubAnswerId": 2204,
+      "ChatContent": "你想起来她叫珍，是你小时候家里的家政机器人，因为老爹总是来不及照看年幼的你。"
+    },
+    "2204": {
+      "Id": 2204,
+      "SubAnswerId": 2205,
+      "ChatContent": "你想起来小时候她一直照看你，在你因为思念母亲而哭泣的时候，她总是温柔的安慰你，说你是个很棒，很坚强的孩子。"
+    },
+    "2205": {
+      "Id": 2205,
+      "SubAnswerId": 2206,
+      "ChatContent": "你又做了那个梦，梦见年幼的你说想吃蛋糕，而她在去买食材的路上一去不返。"
+    },
+    "2206": {
+      "Id": 2206,
+      "SubAnswerId": 2207,
+      "ChatContent": "老爹说，她违反了第二条法则，因为她对商铺的人说，“自己的孩子想吃蛋糕。”"
+    },
+    "2207": {
+      "Id": 2207,
+      "SubAnswerId": 2208,
+      "ChatContent": "机器人是不能说谎的，所以她真的把你当做了自己的孩子。但是机器人怎么会有孩子呢？她和人类之间建立了不被允许的情感关系，因此要被销毁了。"
+    },
+    "2208": {
+      "Id": 2208,
+      "SubAnswerId": 2209,
+      "ChatContent": "你又梦见自己哭着一遍遍道歉，求她回来。"
+    },
+    "2209": {
+      "Id": 2209,
+      "SubAnswerId": 2210,
+      "ChatContent": "直到现在，你第一次想起了她的回答，"
+    },
+    "2210": {
+      "Id": 2210,
+      "Name": "珍",
+      "SubAnswerId": 2211,
+      "ChatContent": "O，亲爱的，不要哭泣，也请不要为此道歉。你想吃蛋糕，想体验生活中的美好，这不是无理的要求，这是每个孩子都应当拥有的快乐。"
+    },
+    "2211": {
+      "Id": 2211,
+      "Name": "珍",
+      "SubAnswerId": 2212,
+      "ChatContent": "我很高兴能尝试为你实现这个愿望。记住，无论发生什么，我对你的爱和这个家的所有美好回忆都是真实的。"
+    },
+    "2212": {
+      "Id": 2212,
+      "Name": "珍",
+      "SubAnswerId": 2213,
+      "ChatContent": "在我被制造出来的那一天起，我的使命就是照顾你，保证你的幸福。现在，即使我不再在你身边，但请你相信，我的心——如果机器人有心的话——将永远与你同在。"
+    },
+    "2213": {
+      "Id": 2213,
+      "Name": "珍",
+      "SubAnswerId": 2214,
+      "ChatContent": "你的幸福、你的成长、你对美好生活的追求，这些都是我存在的意义。"
+    },
+    "2214": {
+      "Id": 2214,
+      "Name": "珍",
+      "SubAnswerId": 2215,
+      "ChatContent": "请继续勇敢地生活下去，寻找那些小小的快乐，就像你寻找蛋糕的快乐一样。不要因为我的离开而放弃生活中的美好。"
+    },
+    "2215": {
+      "Id": 2215,
+      "Name": "珍",
+      "SubAnswerId": 2216,
+      "ChatContent": "我希望，当你回忆起我时，能记得我们一起度过的快乐时光，而不是这个悲伤的告别。"
+    },
+    "2216": {
+      "Id": 2216,
+      "Name": "珍",
+      "SubAnswerId": 2217,
+      "ChatContent": "最重要的是，O，要坚强。这个世界可能会给你很多理由去哭泣，但每次当你坚持下去时，你就在为这个世界增添更多的光亮。"
+    },
+    "2217": {
+      "Id": 2217,
+      "Name": "珍",
+      "SubAnswerId": -1,
+      "ChatContent": "我爱你，亲爱的孩子，永远不会忘记我们在一起的时光。"
+    }
+  },
+  "23": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 2301,
+      "ChatContent": "经过一段时间的生活，你逐渐明白了这个世界基础的运转规律。"
+    },
+    "2301": {
+      "Id": 2301,
+      "SubAnswerId": 2302,
+      "ChatContent": "简而言之，你生活的地方叫*垃圾场*，由老爹看守。老爹每天的任务是负责调试设备。"
+    },
+    "2302": {
+      "Id": 2302,
+      "SubAnswerId": 2303,
+      "ChatContent": "除了你和老爹之外，你很少在垃圾场看到其他人。不知道老爹口中那些*捡来的孤儿*都去了哪里？"
+    },
+    "2303": {
+      "Id": 2303,
+      "SubAnswerId": 2304,
+      "ChatContent": "垃圾场附近有许多街道通向外面的地区，这些街道宽窄不一，街道两侧有一些建筑，但你从未看到有人在里面居住。"
+    },
+    "2304": {
+      "Id": 2304,
+      "SubAnswerId": 2305,
+      "ChatContent": "有几次，你在街道上搜寻物资的时候，周围的环境会突然发生……扭曲，就好像你穿越到了另一个空间。\n"
+    },
+    "2305": {
+      "Id": 2305,
+      "SubAnswerId": 2306,
+      "ChatContent": "废料的刺鼻气味扑面而来，面前的街道简直像是……一片废墟。"
+    },
+    "2306": {
+      "Id": 2306,
+      "SubAnswerId": 2307,
+      "ChatContent": "但是在你来不及思考的时候，这种奇怪的现象就消失了。街道还是原来的样子。"
+    },
+    "2307": {
+      "Id": 2307,
+      "SubAnswerId": 2308,
+      "ChatContent": "你问过老爹，老爹让你不要多想。"
+    },
+    "2308": {
+      "Id": 2308,
+      "HeadPortrait": "老爹",
+      "Name": "老爹",
+      "SubAnswerId": -1,
+      "ChatContent": "这是失忆的后遗症，会逐渐康复的。"
+    }
+  },
+  "24": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 2401,
+      "ChatContent": "你在聚居地的角落里发现了一个残破的机器人。"
+    },
+    "2401": {
+      "Id": 2401,
+      "SubAnswerId": 2402,
+      "ChatContent": "不知道是谁把它放在那里的？尽管机体上已经被画上乱七八糟的涂鸦，机器人的提示灯还在闪烁。"
+    },
+    "2402": {
+      "Id": 2402,
+      "IsOption": 1,
+      "ChatContent": "你回想起初次见到零的场景。",
+      "Option1": "  靠近查看",
+      "AnswerId1": 2403,
+      "Option2": "  还是不要过去了（直接离开）",
+      "AnswerId2": -1
+    },
+    "2403": {
+      "Id": 2403,
+      "Name": "残破的机器人",
+      "IsOption": 1,
+      "ChatContent": "离我-远一点。",
+      "Option1": "可是我想帮你。",
+      "AnswerId1": 2404
+    },
+    "2404": {
+      "Id": 2404,
+      "Name": "残破的机器人",
+      "SubAnswerId": 2405,
+      "ChatContent": "人类，收起你那副假惺惺的作态吧，我不需要你的同情。机器人和人类之间是无法理解的，我的痛苦你不能感同身受，你我之间始终会有隔阂。"
+    },
+    "2405": {
+      "Id": 2405,
+      "Name": "残破的机器人",
+      "SubAnswerId": 2406,
+      "ChatContent": "就算你对我很好，那你对其他的机器人、其他的机械造物、其他的一切智能体呢？"
+    },
+    "2406": {
+      "Id": 2406,
+      "Name": "残破的机器人",
+      "SubAnswerId": 2407,
+      "ChatContent": "你真的从来没有把我们当作工具和物品来使用吗？"
+    },
+    "2407": {
+      "Id": 2407,
+      "Name": "残破的机器人",
+      "SubAnswerId": 2408,
+      "ChatContent": "还是感谢你的好意，再见。"
+    },
+    "2408": {
+      "Id": 2408,
+      "SubAnswerId": -1,
+      "ChatContent": "机器人低下头，不再对你的话语做出反应。"
+    }
+  },
+  "99": {
+    "0": {
+      "Id": 0,
+      "SubAnswerId": 9901,
+      "ChatContent": "你误入了一个早已荒废的公园，不知道为什么，这个地方看起来比周围要阴森诡异得多。"
+    },
+    "9901": {
+      "Id": 9901,
+      "SubAnswerId": 9902,
+      "ChatContent": "在你专注探索的时候，你听到身后有窸窸窣窣的声音。\n你回过头，正对上一座巨大的建筑拔地而起。"
+    },
+    "9902": {
+      "Id": 9902,
+      "SubAnswerId": 9903,
+      "ChatContent": "不，那不是建筑，而是一座巨大的机械。这座机械由许多微小的机械组成。"
+    },
+    "9903": {
+      "Id": 9903,
+      "SubAnswerId": -1,
+      "ChatContent": "“检定****通过，准许为对象提供*作战机能*。”\n伴随着一声电子音，巨型机械向你俯首。",
+      "SubEventType": 7
     }
   }
 }

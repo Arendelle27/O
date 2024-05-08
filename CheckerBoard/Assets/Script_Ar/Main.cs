@@ -30,6 +30,7 @@ public class Main : MonoSingleton<Main>
 
     private void Start()
     {
+        SoundManager.Instance.RoundStart(0);
         MainThreadDispatcher.StartUpdateMicroCoroutine(this.Load());
         UIMain.Instance.ChangeToGamePanel(0);
         CGManager.Instance.ReStart();
@@ -42,14 +43,23 @@ public class Main : MonoSingleton<Main>
      void Init()
     {
         UIMain.Instance.ChangeToGamePanel(1);
-
     }
 
-    public IEnumerator Restart()
+    Coroutine reStartCor;
+
+    public void ReStart()
     {
-        this.Init();
+        if(this.reStartCor!=null)
+        {
+            StopCoroutine(this.reStartCor);
+        }
+        this.reStartCor = StartCoroutine(this.RestartCor());
+    }
+
+    public IEnumerator RestartCor()
+    {
         this.mainCamera?.Restart();
-        this.StartCoroutine( CGManager.Instance.PlayCG(0));//播放开场动画
+        //CGManager.Instance.PlayCG(0);//播放开场动画
         yield return null;
         MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
         yield return null;
@@ -63,8 +73,6 @@ public class Main : MonoSingleton<Main>
         yield return null;
         BuildingManager.Instance.Restart();
         yield return null;
-        ChatManager.Instance.Restart();
-        yield return null;
         NpcManager.Instance.Restart();
         yield return null;
         WandererManager.Instance.Restart();
@@ -72,6 +80,9 @@ public class Main : MonoSingleton<Main>
         QuestManager.Instance.Restart();
         yield return null;
         MessageManager.Instance.ReStart();
+        yield return new WaitForSeconds(1f);
+        this.Init();
+        ChatManager.Instance.Restart();
         yield return null;
 
         //MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
@@ -88,9 +99,19 @@ public class Main : MonoSingleton<Main>
 
     }
 
-    public IEnumerator ReadArchive()
+    Coroutine readArchiveCor;
+
+    public void ReadArchive()
     {
-        this.Init();
+        if (this.readArchiveCor != null)
+        {
+            StopCoroutine(this.readArchiveCor);
+        }
+        this.readArchiveCor = StartCoroutine(this.ReadArchiveCor());
+    }
+
+    public IEnumerator ReadArchiveCor()
+    {
 
         this.mainCamera?.ReadArchive();
         yield return null;
@@ -114,9 +135,10 @@ public class Main : MonoSingleton<Main>
         yield return null;
         WandererManager.Instance.ReadArchive();
         yield return null;
-        ChatManager.Instance.ReadArchive();
-        yield return null;
         QuestManager.Instance.ReadArchive();
+        yield return new WaitForSeconds(1f);
+        this.Init();
+        ChatManager.Instance.ReadArchive();
         yield return null;
 
     }
@@ -125,10 +147,10 @@ public class Main : MonoSingleton<Main>
     /// <summary>
     /// 一局游戏结束
     /// </summary>
-    public IEnumerator GameOver()
+    public IEnumerator GameOver(int endId)
     {
         this.mainCamera?.StopControl();
-        UIManager.Instance.Show<UIScoreWindow>();
+        //UIManager.Instance.Show<UIScoreWindow>();
 
         BuildingManager.Instance.GameOver();
         yield return null; 
@@ -149,6 +171,8 @@ public class Main : MonoSingleton<Main>
         NpcManager.Instance.GameOver();
         yield return null;
         ChatManager.Instance.GameOver();
-        UIMain.Instance.ChangeToGamePanel(4);
+        (UIMain.Instance.ChangeToGamePanel(4) as UIEndPanel).SetInfo(endId);
+
+        SoundManager.Instance.RoundStart(0);
     }
 }

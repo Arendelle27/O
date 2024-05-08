@@ -1,4 +1,5 @@
 using ENTITY;
+using log4net;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace MANAGER
         //当前存在npc
         public Dictionary<Npc_Name,Npc> npcs=new Dictionary<Npc_Name,Npc>();
         //npc的解锁条件
-        public Dictionary<int,Dictionary<int,List<bool>>> npcAppearConditions=new Dictionary<int, Dictionary<int, List<bool>>>(4) 
+        public Dictionary<int,Dictionary<int,List<bool>>> npcAppearConditions=new Dictionary<int, Dictionary<int, List<bool>>>(4) //0为回合数
         {
             {-1,new Dictionary<int, List<bool>>()},//无
-            {0,new Dictionary<int, List<bool>>()},//任务
+            {0,new Dictionary<int, List<bool>>()},//对话
             {1,new Dictionary<int, List<bool>>()},//板块
             {2,new Dictionary<int, List<bool>>()},//已经相遇过
         };
@@ -116,21 +117,40 @@ namespace MANAGER
         public void RoundOver(int round)
         {
             List<List<int>> unlockList = new List<List<int>>();
-            foreach (var npcLeaveCondition in npcLeaveConditions.Values)
+            //foreach (var npcLeaveCondition in npcLeaveConditions.Values)
+            //{
+            //    foreach (var npcDefineId in npcLeaveCondition.Keys)
+            //    {
+            //        NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
+            //        if (npcDefine.LeaveRound == round)
+            //        {
+            //            npcLeaveCondition[npcDefineId][0] = true;
+
+            //            if(this.IsUnlock(false, npcDefine.LeaveCondition, npcDefineId))
+            //            {
+            //                unlockList.Add(new List<int> { npcDefine.LeaveCondition, npcDefineId });
+            //            }
+            //        }
+            //    }
+            //}
+            for (int i = 0; i < this.npcLeaveConditions.Count; i++)
             {
-                foreach (var npcDefineId in npcLeaveCondition.Keys)
+                var item = this.npcLeaveConditions.ElementAt(i);
+                for (int j = 0; j < item.Value.Count; j++)
                 {
-                    NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
+                    var npc = this.npcLeaveConditions[item.Key].ElementAt(j);
+                    NPCDefine npcDefine = DataManager.NPCDefines[npc.Key];
                     if (npcDefine.LeaveRound == round)
                     {
-                        npcLeaveCondition[npcDefineId][0] = true;
+                        item.Value[npc.Key][0] = true;
 
-                        if(this.IsUnlock(false, npcDefine.LeaveCondition, npcDefineId))
+                        if (this.IsUnlock(false, npcDefine.LeaveCondition, npc.Key))
                         {
-                            unlockList.Add(new List<int> { npcDefine.LeaveCondition, npcDefineId });
+                            unlockList.Add(new List<int> { npcDefine.LeaveCondition, npc.Key });
                         }
                     }
                 }
+
             }
             this.RemoveNpcConditions(false, unlockList);
         }
@@ -142,22 +162,42 @@ namespace MANAGER
         public void RoundStart(int round)
         {
             List<List<int>> unlockList = new List<List<int>>();
-            foreach(var npcAppearCondition in npcAppearConditions.Values)
-            {
-                foreach(var npcDefineId in npcAppearCondition.Keys)
-                {
-                    NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
-                    if(npcDefine.AppearRound==round)
-                    {
-                        npcAppearCondition[npcDefineId][0] = true;
 
-                        if(this.IsUnlock(true, npcDefine.AppearCondition, npcDefineId))
+            for(int i = 0;i < this.npcAppearConditions.Count; i++)
+            {
+                var item = this.npcAppearConditions.ElementAt(i);
+                for (int j = 0; j < item.Value.Count; j++)
+                {
+                    var npc = this.npcAppearConditions[item.Key].ElementAt(j);
+                    NPCDefine npcDefine = DataManager.NPCDefines[npc.Key];
+                    if (npcDefine.AppearRound == round)
+                    {
+                        item.Value[npc.Key][0] = true;
+
+                        if (this.IsUnlock(true, npcDefine.AppearCondition, npc.Key))
                         {
-                            unlockList.Add(new List<int> { npcDefine.AppearCondition, npcDefineId });
+                            unlockList.Add(new List<int> { npcDefine.AppearCondition, npc.Key });
                         }
                     }
                 }
+
             }
+            //foreach(var npcAppearCondition in npcAppearConditions.Values)
+            //{
+            //    foreach(var npcDefineId in npcAppearCondition.Keys)
+            //    {
+            //        NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
+            //        if(npcDefine.AppearRound==round)
+            //        {
+            //            npcAppearCondition[npcDefineId][0] = true;
+
+            //            if(this.IsUnlock(true, npcDefine.AppearCondition, npcDefineId))
+            //            {
+            //                unlockList.Add(new List<int> { npcDefine.AppearCondition, npcDefineId });
+            //            }
+            //        }
+            //    }
+            //}
             this.RemoveNpcConditions(true, unlockList);
         }
 
@@ -175,15 +215,16 @@ namespace MANAGER
         public void NPCAppearUnlock(int sort,int conditionValue)
         {
             List<List<int>> unlockList = new List<List<int>>();
-            foreach (var npc in this.npcAppearConditions[sort])
+            for (int i = 0; i < this.npcAppearConditions[sort].Count; i++)
             {
-                NPCDefine npcDefine = DataManager.NPCDefines[npc.Key];
-                if(npcDefine.AppearConditionValue==conditionValue)
+                var item = this.npcAppearConditions[sort].ElementAt(i);
+                NPCDefine npcDefine = DataManager.NPCDefines[item.Key];
+                if (npcDefine.AppearConditionValue == conditionValue)
                 {
-                    npc.Value[1] = true;
-                    if(this.IsUnlock(true, sort, npc.Key))
+                    item.Value[1] = true;
+                    if (this.IsUnlock(true, sort, item.Key))
                     {
-                        unlockList.Add(new List<int> { sort, npc.Key });
+                        unlockList.Add(new List<int> { sort, item.Key });
                     }
                 }
             }
@@ -198,19 +239,20 @@ namespace MANAGER
         public void NPCLeaveUnlock(int sort,int conditionValue)
         {
             List<List<int>> unlockList = new List<List<int>>();
-            foreach (var npc in this.npcLeaveConditions[sort])
+            for (int i = 0; i < this.npcLeaveConditions[sort].Count; i++)
             {
-                NPCDefine npcDefine = DataManager.NPCDefines[npc.Key];
-                if (npcDefine.LeaveConditionValue == conditionValue)
+                var item = this.npcLeaveConditions[sort].ElementAt(i);
+                NPCDefine npcDefine = DataManager.NPCDefines[item.Key];
+                if (npcDefine.AppearConditionValue == conditionValue)
                 {
-                    npc.Value[1] = true;
-                    if (this.IsUnlock(false, sort, npc.Key))
+                    item.Value[1] = true;
+                    if (this.IsUnlock(false, sort, item.Key))
                     {
-                        unlockList.Add(new List<int> { sort, npc.Key });
+                        unlockList.Add(new List<int> { sort, item.Key });
                     }
                 }
             }
-            this.RemoveNpcConditions(true, unlockList);
+            this.RemoveNpcConditions(false, unlockList);
         }
 
         /// <summary>
@@ -276,16 +318,24 @@ namespace MANAGER
                 plot.npcs.Add(npcScript);
 
                 this.npcs.Add(npcDefine.Name, npcScript);
+                if(plot.wanderer!=null)
+                {
+                    ChatManager.Instance.ChatWithNpc(npcDefine.Name);//与npc对话
+                }
             }
             else
             {
                 NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
-                GameObjectPool.Instance.NPCs.Release(this.npcs[npcDefine.Name].gameObject);
-                Vector2Int pos = new Vector2Int(npcDefine.PositionX, npcDefine.PositionY);
-                Plot plot= PlotManager.Instance.NPCAppear(pos);
-                plot.npcs.Remove(this.npcs[npcDefine.Name]);
 
-                this.npcs.Remove(npcDefine.Name);
+                if(this.npcs.ContainsKey(npcDefine.Name))
+                {
+                    GameObjectPool.Instance.NPCs.Release(this.npcs[npcDefine.Name].gameObject);
+                    Vector2Int pos = new Vector2Int(npcDefine.PositionX, npcDefine.PositionY);
+                    Plot plot = PlotManager.Instance.NPCAppear(pos);
+                    plot.npcs.Remove(this.npcs[npcDefine.Name]);
+
+                    this.npcs.Remove(npcDefine.Name);
+                }
             }
         }
 
@@ -299,10 +349,26 @@ namespace MANAGER
         {
             if(isAppear)
             {
+                this.removeNpcAppearConditionsCor = StartCoroutine(this.RemoveNpcConditionsCor(isAppear,npcDefineIds));
+            }
+            else
+            {
+                this.removeNpcLeaveConditionsCor = StartCoroutine(this.RemoveNpcConditionsCor(isAppear, npcDefineIds));
+            }
+        }
+
+        Coroutine removeNpcAppearConditionsCor;
+        Coroutine removeNpcLeaveConditionsCor;
+        IEnumerator RemoveNpcConditionsCor(bool isAppear, List<List<int>> npcDefineIds)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (isAppear)
+            {
                 foreach (var npc in npcDefineIds)
                 {
                     this.npcAppearConditions[npc[0]].Remove(npc[1]);
                 }
+                this.StopCoroutine(this.removeNpcAppearConditionsCor);
             }
             else
             {
@@ -310,6 +376,7 @@ namespace MANAGER
                 {
                     this.npcLeaveConditions[npc[0]].Remove(npc[1]);
                 }
+                this.StopCoroutine(this.removeNpcLeaveConditionsCor);
             }
         }
 

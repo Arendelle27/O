@@ -541,7 +541,7 @@ public static class ArchiveManager
             chatManagerData.chatConditionsData.Add(chatConditionsData);
         }
 
-        foreach (var chatConditionNpc in ChatManager.Instance.chaConditionsNpc)
+        foreach (var chatConditionNpc in ChatManager.Instance.chatConditionsNpc)
         {
             ChatManagerData.ChatConditionsNpcData chatConditionsData = new ChatManagerData.ChatConditionsNpcData();
             chatConditionsData.sort = chatConditionNpc.Key;

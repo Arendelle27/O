@@ -67,8 +67,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b10babea3756f7a489275792bf804fa0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -89,11 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbed694e30dd6b941974260d0ca5fc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 4021500420072505166}
+  normalBg: {fileID: 21300000, guid: d000e4762dbd76e4f8e9dd45c0fdca24, type: 3}
+  selectedBg: {fileID: 21300000, guid: b10babea3756f7a489275792bf804fa0, type: 3}
   owner: {fileID: 0}
   type: 0
-  background: {fileID: 4021500420072505166}
-  normalBg: {fileID: 21300000, guid: a8f3a3f090c86614ba100195c61d3723, type: 3}
-  selectedBg: {fileID: 21300000, guid: ddec001d42573e14c95fad658f04fccb, type: 3}
   buildingImage: {fileID: 3907934809827396220}
 --- !u!1 &6947012222180312707
 GameObject:
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1696aa643cb4fbe4fa2b22c83c9b416f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9285cd017f320e2479bcba6dd60edd79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

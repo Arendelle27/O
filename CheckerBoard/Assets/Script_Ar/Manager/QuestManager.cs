@@ -50,7 +50,7 @@ namespace MANAGER
         {
             ArchiveManager.QuestManagerData questManagerData = ArchiveManager.archive.questManagerData;
 
-            for(int i=1;i<questManagerData.questIds.Count;i++)
+            for(int i=0;i<questManagerData.questIds.Count;i++)
             {
                 if (DataManager.QuestDefines[questManagerData.questIds[i]].IsMain)//如果为主线
                 {
@@ -140,7 +140,7 @@ namespace MANAGER
         public void QuestEndByRound(int round)
         {
             QuestDefine questDefine = DataManager.QuestDefines[this.curMainQuestId];
-            if(questDefine.RoundCondition!=round)
+            if(curMainQuestRound != round)
             {
                 return;
             }
@@ -189,7 +189,7 @@ namespace MANAGER
             if (questDefine.IsMain)//主线任务
             {
                 this.curMainQuestId= questId;
-                this.curMainQuestRound = RoundManager.Instance.roundNumber+questDefine.RoundCondition;
+                this.curMainQuestRound = RoundManager.Instance.roundNumber+questDefine.RoundCondition-1;
             }
             //else//支线任务
             //{
@@ -210,6 +210,8 @@ namespace MANAGER
             QuestDefine questDefine = DataManager.QuestDefines[questId];
             if(isSuccess)
             {
+
+
                 if (questDefine.GainCurrency > 0)
                 {
                     ResourcesManager.Instance.ChangeWealth(questDefine.GainCurrency);
@@ -222,20 +224,17 @@ namespace MANAGER
                 ResourcesManager.Instance.ChangeBuildingResources(resources, true);
 
                 NpcManager.Instance.NPCLeaveUnlock(0, this.curMainQuestId);
-                NpcManager.Instance.NPCAppearUnlock(0, this.curMainQuestId);
+                //NpcManager.Instance.NPCAppearUnlock(0, this.curMainQuestId);
                 ChatManager.Instance.ChatConditionUnlock(3, this.curMainQuestId);
             }
             else
             {
-                if(questDefine.QuestFallResult==0)//失败惩罚为游戏结束
+                if (questDefine.QuestFallResult == 1)
                 {
-                    MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
+                    MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver(2));
                     return;
                 }
-                else 
-                {
 
-                }
             }
 
             this.RemoveQuest(isMain, questId);//移除任务
@@ -251,13 +250,13 @@ namespace MANAGER
         /// <param name="questId"></param>
         void RemoveQuest(bool isMain, int questId=-1)
         {
-            if (isMain)
-            {
-                this.curMainQuestId = -1;
-                this.curMainQuestRound = -1;
-                //this.curMainQuestIds.Remove(questId);
-                //this.curMainQuestRound.Remove(questId);
-            }
+            //if (isMain)
+            //{
+            //    this.curMainQuestId = -1;
+            //    this.curMainQuestRound = -1;
+            //    //this.curMainQuestIds.Remove(questId);
+            //    //this.curMainQuestRound.Remove(questId);
+            //}
             //else
             //{
             //    this.curSecondQuestIds.Remove(questId);
@@ -265,6 +264,5 @@ namespace MANAGER
             //}
             (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
         }
-
     }
 }

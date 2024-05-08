@@ -12,14 +12,14 @@
   },
   "1": {
     "Id": 1,
-    "GuideDescription": "在这里规划你要去的地点，要注意一次*移动*的范围有限。",
+    "GuideDescription": "在这里规划你要去的地点，要注意一次*<color=cyan>移动</color>*的范围有限。",
     "PlayCondition": 1,
     "IsArrow": true,
-    "NoviceGuideWindowPosX": 1301.0,
-    "NoviceGuideWindowPosY": 326.0,
-    "NoviceGuideArrowPosX": 1639.0,
-    "NoviceGuideArrowPosY": 180.0,
-    "NoviceGuideArrowRotZ": 325.238983
+    "NoviceGuideWindowPosX": 1563.0,
+    "NoviceGuideWindowPosY": 510.0,
+    "NoviceGuideArrowPosX": 1825.0,
+    "NoviceGuideArrowPosY": 402.0,
+    "NoviceGuideArrowRotZ": 270.0
   },
   "2": {
     "Id": 2,
@@ -37,11 +37,11 @@
     "GuideDescription": "这里是你能建造的*<color=cyan>机械</color>*，回收设备能帮我们回收废弃资源来换*<color=cyan>空间币</color>*，也就是钱。",
     "PlayCondition": 3,
     "IsArrow": true,
-    "NoviceGuideWindowPosX": 1300.0,
-    "NoviceGuideWindowPosY": 431.0,
-    "NoviceGuideArrowPosX": 1640.0,
-    "NoviceGuideArrowPosY": 268.0,
-    "NoviceGuideArrowRotZ": 322.0341
+    "NoviceGuideWindowPosX": 1563.0,
+    "NoviceGuideWindowPosY": 510.0,
+    "NoviceGuideArrowPosX": 1699.0,
+    "NoviceGuideArrowPosY": 406.0,
+    "NoviceGuideArrowRotZ": 270.0
   },
   "4": {
     "Id": 4,
@@ -51,7 +51,7 @@
     "NoviceGuideWindowPosX": 1221.0,
     "NoviceGuideWindowPosY": 851.0,
     "NoviceGuideArrowPosX": 1394.0,
-    "NoviceGuideArrowPosY": 920.0,
+    "NoviceGuideArrowPosY": 903.0,
     "NoviceGuideArrowRotZ": 64.68363
   },
   "5": {
@@ -60,9 +60,9 @@
     "PlayCondition": 0,
     "IsArrow": true,
     "NoviceGuideWindowPosX": 970.0,
-    "NoviceGuideWindowPosY": 795.0,
+    "NoviceGuideWindowPosY": 797.0,
     "NoviceGuideArrowPosX": 970.0,
-    "NoviceGuideArrowPosY": 864.0,
+    "NoviceGuideArrowPosY": 868.0,
     "NoviceGuideArrowRotZ": 90.0
   },
   "6": {
@@ -71,25 +71,36 @@
     "PlayCondition": 0,
     "IsArrow": true,
     "NoviceGuideWindowPosX": 1298.0,
-    "NoviceGuideWindowPosY": 621.0,
-    "NoviceGuideArrowPosX": 1613.0,
-    "NoviceGuideArrowPosY": 661.0,
-    "NoviceGuideArrowRotZ": 25.5284557
+    "NoviceGuideWindowPosY": 315.0,
+    "NoviceGuideArrowPosX": 1453.0,
+    "NoviceGuideArrowPosY": 224.0,
+    "NoviceGuideArrowRotZ": 270.0
   },
   "7": {
     "Id": 7,
-    "GuideDescription": "这里是你所有的钱。",
+    "GuideDescription": "将来，你可以在这里使用*<color=cyan>升级点数</color>*提升自己的能力",
     "PlayCondition": 0,
     "IsArrow": true,
-    "NoviceGuideWindowPosX": 1213.0,
-    "NoviceGuideWindowPosY": 848.0,
-    "NoviceGuideArrowPosX": 1613.0,
-    "NoviceGuideArrowPosY": 800.0,
+    "NoviceGuideWindowPosX": 1300.0,
+    "NoviceGuideWindowPosY": 895.0,
+    "NoviceGuideArrowPosX": 1626.0,
+    "NoviceGuideArrowPosY": 864.0,
     "NoviceGuideArrowRotZ": 0.0
   },
   "8": {
     "Id": 8,
-    "GuideDescription": "第三天结束时，你要给我80个空间币，作为你的生活费。",
+    "GuideDescription": "这里是你所有的钱。",
+    "PlayCondition": 0,
+    "IsArrow": true,
+    "NoviceGuideWindowPosX": 1300.0,
+    "NoviceGuideWindowPosY": 978.0,
+    "NoviceGuideArrowPosX": 1626.0,
+    "NoviceGuideArrowPosY": 950.0,
+    "NoviceGuideArrowRotZ": 0.0
+  },
+  "9": {
+    "Id": 9,
+    "GuideDescription": "第三天结束时，你要给我80空间币，作为你的生活费。",
     "PlayCondition": 0,
     "IsArrow": false,
     "NoviceGuideWindowPosX": 960.0,

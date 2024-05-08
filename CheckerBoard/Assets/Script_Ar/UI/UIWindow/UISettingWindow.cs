@@ -43,7 +43,7 @@ public class UISettingWindow: UIWindow
 
         this.BackButton.OnClickAsObservable().Subscribe(_ =>
         {
-            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver(2));
             this.OnCloseClick();
         });
 

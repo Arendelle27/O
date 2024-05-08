@@ -58,10 +58,10 @@
     "ResourceByRound": 1,
     "ResourceTotal": 6,
     "IsSpecialGeneration": "true",
-    "HorizontalMin": -7,
-    "HorizontalMax": -7,
-    "VerticalMin": 10,
-    "VerticalMax": 10
+    "HorizontalMin": 12,
+    "HorizontalMax": 12,
+    "VerticalMin": 8,
+    "VerticalMax": 8
   },
   "5": {
     "ID": 5,
@@ -124,7 +124,7 @@
     "UnlockValue": "6",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 5
+    "Weights": 3
   },
   "9": {
     "ID": 9,
@@ -152,10 +152,10 @@
     "UnlockValue": "13",
     "EventPool": 4,
     "IsSpecialGeneration": "true",
-    "HorizontalMin": -20,
-    "HorizontalMax": -20,
-    "VerticalMin": -15,
-    "VerticalMax": -15
+    "HorizontalMin": -7,
+    "HorizontalMax": -7,
+    "VerticalMin": -3,
+    "VerticalMax": -3
   },
   "11": {
     "ID": 11,
@@ -186,6 +186,6 @@
     "UnlockValue": "6",
     "EventPool": 3,
     "IsSpecialGeneration": "false",
-    "Weights": 5
+    "Weights": 3
   }
 }

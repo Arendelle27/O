@@ -17,4 +17,5 @@ public class ChatDefine
     public string Option3 { get; set; }
     public int AnswerId3 { get; set; }
     public int SubEventType { get; set; }
+    public int SubEventValue { get; set; }
 }

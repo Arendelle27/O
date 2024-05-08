@@ -85,7 +85,7 @@ namespace MANAGER
         /// </summary>
         void Init()
         {
-            this.bluePrints.Clear();
+            //this.bluePrints.Clear();
 
         }
 

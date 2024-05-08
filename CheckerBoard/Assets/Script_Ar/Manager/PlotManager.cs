@@ -311,14 +311,14 @@ namespace MANAGER
         Plot GetPlotAndDefine(Vector2Int pos)
         {
             Plot plot = this.GetGrid(pos);
-            if(pos==new Vector2Int(0,0))
-            {
-                plot.SetInfo(DataManager.PlotDefines[6]);
-            }
-            else
-            {
+            //if(pos==new Vector2Int(0,0))
+            //{
+            //    plot.SetInfo(DataManager.PlotDefines[6]);
+            //}
+            //else
+            //{
                 plot.SetInfo(this.GetPlotDefine(pos));
-            }
+            //}
             this.UnlockPlotByPlot(plots[plot.pos]);//订阅解锁格子
             return plot;
         }
@@ -364,7 +364,7 @@ namespace MANAGER
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(1);
                     }
-                    if(plot.plotDefine.EventType==Event_Area_Type.交易)//板块上有事件地区
+                    if(plot.plotDefine.EventType==Event_Area_Type.交易&&plot.wanderer!=null)//板块上有事件地区
                     {
                         EventAreaManager.Instance.selectedEventArea = plot.eventArea;
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
@@ -701,7 +701,7 @@ namespace MANAGER
         /// <param name="plot"></param>
         void UnlockPlotByPlot(Plot plot)
         {
-            if (this.plotConditions[0].ContainsKey(plot.plotDefine.ID))
+            if (this.plotConditions[0].ContainsValue((plot.plotDefine.ID).ToString()))
             {
                 //订阅解锁格子事件
                 plot.unLoadByPlot
@@ -934,13 +934,13 @@ namespace MANAGER
         /// </summary>
         void UpdateCanExplorePlot()
         {
-            foreach (var canExploredPlot in this.canExploredPlots)
-            {
-                if (!this.plots[canExploredPlot].HaveExploratoryTeam/*&& this.plots[canExploredPlot].plot_Statue!=Plot_Statue.已探索*/)
-                {
-                    this.plots[canExploredPlot].ChangeType(Plot_Statue.未探明);
-                }
-            }
+            //foreach (var canExploredPlot in this.canExploredPlots)
+            //{
+            //    if (!this.plots[canExploredPlot].HaveExploratoryTeam/*&& this.plots[canExploredPlot].plot_Statue!=Plot_Statue.已探索*/)
+            //    {
+            //        this.plots[canExploredPlot].ChangeType(Plot_Statue.未探明);
+            //    }
+            //}
             this.canExploredPlots.Clear();
 
             foreach (var exploredPlot in this.haveExploredPlots)

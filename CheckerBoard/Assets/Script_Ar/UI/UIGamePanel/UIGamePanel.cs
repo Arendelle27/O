@@ -54,6 +54,8 @@ public class UIGamePanel : UIPanel
 
     [SerializeField, LabelText("行动点面板"), Tooltip("放入行动点面板")]
     public UIExecutionPanel uIExecutionPanel;
+    [SerializeField, LabelText("作弊"), Tooltip("作弊")]
+    public Button cheat;
 
     private void Start()
     {
@@ -97,6 +99,11 @@ public class UIGamePanel : UIPanel
         {
             this.uiMessage.gameObject.SetActive(messageToggle.isOn);
             this.uiMessageTitle.gameObject.SetActive(messageToggle.isOn);
+        });
+
+        this.cheat.OnClickAsObservable().Subscribe(_ =>
+        {
+            ResourcesManager.Instance.ChangeWealth(1000000);
         });
     }
 }

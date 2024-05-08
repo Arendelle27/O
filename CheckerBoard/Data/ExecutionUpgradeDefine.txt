@@ -3,36 +3,36 @@
     "Level": 0,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 0,
-    "ExecutionIncreaseAmount": 3
+    "ExecutionIncreaseAmount": 5
   },
   "1": {
     "Level": 1,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 1,
-    "ExecutionIncreaseAmount": 4
+    "ExecutionIncreaseAmount": 6
   },
   "2": {
     "Level": 2,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 2,
-    "ExecutionIncreaseAmount": 4
+    "ExecutionIncreaseAmount": 6
   },
   "3": {
     "Level": 3,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 2,
-    "ExecutionIncreaseAmount": 5
+    "ExecutionIncreaseAmount": 7
   },
   "4": {
     "Level": 4,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 3,
-    "ExecutionIncreaseAmount": 5
+    "ExecutionIncreaseAmount": 7
   },
   "5": {
     "Level": 5,
     "UpgradeType": "行动力",
     "ExecutionUpgradeCost": 3,
-    "ExecutionIncreaseAmount": 7
+    "ExecutionIncreaseAmount": 9
   }
 }

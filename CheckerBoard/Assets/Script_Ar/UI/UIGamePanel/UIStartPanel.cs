@@ -9,6 +9,9 @@ using Managers;
 
 public class UIStartPanel : UIPanel
 {
+    [SerializeField, LabelText("按键面板"), Tooltip("按键面板")]
+    public Transform buttonPanel;
+
     [SerializeField, LabelText("开始新游戏"), Tooltip("重新开始游戏")]
     public Button restartGame;
 
@@ -29,7 +32,7 @@ public class UIStartPanel : UIPanel
         this.restartGame.OnClickAsObservable().Subscribe(_ =>
         {
             //重新开始游戏
-            MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.Restart());
+            Main.Instance.ReStart();
         });
 
         this.continueGame.OnClickAsObservable().Subscribe(_ =>
@@ -37,7 +40,7 @@ public class UIStartPanel : UIPanel
             //加载上次保存的游戏进度
             if(ArchiveManager.archive!=null)
             {
-                MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.ReadArchive());
+                Main.Instance.ReadArchive();
             }
             else
             {
@@ -58,6 +61,18 @@ public class UIStartPanel : UIPanel
             //退出游戏
             Application.Quit();
         });
+
+        this.showButtonCor=StartCoroutine(ShowButton());
     }
 
+    Coroutine showButtonCor;
+
+    IEnumerator ShowButton()
+    {
+        this.buttonPanel.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        this.buttonPanel.gameObject.SetActive(true);
+        StopCoroutine(showButtonCor);
+    }
 }
+

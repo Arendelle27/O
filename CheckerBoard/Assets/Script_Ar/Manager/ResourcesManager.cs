@@ -70,7 +70,7 @@ namespace MANAGER
         public void Restart()
         {
             this.Init();
-            this.wealth = 5000;
+            this.wealth = 50;
             this.execution = CapabilityManager.Instance.executionAmount;
         }
 

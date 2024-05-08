@@ -23,7 +23,7 @@ public class Npc :Entity
         this.npcDefine = DataManager.NPCDefines[npcDefinId];
         this.SR.sprite = SpriteManager.npcSprites[this.npcDefine.Name];
         this.pos = plot.pos;
-        this.transform.position = plot.transform.position + new Vector3(-0.3f, ParameterConfig.entityForward, ParameterConfig.entityHigh);
+        this.transform.position = plot.transform.position + new Vector3(-0.2f, ParameterConfig.entityForward, ParameterConfig.entityHigh);
         this.gameObject.SetActive(true);
     }
 

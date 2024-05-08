@@ -154,7 +154,7 @@ namespace ENTITY
                 case 0://资源板块
 
                     this.buildingResources[0]= plotDefine.ResourceType;
-
+                    this.buildingResources[1] = plotDefine.ResourceTotal;
                     break;
                 case 1://事件板块
                     this.eventArea=EventAreaManager.Instance.GetEventArea(plotDefine.EventType, this);
@@ -379,6 +379,14 @@ namespace ENTITY
                     (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(false);//关闭建造按钮
                 }
 
+                NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
+                ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
+
+                foreach (var npc in this.npcs)
+                {
+                    npc.ChatWithWander();
+                }
+
                 if (isFirstExplored)
                 {
                     this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
@@ -394,8 +402,6 @@ namespace ENTITY
 
                     }
 
-                    NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
-                    ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
                     this.isFirstExplored = false;
                 }
 

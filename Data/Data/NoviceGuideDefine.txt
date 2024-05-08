@@ -7,7 +7,7 @@
   },
   "1": {
     "Id": 1,
-    "GuideDescription": "在这里规划你要去的地点，要注意一次*移动*的范围有限。",
+    "GuideDescription": "在这里规划你要去的地点，要注意一次*<color=cyan>移动</color>*的范围有限。",
     "PlayCondition": "移动",
     "IsArrow": "True"
   },
@@ -43,13 +43,19 @@
   },
   "7": {
     "Id": 7,
-    "GuideDescription": "这里是你所有的钱。",
+    "GuideDescription": "将来，你可以在这里使用*<color=cyan>升级点数</color>*提升自己的能力",
     "PlayCondition": "任意位置",
     "IsArrow": "True"
   },
   "8": {
     "Id": 8,
-    "GuideDescription": "第三天结束时，你要给我80个空间币，作为你的生活费。",
+    "GuideDescription": "这里是你所有的*<color=cyan>空间币</color>*。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "True"
+  },
+  "9": {
+    "Id": 9,
+    "GuideDescription": "第三天结束时，你要给我80空间币，作为你的生活费。",
     "PlayCondition": "任意位置",
     "IsArrow": "False"
   }

@@ -35,13 +35,13 @@ public class UISettleInfoWindow : UISelectWindow
         {
             UITransactionWindow uTW = UIManager.Instance.Show<UITransactionWindow>();
             EventAreaManager.Instance.uITransactionWindow??= uTW;//显示交易界面
-            this.selectedWindow.OnCloseClick();
+            //this.selectedWindow.OnCloseClick();
         });
 
         this.buttons[1].OnClickAsObservable().Subscribe(_ =>
         {
             EventManager.Instance.SetConfrontEvent(0, EventAreaManager.Instance.hotility[0]);
-            this.selectedWindow.OnCloseClick();
+            //this.selectedWindow.OnCloseClick();
         });
 
     }

@@ -22,6 +22,8 @@ namespace UIBUILDING
         [SerializeField, LabelText("被选中的建筑UI类型"), ReadOnly]
         Building_Type buildingtypeSelected;//被选中的建筑UI类型
 
+        [SerializeField, LabelText("自适应的窗口"), Tooltip("放入需要只适应的窗口")]
+        public List<RectTransform> rectTransforms = new List<RectTransform>();
 
         private void Start()
         {
@@ -42,6 +44,10 @@ namespace UIBUILDING
                 //this.tabView.tabPages[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
                 this.tabView.tabButtons[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
             }
+            foreach (var rectTransform in rectTransforms)//自适应窗口
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+            }
         }
 
         private void OnDisable()
@@ -61,6 +67,10 @@ namespace UIBUILDING
         {
             this.buildingtypeSelected=Building_Type.无;
             StartCoroutine( this.selectedWindow.BeSelected());
+            foreach (var rectTransform in rectTransforms)//自适应窗口
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+            }
         }
 
         /// <summary>
@@ -81,7 +91,7 @@ namespace UIBUILDING
             {
                 Debug.LogFormat("建造建筑：{0}", buildingtypeSelected);
 
-                if(BuildingManager.Instance.Build(buildingtypeSelected, PlotManager.Instance.SelectedPlot))
+                if(BuildingManager.Instance.Build(buildingtypeSelected, WandererManager.Instance.wanderer.plot))
                 {
                     this.selectedWindow.OnCloseClick();
                 }

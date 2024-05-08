@@ -158,14 +158,12 @@ public class UIUpgradeWindow : UIWindow
     {
         if (isSuccess)
         {
-            this.upgradeResult.color = Color.green;
-            this.upgradeResult.text = "购买成功!";
+            this.upgradeResult.text = "升级成功";
 
         }
         else
         {
-            this.upgradeResult.color = Color.red;
-            this.upgradeResult.text = "购买失败,钱不够www";
+            this.upgradeResult.text = "空间币不足不够";
         }
         this.upgradeResult.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);

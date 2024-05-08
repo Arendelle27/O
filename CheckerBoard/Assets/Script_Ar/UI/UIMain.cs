@@ -33,7 +33,7 @@ public class UIMain : MonoSingleton<UIMain>
     /// 切换开始面板和游戏面板
     /// </summary>
     /// <param name="ischange"></param>
-    public void ChangeToGamePanel(int index)
+    public UIPanel ChangeToGamePanel(int index)
     {
         for (int i = 0; i < uiPanels.Count; i++)
         {
@@ -50,6 +50,7 @@ public class UIMain : MonoSingleton<UIMain>
                 uiPanels[i].gameObject.SetActive(false);
             }
         }
+        return uiPanels[index];
     }
 
 }

@@ -367,7 +367,7 @@ public class EventManager : Singleton<EventManager>
             ResourcesManager.Instance.wealth -= DataManager.StageDecisionCostDefines[stage].StageDecisionCost;
             if (ResourcesManager.Instance.wealth < 0)
             {
-                MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver());
+                MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver(2));
             }
             return 1;
         }

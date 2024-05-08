@@ -55,7 +55,7 @@ public class GatheringBuilding : Building
     public List<int> Gather()
     {
         List<int> resource = new List<int>() { 0, 0 };
-        if(this.existRound % (gatherResourceRounds) != 0)
+        if(this.existRound % (gatherResourceRounds+1) != 0)
         {
             return resource;
         }

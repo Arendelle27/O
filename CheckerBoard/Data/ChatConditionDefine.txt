@@ -5,11 +5,47 @@
     "ChatCondition": 0,
     "ChatConditionValue": 1
   },
-  "11": {
-    "Id": 11,
+  "10110": {
+    "Id": 10110,
     "Type": 1,
-    "ChatCondition": 0,
-    "ChatConditionValue": 2
+    "ChatCondition": 4,
+    "ChatConditionValue": 0
+  },
+  "1012": {
+    "Id": 1012,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 101
+  },
+  "1022": {
+    "Id": 1022,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 102
+  },
+  "1032": {
+    "Id": 1032,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 103
+  },
+  "1042": {
+    "Id": 1042,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 104
+  },
+  "1052": {
+    "Id": 1052,
+    "Type": 1,
+    "ChatCondition": 3,
+    "ChatConditionValue": 105
+  },
+  "10520": {
+    "Id": 10520,
+    "Type": 1,
+    "ChatCondition": 4,
+    "ChatConditionValue": 1
   },
   "2011": {
     "Id": 2011,
@@ -20,27 +56,27 @@
   "2012": {
     "Id": 2012,
     "Type": 2,
-    "ChatCondition": 3,
-    "ChatConditionValue": 201,
+    "ChatCondition": 1,
+    "ChatConditionValue": 2011,
     "NPC": "零"
   },
-  "1012": {
-    "Id": 1012,
-    "Type": 1,
-    "ChatCondition": 3,
-    "ChatConditionValue": 101
-  },
-  "12": {
-    "Id": 12,
+  "3012": {
+    "Id": 3012,
     "Type": 1,
     "ChatCondition": 0,
-    "ChatConditionValue": 6
+    "ChatConditionValue": 20
   },
-  "13": {
-    "Id": 13,
+  "30121": {
+    "Id": 30121,
+    "Type": 1,
+    "ChatCondition": 4,
+    "ChatConditionValue": 2
+  },
+  "3022": {
+    "Id": 3022,
     "Type": 1,
     "ChatCondition": 2,
-    "ChatConditionValue": 5
+    "ChatConditionValue": 9
   },
   "4011": {
     "Id": 4011,
@@ -52,8 +88,162 @@
   "4022": {
     "Id": 4022,
     "Type": 2,
-    "ChatCondition": 3,
-    "ChatConditionValue": 402,
+    "ChatCondition": 1,
+    "ChatConditionValue": 4011,
     "NPC": "Q"
+  },
+  "4032": {
+    "Id": 4032,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 4022,
+    "NPC": "M"
+  },
+  "5011": {
+    "Id": 5011,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 4032,
+    "NPC": "M"
+  },
+  "5012": {
+    "Id": 5012,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 5011,
+    "NPC": "Q"
+  },
+  "5022": {
+    "Id": 5022,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 5012,
+    "NPC": "M"
+  },
+  "5032": {
+    "Id": 5032,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 5022,
+    "NPC": "W"
+  },
+  "5042": {
+    "Id": 5042,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 5032,
+    "NPC": "W"
+  },
+  "6011": {
+    "Id": 6011,
+    "Type": 2,
+    "ChatCondition": 0,
+    "ChatConditionValue": 16,
+    "NPC": "S"
+  },
+  "6012": {
+    "Id": 6012,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 6011,
+    "NPC": "S"
+  },
+  "6022": {
+    "Id": 6022,
+    "Type": 2,
+    "ChatCondition": 1,
+    "ChatConditionValue": 6012,
+    "NPC": "S"
+  },
+  "11": {
+    "Id": 11,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 2
+  },
+  "12": {
+    "Id": 12,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 6
+  },
+  "120": {
+    "Id": 120,
+    "Type": 1,
+    "ChatCondition": 4,
+    "ChatConditionValue": 3
+  },
+  "13": {
+    "Id": 13,
+    "Type": 1,
+    "ChatCondition": 2,
+    "ChatConditionValue": 5
+  },
+  "14": {
+    "Id": 14,
+    "Type": 2,
+    "ChatCondition": 0,
+    "ChatConditionValue": 26,
+    "NPC": "Q"
+  },
+  "15": {
+    "Id": 15,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 10
+  },
+  "16": {
+    "Id": 16,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 22
+  },
+  "18": {
+    "Id": 18,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 14
+  },
+  "19": {
+    "Id": 19,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 27
+  },
+  "20": {
+    "Id": 20,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 17
+  },
+  "21": {
+    "Id": 21,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 21
+  },
+  "22": {
+    "Id": 22,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 30
+  },
+  "23": {
+    "Id": 23,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 6
+  },
+  "24": {
+    "Id": 24,
+    "Type": 1,
+    "ChatCondition": 0,
+    "ChatConditionValue": 23
+  },
+  "99": {
+    "Id": 99,
+    "Type": 1,
+    "ChatCondition": 2,
+    "ChatConditionValue": 10
   }
 }

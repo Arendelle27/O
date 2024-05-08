@@ -370,7 +370,7 @@ namespace MANAGER
         /// <param name="pos"></param>
         public void ExpendClashArea(Vector2Int pos,int clashType)
         {
-            List<Vector2Int> relativePos= new List<Vector2Int>() { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
+            List<Vector2Int> relativePos= new List<Vector2Int>(4) { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
             foreach(Vector2Int rP in relativePos)
             {
                 Vector2Int newPos = pos + rP;
@@ -381,7 +381,7 @@ namespace MANAGER
                 if (PlotManager.Instance.plots[newPos].eventArea==null)
                 {
                     int n = Random.Range(0, 100);
-                    if (n < 10)
+                    if (n < 5)
                     {
                         PlotManager.Instance.plots[newPos].ChangeToClashType(clashType);
                     }

@@ -1,3 +1,4 @@
+using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -84,6 +85,8 @@ namespace MANAGER
             /*回合结束*/
             this.roundNumber++;//回合数加1
 
+            SoundManager.Instance.RoundStart(this.roundNumber);//音乐开始回合
+
             ChatManager.Instance.RoundStart(this.roundNumber);//聊天开始回合
 
             /*回合开始*/
@@ -106,20 +109,6 @@ namespace MANAGER
                 this.unlockBuildingByRound.OnNext(this.roundNumber);
             }
 
-        }
-
-        /// <summary>
-        /// 根据回合条件解锁建筑类型
-        /// </summary>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        public bool UnlockBuildingTypeByResource(int amount)
-        {
-            if(this.roundNumber==amount)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

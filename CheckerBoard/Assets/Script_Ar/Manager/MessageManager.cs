@@ -123,7 +123,7 @@ namespace MANAGER
                 }
                 if(day==0)
                 {
-                    string partingLine = "-------------------";
+                    string partingLine = "-----------------";
                     sb.AppendLine(partingLine);
                 }
             }

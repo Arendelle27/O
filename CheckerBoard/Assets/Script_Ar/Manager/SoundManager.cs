@@ -56,7 +56,7 @@ namespace Managers
             set
             {
                 musicVolume = value;
-                this.SetVolume("MusicVolume",musicVolume);
+                this.SetVolume("Music",musicVolume);
 
             }
         }
@@ -71,7 +71,7 @@ namespace Managers
             set
             {
                 voiceVolume = value;
-                this.SetVolume("SoundVolume",voiceVolume);
+                this.SetVolume("Sound",voiceVolume);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Managers
         /// <param name="mute"></param>
         public void MusicMute(bool mute)
         {
-            this.SetVolume("MusicVolume", mute?0:musicVolume);
+            this.SetVolume("Music", mute?0:musicVolume);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Managers
         /// <param name="mute"></param>
         public void SoundMute(bool mute)
         {
-            this.SetVolume("SoundVolume", mute?0:voiceVolume);
+            this.SetVolume("Sound", mute?0:voiceVolume);
         }
 
         /// <summary>
@@ -148,6 +148,21 @@ namespace Managers
             voiceAudioSource.PlayOneShot(clip);
         }
 
+        public void RoundStart(int round)
+        {
+            switch (round)
+            {
+                case 0:
+                    this.PlayMusic("bgm1");
+                    break;
+                //case 1:
+                //    this.PlayMusic("bgm2");
+                    //break;
+                case 19:
+                    this.PlayMusic("bgm2");
+                    break;
+            }
+        }
         protected void PlayClipOnAudioSource(AudioSource source,AudioClip clip,bool isLoop)
         {
 

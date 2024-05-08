@@ -131,8 +131,11 @@ public enum HeadPortrait_Type
     老爹,
     O,
     零,
+    M,
     M_黑影,
+    W,
     Q,
+    S,
 
     头像
 }
@@ -148,4 +151,12 @@ public enum Npc_Name
     S,
 
     Npc
+}
+
+public enum CG_Type
+{
+    醒来,
+    老爹的遗书,
+    档案,
+    追逐
 }

@@ -6,60 +6,60 @@
     "QuestDescription": "在第3天结束前赚到s空间币,s=p4",
     "QuestConditionId": 1011,
     "RoundCondition": 3,
-    "CurrencyCondition": 200,
+    "CurrencyCondition": 80,
     "DestinationConditionY": 1,
     "GainUpgradePoint": 2,
     "GainResource1": 5,
-    "QuestFallResult": 0
+    "QuestFallResult": 1
   },
   "102": {
     "Id": 102,
     "QuestName": "支付生活费Ⅱ",
     "IsMain": "True",
     "QuestDescription": "在第6天结束前赚到s空间币,s=p4",
-    "QuestConditionId": 1021,
+    "QuestConditionId": 1012,
     "RoundCondition": 3,
-    "CurrencyCondition": 400,
+    "CurrencyCondition": 300,
     "DestinationConditionY": 1,
-    "GainUpgradePoint": 2,
+    "GainUpgradePoint": 4,
     "GainResource1": 5,
-    "QuestFallResult": 0
+    "QuestFallResult": 1
   },
   "103": {
     "Id": 103,
     "QuestName": "支付生活费Ⅲ",
     "IsMain": "True",
     "QuestDescription": "在第14天结束前赚到s空间币,s=p5",
-    "QuestConditionId": 1031,
+    "QuestConditionId": 1022,
     "RoundCondition": 8,
-    "CurrencyCondition": 1000,
-    "GainUpgradePoint": 3,
+    "CurrencyCondition": 2000,
+    "GainUpgradePoint": 6,
     "GainResource1": 10,
-    "QuestFallResult": 0
+    "QuestFallResult": 1
   },
   "104": {
     "Id": 104,
     "QuestName": "支付生活费Ⅳ",
     "IsMain": "True",
     "QuestDescription": "在第24天结束前赚到s空间币,s=p6",
-    "QuestConditionId": 1041,
+    "QuestConditionId": 1032,
     "RoundCondition": 10,
-    "CurrencyCondition": 6000,
-    "GainUpgradePoint": 4,
-    "QuestFallResult": 0
+    "CurrencyCondition": 8000,
+    "GainUpgradePoint": 8,
+    "QuestFallResult": 1
   },
   "105": {
     "Id": 105,
     "QuestName": "支付生活费Ⅴ",
     "IsMain": "True",
     "QuestDescription": "在第29天结束前赚到s空间币,s=p7",
-    "QuestConditionId": 1051,
-    "RoundCondition": 5,
-    "CurrencyCondition": 8000,
+    "QuestConditionId": 1042,
+    "RoundCondition": 6,
+    "CurrencyCondition": 10000,
     "Resource1Condition": 0,
     "Resource2Condition": 0,
     "Resource3Condition": 0,
-    "QuestFallResult": 0
+    "QuestFallResult": 1
   },
   "201": {
     "Id": 201,
@@ -69,8 +69,7 @@
     "QuestConditionId": 2011,
     "Resource1Condition": 10,
     "Resource2Condition": 5,
-    "Resource3Condition": 0,
-    "QuestFallResult": 1
+    "Resource3Condition": 0
   },
   "301": {
     "Id": 301,
@@ -82,8 +81,7 @@
     "Resource3Condition": 1,
     "AimNpc": "零",
     "GainUpgradePoint": 2,
-    "GainCurrency": 10,
-    "QuestFallResult": 1
+    "GainCurrency": 10
   },
   "302": {
     "Id": 302,
@@ -91,8 +89,7 @@
     "IsMain": "True",
     "QuestConditionId": 3021,
     "AimProp": "地下室钥匙",
-    "GainUpgradePoint": 3,
-    "QuestFallResult": 1
+    "GainUpgradePoint": 3
   },
   "303": {
     "Id": 303,
@@ -103,8 +100,7 @@
     "DestinationConditionY": -3,
     "GainUpgradePoint": 4,
     "GainResource1": 1,
-    "GainResource2": 1,
-    "QuestFallResult": 1
+    "GainResource2": 1
   },
   "401": {
     "Id": 401,
@@ -115,8 +111,7 @@
     "CurrencyCondition": 80,
     "DestinationConditionX": -7,
     "DestinationConditionY": 10,
-    "GainResource1": 1,
-    "QuestFallResult": 1
+    "GainResource1": 1
   },
   "402": {
     "Id": 402,
@@ -128,8 +123,7 @@
     "AimNpc": "Q",
     "GainUpgradePoint": 1,
     "GainResource1": 1,
-    "GainResource2": 1,
-    "QuestFallResult": 1
+    "GainResource2": 1
   },
   "403": {
     "Id": 403,
@@ -137,8 +131,7 @@
     "IsMain": "False",
     "QuestConditionId": 4031,
     "GainUpgradePoint": 1,
-    "GainResource1": 1,
-    "QuestFallResult": 1
+    "GainResource1": 1
   },
   "501": {
     "Id": 501,
@@ -146,8 +139,7 @@
     "IsMain": "False",
     "QuestConditionId": 5011,
     "GainResource1": 1,
-    "GainResource2": 1,
-    "QuestFallResult": 1
+    "GainResource2": 1
   },
   "502": {
     "Id": 502,
@@ -155,8 +147,7 @@
     "IsMain": "False",
     "QuestConditionId": 5021,
     "GainUpgradePoint": 1,
-    "GainResource1": 1,
-    "QuestFallResult": 1
+    "GainResource1": 1
   },
   "503": {
     "Id": 503,
@@ -164,16 +155,14 @@
     "IsMain": "False",
     "QuestConditionId": 5031,
     "GainUpgradePoint": 1,
-    "GainResource1": 1,
-    "QuestFallResult": 1
+    "GainResource1": 1
   },
   "504": {
     "Id": 504,
     "QuestName": "筹备运动",
     "IsMain": "False",
     "QuestConditionId": 5041,
-    "GainUpgradePoint": 1,
-    "QuestFallResult": 1
+    "GainUpgradePoint": 1
   },
   "505": {
     "Id": 505,
@@ -182,16 +171,14 @@
     "QuestConditionId": 5051,
     "GainUpgradePoint": 1,
     "HumanHostility": 10,
-    "RobotHostility": 5,
-    "QuestFallResult": 1
+    "RobotHostility": 5
   },
   "601": {
     "Id": 601,
     "QuestName": "电子花束",
     "IsMain": "False",
     "QuestConditionId": 6011,
-    "GainUpgradePoint": 1,
-    "QuestFallResult": 1
+    "GainUpgradePoint": 1
   },
   "602": {
     "Id": 602,
@@ -200,8 +187,7 @@
     "QuestConditionId": 6021,
     "GainUpgradePoint": 1,
     "HumanHostility": -10,
-    "RobotHostility": -10,
-    "QuestFallResult": 1
+    "RobotHostility": -10
   },
   "603": {
     "Id": 603,
@@ -209,7 +195,6 @@
     "IsMain": "False",
     "QuestConditionId": 6031,
     "HumanHostility": -5,
-    "RobotHostility": -10,
-    "QuestFallResult": 1
+    "RobotHostility": -10
   }
 }

@@ -33,7 +33,7 @@ public class UIClashAreaInfoWindow : UISelectWindow
         {
             PlotDefine pD=EventManager.Instance.curClashArea.plot.plotDefine;
             EventManager.Instance.SetConfrontEvent(int.Parse(pD.EventValue),EventAreaManager.Instance.hotility[int.Parse(pD.EventValue)]+500f, EventManager.Instance.curClashArea);
-            this.selectedWindow.OnCloseClick();
+            //this.selectedWindow.OnCloseClick();
         });
 
     }

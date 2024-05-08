@@ -51,7 +51,7 @@ public class ClashArea : EventArea
     /// </summary>
     public override void RoundOver()
     {
-        if(!this.canExpend&&RoundManager.Instance.roundNumber>=3)
+        if(!this.canExpend&&RoundManager.Instance.roundNumber>=10)
         {
             this.canExpend = true;
         }

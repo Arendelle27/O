@@ -30,11 +30,11 @@ public class ProductionBuilding : Building
     /// </summary>
     public int Produce()
     {
-        if (PlotManager.Instance.plots[this.pos].HaveExploratoryTeam || PlotManager.Instance.plots[this.pos].wanderer!=null)
-        {
+        //if (PlotManager.Instance.plots[this.pos].HaveExploratoryTeam || PlotManager.Instance.plots[this.pos].wanderer!=null)
+        //{
             return this.production;
-        }
-        return 0;
+        //}
+        //return 0;
     }
 
 }
