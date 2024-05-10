@@ -76,7 +76,7 @@ namespace MANAGER
 
             ResourcesManager.Instance.RoundOver(this.roundNumber);//资源结束回合
 
-            NpcManager.Instance.RoundOver(this.roundNumber);//npc结束回合
+            //NpcManager.Instance.RoundOver(this.roundNumber);//npc结束回合
             /*结算前*/
             //this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
 
@@ -84,11 +84,15 @@ namespace MANAGER
 
             /*回合结束*/
             this.roundNumber++;//回合数加1
-
+            NpcManager.Instance.RoundOver(this.roundNumber);//npc结束回合
             SoundManager.Instance.RoundStart(this.roundNumber);//音乐开始回合
 
             ChatManager.Instance.RoundStart(this.roundNumber);//聊天开始回合
 
+            if(this.roundNumber>30)
+            {
+                return;
+            }
             /*回合开始*/
             MessageManager.Instance.RoundOver();//刷新信息
 

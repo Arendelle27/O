@@ -21,6 +21,7 @@ public class ClueArea : EventArea
 
     public override void WandererEnter()
     {
+        base.WandererEnter();
         Debug.LogFormat("进入剧情区域{0}", this.plot.pos);
     }
 }

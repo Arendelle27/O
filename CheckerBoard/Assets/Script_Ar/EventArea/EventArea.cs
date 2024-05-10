@@ -1,4 +1,5 @@
 using ENTITY;
+using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,7 +29,8 @@ public class EventArea
     /// </summary>
     public virtual void WandererEnter()
     {
-
+        NpcManager.Instance.NPCAppearUnlock(1, this.plot.plotDefine.ID);//Ìí¼Ó¶Ô»°
+        ChatManager.Instance.ChatConditionUnlock(2, this.plot.plotDefine.ID);
     }
 
     /// <summary>

@@ -21,15 +21,29 @@ public class Npc :Entity
     public void SetInfo(int npcDefinId,Plot plot)
     {
         this.npcDefine = DataManager.NPCDefines[npcDefinId];
-        this.SR.sprite = SpriteManager.npcSprites[this.npcDefine.Name];
+        this.ShowSwitch(false);
         this.pos = plot.pos;
         this.transform.position = plot.transform.position + new Vector3(-0.2f, ParameterConfig.entityForward, ParameterConfig.entityHigh);
         this.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 与流浪者对话
+    /// </summary>
     public void ChatWithWander()
     {
         ChatManager.Instance.ChatWithNpc(this.npcDefine.Name);
+        this.ShowSwitch(false);
+
         NpcManager.Instance.NPCAppearUnlock(2, this.npcDefine.Id);
+    }
+
+    /// <summary>
+    /// Npc可聊天状态切换
+    /// </summary>
+    /// <param name="canChat"></param>
+    public void ShowSwitch(bool canChat)
+    {
+        this.SR.sprite = canChat ? SpriteManager.npcChatSprites[this.npcDefine.Name] : SpriteManager.npcNormalSprites[this.npcDefine.Name];
     }
 }

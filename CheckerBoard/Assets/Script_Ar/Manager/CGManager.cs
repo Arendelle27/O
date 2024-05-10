@@ -1,6 +1,9 @@
 using MANAGER;
+using Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +11,9 @@ public class CGManager : MonoSingleton<CGManager>
 {
     //CG动画图像列表
     public Dictionary<CG_Type, List<string>> CGlist=new Dictionary<CG_Type, List<string>>();
+
+    //点击位置去下一张
+    IDisposable onClickToNext;
 
     public void ReStart()
     {
@@ -25,13 +31,38 @@ public class CGManager : MonoSingleton<CGManager>
 
     }
 
+    /// <summary>
+    /// 播放CG
+    /// </summary>
+    /// <param name="cgName"></param>
     public void PlayCG(CG_Type cgName)
     {
-        if (playCGCor != null)
+        UICGWindow uicg = UIManager.Instance.Show<UICGWindow>();
+        int i = 0;
+        string path = string.Format("CG/{0}/{1}", cgName.ToString(), CGlist[cgName][i]);
+        uicg.sprite = Resources.Load<Sprite>(path);
+        this.onClickToNext = Observable
+          .EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ =>
         {
-            StopCoroutine(playCGCor);
-        }
-        playCGCor = StartCoroutine(PlayCGCor(cgName));
+            i++;
+            if (this.CGlist[cgName].Count <= i)
+            {
+                this.onClickToNext.Dispose();
+                ChatManager.Instance.ChatConditionUnlock(4, (int)cgName);
+                uicg.OnCloseClick();
+                return;
+            }
+            path = string.Format("CG/{0}/{1}", cgName.ToString(), CGlist[cgName][i]);
+            uicg.sprite = Resources.Load<Sprite>(path);
+
+        });
+
+
+        //if (playCGCor != null)
+        //{
+        //    StopCoroutine(playCGCor);
+        //}
+        //playCGCor = StartCoroutine(PlayCGCor(cgName));
     }
 
     Coroutine playCGCor;
@@ -69,6 +100,7 @@ public class CGManager : MonoSingleton<CGManager>
 
     }
 
+
     //public void Load()
     //{
     //    CGDefines = new List<CGDefine>();
@@ -89,5 +121,6 @@ public class CGManager : MonoSingleton<CGManager>
     //    }
     //    return null;
     //}
+
 }
 

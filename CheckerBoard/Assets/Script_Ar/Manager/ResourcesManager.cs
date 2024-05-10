@@ -189,6 +189,23 @@ namespace MANAGER
             this.ChangeExecution(-1);//消耗一点行动力
             return true;
         }
+        /// <summary>
+        /// 是否有足够的行动力处理冲突
+        /// </summary>
+        /// <returns></returns>
+        public bool CanCopyConfront()
+        {
+            if (this.execution < 1)
+            {
+                MessageManager.Instance.AddMessage(Message_Type.冲突, string.Format("没有足够的行动力"));
+                return false;
+            }
+            else
+            {
+                this.ChangeExecution(-1);
+                return true;
+            }
+        }
 
         /// <summary>
         /// 判断是否能升级

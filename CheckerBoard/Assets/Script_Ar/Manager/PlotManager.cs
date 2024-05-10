@@ -49,6 +49,8 @@ namespace MANAGER
 
         [SerializeField, LabelText("解锁格子的道具"), ReadOnly]
         internal Dictionary<string, bool> unloadProp=new Dictionary<string, bool>();
+        [SerializeField, LabelText("道具解锁事件"), ReadOnly]
+        Dictionary<string, IDisposable> unlockIDisposableProp = new Dictionary<string, IDisposable> { };
 
         //回合数解锁格子
         IDisposable unlockByRound;
@@ -168,7 +170,7 @@ namespace MANAGER
             yield return null;
             this.InitPlotType();
             yield return null;
-            for (int i = -5; i <= 5; i++)
+            for (int i = -3; i <= 3; i++)
                 for (int j = -3; j <= 3; j++)
                 {
                     this.GetPlotAndDefine(new Vector2Int(i, j));
@@ -219,6 +221,7 @@ namespace MANAGER
             foreach (var prop in plotManagerData.unloadPropsData)
             {
                 this.unloadProp.Add(prop.propName, prop.isUnloaded);
+                this.unlockIDisposableProp.Add(prop. propName, null);
             }
 
             foreach (var plot in plotManagerData.plotsData)
@@ -243,33 +246,21 @@ namespace MANAGER
 
             foreach(var id in this.plotConditions[2].Keys)//道具解锁格子
             {
-                this.ObserveEveryValueChanged(_ => this.unloadProp[plotConditions[2][id]])
+                this.unlockIDisposableProp[plotConditions[2][id]]= this.ObserveEveryValueChanged(_ => this.unloadProp[plotConditions[2][id]])
+                    .Where(_ => this.unloadProp[plotConditions[2][id]])
                     .First()
                     .Subscribe(_ =>
                     {
                         if (this.unloadProp[plotConditions[2][id]])
                         {
                             this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
+                            this.unlockIDisposableProp[plotConditions[2][id]].Dispose();
                             this.plotConditions[2].Remove(id);
                             Debug.Log("解锁通过道具解锁格子");
-                            if (this.plotTypeSepical.ContainsValue(id))
-                            {
-                                //是特殊生成
-                                MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
-                                foreach (var pos in this.plotTypeSepical.Keys)
-                                {
-                                    if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == id)//板块存在并且是对应类型
-                                    {
-                                        this.plots[pos].canEnter = true;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
-                                //非特殊生成
-                                this.UpdateWeightTotalsAndDespeicalType(true);
-                            }
+                            this.PlotUnlock(id);
+
+
+
                         }
                     });
                 break;
@@ -290,6 +281,15 @@ namespace MANAGER
             if (this.unlockByRound != null)//取消订阅回合解锁格子
             {
                 unlockByRound.Dispose();
+            }
+            for (int i = 0; i < this.unlockIDisposableProp.Count;)
+            {
+                var id = this.unlockIDisposableProp.ElementAt(i);
+                if (id.Value != null)
+                {
+                    id.Value.Dispose();
+                }
+                this.unlockIDisposableProp.Remove(id.Key);
             }
             this.map_Mode = Map_Mode.正常;
 
@@ -408,38 +408,20 @@ namespace MANAGER
                     case Plot_Condition_Type.道具:
                         this.plotConditions[2].Add(pD.ID, pD.UnlockValue);
                         this.unloadProp.Add(pD.UnlockValue, false);
+                        this.unlockIDisposableProp.Add(pD.UnlockValue, null);
 
-                        this.ObserveEveryValueChanged(_=>this.unloadProp[plotConditions[2][pD.ID]])
+                        this.unlockIDisposableProp[plotConditions[2][pD.ID]]=this.ObserveEveryValueChanged(_=>this.unloadProp[plotConditions[2][pD.ID]])
+                            .Where(_=>this.unloadProp[plotConditions[2][pD.ID]])
                             .First()
                             .Subscribe(_ =>
                         {
                             if (this.unloadProp[plotConditions[2][pD.ID]])
                             {
                                 this.plotTypes[pD.Type].Add(pD.ID);
+                                this.unlockIDisposableProp[plotConditions[2][pD.ID]].Dispose();
                                 this.plotConditions[2].Remove(pD.ID);
                                 Debug.Log("解锁通过道具解锁格子");
-                                if (this.plotTypeSepical.ContainsValue(pD.ID))
-                                {
-                                    //是特殊生成
-                                    MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[pD.ID].Name));
-                                    foreach (var pos in this.plotTypeSepical.Keys)
-                                    {
-                                        if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == pD.ID)//板块存在并且是对应类型
-                                        {
-                                            this.plots[pos].canEnter = true;
-                                            if (plots[pos].plotDefine.Name== "地下室（未解锁)")//如果是地下室
-                                            {
-                                                plots[pos].SR.sprite = SpriteManager.plotSprites["地下室（解锁)"];
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[pD.ID].Name));
-                                    //非特殊生成
-                                    this.UpdateWeightTotalsAndDespeicalType(true);
-                                }
+                                this.PlotUnlock(pD.ID);
                             }
                         });
                         break;
@@ -464,24 +446,7 @@ namespace MANAGER
                         this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
                         this.plotConditions[1].Remove(id);
                         Debug.Log("解锁通过回合解锁格子");
-                        if (this.plotTypeSepical.ContainsValue(id))
-                        {
-                            MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
-                            //是特殊生成
-                            foreach (var pos in this.plotTypeSepical.Keys)
-                            {
-                                if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == id)//板块存在并且是对应类型
-                                {
-                                    this.plots[pos].canEnter = true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
-                            //非特殊生成
-                            this.UpdateWeightTotalsAndDespeicalType(true);
-                        }
+                        this.PlotUnlock(id);
                     }
                     else
                     {
@@ -704,32 +669,71 @@ namespace MANAGER
             if (this.plotConditions[0].ContainsValue((plot.plotDefine.ID).ToString()))
             {
                 //订阅解锁格子事件
+                plot.unLoadByPlot=new Subject<int>();
                 plot.unLoadByPlot
                     .First()
                     .Subscribe(id =>
                 {
-                    this.plotTypes[plot.plotDefine.Type].Add(plot.plotDefine.ID);
-                    this.plotConditions[0].Remove(plot.plotDefine.ID);
-                    Debug.Log("解锁通过板块解锁格子");
-                    if (this.plotTypeSepical.ContainsValue(id))
+                    //this.plotTypes[plot.plotDefine.Type].Add(plot.plotDefine.ID);
+                    List<int> unlockPlotDefineIds = new List<int>();
+                    for(int i = 0; i < this.plotConditions[0].Count; i++)
                     {
-                        MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[id].Name));
-                        //是特殊生成
-                        foreach (var pos in this.plotTypeSepical.Keys)
+                        var item = this.plotConditions[0].ElementAt(i);
+                        if (item.Value == (id).ToString())
                         {
-                            if (this.plots.ContainsKey(pos) && this.plots[pos].plotDefine.ID == id)//板块存在并且是对应类型
-                            {
-                                this.plots[pos].canEnter = true;
-                            }
+                            unlockPlotDefineIds.Add(item.Key);
+                            this.plotTypes[plot.plotDefine.Type].Add(item.Key);
+                            break;
                         }
                     }
-                    else
+                    foreach (var unlockPlotDefineId in unlockPlotDefineIds)
                     {
-                        MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[id].Name));
-                        //非特殊生成
-                        this.UpdateWeightTotalsAndDespeicalType(true);
+                        this.plotConditions[0].Remove(unlockPlotDefineId);
+
+                        Debug.Log("解锁通过板块解锁格子");
+                        this.PlotUnlock(unlockPlotDefineId);
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// 解锁板块
+        /// </summary>
+        /// <param name="plotDefineId"></param>
+        void PlotUnlock(int plotDefineId)
+        {
+            if (this.plotTypeSepical.ContainsValue(plotDefineId))
+            {
+                //是特殊生成
+                MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("地图上的{0}可以进入了", DataManager.PlotDefines[plotDefineId].Name));
+                foreach (var pos in this.plotTypeSepical.Keys)
+                {
+                    if(this.plotTypeSepical[pos] == plotDefineId) //是对应类型
+                    {
+                        Plot plot = null;
+                        if (this.plots.ContainsKey(pos) )//板块存在
+                        {
+                            plot = this.plots[pos];
+                        }
+                        else
+                        {
+                            plot = this.GetPlotAndDefine(pos);
+                        }
+                        plot.canEnter = true;
+                        if (plot.plotDefine.Name == "地下室（未解锁）")//如果是地下室
+                        {
+                            plot.SR.sprite = SpriteManager.plotSprites["地下室（解锁）"];
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("地图上板块发生了巨大的变化，出现了{0}", DataManager.PlotDefines[plotDefineId].Name));
+                //非特殊生成
+                this.UpdateWeightTotalsAndDespeicalType(true);
             }
         }
 
@@ -1008,7 +1012,7 @@ namespace MANAGER
             {
                 this.map_Mode = Map_Mode.正常;
                 UIMain.Instance.ChangeToGamePanel(1);//恢复到游戏界面
-                UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
+                //UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
             }
         }
     }

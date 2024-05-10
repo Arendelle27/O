@@ -33,6 +33,7 @@
     "Id": 1004,
     "Name": "Q",
     "AppearCondition": 2,
+    "AppearConditionValue": 1003,
     "AppearRound": 26,
     "LeaveCondition": 1,
     "LeaveConditionValue": 14,

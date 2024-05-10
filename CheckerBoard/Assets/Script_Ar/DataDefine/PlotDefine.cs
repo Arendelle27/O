@@ -11,10 +11,8 @@ public class PlotDefine
     public int Type { get; set; }
     public Event_Area_Type EventType { get; set; }
     public string EventValue { get; set; }
-    public string Effect { get; set; }
     public Plot_Condition_Type Condition { get; set; }
     public string UnlockValue { get; set; }
-    public int EventPool { get; set; }
     public int ResourceType { get; set; }
     public int ResourceFristtime { get; set; }
     public int ResourceByRound { get; set; }

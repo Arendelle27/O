@@ -43,6 +43,7 @@ public class Main : MonoSingleton<Main>
      void Init()
     {
         UIMain.Instance.ChangeToGamePanel(1);
+        SoundManager.Instance.RoundStart(0);
     }
 
     Coroutine reStartCor;
@@ -173,6 +174,6 @@ public class Main : MonoSingleton<Main>
         ChatManager.Instance.GameOver();
         (UIMain.Instance.ChangeToGamePanel(4) as UIEndPanel).SetInfo(endId);
 
-        SoundManager.Instance.RoundStart(0);
+        SoundManager.Instance.RoundStart(100);
     }
 }

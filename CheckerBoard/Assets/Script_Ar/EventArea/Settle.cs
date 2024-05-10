@@ -45,6 +45,7 @@ public class Settle : EventArea
     /// </summary>
     public override void WandererEnter()
     {
+        base.WandererEnter();
         if (this.isBlackMarket)
         {
             Debug.LogFormat("½øÈëºÚÊĞ{0}", this.plot.pos);

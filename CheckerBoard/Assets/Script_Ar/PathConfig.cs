@@ -26,7 +26,10 @@ public class PathConfig
 
     const string HeadPortrait_Sprite_Paths = "UI/HeadPortrait/{0}";
 
-    const string Npc_Sprite_Paths = "UI/Npc/{0}";
+    const string NpcNormal_Sprite_Paths = "UI/NpcNormal/{0}";
+
+    const string NpcChat_Sprite_Paths = "UI/NpcChat/{0}";
+
 
 
     //“Ù¿÷“Ù–ßŒª÷√
@@ -96,9 +99,13 @@ public class PathConfig
     }
     //PlotSprite
 
-    public static string GetNpcSpritePath(string name)
+    public static string GetNpcNormalSpritePath(string name)
     {
-        return string.Format(Npc_Sprite_Paths, name);
+        return string.Format(NpcNormal_Sprite_Paths, name);
+    }
+    public static string GetNpcChatSpritePath(string name)
+    {
+        return string.Format(NpcChat_Sprite_Paths, name);
     }
     public static string GetMusicPath(string name)
     {

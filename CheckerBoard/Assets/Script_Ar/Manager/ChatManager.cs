@@ -1,3 +1,4 @@
+using Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace MANAGER
             {
                 curChatContentId = value; 
                 this.UpdateChatWindow(value);
+                this.PlayChatNextVoice();
             }
         }
         //聊天窗口
@@ -125,6 +127,7 @@ namespace MANAGER
         /// <param name="sort"></param>
         public void ChatConditionUnlock(int sort,int value)
         {
+            Dictionary<Npc_Name,int> npcs = new Dictionary<Npc_Name, int>();
             for(int i = 0; i < this.chatConditionsNpc[sort].Count;i++)
             {
                 var item = this.chatConditionsNpc[sort].ElementAt(i);
@@ -132,10 +135,21 @@ namespace MANAGER
                 if (chatConditionDefine.ChatConditionValue == value)
                 {
                     this.chatConditionsNpc[sort][item.Key] = true;
+                    NpcManager.Instance.npcs[chatConditionDefine.NPC].ShowSwitch(true);
+
+                    npcs.Add(chatConditionDefine.NPC, item.Key);
 
                 }
             }
-
+            //foreach (var npc in WandererManager.Instance.wanderer.plot.npcs)
+            //{
+            //    if (npcs.ContainsKey(npc.npcDefine.Name))
+            //    {
+            //        this.CurChatId = npcs[npc.npcDefine.Name];
+            //        this.chatConditionsNpc[sort].Remove(npcs[npc.npcDefine.Name]);
+            //        break;
+            //    }
+            //}
 
             int chatDefineId = -1;
             foreach (var id in this.chatConditions[sort])
@@ -151,6 +165,7 @@ namespace MANAGER
             if (chatDefineId != -1)
             {
                 this.chatConditions[sort].Remove(chatDefineId);
+
             }
 
 
@@ -280,7 +295,9 @@ namespace MANAGER
                     case 8://结局CG
                         MainThreadDispatcher.StartUpdateMicroCoroutine(Main.Instance.GameOver(subEventValue));
                         break;
-
+                    case 9://增加人类阵营敌意
+                        EventAreaManager.Instance.hotility[0] += this.subEventValue;
+                        break;
                 }
             }
         }
@@ -295,7 +312,13 @@ namespace MANAGER
                 {
                     this.onClickToNext.Dispose();
                     this.CurChatContentId= this.curChatDefines[this.CurChatContentId].SubAnswerId;
+                    //this.PlayChatNextVoice();
                 });
+        }
+
+        void PlayChatNextVoice()
+        {
+            SoundManager.Instance.PlayVoice("Chat");
         }
     }
 }

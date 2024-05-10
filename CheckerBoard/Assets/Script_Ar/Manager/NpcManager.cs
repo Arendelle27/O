@@ -243,7 +243,7 @@ namespace MANAGER
             {
                 var item = this.npcLeaveConditions[sort].ElementAt(i);
                 NPCDefine npcDefine = DataManager.NPCDefines[item.Key];
-                if (npcDefine.AppearConditionValue == conditionValue)
+                if (npcDefine.LeaveConditionValue == conditionValue)
                 {
                     item.Value[1] = true;
                     if (this.IsUnlock(false, sort, item.Key))
@@ -320,7 +320,7 @@ namespace MANAGER
                 this.npcs.Add(npcDefine.Name, npcScript);
                 if(plot.wanderer!=null)
                 {
-                    ChatManager.Instance.ChatWithNpc(npcDefine.Name);//与npc对话
+                    npcScript.ChatWithWander();//与npc对话
                 }
             }
             else

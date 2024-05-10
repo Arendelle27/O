@@ -15,7 +15,9 @@ namespace MANAGER
 
         public static Dictionary<HeadPortrait_Type,Sprite> headPortraitSprites =new Dictionary<HeadPortrait_Type, Sprite>();
 
-        public static Dictionary<Npc_Name, Sprite> npcSprites = new Dictionary<Npc_Name, Sprite>();
+        public static Dictionary<Npc_Name, Sprite> npcNormalSprites = new Dictionary<Npc_Name, Sprite>();
+
+        public static Dictionary<Npc_Name, Sprite> npcChatSprites = new Dictionary<Npc_Name, Sprite>();
 
         public static void Load()
         {
@@ -57,10 +59,19 @@ namespace MANAGER
 
             for (int i = 0; i < (int)Npc_Name.Npc; i++)
             {
-                Sprite sprite = Resources.Load<Sprite>(PathConfig.GetNpcSpritePath(((Npc_Name)i).ToString()));
-                if (sprite != null && !npcSprites.ContainsKey((Npc_Name)i))
+                Sprite sprite = Resources.Load<Sprite>(PathConfig.GetNpcNormalSpritePath(((Npc_Name)i).ToString()));
+                if (sprite != null && !npcNormalSprites.ContainsKey((Npc_Name)i))
                 {
-                    npcSprites.Add((Npc_Name)i, sprite);
+                    npcNormalSprites.Add((Npc_Name)i, sprite);
+                }
+            }
+
+            for (int i = 0; i < (int)Npc_Name.Npc; i++)
+            {
+                Sprite sprite = Resources.Load<Sprite>(PathConfig.GetNpcChatSpritePath(((Npc_Name)i).ToString()));
+                if (sprite != null && !npcChatSprites.ContainsKey((Npc_Name)i))
+                {
+                    npcChatSprites.Add((Npc_Name)i, sprite);
                 }
             }
         }

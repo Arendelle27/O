@@ -16,6 +16,10 @@ public class UIEscapePanel : UIConfrontEventPanel
         base.Start();
         this.insureButton.OnClickAsObservable().Subscribe(_ =>
         {
+            if (!ResourcesManager.Instance.CanCopyConfront())
+            {
+                return;
+            }
             if (!EventManager.Instance.Escape(this.successRate))
             {
                 int rate = EventManager.Instance.calculateRates(0);

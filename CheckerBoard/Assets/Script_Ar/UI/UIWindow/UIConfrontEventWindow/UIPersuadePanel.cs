@@ -73,6 +73,10 @@ public class UIPersuadePanel : UIConfrontEventPanel
 
         this.insureButton.OnClickAsObservable().Subscribe(_ =>
         {
+            if(!ResourcesManager.Instance.CanCopyConfront())
+            {
+                return;
+            }
             if(!EventManager.Instance.Persudate(this.successRate,this.persuadeCostCurrencyValue))
             {
                 int rate= EventManager.Instance.calculateRates(0);

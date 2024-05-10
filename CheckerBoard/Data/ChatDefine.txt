@@ -1109,8 +1109,8 @@
     }
   },
   "4022": {
-    "402201": {
-      "Id": 402201,
+    "0": {
+      "Id": 0,
       "HeadPortrait": "Q",
       "Name": "Q",
       "IsOption": 0,
@@ -3596,7 +3596,9 @@
     "1820": {
       "Id": 1820,
       "SubAnswerId": -1,
-      "ChatContent": "你望着集市上来往的形形色色的人群，零的话让你若有所思。"
+      "ChatContent": "你望着集市上来往的形形色色的人群，零的话让你若有所思。",
+      "SubEventType": 9,
+      "SubEventValue": 15
     }
   },
   "19": {

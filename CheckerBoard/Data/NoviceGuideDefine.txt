@@ -81,9 +81,9 @@
     "GuideDescription": "将来，你可以在这里使用*<color=cyan>升级点数</color>*提升自己的能力",
     "PlayCondition": 0,
     "IsArrow": true,
-    "NoviceGuideWindowPosX": 1300.0,
+    "NoviceGuideWindowPosX": 1337.0,
     "NoviceGuideWindowPosY": 895.0,
-    "NoviceGuideArrowPosX": 1626.0,
+    "NoviceGuideArrowPosX": 1663.0,
     "NoviceGuideArrowPosY": 864.0,
     "NoviceGuideArrowRotZ": 0.0
   },
@@ -92,9 +92,9 @@
     "GuideDescription": "这里是你所有的钱。",
     "PlayCondition": 0,
     "IsArrow": true,
-    "NoviceGuideWindowPosX": 1300.0,
+    "NoviceGuideWindowPosX": 1279.0,
     "NoviceGuideWindowPosY": 978.0,
-    "NoviceGuideArrowPosX": 1626.0,
+    "NoviceGuideArrowPosX": 1605.0,
     "NoviceGuideArrowPosY": 950.0,
     "NoviceGuideArrowRotZ": 0.0
   },

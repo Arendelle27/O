@@ -6,9 +6,9 @@
       "PurchaseOrSell": 0,
       "TransactionType": "资源",
       "Subtype": 0,
-      "Amount": 20,
+      "Amount": 30,
       "Price": 25,
-      "CoolingRounds": 2
+      "CoolingRounds": 1
     },
     "1": {
       "ID": 1,
@@ -16,9 +16,9 @@
       "PurchaseOrSell": 0,
       "TransactionType": "资源",
       "Subtype": 1,
-      "Amount": 10,
+      "Amount": 20,
       "Price": 80,
-      "CoolingRounds": 3
+      "CoolingRounds": 2
     },
     "2": {
       "ID": 2,
@@ -26,7 +26,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 0,
-      "Amount": 10,
+      "Amount": 30,
       "Price": 20
     },
     "3": {
@@ -35,8 +35,8 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 1,
-      "Amount": 5,
-      "Price": 60
+      "Amount": 20,
+      "Price": 65
     }
   },
   "1": {
@@ -46,9 +46,9 @@
       "PurchaseOrSell": 0,
       "TransactionType": "资源",
       "Subtype": 2,
-      "Amount": 2,
+      "Amount": 5,
       "Price": 1000,
-      "CoolingRounds": 5
+      "CoolingRounds": 3
     },
     "1": {
       "ID": 1,
@@ -65,7 +65,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 2,
-      "Amount": 2,
+      "Amount": 5,
       "Price": 800
     }
   }

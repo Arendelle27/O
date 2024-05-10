@@ -73,7 +73,6 @@
     "EventValue": "3",
     "Condition": "回合",
     "UnlockValue": "3",
-    "EventPool": 1,
     "IsSpecialGeneration": "true",
     "HorizontalMin": 15,
     "HorizontalMax": 20,
@@ -90,7 +89,6 @@
     "EventValue": "3",
     "Condition": "回合",
     "UnlockValue": "6",
-    "EventPool": 2,
     "IsSpecialGeneration": "true",
     "HorizontalMin": 17,
     "HorizontalMax": 17,
@@ -122,7 +120,6 @@
     "EventValue": "1",
     "Condition": "回合",
     "UnlockValue": "6",
-    "EventPool": 3,
     "IsSpecialGeneration": "false",
     "Weights": 3
   },
@@ -150,7 +147,6 @@
     "EventValue": "战斗机械蓝图",
     "Condition": "回合",
     "UnlockValue": "13",
-    "EventPool": 4,
     "IsSpecialGeneration": "true",
     "HorizontalMin": -7,
     "HorizontalMax": -7,
@@ -167,7 +163,6 @@
     "EventValue": "地下室",
     "Condition": "道具",
     "UnlockValue": "地下室钥匙",
-    "EventPool": 5,
     "IsSpecialGeneration": "true",
     "HorizontalMin": 5,
     "HorizontalMax": 5,
@@ -184,7 +179,6 @@
     "EventValue": "0",
     "Condition": "回合",
     "UnlockValue": "6",
-    "EventPool": 3,
     "IsSpecialGeneration": "false",
     "Weights": 3
   }

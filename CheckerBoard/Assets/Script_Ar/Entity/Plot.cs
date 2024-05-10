@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static ArchiveManager;
@@ -79,7 +80,10 @@ namespace ENTITY
         //public Subject<Vector2Int> enterSelectedSubject = new Subject<Vector2Int>();
 
         [SerializeField, LabelText("通过板块解锁板块"), ReadOnly]
-        public Subject<int> unLoadByPlot=new Subject<int>();
+        public Subject<int> unLoadByPlot;
+
+
+
         #endregion
 
         private void Start()
@@ -108,7 +112,7 @@ namespace ENTITY
         {
             this.clickSelectedSubject = new Subject<Plot>();
             //this.enterSelectedSubject = new Subject<Vector2Int>();
-            this.unLoadByPlot = new Subject<int>();
+            //this.unLoadByPlot = new Subject<int>();
         }
 
         private void OnDisable()
@@ -117,7 +121,12 @@ namespace ENTITY
 
             //this.enterSelectedSubject.OnCompleted();
 
-            this.unLoadByPlot.OnCompleted();
+            if(this.unLoadByPlot!=null)
+            {
+                this.unLoadByPlot.OnCompleted();
+                this.unLoadByPlot=null;
+            }
+            
 
         }
 
@@ -379,8 +388,8 @@ namespace ENTITY
                     (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(false);//关闭建造按钮
                 }
 
-                NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
-                ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
+                //NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
+                //ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
 
                 foreach (var npc in this.npcs)
                 {
@@ -389,7 +398,10 @@ namespace ENTITY
 
                 if (isFirstExplored)
                 {
-                    this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
+                    if(this.unLoadByPlot!=null)
+                    {
+                        this.unLoadByPlot.OnNext(this.plotDefine.ID);//通过格子解锁格子
+                    }
                     if (this.plotDefine.Type == 0)//资源板块
                     {
                         if (this.buildingResources[0] == -1)

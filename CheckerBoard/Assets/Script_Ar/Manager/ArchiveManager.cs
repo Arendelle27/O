@@ -25,7 +25,7 @@ public static class ArchiveManager
         public QuestManagerData questManagerData;
         public NpcManagerData npcManagerData;
         public ChatManagerData chatManagerData;
-        public Vector3 CameraPos;
+        public CameraData cameraData;
     }
 
     [Serializable]
@@ -272,6 +272,13 @@ public static class ArchiveManager
 
         public List<ChatConditionsData> chatConditionsData = new List<ChatConditionsData>();
         public List<ChatConditionsNpcData> chatConditionNpcsData = new List<ChatConditionsNpcData>();
+    }
+
+    [Serializable]
+    public class CameraData
+    {
+        public Vector3 cameraPosition;
+        public float cameraSize;
     }
 
     //¥Êµµ
@@ -597,7 +604,10 @@ public static class ArchiveManager
         #endregion
 
         #region œ‡ª˙Œª÷√
-        arc.CameraPos = Camera.main.transform.position;
+        CameraData cameraData = new CameraData();
+        cameraData.cameraPosition = Camera.main.transform.position;
+        cameraData.cameraSize = Camera.main.fieldOfView;
+        arc.cameraData = cameraData;
         #endregion
 
         string json = JsonUtility.ToJson(arc);

@@ -62,7 +62,6 @@ public class UIGamePanel : UIPanel
         this.upgradeButton.OnClickAsObservable().Subscribe(_ =>
         {
             //打开升级界面
-            //UIManager.Instance.Show<UIUpgradeWindow>();
             UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
         });
 

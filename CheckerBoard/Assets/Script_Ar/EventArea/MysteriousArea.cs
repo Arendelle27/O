@@ -22,6 +22,7 @@ public class MysteriousArea : EventArea
 
     public override void WandererEnter()
     {
+        base.WandererEnter();
         Debug.LogFormat("½øÈëÒÅ¼£{0}", this.plot.pos);
     }
 }

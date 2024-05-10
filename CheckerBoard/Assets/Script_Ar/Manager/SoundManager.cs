@@ -140,7 +140,7 @@ namespace Managers
         public void PlayVoice(string name)
         {
             AudioClip clip=Resources.Load<AudioClip>(PathConfig.GetVoicePath(name));
-            if(clip!=null)
+            if(clip==null)
             {
                 Debug.LogWarningFormat("PlaySound:{0} not exited.",name);
                 return;
@@ -161,8 +161,13 @@ namespace Managers
                 case 19:
                     this.PlayMusic("bgm2");
                     break;
+                case 100:
+                    this.PlayMusic("EndBgm");
+                    break;
             }
         }
+
+
         protected void PlayClipOnAudioSource(AudioSource source,AudioClip clip,bool isLoop)
         {
 

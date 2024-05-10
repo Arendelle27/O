@@ -54,7 +54,9 @@ public class MainCamera : MonoBehaviour
     public void ReadArchive()
     {
         this.Init();
-        this.transform.position =ArchiveManager.archive.CameraPos;
+        ArchiveManager.CameraData cameraData = ArchiveManager.archive.cameraData;
+        this.transform.position =cameraData.cameraPosition;
+        this.mainCamera.fieldOfView = cameraData.cameraSize;
     }
 
     /// <summary>
