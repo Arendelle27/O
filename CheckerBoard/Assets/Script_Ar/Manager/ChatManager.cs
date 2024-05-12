@@ -127,7 +127,7 @@ namespace MANAGER
         /// <param name="sort"></param>
         public void ChatConditionUnlock(int sort,int value)
         {
-            Dictionary<Npc_Name,int> npcs = new Dictionary<Npc_Name, int>();
+            Dictionary<int,int> npcs = new Dictionary<int, int>();
             for(int i = 0; i < this.chatConditionsNpc[sort].Count;i++)
             {
                 var item = this.chatConditionsNpc[sort].ElementAt(i);
@@ -176,7 +176,7 @@ namespace MANAGER
         /// </summary>
         /// <param name="npc"></param>
         /// <param name="npcId"></param>
-        public void ChatWithNpc(Npc_Name npc)
+        public void ChatWithNpc(int npc)
         {
             int chatDefineId = -1;
             foreach (var item in this.chatConditionsNpc.Values)
@@ -276,7 +276,8 @@ namespace MANAGER
                         Debug.Log("新手引导");
                         break;
                     case 3://解锁地下室钥匙
-                        PlotManager.Instance.unloadProp["地下室钥匙"] = true;
+                        PlotManager.Instance.unloadProp[Prop_Type.地下室钥匙] = true;
+                        MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("获得了{0}", Prop_Type.地下室钥匙.ToString()));
                         break;
                     case 4://播放CG
                         CGManager.Instance.PlayCG((CG_Type) this.subEventValue);

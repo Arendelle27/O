@@ -41,8 +41,11 @@ public class NoviceGuideTool : Editor
 
                 NoviceGuideDefine def = DataManager.NoviceGuideDefines[uINoviceGuideWindow.id];
 
-                def.NoviceGuideWindowPosX = uINoviceGuideWindow.transform.position.x;
-                def.NoviceGuideWindowPosY = uINoviceGuideWindow.transform.position.y;
+                def.NoviceGuidePosX = uINoviceGuideWindow.transform.position.x;
+                def.NoviceGuidePosY = uINoviceGuideWindow.transform.position.y;
+
+                def.NoviceGuideWindowPosX = uINoviceGuideWindow.UINoviceGuideWindowTransform.position.x;
+                def.NoviceGuideWindowPosY = uINoviceGuideWindow.UINoviceGuideWindowTransform.position.y;
 
                 def.NoviceGuideArrowPosX = uINoviceGuideWindow.UINoviceGuideArrowTransform.position.x;
                 def.NoviceGuideArrowPosY = uINoviceGuideWindow.UINoviceGuideArrowTransform.position.y;

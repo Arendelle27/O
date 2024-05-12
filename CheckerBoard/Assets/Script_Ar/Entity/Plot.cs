@@ -117,13 +117,14 @@ namespace ENTITY
 
         private void OnDisable()
         {
-            this.clickSelectedSubject.OnCompleted();
+            this.clickSelectedSubject.Dispose();
 
             //this.enterSelectedSubject.OnCompleted();
 
             if(this.unLoadByPlot!=null)
             {
-                this.unLoadByPlot.OnCompleted();
+                this.unLoadByPlot.Dispose();
+
                 this.unLoadByPlot=null;
             }
             
@@ -413,14 +414,14 @@ namespace ENTITY
                         ResourcesManager.Instance.ChangeBuildingResources(res, true);
 
                     }
-
                     this.isFirstExplored = false;
                 }
-
+                QuestManager.Instance.QuestEnd(1, this.plotDefine.ID);
                 //EventManager.Instance.curClashArea = null;//清空记录的冲突区域
 
                 //触发角色进入事件
                 this.eventArea?.WandererEnter();
+                EventAreaManager.Instance.selectedEventArea = this.eventArea;
             }
         }
 

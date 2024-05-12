@@ -44,13 +44,13 @@ namespace MANAGER
         int weightTotal = 0;//格子权重总和
 
         [SerializeField, LabelText("解锁格子条件"), ReadOnly]
-        internal List<Dictionary<int,string>> plotConditions = new List<Dictionary<int, string>>(3) {new Dictionary<int, string>(),new Dictionary<int, string>(),new Dictionary<int, string>() };
+        internal List<Dictionary<int,int>> plotConditions = new List<Dictionary<int, int>>(3) { new Dictionary<int, int>(), new Dictionary<int, int>(), new Dictionary<int, int>() };
         //存储格子条件,0为板块,1为回合,2为道具
 
         [SerializeField, LabelText("解锁格子的道具"), ReadOnly]
-        internal Dictionary<string, bool> unloadProp=new Dictionary<string, bool>();
+        internal Dictionary<Prop_Type, bool> unloadProp=new Dictionary<Prop_Type, bool>();
         [SerializeField, LabelText("道具解锁事件"), ReadOnly]
-        Dictionary<string, IDisposable> unlockIDisposableProp = new Dictionary<string, IDisposable> { };
+        Dictionary<Prop_Type, IDisposable> unlockIDisposableProp = new Dictionary<Prop_Type, IDisposable> { };
 
         //回合数解锁格子
         IDisposable unlockByRound;
@@ -203,7 +203,7 @@ namespace MANAGER
 
             for(int i = 0; i < this.plotConditions.Count; i++)
             {
-                Dictionary<int, string> dic = new Dictionary<int, string>();
+                Dictionary<int, int> dic = new Dictionary<int, int>();
                 for(int j = 0; j < plotManagerData.plotConditions[i].ids.Count; j++)
                 {
                     dic.Add(plotManagerData.plotConditions[i].ids[j], plotManagerData.plotConditions[i].conditions[j]);
@@ -246,22 +246,21 @@ namespace MANAGER
 
             foreach(var id in this.plotConditions[2].Keys)//道具解锁格子
             {
-                this.unlockIDisposableProp[plotConditions[2][id]]= this.ObserveEveryValueChanged(_ => this.unloadProp[plotConditions[2][id]])
-                    .Where(_ => this.unloadProp[plotConditions[2][id]])
+                this.unlockIDisposableProp[(Prop_Type)plotConditions[2][id]]= this.ObserveEveryValueChanged(_ => this.unloadProp[(Prop_Type)plotConditions[2][id]])
+                    .Where(_ => this.unloadProp[(Prop_Type)plotConditions[2][id]])
                     .First()
                     .Subscribe(_ =>
                     {
-                        if (this.unloadProp[plotConditions[2][id]])
-                        {
-                            this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
-                            this.unlockIDisposableProp[plotConditions[2][id]].Dispose();
-                            this.plotConditions[2].Remove(id);
-                            Debug.Log("解锁通过道具解锁格子");
-                            this.PlotUnlock(id);
+                        //if (this.unloadProp[(Prop_Type)plotConditions[2][id]])
+                        //{
+                        this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
+                        this.unlockIDisposableProp[(Prop_Type)plotConditions[2][id]].Dispose();
+                        this.plotConditions[2].Remove(id);
+                        Debug.Log("解锁通过道具解锁格子");
+                        this.PlotUnlock(id);
 
-
-
-                        }
+                        //}
+                        QuestManager.Instance.QuestEnd(2, plotConditions[2][id]);
                     });
                 break;
             }
@@ -298,8 +297,8 @@ namespace MANAGER
             this.canExploredPlots.Clear();
             this.plotTypes = new List<HashSet<int>>(3) { new HashSet<int>(), new HashSet<int>() };
             this.weightTotal = 0;
-            this.plotConditions = new List<Dictionary<int, string>>(3) { new Dictionary<int, string>(), new Dictionary<int, string>(), new Dictionary<int, string>() };
-            this.unloadProp = new Dictionary<string, bool>();
+            this.plotConditions = new List<Dictionary<int, int>>(3) { new Dictionary<int, int>(), new Dictionary<int, int>(), new Dictionary<int, int>() };
+            this.unloadProp = new Dictionary<Prop_Type, bool>();
 
             this.RemoveAllPlot();
         }
@@ -311,14 +310,14 @@ namespace MANAGER
         Plot GetPlotAndDefine(Vector2Int pos)
         {
             Plot plot = this.GetGrid(pos);
-            //if(pos==new Vector2Int(0,0))
-            //{
-            //    plot.SetInfo(DataManager.PlotDefines[6]);
-            //}
-            //else
-            //{
+            if (pos == new Vector2Int(0, 0))
+            {
+                plot.SetInfo(DataManager.PlotDefines[7]);
+            }
+            else
+            {
                 plot.SetInfo(this.GetPlotDefine(pos));
-            //}
+            }
             this.UnlockPlotByPlot(plots[plot.pos]);//订阅解锁格子
             return plot;
         }
@@ -366,7 +365,7 @@ namespace MANAGER
                     }
                     if(plot.plotDefine.EventType==Event_Area_Type.交易&&plot.wanderer!=null)//板块上有事件地区
                     {
-                        EventAreaManager.Instance.selectedEventArea = plot.eventArea;
+                        //EventAreaManager.Instance.selectedEventArea = plot.eventArea;
                         UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
                         uSW.OpenWindow(2);
                     }
@@ -407,18 +406,18 @@ namespace MANAGER
                         break;
                     case Plot_Condition_Type.道具:
                         this.plotConditions[2].Add(pD.ID, pD.UnlockValue);
-                        this.unloadProp.Add(pD.UnlockValue, false);
-                        this.unlockIDisposableProp.Add(pD.UnlockValue, null);
+                        this.unloadProp.Add((Prop_Type)pD.UnlockValue, false);
+                        this.unlockIDisposableProp.Add((Prop_Type)pD.UnlockValue, null);
 
-                        this.unlockIDisposableProp[plotConditions[2][pD.ID]]=this.ObserveEveryValueChanged(_=>this.unloadProp[plotConditions[2][pD.ID]])
-                            .Where(_=>this.unloadProp[plotConditions[2][pD.ID]])
+                        this.unlockIDisposableProp[(Prop_Type)plotConditions[2][pD.ID]]=this.ObserveEveryValueChanged(_=>this.unloadProp[(Prop_Type)plotConditions[2][pD.ID]])
+                            .Where(_=>this.unloadProp[(Prop_Type)plotConditions[2][pD.ID]])
                             .First()
                             .Subscribe(_ =>
                         {
-                            if (this.unloadProp[plotConditions[2][pD.ID]])
+                            if (this.unloadProp[(Prop_Type)plotConditions[2][pD.ID]])
                             {
                                 this.plotTypes[pD.Type].Add(pD.ID);
-                                this.unlockIDisposableProp[plotConditions[2][pD.ID]].Dispose();
+                                this.unlockIDisposableProp[(Prop_Type)plotConditions[2][pD.ID]].Dispose();
                                 this.plotConditions[2].Remove(pD.ID);
                                 Debug.Log("解锁通过道具解锁格子");
                                 this.PlotUnlock(pD.ID);
@@ -441,7 +440,7 @@ namespace MANAGER
                 for (int i = 0; i < this.plotConditions[1].Count;)
                 {
                     var id = this.plotConditions[1].ElementAt(i).Key;
-                    if (int.Parse(this.plotConditions[1][id]) <= roundNumber)
+                    if (this.plotConditions[1][id] <= roundNumber)
                     {
                         this.plotTypes[DataManager.PlotDefines[id].Type].Add(id);
                         this.plotConditions[1].Remove(id);
@@ -666,7 +665,7 @@ namespace MANAGER
         /// <param name="plot"></param>
         void UnlockPlotByPlot(Plot plot)
         {
-            if (this.plotConditions[0].ContainsValue((plot.plotDefine.ID).ToString()))
+            if (this.plotConditions[0].ContainsValue(plot.plotDefine.ID))
             {
                 //订阅解锁格子事件
                 plot.unLoadByPlot=new Subject<int>();
@@ -679,7 +678,7 @@ namespace MANAGER
                     for(int i = 0; i < this.plotConditions[0].Count; i++)
                     {
                         var item = this.plotConditions[0].ElementAt(i);
-                        if (item.Value == (id).ToString())
+                        if (item.Value == id)
                         {
                             unlockPlotDefineIds.Add(item.Key);
                             this.plotTypes[plot.plotDefine.Type].Add(item.Key);
@@ -693,6 +692,8 @@ namespace MANAGER
                         Debug.Log("解锁通过板块解锁格子");
                         this.PlotUnlock(unlockPlotDefineId);
                     }
+                    plot.unLoadByPlot.Dispose();
+
                 });
             }
         }
@@ -1007,11 +1008,19 @@ namespace MANAGER
             {
                 this.map_Mode = Map_Mode.拓展探索小队;
                 UIMain.Instance.ChangeToGamePanel(3);
+                if (NoviceGuideManager.Instance.isGuideStage[5])//是否处于新手指引阶段
+                {
+                    NoviceGuideManager.Instance.uINoviceGuidePanel.masks[0].gameObject.SetActive(false);
+                }
             }
             else
             {
                 this.map_Mode = Map_Mode.正常;
                 UIMain.Instance.ChangeToGamePanel(1);//恢复到游戏界面
+                if (NoviceGuideManager.Instance.isGuideStage[5])//是否处于新手指引阶段
+                {
+                    NoviceGuideManager.Instance.NoviceGuideStage++;
+                }
                 //UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
             }
         }

@@ -80,10 +80,10 @@ namespace MANAGER
             /*结算前*/
             //this.stage+= EventManager.Instance.StageDecision(this.stage,this.roundNumber);//阶段决策
 
-            QuestManager.Instance.QuestEndByRound(this.roundNumber);//阶段决策
-
             /*回合结束*/
             this.roundNumber++;//回合数加1
+
+            QuestManager.Instance.QuestEndByRound(this.roundNumber);//阶段决策
             NpcManager.Instance.RoundOver(this.roundNumber);//npc结束回合
             SoundManager.Instance.RoundStart(this.roundNumber);//音乐开始回合
 

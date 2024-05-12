@@ -1,3 +1,4 @@
+using MANAGER;
 using Managers;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -69,7 +70,10 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
         //{
         //    return;
         //}
-
+        if (NoviceGuideManager.Instance.NoviceGuideStage>-1)//是否处于新手指引阶段
+        {
+            return;
+        }
         if (ed == null||ed.hovered.Contains(this.gameObject))
         {
             return;

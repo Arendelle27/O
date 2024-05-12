@@ -150,6 +150,7 @@ public class Main : MonoSingleton<Main>
     /// </summary>
     public IEnumerator GameOver(int endId)
     {
+        UIManager.Instance.Close<UISelectedWindow>();
         this.mainCamera?.StopControl();
         //UIManager.Instance.Show<UIScoreWindow>();
 

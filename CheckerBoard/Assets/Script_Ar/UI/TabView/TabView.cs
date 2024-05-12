@@ -27,7 +27,6 @@ public class TabView : MonoBehaviour {
                 break;
             }
         }
-        //SelectTab(0);
     }
 
     void OnEnable()

@@ -162,7 +162,7 @@
     "EventType": "剧情",
     "EventValue": "地下室",
     "Condition": "道具",
-    "UnlockValue": "地下室钥匙",
+    "UnlockValue": "1",
     "IsSpecialGeneration": "true",
     "HorizontalMin": 5,
     "HorizontalMax": 5,

@@ -8,5 +8,5 @@ public class ChatConditionDefine
     public int Type { get; set; }
     public int ChatCondition { get; set; }
     public int ChatConditionValue{ get; set; }
-    public Npc_Name NPC { get; set; }
+    public int NPC { get; set; }
 }

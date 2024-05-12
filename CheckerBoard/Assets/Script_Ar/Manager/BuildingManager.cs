@@ -544,14 +544,14 @@ namespace MANAGER
                 if(plot.building==null)
                 {
                     this.GetBuilding(type, plot);
-
+                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("({0},{1})建造{2}", plot.pos.x,plot.pos.y,type.ToString()));
                     (UIMain.Instance.uiPanels[1] as UIGamePanel).buildButton.gameObject.SetActive(false);//关闭建造按钮
                     return true;
                 }
                 else
                 {
                     Debug.Log("该板块已有建筑");
-                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("{0}板块已有建筑", plot.pos));
+                    MessageManager.Instance.AddMessage(Message_Type.机械, string.Format("({0},{1})板块已有机械", plot.pos.x,plot.pos.y));
                 }
             }
             return false;

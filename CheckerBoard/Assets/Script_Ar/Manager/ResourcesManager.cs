@@ -72,6 +72,7 @@ namespace MANAGER
             this.Init();
             this.wealth = 50;
             this.execution = CapabilityManager.Instance.executionAmount;
+            this.buildingResources = new List<int> { 10, 2, 0 };
         }
 
         public void ReadArchive()
@@ -87,7 +88,7 @@ namespace MANAGER
         public void GameOver()
         {
             this.wealth = 0;
-            this.buildingResources = new List<int> { 0, 0, 0 };
+            this.buildingResources = new List<int> { 0,0,0 };
             this.execution = 0;
         }
 

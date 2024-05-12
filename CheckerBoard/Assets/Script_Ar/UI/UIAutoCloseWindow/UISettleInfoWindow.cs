@@ -40,6 +40,10 @@ public class UISettleInfoWindow : UISelectWindow
 
         this.buttons[1].OnClickAsObservable().Subscribe(_ =>
         {
+            if (!ResourcesManager.Instance.CanCopyConfront())
+            {
+                return;
+            }
             EventManager.Instance.SetConfrontEvent(0, EventAreaManager.Instance.hotility[0]);
             //this.selectedWindow.OnCloseClick();
         });
@@ -58,9 +62,10 @@ public class UISettleInfoWindow : UISelectWindow
         this.image.sprite = SpriteManager.plotSprites[eventArea.plot.plotDefine.Name];
         this.title.text = eventArea.plot.plotDefine.Name;
         this.description.text = eventArea.plot.plotDefine.Description;
-        this.hotilityValue.text = EventAreaManager.Instance.hotility[0].ToString();
+
+        this.hotilityValue.text = EventAreaManager.Instance.hotility[int.Parse( eventArea.plot.plotDefine.EventValue)].ToString(); 
         //this.SetButton((int)eventArea.plot.plotDefine.EventType);//…Ë÷√∞¥º¸
-        
+
     }
 
     /// <summary>

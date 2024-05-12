@@ -29,8 +29,8 @@ public class EventArea
     /// </summary>
     public virtual void WandererEnter()
     {
-        NpcManager.Instance.NPCAppearUnlock(1, this.plot.plotDefine.ID);//添加对话
-        ChatManager.Instance.ChatConditionUnlock(2, this.plot.plotDefine.ID);
+        NpcManager.Instance.NPCAppearUnlock(1, this.plot.plotDefine.ID);
+        ChatManager.Instance.ChatConditionUnlock(2, this.plot.plotDefine.ID);//添加对话
     }
 
     /// <summary>

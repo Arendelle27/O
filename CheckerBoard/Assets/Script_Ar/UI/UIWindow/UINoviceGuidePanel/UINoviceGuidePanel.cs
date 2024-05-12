@@ -50,6 +50,19 @@ public class UINoviceGuidePanel : UIWindow
                 this.masks[0].gameObject.SetActive(true);
                 this.masks[0].uIMasks[1].gameObject.SetActive(false);
                 break;
+            case PlayCondition_Type.生产建筑:
+                this.masks[0].gameObject.SetActive(true);
+                this.masks[0].uIMasks[5].gameObject.SetActive(false);
+                break;
+            case PlayCondition_Type.能力提升:
+                this.masks[0].gameObject.SetActive(true);
+                this.masks[0].uIMasks[4].gameObject.SetActive(false);
+                break;
+            case PlayCondition_Type.关闭能力提升:
+                this.masks[0].gameObject.SetActive(true);
+                break;
+
+
         }
 
         foreach (var rectTransform in rectTransforms)

@@ -32,6 +32,8 @@ namespace UIBUILDING
             {
                 listView.onItemSelected += this.OnBuildingItemSelected;
             }
+            //this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(true);
             //MainThreadDispatcher.StartUpdateMicroCoroutine(BeSelected());
 
         }
@@ -48,6 +50,7 @@ namespace UIBUILDING
             {
                 LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
             }
+            this.tabView.tabButtons[1].OnClick();//生产建筑
         }
 
         private void OnDisable()
@@ -93,6 +96,10 @@ namespace UIBUILDING
 
                 if(BuildingManager.Instance.Build(buildingtypeSelected, WandererManager.Instance.wanderer.plot))
                 {
+                    if (NoviceGuideManager.Instance.isGuideStage[3])//是否处于新手指引阶段
+                    {
+                        NoviceGuideManager.Instance.NoviceGuideStage++;
+                    }
                     this.selectedWindow.OnCloseClick();
                 }
                 
@@ -112,6 +119,7 @@ namespace UIBUILDING
         /// </summary>
         public void UpdateBuildingList(int sort)
         {
+
             ClearBuildingList(sort);
             foreach (var buType in BuildingManager.Instance.buildingTypes[sort])
             {

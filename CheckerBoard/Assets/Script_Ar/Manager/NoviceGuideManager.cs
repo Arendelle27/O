@@ -11,7 +11,7 @@ namespace MANAGER
     public class NoviceGuideManager : Singleton<NoviceGuideManager>
     {
         //当前新手指引阶段
-        int noviceGuideStage = 0;
+        int noviceGuideStage = -1;
 
         public int NoviceGuideStage
         {
@@ -27,8 +27,8 @@ namespace MANAGER
         }
 
         //是否处于特定新手指引阶段
-        public List<bool> isGuideStage = new List<bool>(3) { false, false, false };
-        //0：移动，1：移动地点 2：建造
+        public List<bool> isGuideStage = new List<bool>(6) { false, false, false,false ,false,false};
+        //0：移动，1：移动地点,2：建造,3:生产建筑,4:能力提升,5:关闭能力提升
 
         //新手指引面板
         public UINoviceGuidePanel uINoviceGuidePanel;
@@ -45,6 +45,10 @@ namespace MANAGER
             if (this.uINoviceGuidePanel == null)
             {
                 this.uINoviceGuidePanel = UIManager.Instance.Show<UINoviceGuidePanel>();
+            }
+            else
+            {
+                this.uINoviceGuidePanel.gameObject.SetActive(true);
             }
 
             this.NoviceGuideStage = 0;
@@ -74,7 +78,10 @@ namespace MANAGER
             {
                 NoviceGuideDefine noviceGuideDefine = DataManager.NoviceGuideDefines[this.NoviceGuideStage];
                 this.uINoviceGuidePanel.SetInfo(noviceGuideDefine);
-                this.isGuideStage = new List<bool>(3) { false, false, false };
+                for(int i = 0; i < this.isGuideStage.Count; i++)
+                {
+                    this.isGuideStage[i] = false;
+                }
                 switch (noviceGuideDefine.PlayCondition)
                 {
                     case PlayCondition_Type.任意位置:
@@ -89,13 +96,23 @@ namespace MANAGER
                     case PlayCondition_Type.建造:
                         this.isGuideStage[2] = true;
                         break;
+                    case PlayCondition_Type.生产建筑:
+                        this.isGuideStage[3] = true;
+                        break;
+                    case PlayCondition_Type.能力提升:
+                        this.isGuideStage[4] = true;
+                        break;
+                    case PlayCondition_Type.关闭能力提升:
+                        this.isGuideStage[5] = true;
+                        break;
                 }
 
             }
             else
             {
+                this.noviceGuideStage = -1;
                 UIManager.Instance.Close<UINoviceGuidePanel>();
-                QuestManager.Instance.GetQuest(-1);//接受第一个任务
+                //QuestManager.Instance.GetQuest(-1);//接受第一个任务
             }
         }
     }

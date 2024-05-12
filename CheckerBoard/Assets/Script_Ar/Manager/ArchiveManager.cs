@@ -52,13 +52,13 @@ public static class ArchiveManager
         public class PlotConditions
         {
             public List<int> ids;
-            public List<string> conditions;
+            public List<int> conditions;
         }
 
         [Serializable]
         public class UnloadPropData
         {
-            public string propName;
+            public Prop_Type propName;
             public bool isUnloaded;
         }
 
@@ -209,8 +209,8 @@ public static class ArchiveManager
     [Serializable]
     public class QuestManagerData
     {
-        public List<int> questIds = new List<int>();//存在主线时,0为主线任务,后续为支线任务
-        public List<int> questsRound = new List<int>();//存在主线时,0为主线任务,后续为支线任务
+        public List<int> questMainIds = new List<int>();//主线任务
+        public List<int> questSecondIds = new List<int>();//支线任务
 
         public List<int> questConditions = new List<int>();
     }
@@ -495,7 +495,7 @@ public static class ArchiveManager
         {
             npcManagerData.npcsData.Add(new NpcManagerData.NpcData
             {
-                npcName = npc.Key,
+                npcName = npc.Value.npcDefine.Name,
                 npcDefineId = npc.Value.npcDefine.Id,
                 pos = npc.Value.pos
             });
@@ -567,18 +567,9 @@ public static class ArchiveManager
 
         #region 任务管理器数据
         QuestManagerData questManagerData = new QuestManagerData();
-        if(QuestManager.Instance.curMainQuestId!=-1)
-        {
-            questManagerData.questIds.Add(QuestManager.Instance.curMainQuestId);
-            questManagerData.questsRound.Add(QuestManager.Instance.curMainQuestRound);
-        }
+        questManagerData.questMainIds = QuestManager.Instance.curQuestIds[0].ToList();
+        questManagerData.questSecondIds = QuestManager.Instance.curQuestIds[1].ToList();
         questManagerData.questConditions = QuestManager.Instance.questConditions.ToList();
-
-        //foreach (var questId in QuestManager.Instance.curSecondQuestIds)
-        //{
-        //    questManagerData.questIds.Add(questId);
-        //    questManagerData.questsRound.Add(QuestManager.Instance.curSecondQuestsRound[questId]);
-        //}
 
         arc.questManagerData = questManagerData;
         #endregion

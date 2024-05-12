@@ -2,12 +2,12 @@
   "101": {
     "Id": 101,
     "QuestName": "支付生活费Ⅰ",
-    "IsMain": "True",
-    "QuestDescription": "在第3天结束前赚到s空间币,s=p4",
-    "QuestConditionId": 1011,
-    "RoundCondition": 3,
+    "IsMain": 0,
+    "QuestDescription": "在第3天结束前赚到80空间币",
+    "QuestConditionId": 10110,
+    "RoundCondition": 4,
     "CurrencyCondition": 80,
-    "DestinationConditionY": 1,
+    "QuestJudgeType": -1,
     "GainUpgradePoint": 2,
     "GainResource1": 5,
     "QuestFallResult": 1
@@ -15,12 +15,12 @@
   "102": {
     "Id": 102,
     "QuestName": "支付生活费Ⅱ",
-    "IsMain": "True",
-    "QuestDescription": "在第6天结束前赚到s空间币,s=p4",
+    "IsMain": 0,
+    "QuestDescription": "在第6天结束前赚到300空间币",
     "QuestConditionId": 1012,
-    "RoundCondition": 3,
+    "RoundCondition": 7,
     "CurrencyCondition": 300,
-    "DestinationConditionY": 1,
+    "QuestJudgeType": -1,
     "GainUpgradePoint": 4,
     "GainResource1": 5,
     "QuestFallResult": 1
@@ -28,11 +28,12 @@
   "103": {
     "Id": 103,
     "QuestName": "支付生活费Ⅲ",
-    "IsMain": "True",
-    "QuestDescription": "在第14天结束前赚到s空间币,s=p5",
+    "IsMain": 0,
+    "QuestDescription": "在第14天结束前赚到2000空间币",
     "QuestConditionId": 1022,
-    "RoundCondition": 8,
+    "RoundCondition": 15,
     "CurrencyCondition": 2000,
+    "QuestJudgeType": -1,
     "GainUpgradePoint": 6,
     "GainResource1": 10,
     "QuestFallResult": 1
@@ -40,64 +41,68 @@
   "104": {
     "Id": 104,
     "QuestName": "支付生活费Ⅳ",
-    "IsMain": "True",
-    "QuestDescription": "在第24天结束前赚到s空间币,s=p6",
+    "IsMain": 0,
+    "QuestDescription": "在第24天结束前赚到8000空间币",
     "QuestConditionId": 1032,
-    "RoundCondition": 10,
+    "RoundCondition": 25,
     "CurrencyCondition": 8000,
+    "QuestJudgeType": -1,
     "GainUpgradePoint": 8,
     "QuestFallResult": 1
   },
   "105": {
     "Id": 105,
     "QuestName": "支付生活费Ⅴ",
-    "IsMain": "True",
-    "QuestDescription": "在第29天结束前赚到s空间币,s=p7",
+    "IsMain": 0,
+    "QuestDescription": "在第30天结束前赚到10000空间币",
     "QuestConditionId": 1042,
-    "RoundCondition": 6,
+    "RoundCondition": 31,
     "CurrencyCondition": 10000,
-    "Resource1Condition": 0,
-    "Resource2Condition": 0,
-    "Resource3Condition": 0,
+    "QuestJudgeType": -1,
     "QuestFallResult": 1
   },
   "201": {
     "Id": 201,
     "QuestName": "收集维修材料",
-    "IsMain": "True",
+    "IsMain": 0,
     "QuestDescription": "找到10个破旧电缆，5个废弃金属带给零",
     "QuestConditionId": 2011,
     "Resource1Condition": 10,
     "Resource2Condition": 5,
-    "Resource3Condition": 0
+    "Resource3Condition": 0,
+    "QuestJudgeType": 0,
+    "QuestJudgeValue": 1002
   },
   "301": {
     "Id": 301,
     "QuestName": "垃圾场的秘密",
-    "IsMain": "True",
+    "IsMain": 0,
+    "IsExist": -1,
     "QuestConditionId": 3011,
     "Resource1Condition": 1,
     "Resource2Condition": 0,
     "Resource3Condition": 1,
-    "AimNpc": "零",
+    "QuestJudgeType": 0,
+    "QuestJudgeValue": 1002,
     "GainUpgradePoint": 2,
     "GainCurrency": 10
   },
   "302": {
     "Id": 302,
     "QuestName": "钥匙？",
-    "IsMain": "True",
+    "IsMain": 0,
+    "IsExist": -1,
     "QuestConditionId": 3021,
-    "AimProp": "地下室钥匙",
+    "QuestJudgeType": 2,
+    "QuestJudgeValue": 1,
     "GainUpgradePoint": 3
   },
   "303": {
     "Id": 303,
     "QuestName": "寻找地下室",
-    "IsMain": "True",
+    "IsMain": 0,
+    "IsExist": -1,
     "QuestConditionId": 3031,
-    "DestinationConditionX": 5,
-    "DestinationConditionY": -3,
     "GainUpgradePoint": 4,
     "GainResource1": 1,
     "GainResource2": 1
@@ -105,22 +110,25 @@
   "401": {
     "Id": 401,
     "QuestName": "玫瑰壤",
-    "IsMain": "False",
+    "IsMain": 1,
     "QuestDescription": "找到Q描述的地点（向西22公里，向北6公里）",
     "QuestConditionId": 4011,
+    "RoundCondition": 25,
     "CurrencyCondition": 80,
-    "DestinationConditionX": -7,
-    "DestinationConditionY": 10,
+    "QuestJudgeType": 1,
+    "QuestJudgeValue": 4,
     "GainResource1": 1
   },
   "402": {
     "Id": 402,
     "QuestName": "玫瑰壤",
-    "IsMain": "False",
+    "IsMain": 1,
     "QuestDescription": "把芯片带回去给Q",
     "QuestConditionId": 4021,
+    "RoundCondition": 25,
     "CurrencyCondition": 80,
-    "AimNpc": "Q",
+    "QuestJudgeType": 0,
+    "QuestJudgeValue": 1003,
     "GainUpgradePoint": 1,
     "GainResource1": 1,
     "GainResource2": 1
@@ -128,7 +136,8 @@
   "403": {
     "Id": 403,
     "QuestName": "探秘黑市",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 4031,
     "GainUpgradePoint": 1,
     "GainResource1": 1
@@ -136,7 +145,8 @@
   "501": {
     "Id": 501,
     "QuestName": "M的试探",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 5011,
     "GainResource1": 1,
     "GainResource2": 1
@@ -144,7 +154,8 @@
   "502": {
     "Id": 502,
     "QuestName": "运送物资",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 5021,
     "GainUpgradePoint": 1,
     "GainResource1": 1
@@ -152,7 +163,8 @@
   "503": {
     "Id": 503,
     "QuestName": "运送情报",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 5031,
     "GainUpgradePoint": 1,
     "GainResource1": 1
@@ -160,14 +172,16 @@
   "504": {
     "Id": 504,
     "QuestName": "筹备运动",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 5041,
     "GainUpgradePoint": 1
   },
   "505": {
     "Id": 505,
     "QuestName": "落幕时刻",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 5051,
     "GainUpgradePoint": 1,
     "HumanHostility": 10,
@@ -176,14 +190,16 @@
   "601": {
     "Id": 601,
     "QuestName": "电子花束",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 6011,
     "GainUpgradePoint": 1
   },
   "602": {
     "Id": 602,
     "QuestName": "共享天空",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 6021,
     "GainUpgradePoint": 1,
     "HumanHostility": -10,
@@ -192,7 +208,8 @@
   "603": {
     "Id": 603,
     "QuestName": "告别",
-    "IsMain": "False",
+    "IsMain": 1,
+    "IsExist": -1,
     "QuestConditionId": 6031,
     "HumanHostility": -5,
     "RobotHostility": -10

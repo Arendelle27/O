@@ -122,7 +122,10 @@ public enum PlayCondition_Type
     任意位置,
     移动,
     移动地点,
-    建造
+    建造,
+    生产建筑,
+    能力提升,
+    关闭能力提升
 }
 
 public enum HeadPortrait_Type

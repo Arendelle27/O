@@ -65,7 +65,7 @@ namespace MANAGER
         public void Restart()
         {
             this.Init();
-            this.upgradePoint = 0;
+            this.upgradePoint = 2;
             this.upgradePointHaveBuy = 0;
             this.freelyReduceCoolingRound = 0;
             for (int i = 0; i < this.curLevels.Count; i++)
@@ -128,7 +128,7 @@ namespace MANAGER
                         this.expendExploratoryAmount+= teamUpgradeDefine.TeamIncreaseAmount;
                         this.curLevels[0]++;
 
-                        this.uIStrengthenCapabilityWindow.UpdateUpgradePointHaveBuy();
+
 
                         PlotManager.Instance.EnterSelectExtendExpTeam(true);//进入选择扩展探索小队的模式
                         UIManager.Instance.Close<UIStrengthenCapabilityWindow>();
@@ -147,7 +147,7 @@ namespace MANAGER
 
                         this.curLevels[1]++;
 
-                        this.uIStrengthenCapabilityWindow.UpdateUpgradePointHaveBuy();
+
                     }
                     break;
                 case Upgrade_Type.行动力:
@@ -163,11 +163,11 @@ namespace MANAGER
 
                         this.curLevels[2]++;
 
-                        this.uIStrengthenCapabilityWindow.UpdateUpgradePointHaveBuy();
+
                     }
                     break;
             }
-
+            this.uIStrengthenCapabilityWindow.UpdateUpgradePointHaveBuy();
             this.uIStrengthenCapabilityWindow.UpdateStrengthenCapabilityItemInfo((int)type); //更新强化能力项目信息
         }
 

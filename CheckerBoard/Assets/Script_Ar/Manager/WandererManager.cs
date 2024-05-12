@@ -155,6 +155,10 @@ namespace MANAGER
 
                 PlotManager.Instance.WanderEnter(amiPlot);
                 PlotManager.Instance.EnterMoveWanderer(false);
+                if (NoviceGuideManager.Instance.isGuideStage[1])//是否处于新手指引阶段
+                {
+                    NoviceGuideManager.Instance.NoviceGuideStage++;
+                }
             });
 
 

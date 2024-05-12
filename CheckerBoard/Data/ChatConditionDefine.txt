@@ -58,7 +58,7 @@
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 2011,
-    "NPC": "零"
+    "NPC": 1002
   },
   "3012": {
     "Id": 3012,
@@ -83,77 +83,77 @@
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 13,
-    "NPC": "Q"
+    "NPC": 1003
   },
   "4022": {
     "Id": 4022,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 4011,
-    "NPC": "Q"
+    "NPC": 1003
   },
   "4032": {
     "Id": 4032,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 4022,
-    "NPC": "M"
+    "NPC": 1005
   },
   "5011": {
     "Id": 5011,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 4032,
-    "NPC": "M"
+    "NPC": 1005
   },
   "5012": {
     "Id": 5012,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5011,
-    "NPC": "Q"
+    "NPC": 1003
   },
   "5022": {
     "Id": 5022,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5012,
-    "NPC": "M"
+    "NPC": 1005
   },
   "5032": {
     "Id": 5032,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5022,
-    "NPC": "W"
+    "NPC": 1006
   },
   "5042": {
     "Id": 5042,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5032,
-    "NPC": "W"
+    "NPC": 1006
   },
   "6011": {
     "Id": 6011,
     "Type": 2,
     "ChatCondition": 0,
     "ChatConditionValue": 16,
-    "NPC": "S"
+    "NPC": 1007
   },
   "6012": {
     "Id": 6012,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 6011,
-    "NPC": "S"
+    "NPC": 1007
   },
   "6022": {
     "Id": 6022,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 6012,
-    "NPC": "S"
+    "NPC": 1007
   },
   "11": {
     "Id": 11,
@@ -184,7 +184,7 @@
     "Type": 2,
     "ChatCondition": 0,
     "ChatConditionValue": 26,
-    "NPC": "Q"
+    "NPC": 1004
   },
   "15": {
     "Id": 15,

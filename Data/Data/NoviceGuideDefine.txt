@@ -7,54 +7,90 @@
   },
   "1": {
     "Id": 1,
-    "GuideDescription": "在这里规划你要去的地点，要注意一次*<color=cyan>移动</color>*的范围有限。",
-    "PlayCondition": "移动",
-    "IsArrow": "True"
+    "GuideDescription": "按住鼠标中键拖动地图。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "False"
   },
   "2": {
     "Id": 2,
-    "GuideDescription": "迷雾中的地区是你尚未*<color=cyan>探索</color>*的，可以通过移动到这个地区上来解锁。",
-    "PlayCondition": "移动地点",
+    "GuideDescription": "使用鼠标滚轮缩放地图。",
+    "PlayCondition": "任意位置",
     "IsArrow": "False"
   },
   "3": {
     "Id": 3,
-    "GuideDescription": "这里是你能建造的*<color=cyan>机械</color>*，回收设备能帮我们回收废弃资源来换*<color=cyan>空间币</color>*，也就是钱。",
-    "PlayCondition": "建造",
+    "GuideDescription": "在这里规划你要去的地点，*移动*的范围和你当前的行动力有关。",
+    "PlayCondition": "移动",
     "IsArrow": "True"
   },
   "4": {
     "Id": 4,
-    "GuideDescription": "不过要想建造机械，你需要一些*<color=cyan>材料</color>*，这里是你已有的材料。\n这些材料可以通过*<color=cyan>地区探索</color>*和*<color=cyan>停留在有材料的地区上</color>*来收集，将来也可以建造*<color=cyan>自动采集资源的机械</color>*。",
-    "PlayCondition": "任意位置",
-    "IsArrow": "True"
+    "GuideDescription": "迷雾中的地区是你尚未*<color=cyan>探索</color>*的，可以通过移动到这个地区上来解锁。",
+    "PlayCondition": "移动地点",
+    "IsArrow": "False"
   },
   "5": {
     "Id": 5,
-    "GuideDescription": "这里是你度过的*<color=cyan>天数</color>*。",
-    "PlayCondition": "任意位置",
+    "GuideDescription": "这里是你能建造的*<color=cyan>机械</color>*。",
+    "PlayCondition": "建造",
     "IsArrow": "True"
   },
   "6": {
     "Id": 6,
-    "GuideDescription": "切记，每天的行动力是有限的，不要透支体力，我见过很多人这么死在荒野上。",
+    "GuideDescription": "生产建筑能帮我们回收废弃资源来换*<color=cyan>空间币</color>*，也就是钱。",
     "PlayCondition": "任意位置",
     "IsArrow": "True"
   },
   "7": {
     "Id": 7,
-    "GuideDescription": "将来，你可以在这里使用*<color=cyan>升级点数</color>*提升自己的能力",
-    "PlayCondition": "任意位置",
+    "GuideDescription": "双击建筑以在当前地块建造。",
+    "PlayCondition": "生产建筑",
     "IsArrow": "True"
   },
   "8": {
     "Id": 8,
-    "GuideDescription": "这里是你所有的*<color=cyan>空间币</color>*。",
+    "GuideDescription": "不过要想建造机械，你需要一些*<color=cyan>材料</color>*，这里是你已有的材料。\n",
     "PlayCondition": "任意位置",
     "IsArrow": "True"
   },
   "9": {
     "Id": 9,
+    "GuideDescription": "这些材料可以通过*<color=cyan>地区探索</color>*和*<color=cyan>停留在有材料的地区上</color>*来收集，将来也可以建造*<color=cyan>自动采集资源的机械</color>*。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "True"
+  },
+  "10": {
+    "Id": 10,
+    "GuideDescription": "这里是你度过的*<color=cyan>天数</color>*。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "True"
+  },
+  "11": {
+    "Id": 11,
+    "GuideDescription": "切记，每天的行动力是有限的，不要透支体力，我见过很多人这么死在荒野上。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "True"
+  },
+  "12": {
+    "Id": 12,
+    "GuideDescription": "可以在这里使用*<color=cyan>升级点数</color>*提升自己的能力。",
+    "PlayCondition": "能力提升",
+    "IsArrow": "True"
+  },
+  "13": {
+    "Id": 13,
+    "GuideDescription": "*探索小队*能加快探索和资源收集的效率，提升*交易等级*能在买卖物品时节省更多的钱，*行动力*能增加每天行动的次数。",
+    "PlayCondition": "关闭能力提升",
+    "IsArrow": "False"
+  },
+  "14": {
+    "Id": 14,
+    "GuideDescription": "这里是你所有的钱。",
+    "PlayCondition": "任意位置",
+    "IsArrow": "True"
+  },
+  "15": {
+    "Id": 15,
     "GuideDescription": "第三天结束时，你要给我80空间币，作为你的生活费。",
     "PlayCondition": "任意位置",
     "IsArrow": "False"

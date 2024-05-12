@@ -32,10 +32,11 @@ public class Npc :Entity
     /// </summary>
     public void ChatWithWander()
     {
-        ChatManager.Instance.ChatWithNpc(this.npcDefine.Name);
+        ChatManager.Instance.ChatWithNpc(this.npcDefine.Id);
         this.ShowSwitch(false);
 
         NpcManager.Instance.NPCAppearUnlock(2, this.npcDefine.Id);
+        QuestManager.Instance.QuestEnd(0, this.npcDefine.Id);
     }
 
     /// <summary>

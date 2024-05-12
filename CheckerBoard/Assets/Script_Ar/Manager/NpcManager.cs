@@ -11,7 +11,7 @@ namespace MANAGER
     public class NpcManager : MonoSingleton<NpcManager>
     {
         //当前存在npc
-        public Dictionary<Npc_Name,Npc> npcs=new Dictionary<Npc_Name,Npc>();
+        public Dictionary<int,Npc> npcs=new Dictionary<int,Npc>();
         //npc的解锁条件
         public Dictionary<int,Dictionary<int,List<bool>>> npcAppearConditions=new Dictionary<int, Dictionary<int, List<bool>>>(4) //0为回合数
         {
@@ -317,7 +317,7 @@ namespace MANAGER
                 npcScript.SetInfo(npcDefineId, plot);
                 plot.npcs.Add(npcScript);
 
-                this.npcs.Add(npcDefine.Name, npcScript);
+                this.npcs.Add(npcDefine.Id, npcScript);
                 if(plot.wanderer!=null)
                 {
                     npcScript.ChatWithWander();//与npc对话
@@ -327,14 +327,14 @@ namespace MANAGER
             {
                 NPCDefine npcDefine = DataManager.NPCDefines[npcDefineId];
 
-                if(this.npcs.ContainsKey(npcDefine.Name))
+                if(this.npcs.ContainsKey(npcDefine.Id))
                 {
-                    GameObjectPool.Instance.NPCs.Release(this.npcs[npcDefine.Name].gameObject);
+                    GameObjectPool.Instance.NPCs.Release(this.npcs[npcDefine.Id].gameObject);
                     Vector2Int pos = new Vector2Int(npcDefine.PositionX, npcDefine.PositionY);
                     Plot plot = PlotManager.Instance.NPCAppear(pos);
-                    plot.npcs.Remove(this.npcs[npcDefine.Name]);
+                    plot.npcs.Remove(this.npcs[npcDefine.Id]);
 
-                    this.npcs.Remove(npcDefine.Name);
+                    this.npcs.Remove(npcDefineId);
                 }
             }
         }

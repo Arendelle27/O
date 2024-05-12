@@ -28,6 +28,10 @@ public class UIStrengthenCapabilityWindow : UIWindow
         this.closeButton.OnClickAsObservable().Subscribe(_ =>
         {
             this.OnCloseClick();
+            if (NoviceGuideManager.Instance.isGuideStage[5])//是否处于新手指引阶段
+            {
+                NoviceGuideManager.Instance.NoviceGuideStage++;
+            }
         });
 
         this.upgadeButton.OnClickAsObservable().Subscribe(_ =>

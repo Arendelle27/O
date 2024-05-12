@@ -63,6 +63,10 @@ public class UIGamePanel : UIPanel
         {
             //打开升级界面
             UIManager.Instance.Show<UIStrengthenCapabilityWindow>();
+            if (NoviceGuideManager.Instance.isGuideStage[4])//是否处于新手指引阶段
+            {
+                NoviceGuideManager.Instance.NoviceGuideStage++;
+            }
         });
 
         this.buildButton.OnClickAsObservable().Subscribe(_ =>

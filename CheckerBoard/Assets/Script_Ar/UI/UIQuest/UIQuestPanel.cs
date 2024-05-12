@@ -7,66 +7,84 @@ using UnityEngine.UI;
 
 public class UIQuestPanel : MonoBehaviour
 {
-    [SerializeField, LabelText("主线UI"), ReadOnly]
-    public UIQuest uIQuestMain;
+    [SerializeField, LabelText("任务UI"), ReadOnly]
+    public List<List<UIQuest>> uIQuest=new List<List<UIQuest>>(2) {new List<UIQuest>(),new List<UIQuest>() };
     //[SerializeField, LabelText("支线UI"), ReadOnly]
     //public Dictionary<int,UIQuest> uiQuestSecond=new Dictionary<int, UIQuest>();
+    [SerializeField, LabelText("自适应的窗口"), Tooltip("放入需要只适应的窗口")]
+    public List<RectTransform> rectTransforms = new List<RectTransform>();
+
+    public void OnEnable()
+    {
+        this.UpdateAllUIQuest();
+    }
 
     /// <summary>
     /// 更新任务UI
     /// </summary>
     public void UpdateAllUIQuest()
     {
-        this.RemoveAllUIQuest();
-        if (DataManager.QuestDefines.ContainsKey(QuestManager.Instance.curMainQuestId))
+        List<Dictionary<int,bool>> questOpen= new List<Dictionary<int, bool>>(2) {new Dictionary<int, bool>(), new Dictionary<int, bool>() };
+        for (int i = 0; i < this.uIQuest.Count; i++)
         {
-            this.SetQuestMain(DataManager.QuestDefines[QuestManager.Instance.curMainQuestId]);//主线任务
+            foreach (var quest in uIQuest[i])
+            {
+                questOpen[i].Add(quest.questId, quest.switchToggle.isOn);//记录任务开关状态
+            }
+        }
+        this.RemoveAllUIQuest();
+        for(int i=0;i<QuestManager.Instance.curQuestIds.Count;i++)
+        {
+            foreach (var questId in QuestManager.Instance.curQuestIds[i])
+            {
+                if (!questOpen[i].ContainsKey(questId))
+                {
+                    questOpen[i].Add(questId, true);
+                }
+
+                this.SetQuest(i,DataManager.QuestDefines[questId], questOpen[i][questId]);
+            }
         }
 
+        foreach (var rectTransform in rectTransforms)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        }
         //foreach (var item in QuestManager.Instance.curSecondQuestIds)
         //{
         //    SetQuestSecond(DataManager.QuestDefines[item]);
         //}
     }
 
-    public void SetQuestMain(QuestDefine questDefine)
+    /// <summary>
+    /// 设置任务
+    /// </summary>
+    /// <param name="isMain"></param>
+    /// <param name="questDefine"></param>
+    /// <param name="isOpen"></param>
+    public void SetQuest(int isMain,QuestDefine questDefine,bool isOpen)
     {
 
         GameObject go = GameObjectPool.Instance.UIQuestItems.Get();
         go.transform.SetParent(this.transform);
         UIQuest uiQuest = go.GetComponent<UIQuest>();
-        uiQuest.SetInfo(questDefine);
-        this.uIQuestMain = uiQuest;
+        uiQuest.SetInfo(questDefine,isOpen);
+        this.uIQuest[isMain].Add(uiQuest);
     }
 
-    //public void SetQuestSecond(QuestDefine questDefine)
-    //{
-    //    if(this.uiQuestSecond.ContainsKey(questDefine.Id))
-    //    {
-    //        this.uiQuestSecond[questDefine.Id].SetInfo(questDefine);
-    //        return;
-    //    }
-    //    //GameObject go = GameObjectPool.Instance.UIQuestItems.Get();
-    //    //go.transform.SetParent(UIMain.Instance.uIQuestPanel.transform);
-    //    //UIQuest uiQuest = go.GetComponent<UIQuest>();
-    //    //uiQuest.SetInfo(questDefine);
-    //    //uiQuestSecond.Add(uiQuest);
-    //}
 
     /// <summary>
     /// 移除所有任务UI
     /// </summary>
     public void RemoveAllUIQuest()
     {
-        if (this.uIQuestMain != null)
+        for(int i=0;i<this.uIQuest.Count;i++)
         {
-            GameObjectPool.Instance.UIQuestItems.Release(uIQuestMain.gameObject);
-            this.uIQuestMain = null;
+            for (int j = 0; j < this.uIQuest[i].Count; j++)
+            {
+                GameObjectPool.Instance.UIQuestItems.Release(this.uIQuest[i][j].gameObject);
+            }
+            this.uIQuest[i].Clear();
         }
-        //foreach (var item in this.uiQuestSecond)
-        //{
-        //    GameObjectPool.Instance.UIQuestItems.Release(item.Value.gameObject);
-        //}
-        //this.uiQuestSecond.Clear();
     }
 }

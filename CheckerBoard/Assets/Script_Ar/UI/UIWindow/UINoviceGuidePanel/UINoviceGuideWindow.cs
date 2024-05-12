@@ -9,6 +9,9 @@ public class UINoviceGuideWindow : MonoBehaviour
     [SerializeField, LabelText("新手指引窗口Id"), Tooltip("新手指引窗口Id")]
     public int id;
 
+    [SerializeField, LabelText("新手指引框"), Tooltip("放入新手指引框")]
+    public Transform UINoviceGuideWindowTransform;
+
     [SerializeField, LabelText("新手指引箭头"), Tooltip("放入新手指引箭头")]
     public Transform UINoviceGuideArrowTransform;
 
@@ -24,7 +27,8 @@ public class UINoviceGuideWindow : MonoBehaviour
         this.gameObject.SetActive(false);
         this.id=noviceGuideDefine.Id;
         this.NoviceGuideDescriptionText.text = noviceGuideDefine.GuideDescription;
-        this.transform.position = new Vector3(noviceGuideDefine.NoviceGuideWindowPosX, noviceGuideDefine.NoviceGuideWindowPosY, 0);
+        this.transform.position = new Vector3(noviceGuideDefine.NoviceGuidePosX, noviceGuideDefine.NoviceGuidePosY, 0);
+        this.UINoviceGuideWindowTransform.position = new Vector3(noviceGuideDefine.NoviceGuideWindowPosX, noviceGuideDefine.NoviceGuideWindowPosY, 0);
 
         if(noviceGuideDefine.IsArrow)
         {
