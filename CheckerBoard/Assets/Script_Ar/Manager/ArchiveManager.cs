@@ -212,7 +212,8 @@ public static class ArchiveManager
         public List<int> questMainIds = new List<int>();//主线任务
         public List<int> questSecondIds = new List<int>();//支线任务
 
-        public List<int> questConditions = new List<int>();
+        public List<int> questQuestConditions = new List<int>();
+        public List<int> questChatConditions = new List<int>();
     }
 
     [Serializable]
@@ -289,6 +290,10 @@ public static class ArchiveManager
     /// </summary>
     public static void SaveData()
     {
+        if(UIMain.Instance.curPanelIndex!=1)//不在游戏界面
+        {
+            return;
+        }
         Archive arc = new Archive();//建立存档
         #region 地块管理器数据
         PlotManagerData plotManagerData = new PlotManagerData();
@@ -569,8 +574,8 @@ public static class ArchiveManager
         QuestManagerData questManagerData = new QuestManagerData();
         questManagerData.questMainIds = QuestManager.Instance.curQuestIds[0].ToList();
         questManagerData.questSecondIds = QuestManager.Instance.curQuestIds[1].ToList();
-        questManagerData.questConditions = QuestManager.Instance.questConditions.ToList();
-
+        questManagerData.questChatConditions = QuestManager.Instance.questConditions[0].ToList();
+        questManagerData.questChatConditions = QuestManager.Instance.questConditions[1].ToList();
         arc.questManagerData = questManagerData;
         #endregion
 

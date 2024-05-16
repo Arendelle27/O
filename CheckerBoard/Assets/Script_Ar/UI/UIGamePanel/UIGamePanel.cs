@@ -29,6 +29,9 @@ public class UIGamePanel : UIPanel
     [SerializeField, LabelText("当前回合数"), Tooltip("当前回合数的显示")]
     public Text roundNumber;
 
+    [SerializeField, LabelText("新手指引按键"), Tooltip("放入新手指引按键")]
+    public Button operationInstructionButton;
+
     [SerializeField, LabelText("建造按键"), Tooltip("点击建造建筑")]
     public Button buildButton;
 
@@ -67,6 +70,12 @@ public class UIGamePanel : UIPanel
             {
                 NoviceGuideManager.Instance.NoviceGuideStage++;
             }
+        });
+
+        this.operationInstructionButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            //打开升级界面
+            UIManager.Instance.Show<UIOperationInstructionWindow>();
         });
 
         this.buildButton.OnClickAsObservable().Subscribe(_ =>

@@ -318,6 +318,7 @@ namespace MANAGER
                 plot.npcs.Add(npcScript);
 
                 this.npcs.Add(npcDefine.Id, npcScript);
+
                 if(plot.wanderer!=null)
                 {
                     npcScript.ChatWithWander();//”Înpc∂‘ª∞

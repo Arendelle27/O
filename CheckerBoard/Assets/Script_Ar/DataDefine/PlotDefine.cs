@@ -10,7 +10,7 @@ public class PlotDefine
     public bool CanBuild { get; set; }
     public int Type { get; set; }
     public Event_Area_Type EventType { get; set; }
-    public string EventValue { get; set; }
+    public int EventValue { get; set; }
     public Plot_Condition_Type Condition { get; set; }
     public int UnlockValue { get; set; }
     public int ResourceType { get; set; }

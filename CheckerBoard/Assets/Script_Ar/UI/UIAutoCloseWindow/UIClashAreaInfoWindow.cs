@@ -32,7 +32,7 @@ public class UIClashAreaInfoWindow : UISelectWindow
         this.buttons[0].OnClickAsObservable().Subscribe(_ =>
         {
             PlotDefine pD=EventManager.Instance.curClashArea.plot.plotDefine;
-            EventManager.Instance.SetConfrontEvent(int.Parse(pD.EventValue),EventAreaManager.Instance.hotility[int.Parse(pD.EventValue)]+500f, EventManager.Instance.curClashArea);
+            EventManager.Instance.SetConfrontEvent(pD.EventValue,EventAreaManager.Instance.hotility[pD.EventValue]+500f, EventManager.Instance.curClashArea);
             //this.selectedWindow.OnCloseClick();
         });
 
@@ -50,7 +50,7 @@ public class UIClashAreaInfoWindow : UISelectWindow
         this.image.sprite = SpriteManager.plotSprites[clashArea.plot.plotDefine.Name];
         this.title.text = clashArea.plot.plotDefine.Name;
         this.description.text = clashArea.plot.plotDefine.Description;
-        this.hotilityValue.text = EventAreaManager.Instance.hotility[int.Parse(clashArea.plot.plotDefine.EventValue)].ToString();
+        this.hotilityValue.text = EventAreaManager.Instance.hotility[clashArea.plot.plotDefine.EventValue].ToString();
         //this.SetButton((int)eventArea.plot.plotDefine.EventType);//…Ë÷√∞¥º¸
         
     }

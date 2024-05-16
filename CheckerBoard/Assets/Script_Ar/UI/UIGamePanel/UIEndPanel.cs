@@ -45,7 +45,7 @@ public class UIEndPanel : UIPanel
     IEnumerator ShowButton()
     {
         this.buttonPanel.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         this.buttonPanel.gameObject.SetActive(true);
         StopCoroutine(showButtonCor);
     }

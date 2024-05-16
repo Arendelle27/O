@@ -33,7 +33,6 @@
     "Id": 1004,
     "Name": "Q",
     "AppearCondition": 2,
-    "AppearConditionValue": 1003,
     "AppearRound": 26,
     "LeaveCondition": 1,
     "LeaveConditionValue": 14,
@@ -53,7 +52,7 @@
     "Id": 1006,
     "Name": "W",
     "AppearCondition": 0,
-    "AppearConditionValue": 5022,
+    "AppearConditionValue": 5021,
     "LeaveCondition": 1,
     "LeaveConditionValue": 5042,
     "PositionX": 16,
@@ -64,7 +63,8 @@
     "Name": "S",
     "AppearCondition": -1,
     "AppearRound": 16,
-    "LeaveCondition": -2,
+    "LeaveCondition": -1,
+    "LeaveRound": 28,
     "PositionX": 6,
     "PositionY": -4
   }

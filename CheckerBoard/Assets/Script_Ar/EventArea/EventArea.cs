@@ -31,6 +31,7 @@ public class EventArea
     {
         NpcManager.Instance.NPCAppearUnlock(1, this.plot.plotDefine.ID);
         ChatManager.Instance.ChatConditionUnlock(2, this.plot.plotDefine.ID);//Ìí¼Ó¶Ô»°
+
     }
 
     /// <summary>

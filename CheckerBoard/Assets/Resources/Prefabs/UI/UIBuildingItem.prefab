@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 4021500420072505166}
-  normalBg: {fileID: 21300000, guid: d000e4762dbd76e4f8e9dd45c0fdca24, type: 3}
+  normalBg: {fileID: 21300000, guid: 9304f93b180b52f48bcbc12ac41c51b1, type: 3}
   selectedBg: {fileID: 21300000, guid: b10babea3756f7a489275792bf804fa0, type: 3}
   owner: {fileID: 0}
   type: 0

@@ -56,8 +56,8 @@
   "2012": {
     "Id": 2012,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 2011,
+    "ChatCondition": 3,
+    "ChatConditionValue": 201,
     "NPC": 1002
   },
   "3012": {
@@ -76,7 +76,7 @@
     "Id": 3022,
     "Type": 1,
     "ChatCondition": 2,
-    "ChatConditionValue": 9
+    "ChatConditionValue": 11
   },
   "4011": {
     "Id": 4011,
@@ -88,15 +88,15 @@
   "4022": {
     "Id": 4022,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 4011,
+    "ChatCondition": 3,
+    "ChatConditionValue": 401,
     "NPC": 1003
   },
   "4032": {
     "Id": 4032,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 4022,
+    "ChatCondition": 3,
+    "ChatConditionValue": 403,
     "NPC": 1005
   },
   "5011": {
@@ -109,50 +109,78 @@
   "5012": {
     "Id": 5012,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 5011,
+    "ChatCondition": 3,
+    "ChatConditionValue": 501,
     "NPC": 1003
   },
-  "5022": {
-    "Id": 5022,
+  "5021": {
+    "Id": 5021,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5012,
     "NPC": 1005
   },
-  "5032": {
-    "Id": 5032,
+  "5022": {
+    "Id": 5022,
+    "Type": 2,
+    "ChatCondition": 3,
+    "ChatConditionValue": 502,
+    "NPC": 1006
+  },
+  "5031": {
+    "Id": 5031,
     "Type": 2,
     "ChatCondition": 1,
     "ChatConditionValue": 5022,
     "NPC": 1006
   },
+  "5032": {
+    "Id": 5032,
+    "Type": 2,
+    "ChatCondition": 3,
+    "ChatConditionValue": 503,
+    "NPC": 1006
+  },
   "5042": {
     "Id": 5042,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 5032,
-    "NPC": 1006
+    "ChatCondition": 3,
+    "ChatConditionValue": 504,
+    "NPC": 1005
+  },
+  "50420": {
+    "Id": 50420,
+    "Type": 1,
+    "ChatCondition": 4,
+    "ChatConditionValue": 4,
+    "NPC": 1005
   },
   "6011": {
     "Id": 6011,
     "Type": 2,
     "ChatCondition": 0,
-    "ChatConditionValue": 16,
+    "ChatConditionValue": 17,
     "NPC": 1007
   },
   "6012": {
     "Id": 6012,
     "Type": 2,
+    "ChatCondition": 3,
+    "ChatConditionValue": 601,
+    "NPC": 1007
+  },
+  "6021": {
+    "Id": 6021,
+    "Type": 2,
     "ChatCondition": 1,
-    "ChatConditionValue": 6011,
+    "ChatConditionValue": 6012,
     "NPC": 1007
   },
   "6022": {
     "Id": 6022,
     "Type": 2,
-    "ChatCondition": 1,
-    "ChatConditionValue": 6012,
+    "ChatCondition": 3,
+    "ChatConditionValue": 602,
     "NPC": 1007
   },
   "11": {

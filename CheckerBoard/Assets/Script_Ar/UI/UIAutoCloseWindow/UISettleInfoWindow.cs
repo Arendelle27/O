@@ -63,7 +63,7 @@ public class UISettleInfoWindow : UISelectWindow
         this.title.text = eventArea.plot.plotDefine.Name;
         this.description.text = eventArea.plot.plotDefine.Description;
 
-        this.hotilityValue.text = EventAreaManager.Instance.hotility[int.Parse( eventArea.plot.plotDefine.EventValue)].ToString(); 
+        this.hotilityValue.text = EventAreaManager.Instance.hotility[0].ToString(); 
         //this.SetButton((int)eventArea.plot.plotDefine.EventType);//…Ë÷√∞¥º¸
 
     }

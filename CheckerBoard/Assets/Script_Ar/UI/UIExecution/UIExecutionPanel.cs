@@ -42,7 +42,7 @@ public class UIExecutionPanel : MonoBehaviour
                 uiExecution.id = i;
             }
         }
-
+        this.UpdatUIExuection(ResourcesManager.Instance.execution);
         //for (int i = 0; i < allExecution; i++)
         //{
         //    GameObject go = GameObjectPool.Instance.UIExecutionItems.Get();

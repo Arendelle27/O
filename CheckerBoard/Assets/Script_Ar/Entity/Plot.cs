@@ -391,6 +391,7 @@ namespace ENTITY
 
                 //NpcManager.Instance.NPCAppearUnlock(1, this.plotDefine.ID);//添加对话
                 //ChatManager.Instance.ChatConditionUnlock(2, this.plotDefine.ID);
+                QuestManager.Instance.QuestEnd(1, this.plotDefine.ID);
 
                 foreach (var npc in this.npcs)
                 {
@@ -416,7 +417,6 @@ namespace ENTITY
                     }
                     this.isFirstExplored = false;
                 }
-                QuestManager.Instance.QuestEnd(1, this.plotDefine.ID);
                 //EventManager.Instance.curClashArea = null;//清空记录的冲突区域
 
                 //触发角色进入事件

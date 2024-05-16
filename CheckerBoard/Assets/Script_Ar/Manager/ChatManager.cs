@@ -135,21 +135,24 @@ namespace MANAGER
                 if (chatConditionDefine.ChatConditionValue == value)
                 {
                     this.chatConditionsNpc[sort][item.Key] = true;
-                    NpcManager.Instance.npcs[chatConditionDefine.NPC].ShowSwitch(true);
+                    if(NpcManager.Instance.npcs.ContainsKey(chatConditionDefine.NPC))
+                    {
+                        NpcManager.Instance.npcs[chatConditionDefine.NPC].ShowSwitch(true);
+                    }
 
                     npcs.Add(chatConditionDefine.NPC, item.Key);
 
                 }
             }
-            //foreach (var npc in WandererManager.Instance.wanderer.plot.npcs)
-            //{
-            //    if (npcs.ContainsKey(npc.npcDefine.Name))
-            //    {
-            //        this.CurChatId = npcs[npc.npcDefine.Name];
-            //        this.chatConditionsNpc[sort].Remove(npcs[npc.npcDefine.Name]);
-            //        break;
-            //    }
-            //}
+            foreach (var npc in WandererManager.Instance.wanderer.plot.npcs)
+            {
+                if (npcs.ContainsKey((int)npc.npcDefine.Name))
+                {
+                    this.CurChatId = npcs[(int)npc.npcDefine.Name];
+                    this.chatConditionsNpc[sort].Remove(npcs[(int)npc.npcDefine.Name]);
+                    break;
+                }
+            }
 
             int chatDefineId = -1;
             foreach (var id in this.chatConditions[sort])
@@ -258,7 +261,7 @@ namespace MANAGER
                 UIManager.Instance.Close<UIChatWindow>();
                 NpcManager.Instance.NPCLeaveUnlock(1,this.curChatId);
                 NpcManager.Instance.NPCAppearUnlock(0, this.curChatId);
-                QuestManager.Instance.QuestUnlock(this.curChatId);
+                QuestManager.Instance.QuestUnlock(0,this.curChatId);
                 this.ChatConditionUnlock(1, this.curChatId);
 
                 if(this.subEventType==-1)
@@ -298,6 +301,9 @@ namespace MANAGER
                         break;
                     case 9://增加人类阵营敌意
                         EventAreaManager.Instance.hotility[0] += this.subEventValue;
+                        break;
+                    case 10://获得空间币
+                        ResourcesManager.Instance.ChangeWealth(this.subEventValue);
                         break;
                 }
             }

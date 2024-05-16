@@ -30,7 +30,6 @@ public class Main : MonoSingleton<Main>
 
     private void Start()
     {
-        SoundManager.Instance.RoundStart(0);
         MainThreadDispatcher.StartUpdateMicroCoroutine(this.Load());
         UIMain.Instance.ChangeToGamePanel(0);
         CGManager.Instance.ReStart();
@@ -62,6 +61,7 @@ public class Main : MonoSingleton<Main>
         this.mainCamera?.Restart();
         //CGManager.Instance.PlayCG(0);//播放开场动画
         yield return null;
+        //yield return AsyncOperation;
         MainThreadDispatcher.StartUpdateMicroCoroutine(PlotManager.Instance.Restart());
         yield return null;
         CapabilityManager.Instance.Restart();

@@ -18,17 +18,19 @@ public class CGManager : MonoSingleton<CGManager>
     public void ReStart()
     {
         List<string> list = new List<string>(3) { "开场cg01", "开场cg02", "开场cg03" };
-        CGlist.Add(CG_Type.醒来, list);//0为开场动画
+        CGlist.Add(CG_Type.醒来, list);
 
         list = new List<string>(2) { "老爹的遗书cg01", "老爹的遗书cg02" };
-        CGlist.Add(CG_Type.老爹的遗书, list);//0为开场动画
+        CGlist.Add(CG_Type.老爹的遗书, list);
 
         list = new List<string>(1) { "档案cg01" };
-        CGlist.Add(CG_Type.档案, list);//0为开场动画
+        CGlist.Add(CG_Type.档案, list);
 
         list = new List<string>(2) { "追逐cg01", "追逐cg02"};
-        CGlist.Add(CG_Type.追逐, list);//0为开场动画
+        CGlist.Add(CG_Type.追逐, list);
 
+        list = new List<string>(1) { "演讲cg01" };
+        CGlist.Add(CG_Type.演讲, list);
     }
 
     /// <summary>

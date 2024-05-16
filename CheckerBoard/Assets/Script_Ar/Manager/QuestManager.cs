@@ -15,8 +15,8 @@ namespace MANAGER
         //当前任务ID,0为主线，1为支线
         public List<HashSet<int>> curQuestIds=new List<HashSet<int>>(2) {new HashSet<int>(),new HashSet<int>() };
 
-        //任务解锁条件
-        public HashSet<int> questConditions = new HashSet<int>();
+        //任务解锁条件,0为对话，1为任务
+        public List<HashSet<int>> questConditions = new List<HashSet<int>>(2) { new HashSet<int>() ,new HashSet<int>()};
 
         public void Restart()
         {
@@ -24,7 +24,7 @@ namespace MANAGER
             {
                 if (item.Value.IsExist != 0)
                     continue;
-                this.questConditions.Add(item.Value.Id);
+                this.questConditions[item.Value.PreContent].Add(item.Value.Id);
             }
         }
 
@@ -40,9 +40,13 @@ namespace MANAGER
             {
                 this.curQuestIds[1].Add(item);
             }
-            foreach (var item in questManagerData.questConditions)
+            foreach (var item in questManagerData.questChatConditions)
             {
-                this.questConditions.Add(item);
+                this.questConditions[0].Add(item);
+            }
+            foreach (var item in questManagerData.questQuestConditions)
+            {
+                this.questConditions[1].Add(item);
             }
             (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
         }
@@ -56,7 +60,11 @@ namespace MANAGER
             {
                 this.curQuestIds[i].Clear();
             }
-            this.questConditions.Clear();
+
+            for (int i = 0; i < this.questConditions.Count; i++)
+            {
+                this.questConditions[i].Clear();
+            }
 
             ////清除所有任务
             //for (int i = 0; i < this.curMainQuestIds.Count;)
@@ -73,10 +81,10 @@ namespace MANAGER
         /// <summary>
         /// 解锁任务
         /// </summary>
-        public void QuestUnlock(int questConditionId)
+        public void QuestUnlock(int sort, int questConditionId)
         {
             List<int> ids = new List<int>();
-            foreach (var item in this.questConditions)
+            foreach (var item in this.questConditions[sort])
             {
                 QuestDefine questDefine= DataManager.QuestDefines[item];
                 if (questDefine.QuestConditionId == questConditionId)
@@ -87,7 +95,7 @@ namespace MANAGER
             }
             foreach (var id in ids)
             {
-                this.questConditions.Remove(id);
+                this.questConditions[sort].Remove(id);
             }
         }
 
@@ -178,7 +186,7 @@ namespace MANAGER
 
                     if (questDefine.QuestJudgeValue == value)
                     {
-                        if(this.FinishQuest(questDefine)==0)//因为任务任务成功
+                        if(this.FinishQuest(questDefine)==0)//因为任务成功
                         {
                             removeQuestIds[j].Add(quest);
                         }
@@ -230,7 +238,7 @@ namespace MANAGER
             if (isSuccess)
             {
                 MessageManager.Instance.AddMessage(Message_Type.任务, string.Format("完成任务:{0}", questDefine.QuestName));
-                ResourcesManager.Instance.ChangeWealth(questDefine.CurrencyCondition);
+                ResourcesManager.Instance.ChangeWealth(-questDefine.CurrencyCondition);
                 ResourcesManager.Instance.ChangeBuildingResources(new int[3] { questDefine.Resource1Condition, questDefine.Resource2Condition, questDefine.Resource3Condition }, false);
 
                 ResourcesManager.Instance.ChangeWealth(questDefine.GainCurrency);
@@ -242,6 +250,7 @@ namespace MANAGER
 
                 NpcManager.Instance.NPCLeaveUnlock(0, questDefine.Id);
                 ChatManager.Instance.ChatConditionUnlock(3, questDefine.Id);
+                this.QuestUnlock(1, questDefine.Id);
                 return 0;
             }
             else

@@ -25,7 +25,7 @@ public class ClashArea : EventArea
     public override void SetInfo(Plot plot)
     {
         base.SetInfo(plot);
-        this.clashType = int.Parse(plot.plotDefine.EventValue);
+        this.clashType = plot.plotDefine.EventValue;
         this.canExpend = false;
 
         if (this.plot.wanderer != null)

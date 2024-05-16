@@ -65,6 +65,11 @@ public class UIStartPanel : UIPanel
         this.showButtonCor=StartCoroutine(ShowButton());
     }
 
+    private void OnEnable()
+    {
+        SoundManager.Instance.RoundStart(0);
+    }
+
     Coroutine showButtonCor;
 
     IEnumerator ShowButton()

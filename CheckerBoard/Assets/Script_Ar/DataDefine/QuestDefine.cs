@@ -9,6 +9,7 @@ public class QuestDefine
     public int IsMain { get; set; }
     public int IsExist { get; set; }
     public string QuestDescription { get; set; }
+    public int PreContent { get; set; }
     public int QuestConditionId { get; set; }
     public int RoundCondition { get; set; }
     public int CurrencyCondition { get; set; }

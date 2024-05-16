@@ -158,7 +158,7 @@ namespace Managers
                 //case 1:
                 //    this.PlayMusic("bgm2");
                     //break;
-                case 19:
+                case 20:
                     this.PlayMusic("bgm2");
                     break;
                 case 100:

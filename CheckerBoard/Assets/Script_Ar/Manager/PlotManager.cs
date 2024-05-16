@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 using UniRx;
 using System;
 using System.Linq;
+using Managers;
 
 namespace MANAGER
 {
@@ -843,7 +844,7 @@ namespace MANAGER
                     MessageManager.Instance.AddMessage(Message_Type.探索, "不知为何，目的地进不去");
                     return false;
                 }
-
+                SoundManager.Instance.PlayVoice("Move");
                 ResourcesManager.Instance.ChangeExecution(-this.moveExecutionCost);//消耗行动点
                 MainThreadDispatcher.StartUpdateMicroCoroutine(WandererManager.Instance.WandererMoveTo(this.moveAimPlot));//将流浪者移动到指定的板块
                 MessageManager.Instance.AddMessage(Message_Type.探索, string.Format("消耗{0}行动力，移动到（{1}，{2}）", this.moveExecutionCost, this.moveAimPlot.pos.x, this.moveAimPlot.pos.y));

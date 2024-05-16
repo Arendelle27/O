@@ -6,7 +6,7 @@
       "PurchaseOrSell": 0,
       "TransactionType": "资源",
       "Subtype": 0,
-      "Amount": 30,
+      "Amount": 20,
       "Price": 25,
       "CoolingRounds": 1
     },
@@ -16,7 +16,7 @@
       "PurchaseOrSell": 0,
       "TransactionType": "资源",
       "Subtype": 1,
-      "Amount": 20,
+      "Amount": 10,
       "Price": 80,
       "CoolingRounds": 2
     },
@@ -35,7 +35,7 @@
       "PurchaseOrSell": 1,
       "TransactionType": "资源",
       "Subtype": 1,
-      "Amount": 20,
+      "Amount": 15,
       "Price": 65
     }
   },
