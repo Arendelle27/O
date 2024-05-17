@@ -40,6 +40,8 @@ public static class DataManager
 
     public static Dictionary<int, CameraDefine> CameraDefines;
 
+    public static Dictionary<int, CGDefine> CGDefines;
+
     /// <summary>
     /// 读取建筑脚本列表
     /// </summary>
@@ -142,10 +144,12 @@ public static class DataManager
         QuestDefines = JsonConvert.DeserializeObject<Dictionary<int, QuestDefine>>(json);
         yield return null;
 
-
-
         json = File.ReadAllText(PathConfig.GetDataTxtPath("CameraDefine.txt"));
         CameraDefines = JsonConvert.DeserializeObject<Dictionary<int, CameraDefine>>(json);
+        yield return null;
+
+        json = File.ReadAllText(PathConfig.GetDataTxtPath("CGDefine.txt"));
+        CGDefines = JsonConvert.DeserializeObject<Dictionary<int, CGDefine>>(json);
         yield return null;
 
         SpriteManager.Load();//加载精灵

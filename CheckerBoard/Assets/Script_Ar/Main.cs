@@ -32,7 +32,6 @@ public class Main : MonoSingleton<Main>
     {
         MainThreadDispatcher.StartUpdateMicroCoroutine(this.Load());
         UIMain.Instance.ChangeToGamePanel(0);
-        CGManager.Instance.ReStart();
     }
 
     /// <summary>
@@ -41,6 +40,7 @@ public class Main : MonoSingleton<Main>
     /// <returns></returns>
      void Init()
     {
+        CGManager.Instance.ReStart();
         UIMain.Instance.ChangeToGamePanel(1);
         SoundManager.Instance.RoundStart(0);
     }
