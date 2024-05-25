@@ -98,6 +98,11 @@ public enum Prop_Type
     道具
 }
 
+public enum BluePrint_Type
+{
+    芯片探测仪蓝图
+}
+
 public enum Message_Type
 {
     指引 = 0,

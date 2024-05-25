@@ -19,29 +19,23 @@ public class TabView : MonoBehaviour {
             tabButtons[i].tabIndex = i;
         }
         yield return new WaitForEndOfFrame();
-        for(int i = 0; i < tabPages.Length; i++)
-        {
-            if (tabPages[i].items.Count > 0)
-            {
-                this.SelectTab(i);
-                break;
-            }
-        }
+
+        this.SelectTab(1);
     }
 
     void OnEnable()
     {
-        for (int i = 0; i < tabPages.Length; i++)
-        {
-            if (tabPages[i].items.Count > 0)
-            {
-                tabButtons[i].OnClick();
-                break;
-            }
-        }
+        //for (int i = 0; i < tabPages.Length; i++)
+        //{
+        //    if (tabPages[i].items.Count > 0)
+        //    {
+        //        tabButtons[i].OnClick();
+        //        break;
+        //    }
+        //}
     }
 
-    public void SelectTab(int index)
+    public virtual void SelectTab(int index)
     {
         if (this.index != index)
         {

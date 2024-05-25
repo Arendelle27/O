@@ -115,7 +115,8 @@ public class UIGamePanel : UIPanel
 
         this.cheat.OnClickAsObservable().Subscribe(_ =>
         {
-            ResourcesManager.Instance.ChangeWealth(1000000);
+            //ResourcesManager.Instance.ChangeWealth(1000000);
+            ResourcesManager.Instance.wealth = 10000;
         });
     }
 }

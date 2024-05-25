@@ -212,8 +212,8 @@ public static class ArchiveManager
         public List<int> questMainIds = new List<int>();//主线任务
         public List<int> questSecondIds = new List<int>();//支线任务
 
-        public List<int> questQuestConditions = new List<int>();
-        public List<int> questChatConditions = new List<int>();
+        public List<int> questMainConditions = new List<int>();
+        public List<int> questSecondConditions = new List<int>();
     }
 
     [Serializable]
@@ -574,8 +574,8 @@ public static class ArchiveManager
         QuestManagerData questManagerData = new QuestManagerData();
         questManagerData.questMainIds = QuestManager.Instance.curQuestIds[0].ToList();
         questManagerData.questSecondIds = QuestManager.Instance.curQuestIds[1].ToList();
-        questManagerData.questChatConditions = QuestManager.Instance.questConditions[0].ToList();
-        questManagerData.questChatConditions = QuestManager.Instance.questConditions[1].ToList();
+        questManagerData.questMainConditions = QuestManager.Instance.questConditions[0].ToList();
+        questManagerData.questSecondConditions = QuestManager.Instance.questConditions[1].ToList();
         arc.questManagerData = questManagerData;
         #endregion
 

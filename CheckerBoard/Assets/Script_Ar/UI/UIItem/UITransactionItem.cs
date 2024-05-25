@@ -57,7 +57,7 @@ public class UITransactionItem : ListView.ListViewItem
                 this.iconImage.sprite = SpriteManager.buildingResourceSprites[(Resource_Type)tD.Subtype];
                 break;
             case Transaction_Type.À¶Í¼:
-                this.nameText.text = string.Format("À¶Í¼{0}", tD.Subtype);
+                this.nameText.text = string.Format("{0}", (BluePrint_Type)tD.Subtype);
                 this.iconImage.sprite = SpriteManager.propSprites[Prop_Type.À¶Í¼];
                 break;
         }

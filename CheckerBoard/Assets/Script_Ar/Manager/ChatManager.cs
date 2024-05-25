@@ -100,6 +100,13 @@ namespace MANAGER
                 foreach (var id in item.chatConditionData)
                 {
                     this.chatConditionsNpc[item.sort].Add(id.chatDefineId,id.condition);
+                    if(id.condition)
+                    {
+                        if (NpcManager.Instance.npcs.ContainsKey(DataManager.ChatConditionDefines[id.chatDefineId].NPC))
+                        {
+                            NpcManager.Instance.npcs[DataManager.ChatConditionDefines[id.chatDefineId].NPC].ShowSwitch(true);
+                        }
+                    }
                 }
             }
         }
@@ -146,10 +153,11 @@ namespace MANAGER
             }
             foreach (var npc in WandererManager.Instance.wanderer.plot.npcs)
             {
-                if (npcs.ContainsKey((int)npc.npcDefine.Name))
+                if (npcs.ContainsKey((int)npc.npcDefine.Id))
                 {
-                    this.CurChatId = npcs[(int)npc.npcDefine.Name];
-                    this.chatConditionsNpc[sort].Remove(npcs[(int)npc.npcDefine.Name]);
+                    npc.ShowSwitch(false);//npc可聊天状态切换
+                    this.CurChatId = npcs[(int)npc.npcDefine.Id];
+                    this.chatConditionsNpc[sort].Remove(npcs[(int)npc.npcDefine.Id]);
                     break;
                 }
             }
@@ -258,13 +266,14 @@ namespace MANAGER
             }
             else//对话结束
             {
+
                 UIManager.Instance.Close<UIChatWindow>();
                 NpcManager.Instance.NPCLeaveUnlock(1,this.curChatId);
                 NpcManager.Instance.NPCAppearUnlock(0, this.curChatId);
                 QuestManager.Instance.QuestUnlock(0,this.curChatId);
                 this.ChatConditionUnlock(1, this.curChatId);
-
-                if(this.subEventType==-1)
+                this.curChatId = -1;
+                if (this.subEventType==-1)
                 {
                     return;
                 }

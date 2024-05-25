@@ -1,4 +1,5 @@
 using ENTITY;
+using MANAGER;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,6 +47,8 @@ public class Settle : EventArea
     public override void WandererEnter()
     {
         base.WandererEnter();
+        UISelectedWindow uSW = UIManager.Instance.Show<UISelectedWindow>();
+        uSW.OpenWindow(2);
         if (this.isBlackMarket)
         {
             Debug.LogFormat("½øÈëºÚÊÐ{0}", this.plot.pos);

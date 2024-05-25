@@ -65,6 +65,7 @@ namespace MANAGER
 
             this.ObserveEveryValueChanged(_ => this.buildingTypes[0].Count).Subscribe(_ =>
             {
+                
                 (UIMain.Instance.uISelectedWindow.uISelectedWindows[0] as UIBuildingWindow)?.UpdateBuildingList(0);
             });
 

@@ -41,7 +41,6 @@ public class Main : MonoSingleton<Main>
      void Init()
     {
         CGManager.Instance.ReStart();
-        UIMain.Instance.ChangeToGamePanel(1);
         SoundManager.Instance.RoundStart(0);
     }
 
@@ -83,8 +82,10 @@ public class Main : MonoSingleton<Main>
         MessageManager.Instance.ReStart();
         yield return new WaitForSeconds(1f);
         this.Init();
+        UIMain.Instance.ChangeToGamePanel(1);
         ChatManager.Instance.Restart();
         yield return null;
+
 
         //MessageManager.Instance.AddMessage(Message_Type.指引, "游戏开始咯!");
 
@@ -140,7 +141,8 @@ public class Main : MonoSingleton<Main>
         yield return new WaitForSeconds(1f);
         this.Init();
         ChatManager.Instance.ReadArchive();
-        yield return null;
+        yield return new WaitForSeconds(0.3f);
+        UIMain.Instance.ChangeToGamePanel(1);
 
     }
 
@@ -152,6 +154,10 @@ public class Main : MonoSingleton<Main>
     {
         UIManager.Instance.Close<UISelectedWindow>();
         this.mainCamera?.StopControl();
+        if(ChatManager.Instance.CurChatId!=-1)//如果当前有对话
+        {
+            UIManager.Instance.Close<UIChatWindow>();
+        }
         //UIManager.Instance.Show<UIScoreWindow>();
 
         BuildingManager.Instance.GameOver();

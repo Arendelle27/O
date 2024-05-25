@@ -40,11 +40,48 @@ namespace UIBUILDING
 
         void OnEnable()
         {
-            this.uiBuildingItemInfo.gameObject.SetActive(false);
-            for(int i = 0; i < this.tabView.tabPages.Length; i++)
+            if (WandererManager.Instance.wanderer == null)
             {
-                //this.tabView.tabPages[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
-                this.tabView.tabButtons[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
+                return;
+
+            }
+            this.uiBuildingItemInfo.gameObject.SetActive(false);
+
+            bool canBuildGathering = true;
+            Plot plot = WandererManager.Instance.wanderer.plot;
+            if (plot.plotType==1)
+            {
+                canBuildGathering = false;
+            }
+            else
+            {
+                if (plot.buildingResources[0]==-1)
+                {
+                    canBuildGathering = false;
+                }
+                else if (plot.buildingResources[0]==0&& this.tabView.tabPages[0].items.Count==0)
+                {
+                    canBuildGathering = false;
+                }
+                else if(plot.buildingResources[0] == 1 && this.tabView.tabPages[3].items.Count == 0)
+                {
+                    canBuildGathering = false;
+                }
+                else if (plot.buildingResources[0] == 2 && this.tabView.tabPages[4].items.Count == 0)
+                {
+                    canBuildGathering = false;
+                }
+            }
+            for(int i = 0; i < this.tabView.tabButtons.Length; i++)
+            {
+                if(i==0)
+                {
+                    this.tabView.tabButtons[0].gameObject.SetActive(canBuildGathering);
+                }
+                else
+                {
+                    this.tabView.tabButtons[i].gameObject.SetActive(this.tabView.tabPages[i].items.Count != 0);
+                }
             }
             foreach (var rectTransform in rectTransforms)//自适应窗口
             {
@@ -111,6 +148,11 @@ namespace UIBUILDING
         /// </summary>
         void ClearBuildingList(int sort)
         {
+            if (sort == 0)
+            {
+                this.tabView.tabPages[3].RemoveAll();
+                this.tabView.tabPages[4].RemoveAll();
+            }
             this.tabView.tabPages[sort].RemoveAll();
         }
 
@@ -124,10 +166,27 @@ namespace UIBUILDING
             foreach (var buType in BuildingManager.Instance.buildingTypes[sort])
             {
                 GameObject go = GameObjectPool.Instance.UIBuildingItems.Get();
-                go.transform.SetParent(this.tabView.tabPages[sort].content);//在建筑列表第一页生成
+                int buildingSort = sort;
+                if (sort == 0)
+                {
+                    if (buType <= Building_Type.电缆卷机)
+                    {
+                        buildingSort = 0;
+                    }
+                    else if (buType <= Building_Type.金属提纯器)
+                    {
+                        buildingSort = 3;
+                    }
+                    else
+                    {
+                        buildingSort = 4;
+                    }
+                }
+
+                go.transform.SetParent(this.tabView.tabPages[buildingSort].content);//在建筑列表第一页生成
                 UIBuildingItem ui = go.GetComponent<UIBuildingItem>();
                 ui.SetInfo(sort, buType);//设置建筑UIItem信息
-                this.tabView.tabPages[sort].AddItem(ui);
+                this.tabView.tabPages[buildingSort].AddItem(ui);
             }
         }
     }

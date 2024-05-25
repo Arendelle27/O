@@ -40,11 +40,11 @@ namespace MANAGER
             {
                 this.curQuestIds[1].Add(item);
             }
-            foreach (var item in questManagerData.questChatConditions)
+            foreach (var item in questManagerData.questMainConditions) 
             {
                 this.questConditions[0].Add(item);
             }
-            foreach (var item in questManagerData.questQuestConditions)
+            foreach (var item in questManagerData.questSecondConditions)
             {
                 this.questConditions[1].Add(item);
             }
@@ -84,15 +84,19 @@ namespace MANAGER
         public void QuestUnlock(int sort, int questConditionId)
         {
             List<int> ids = new List<int>();
-            foreach (var item in this.questConditions[sort])
+
+            for(int i=0;i< this.questConditions[sort].Count; i++)
             {
-                QuestDefine questDefine= DataManager.QuestDefines[item];
+                var item = this.questConditions[sort].ElementAt(i);
+                QuestDefine questDefine = DataManager.QuestDefines[item];
                 if (questDefine.QuestConditionId == questConditionId)
                 {
                     ids.Add(questConditionId);
                     this.GetQuest(questDefine.Id);
                 }
+
             }
+
             foreach (var id in ids)
             {
                 this.questConditions[sort].Remove(id);
@@ -109,17 +113,55 @@ namespace MANAGER
 
             this.curQuestIds[questDefine.IsMain].Add(questDefineId);
             MessageManager.Instance.AddMessage(Message_Type.任务, string.Format("接取{0}要任务:{1}",questDefine.IsMain==0?"主":"次", questDefine.QuestName));
-            //if (questDefine.IsMain)//主线任务
-            //{
-            //    this.curQuestIds[0].Add(questDefineId);
 
-            //    MessageManager.Instance.AddMessage(Message_Type.任务, string.Format("接取主要任务:{0}", questDefine.QuestName));
-            //}
-            //else//支线任务
-            //{
-            //    this.curQuestIds[1].Add(questDefineId);
-            //    MessageManager.Instance.AddMessage(Message_Type.任务, string.Format("接取次要任务:{0}", questDefine.QuestName));
-            //}
+
+            bool isFinish = false;
+            switch (questDefine.QuestJudgeType)
+            {
+                case 0:
+                    foreach(var npc in WandererManager.Instance.wanderer.plot.npcs)
+                    {
+                        if(npc.npcDefine.Id==questDefine.QuestJudgeValue)
+                        {
+                            isFinish = true;
+                            break;
+                        }
+                    }
+                    break;
+                case 1:
+                    DataManager.PlotDefines.TryGetValue(questDefine.QuestJudgeValue, out PlotDefine plot);
+                    for(int i=plot.HorizontalMin;i<=plot.HorizontalMax;i++)
+                    {
+                        for (int j = plot.VerticalMin; j <= plot.VerticalMax; j++)
+                        {
+                            if (PlotManager.Instance.plots.ContainsKey(new Vector2Int(i, j)))
+                            {
+                                if (!PlotManager.Instance.plots[new Vector2Int(i, j)].isFirstExplored)
+                                {
+                                    isFinish = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if(isFinish)
+                        {
+                            break;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (PlotManager.Instance.unloadProp[(Prop_Type)questDefine.QuestJudgeValue])
+                    {
+                        isFinish = true;
+                    }
+                    break;
+
+            }
+            if(isFinish)
+            {
+                this.QuestEnd(questDefine.QuestJudgeType, questDefine.QuestJudgeValue);
+            }
+
             (UIMain.Instance.uiPanels[1] as UIGamePanel).uIQuestPanel.UpdateAllUIQuest();
         }
 

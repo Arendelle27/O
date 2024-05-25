@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UISelectedWindow : UIWindow, IDeselectHandler
+public class UISelectedWindow : UIWindow, IDeselectHandler, ISelectHandler
 {
     [SerializeField, LabelText("不选择则自动关闭"), Tooltip("不选择则自动关闭的UI窗口")]
     public List<UISelectWindow> uISelectedWindows = new List<UISelectWindow>();
@@ -58,6 +58,11 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
         this.GetComponent<Selectable>().Select();
     }
 
+    public void OnSelect(BaseEventData eventData)
+    {
+
+    }
+
     /// <summary>
     /// 未选中建筑UI时关闭建筑UI选择界面
     /// </summary>
@@ -76,9 +81,13 @@ public class UISelectedWindow : UIWindow, IDeselectHandler
         }
         if (ed == null||ed.hovered.Contains(this.gameObject))
         {
+            StartCoroutine(BeSelected());//0.1秒后被选中
             return;
         }
         this.OnCloseClick();
     }
+
+
+
     #endregion
 }

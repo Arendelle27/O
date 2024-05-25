@@ -5,7 +5,7 @@
     "IsMain": "0",
     "QuestDescription": "在第3天结束前赚到80空间币",
     "PreContent": 0,
-    "QuestConditionId": 1011,
+    "QuestConditionId": 10110,
     "RoundCondition": 4,
     "CurrencyCondition": 80,
     "QuestJudgeType": -1,
